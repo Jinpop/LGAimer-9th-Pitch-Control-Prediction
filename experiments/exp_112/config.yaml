@@ -1,0 +1,44 @@
+exp_id: exp_112
+date: 2026-08-27
+type: "read-only 측정 · 재학습 0 · zip 0 · 슬롯 0 · GPU 0 · 서버 CPU 사용 ≈0(열 추출 1회뿐)"
+질문: >
+  현 패키지 CW(submit_CW_batresid_flip.zip)의 조정 가능한 상수 중, 아직 꼭지점에
+  착륙하지 않은 것이 무엇이고 각각 LB 몇 점짜리인가.
+
+패키지:
+  zip: submissions/submit_CW_batresid_flip.zip
+  부모: CS3 (LB 1151.6566018102, 팀 최고)
+  CW_자신의_LB: 미측정
+
+방법:
+  1_전수열거: >
+    4개 JSON 의 모든 스칼라를 뽑고 script.py · mate/script.py · aa_infer.py ·
+    mate/q_infer.py · form_offset.py 를 읽어 ★산술에 실제로 들어가는 것★만 남긴다.
+    PRINT-ONLY·이력·산문 블록을 걸러낸다 (S209).
+  2_장부: >
+    submissions/CV_LB.md · experiments/EXPERIMENTS.md ·
+    orchestration/팀문서/registry_2026-08-24.md 원문 행 (G-LEDGER).
+  3_K_G: >
+    우리 규약 캘프레임(build_AC/work/tr2024, train season==2024, 253,507행 ·
+    ins 앵커 lt2024 스왑 · lookup ≤2023 키 1,202 제한)에서 재학습 0 으로 측정.
+    성분 벡터는 CW 출하 빌드가 남긴 build_CW/work/{offline_CW,calp_PAR,ftmr_CW_0,
+    ftwo_CW_0}.npy 를 그대로 쓴다.  ★솔버팩(ct_vec.npz)은 쓰지 않는다★ — 그 프레임은
+    ≤2024 표를 2024행에 써서 곡률이 2.04배 틀린다 (S210).
+    d_adj 종속 재유도를 반영해 δ 를 s=p(1−p) 가중 평균으로 사영한다.
+  4_L: >
+    🔴 캘프레임 L 은 앵커 2개가 서로를 반증했으므로 판정 근거로 쓰지 않는다.
+    L 은 ★같은 기반의 LB 점★ 또는 정직면에서만 읽는다 (S217·S206·S202).
+
+사전_등록_문턱:
+  행동_문턱_LB_pts: 1.4    # 팀 원장 검출한계 (제76)
+  보고_문턱_LB_pts: 0.25   # 이보다 작으면 "닫혔다"로 적는다
+
+검산_게이트:
+  - "K·G 기계 검증 ①: count 축 캘프레임 K·G 2.2928 vs 패키지 기록 2.30510 → 0.5%"
+  - "K·G 기계 검증 ②: ctrl_asof_psr 캘프레임 K·G 28,500.5 vs 패키지 기록 K·G_ii 28,502.4 → 0.007%"
+  - "장부 재현: count 축 잔여 +0.2473 vs S215 기록 +0.250"
+  - "m(logit_mix) 역산 잔차 2.11e-15"
+  - "offline_CW = 출하 CW 캘 벡터: logit 차가 선언 d_adj 걸음과 5.62e-16 안에서 상수"
+
+금지:
+  - 파일 삭제 (서버 포함) · 외부 프로세스 kill · GPU · 재학습 · zip · 제출

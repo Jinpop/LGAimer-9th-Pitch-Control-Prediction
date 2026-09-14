@@ -1,0 +1,871 @@
+{
+ "exp_id": "exp_082",
+ "K_pts_per_brier": 400309.19882517256,
+ "ref_brier": 0.2498069,
+ "threads": "OMP/OPENBLAS/MKL/NUMEXPR/VECLIB = 6",
+ "core078_stage0_gates": {
+  "G0a": {
+   "what": "arms 벡터로 재구성한 파트너 출력이 저장된 tr2024 파트너 벡터 10종과 비트 동일한가 (배포 CSV 왕복 포함)",
+   "cases": {
+    "BN_wv6_070": {
+     "path": "build_BN/work/tr2024_p_v19_BN_wv6_070.npy",
+     "params": {
+      "w_v6_inner": 0.7,
+      "w_ebm": -0.1,
+      "beta_ins": 0.03
+     },
+     "bitwise_equal": true,
+     "n_rows_differ": 0,
+     "max_abs_diff": 0.0
+    },
+    "BN_wv6_050_fresh": {
+     "path": "build_BN/work/tr2024_p_v19_BN_wv6_050_fresh.npy",
+     "params": {
+      "w_v6_inner": 0.5,
+      "w_ebm": -0.1,
+      "beta_ins": 0.03
+     },
+     "bitwise_equal": true,
+     "n_rows_differ": 0,
+     "max_abs_diff": 0.0
+    },
+    "AR": {
+     "path": "build_AR/work/tr2024_p_v19_AR.npy",
+     "params": {
+      "w_v6_inner": 0.5,
+      "w_ebm": -0.1,
+      "beta_ins": 0.03
+     },
+     "bitwise_equal": true,
+     "n_rows_differ": 0,
+     "max_abs_diff": 0.0
+    },
+    "BO_wv6_vertex": {
+     "path": "build_BO/work/tr2024_p_v19_BO_wv6_vertex.npy",
+     "params": {
+      "w_v6_inner": 0.6668397489,
+      "w_ebm": -0.1,
+      "beta_ins": 0.03
+     },
+     "bitwise_equal": true,
+     "n_rows_differ": 0,
+     "max_abs_diff": 0.0
+    },
+    "BO_wv6_070_fresh": {
+     "path": "build_BO/work/tr2024_p_v19_BO_wv6_070_fresh.npy",
+     "params": {
+      "w_v6_inner": 0.7,
+      "w_ebm": -0.1,
+      "beta_ins": 0.03
+     },
+     "bitwise_equal": true,
+     "n_rows_differ": 0,
+     "max_abs_diff": 0.0
+    },
+    "AO_webm_000": {
+     "path": "build_AO/work/tr2024_p_v19_ao.npy",
+     "params": {
+      "w_v6_inner": 0.5,
+      "w_ebm": 0.0,
+      "beta_ins": 0.03
+     },
+     "bitwise_equal": true,
+     "n_rows_differ": 0,
+     "max_abs_diff": 0.0
+    },
+    "AK_webm_015": {
+     "path": "build_AO/work/tr2024_p_v19_w015.npy",
+     "params": {
+      "w_v6_inner": 0.5,
+      "w_ebm": 0.15,
+      "beta_ins": 0.03
+     },
+     "bitwise_equal": true,
+     "n_rows_differ": 0,
+     "max_abs_diff": 0.0
+    },
+    "AP_wv6_100": {
+     "path": "build_AP/work/tr2024_p_v19_ap.npy",
+     "params": {
+      "w_v6_inner": 1.0,
+      "w_ebm": 0.0,
+      "beta_ins": 0.03
+     },
+     "bitwise_equal": true,
+     "n_rows_differ": 0,
+     "max_abs_diff": 0.0
+    },
+    "AQ_wv6_025": {
+     "path": "build_AQ/work/tr2024_p_v19_AQ.npy",
+     "params": {
+      "w_v6_inner": 0.25,
+      "w_ebm": 0.0,
+      "beta_ins": 0.03
+     },
+     "bitwise_equal": true,
+     "n_rows_differ": 0,
+     "max_abs_diff": 0.0
+    },
+    "AT_betains_006": {
+     "path": "build_AT/work/tr2024_p_v19_AT.npy",
+     "params": {
+      "w_v6_inner": 0.5,
+      "w_ebm": -0.1,
+      "beta_ins": 0.06
+     },
+     "bitwise_equal": true,
+     "n_rows_differ": 0,
+     "max_abs_diff": 0.0
+    }
+   },
+   "n_cases": 10,
+   "BN_stored_sha256": "ab38ec13c7bb4c78e1f03f6eb459138dad395c7561b31ea86bec25ba7b1238eb",
+   "sha_asserted_prefix_ab38ec13": true,
+   "PASS": true
+  },
+  "G0b": {
+   "shipped": "0.02875748759679648",
+   "solver": "0.028757487596796416",
+   "abs_diff": 6.245004513516506e-17,
+   "PASS": true
+  },
+  "G0c": {
+   "brier_BN": 0.24552396647966293,
+   "expected_exp072": 0.24552396647966293,
+   "abs_diff": 0.0,
+   "d_adj_BN_solver": "0.028610055723290194",
+   "d_adj_BN_shipped": "0.028610055723290194",
+   "d_adj_abs_diff": 0.0,
+   "PASS": true
+  }
+ },
+ "constants": {
+  "mu_mr": -0.45376277509804325,
+  "mu_wo": -2.0056142032773767,
+  "b_shipped": -0.05,
+  "c_shipped": 0.0,
+  "d_adj_BO": 0.02875748759679648,
+  "d_adj_new": 0.028693042338963914,
+  "LB_BO": 1115.9913864857,
+  "LB_teammate": 1118.6680789834,
+  "g_pts": 2.6766924977
+ },
+ "mate_reproduction_tr2024": {
+  "bitwise_identical": false,
+  "n_rows_differ": 78466,
+  "max_abs": 5.551115123125783e-17,
+  "note": "S13 — 세션 간 SIMD 축약 순서 차이는 1e-9급으로 알려져 있다"
+ },
+ "S21_float_parser": {
+  "lg_mr": {
+   "n_rows_differ": 152137,
+   "share": 0.6001293849873968,
+   "max_abs_diff": 2.220446049250313e-16,
+   "max_rel_ulp": 8.127159773012603e-13
+  },
+  "lg_wo": {
+   "n_rows_differ": 71145,
+   "share": 0.2806431380593041,
+   "max_abs_diff": 4.440892098500626e-16,
+   "max_rel_ulp": 3.4738263584991214e-16
+  }
+ },
+ "mu_independent_check": {
+  "mean_lg_mr_tr2024": -0.4537627750980432,
+  "mu_mr_shipped": -0.45376277509804325,
+  "abs_diff_mr": 5.551115123125783e-17,
+  "mean_lg_wo_tr2024": -2.0056142032773767,
+  "mu_wo_shipped": -2.0056142032773767,
+  "abs_diff_wo": 0.0
+ },
+ "stage0_gates": {
+  "G0b": {
+   "what": "b=0,c=0 → BO 예측·d_adj 정확 재현 (tr2024 보정 프레임)",
+   "d_adj_solved": "0.028757487596796416",
+   "d_adj_BO_shipped": "0.02875748759679648",
+   "abs_diff_d": 6.245004513516506e-17,
+   "pred_bitwise_identical_to_BO": true,
+   "pred_max_abs_diff": 0.0,
+   "PASS": true
+  },
+  "G0c": {
+   "what": "b=-0.05,c=0 에서 팀원 d_adj 독립 재유도",
+   "d_adj_solved": "0.028693042338964712",
+   "d_adj_shipped": "0.028693042338963914",
+   "abs_diff": 7.979727989493313e-16,
+   "PASS": true
+  },
+  "G0a": {
+   "what": "팀원 최종 예측 = BO 예측 로짓 + (d_new−d_BO) + b·(lg_mr−mu_mr)",
+   "frames": {
+    "cov": {
+     "n_rows": 245789,
+     "max_abs_logit_err": 8.881784197001252e-16,
+     "mean_abs_logit_err": 1.8579995119167292e-16,
+     "max_abs_p_err": 2.220446049250313e-16,
+     "PASS": true
+    },
+    "band": {
+     "n_rows": 245789,
+     "max_abs_logit_err": 8.881784197001252e-16,
+     "mean_abs_logit_err": 1.820223238878243e-16,
+     "max_abs_p_err": 2.220446049250313e-16,
+     "PASS": true
+    },
+    "real5": {
+     "n_rows": 5,
+     "max_abs_logit_err": 2.5326962749261384e-16,
+     "mean_abs_logit_err": 1.2281842209915794e-16,
+     "max_abs_p_err": 0.0,
+     "PASS": true
+    }
+   },
+   "PASS": true
+  },
+  "identity_anchor_cov": {
+   "ident__cov(이번 세션)": "7e9d2eb8a887f17cc75c08e3cd34d5eb996eed952785368d2f35ddd65b5478e8",
+   "boref__cov(이번 세션 BO)": "7e9d2eb8a887f17cc75c08e3cd34d5eb996eed952785368d2f35ddd65b5478e8",
+   "au_bo__cov(이전 세션 BO)": "7e9d2eb8a887f17cc75c08e3cd34d5eb996eed952785368d2f35ddd65b5478e8",
+   "ident_vs_boref_same_session_bitwise": true,
+   "ident_vs_boref_sha_equal": true,
+   "ident_vs_au_bo_prev_session_ndiff": 0,
+   "ident_vs_au_bo_prev_session_max_abs": 0.0,
+   "S13_note": "세션이 다르면 팀원 numpy NN 의 SIMD 축약 순서로 1e-9급 차이가 날 수 있다"
+  },
+  "identity_anchor_PASS": true
+ },
+ "stage1_frames": {
+  "tr2024_cal": {
+   "n_rows": 253507,
+   "anchor": "lt2024(보정 규약)",
+   "kind": "calibration",
+   "rms_delta_b": 0.06852913292900469,
+   "rms_delta_c": 0.09043761616275764,
+   "G_bb": 0.004696242060001195,
+   "G_cc": 0.008178962417202283,
+   "G_bc": -0.003965097753605152,
+   "K_G_bb_pts_at_u1": 1879.9488965281562,
+   "K_G_cc_pts_at_u1": 3274.1138924514426,
+   "rho_b_c": -0.6397783734774966,
+   "corr_lg_mr_lg_wo": -0.6322252132821863,
+   "sd_lg_mr": 0.2817722890658388,
+   "sd_lg_wo": 0.3658371338450832,
+   "mean_lg_mr": -0.4537627750980432,
+   "mean_lg_wo": -2.0056142032773767,
+   "secant4h_norm_ratio_b": 1.0002661012368212,
+   "secant4h_norm_ratio_c": 1.0000078104485695
+  },
+  "cov": {
+   "n_rows": 245789,
+   "anchor": "출하 앵커",
+   "kind": "deployment_standin",
+   "rms_delta_b": 0.07515608148901425,
+   "rms_delta_c": 0.09376953287320221,
+   "G_bb": 0.005648436584783349,
+   "G_cc": 0.00879272529525855,
+   "G_bc": -0.004723502480924034,
+   "K_G_bb_pts_at_u1": 2261.1211238694164,
+   "K_G_cc_pts_at_u1": 3519.808818434779,
+   "rho_b_c": -0.6702522285269855,
+   "corr_lg_mr_lg_wo": -0.6625513702639187,
+   "sd_lg_mr": 0.2801905123499714,
+   "sd_lg_wo": 0.3729699467837534,
+   "mean_lg_mr": -0.5782709792021431,
+   "mean_lg_wo": -1.9422212550593665,
+   "secant4h_norm_ratio_b": 1.000226450030773,
+   "secant4h_norm_ratio_c": 0.9999762731333451
+  },
+  "band": {
+   "n_rows": 245789,
+   "anchor": "출하 앵커",
+   "kind": "deployment_standin",
+   "rms_delta_b": 0.06231895076004248,
+   "rms_delta_c": 0.08947318778031799,
+   "G_bb": 0.0038836516238325994,
+   "G_cc": 0.008005451331572043,
+   "G_bc": -0.0038021801435184632,
+   "K_G_bb_pts_at_u1": 1554.6614700525083,
+   "K_G_cc_pts_at_u1": 3204.655808775515,
+   "rho_b_c": -0.6818983600429385,
+   "corr_lg_mr_lg_wo": -0.6857747536149131,
+   "sd_lg_mr": 0.25366368982563625,
+   "sd_lg_wo": 0.3601009257889132,
+   "mean_lg_mr": -0.43432080611517127,
+   "mean_lg_wo": -1.9776319616361546,
+   "secant4h_norm_ratio_b": 1.0001892645680546,
+   "secant4h_norm_ratio_c": 1.0000245099024674
+  },
+  "real5": {
+   "n_rows": 5,
+   "anchor": "출하 앵커",
+   "kind": "deployment_standin",
+   "rms_delta_b": 0.07160800982686377,
+   "rms_delta_c": 0.04052897340518074,
+   "G_bb": 0.005127707071364218,
+   "G_cc": 0.0016425976852778475,
+   "G_bc": -0.0025031945672673974,
+   "K_G_bb_pts_at_u1": 2052.668309547982,
+   "K_G_cc_pts_at_u1": 657.546963385658,
+   "rho_b_c": -0.8625164775749999,
+   "corr_lg_mr_lg_wo": -0.6737707035656203,
+   "sd_lg_mr": 0.17564727431279045,
+   "sd_lg_wo": 0.11026512832656162,
+   "mean_lg_mr": -0.21441092550342228,
+   "mean_lg_wo": -2.1326383112634146,
+   "secant4h_norm_ratio_b": 1.0003156282578936,
+   "secant4h_norm_ratio_c": 0.9998712540312897
+  }
+ },
+ "stage1_b_vertex": {
+  "tr2024_cal/derivative_G": {
+   "G_used": 0.004696242060001195,
+   "K_times_Q_at_u_pts": 4.699872241320391,
+   "L": -0.00018427167701039928,
+   "b_star": -0.03923811308192074,
+   "u_star": -0.03923811308192074,
+   "max_gain_pts": 2.8944248138579125,
+   "gain_already_bought_pts": 2.6766924977,
+   "remaining_headroom_pts": 0.21773231615791255,
+   "predicted_LB_at_vertex": 1118.885811299558
+  },
+  "tr2024_cal/secant_G": {
+   "G_used": 0.004680159870020703,
+   "K_times_Q_at_u_pts": 4.683777619854279,
+   "L": -0.000183869622260887,
+   "b_star": -0.0392870387694841,
+   "u_star": -0.0392870387694841,
+   "max_gain_pts": 2.8917107486998406,
+   "gain_already_bought_pts": 2.6766924977,
+   "remaining_headroom_pts": 0.21501825099984062,
+   "predicted_LB_at_vertex": 1118.8830972343999
+  },
+  "tr2024_cal/nonlinearity": {
+   "G_secant_over_G_derivative": 0.9965755193673965,
+   "K_times_Q_exact_pts": 4.683777619854279
+  },
+  "cov/derivative_G": {
+   "G_used": 0.005648436584783349,
+   "K_times_Q_at_u_pts": 5.652802809673542,
+   "L": -0.00020807654012995315,
+   "b_star": -0.03683789965713745,
+   "u_star": -0.03683789965713745,
+   "max_gain_pts": 3.0684111232762374,
+   "gain_already_bought_pts": 2.6766924977,
+   "remaining_headroom_pts": 0.3917186255762375,
+   "predicted_LB_at_vertex": 1119.0597976089764
+  },
+  "cov/secant_G": {
+   "G_used": 0.005631744447964773,
+   "K_times_Q_at_u_pts": 5.636097769882231,
+   "L": -0.00020765923670948875,
+   "b_star": -0.036872986448192556,
+   "u_star": -0.036872986448192556,
+   "max_gain_pts": 3.0651740288322658,
+   "gain_already_bought_pts": 2.6766924977,
+   "remaining_headroom_pts": 0.3884815311322658,
+   "predicted_LB_at_vertex": 1119.0565605145323
+  },
+  "cov/nonlinearity": {
+   "G_secant_over_G_derivative": 0.9970448217718255,
+   "K_times_Q_exact_pts": 5.636097769882231
+  },
+  "band/derivative_G": {
+   "G_used": 0.0038836516238325994,
+   "K_times_Q_at_u_pts": 3.8866536751312717,
+   "L": -0.00016395691610618442,
+   "b_star": -0.04221720483372882,
+   "u_star": -0.04221720483372882,
+   "max_gain_pts": 2.770861297730879,
+   "gain_already_bought_pts": 2.6766924977,
+   "remaining_headroom_pts": 0.09416880003087913,
+   "predicted_LB_at_vertex": 1118.762247783431
+  },
+  "band/secant_G": {
+   "G_used": 0.003874143924485824,
+   "K_times_Q_at_u_pts": 3.877138626360826,
+   "L": -0.00016371922362251503,
+   "b_star": -0.04225945829935676,
+   "u_star": -0.04225945829935676,
+   "max_gain_pts": 2.769613530882749,
+   "gain_already_bought_pts": 2.6766924977,
+   "remaining_headroom_pts": 0.09292103318274902,
+   "predicted_LB_at_vertex": 1118.7610000165828
+  },
+  "band/nonlinearity": {
+   "G_secant_over_G_derivative": 0.9975518660612013,
+   "K_times_Q_exact_pts": 3.877138626360826
+  },
+  "real5/derivative_G": {
+   "G_used": 0.005127707071364218,
+   "K_times_Q_at_u_pts": 5.131670773869955,
+   "L": -0.00019505830229447487,
+   "b_star": -0.03804006343961843,
+   "u_star": -0.03804006343961843,
+   "max_gain_pts": 2.970306342101076,
+   "gain_already_bought_pts": 2.6766924977,
+   "remaining_headroom_pts": 0.29361384440107585,
+   "predicted_LB_at_vertex": 1118.9616928278012
+  },
+  "real5/secant_G": {
+   "G_used": 0.005107059123485444,
+   "K_times_Q_at_u_pts": 5.1110068651881155,
+   "L": -0.00019454210359750554,
+   "b_star": -0.038092784691463544,
+   "u_star": -0.038092784691463544,
+   "max_gain_pts": 2.966551550723448,
+   "gain_already_bought_pts": 2.6766924977,
+   "remaining_headroom_pts": 0.28985905302344817,
+   "predicted_LB_at_vertex": 1118.9579380364235
+  },
+  "real5/nonlinearity": {
+   "G_secant_over_G_derivative": 0.9959732590821962,
+   "K_times_Q_exact_pts": 5.1110068651881155
+  }
+ },
+ "stage1_frame_spread": {
+  "b_star_min": -0.04221720483372882,
+  "b_star_max": -0.03683789965713745,
+  "b_star_range": 0.005379305176591374,
+  "max_gain_min_pts": 2.770861297730879,
+  "max_gain_max_pts": 3.0684111232762374,
+  "remaining_min_pts": 0.09416880003087913,
+  "remaining_max_pts": 0.3917186255762375,
+  "K_G_bb_min": 1554.6614700525083,
+  "K_G_bb_max": 2261.1211238694164,
+  "K_G_bb_ratio_max_over_min": 1.4544138176866552
+ },
+ "stage2_c": {
+  "tr2024_cal": {
+   "K_G_cc_pts_at_u1": 3274.1138924514426,
+   "amp_KQ1_firstorder": 0.01747644556955426,
+   "amp_KQ1_exact": 0.017476254850735912,
+   "amp_S42_buy_0p2x": 0.0034952509701471827,
+   "K_times_Q_at_0p2x_pts": 0.039999451996672805,
+   "nonlinear_1pct_amplitude": 0.30439464459212917,
+   "rho_with_b_axis": -0.6397783734774966,
+   "corr_lg_mr_lg_wo": -0.6322252132821863,
+   "K_G_cc_after_orthogonalising_b_pts": 1933.9654882939908
+  },
+  "cov": {
+   "K_G_cc_pts_at_u1": 3519.808818434779,
+   "amp_KQ1_firstorder": 0.016855454302474867,
+   "amp_KQ1_exact": 0.016856403934351886,
+   "amp_S42_buy_0p2x": 0.0033712807868703774,
+   "K_times_Q_at_0p2x_pts": 0.04000376654736452,
+   "nonlinear_1pct_amplitude": 0.29555436529019236,
+   "rho_with_b_axis": -0.6702522285269855,
+   "corr_lg_mr_lg_wo": -0.6625513702639187,
+   "K_G_cc_after_orthogonalising_b_pts": 1938.5767690125306
+  },
+  "band": {
+   "K_G_cc_pts_at_u1": 3204.655808775515,
+   "amp_KQ1_firstorder": 0.017664823569149217,
+   "amp_KQ1_exact": 0.017663980954223717,
+   "amp_S42_buy_0p2x": 0.0035327961908447436,
+   "K_times_Q_at_0p2x_pts": 0.039997102596084536,
+   "nonlinear_1pct_amplitude": 0.34064510866160963,
+   "rho_with_b_axis": -0.6818983600429385,
+   "corr_lg_mr_lg_wo": -0.6857747536149131,
+   "K_G_cc_after_orthogonalising_b_pts": 1714.5377308198206
+  },
+  "real5": {
+   "K_G_cc_pts_at_u1": 657.546963385658,
+   "amp_KQ1_firstorder": 0.03899748608255246,
+   "amp_KQ1_exact": 0.039022621738745336,
+   "amp_S42_buy_0p2x": 0.007804524347749068,
+   "K_times_Q_at_0p2x_pts": 0.040041521638210495,
+   "nonlinear_1pct_amplitude": 0.35777441379069996,
+   "rho_with_b_axis": -0.8625164775749999,
+   "corr_lg_mr_lg_wo": -0.6737707035656203,
+   "K_G_cc_after_orthogonalising_b_pts": 168.3749774815411
+  }
+ },
+ "stage2_rho": {
+  "rho_c_vs_15axes_tr2024": {
+   "alpha": 0.035783271610653096,
+   "beta_skew": -0.09600762702264659,
+   "c_aa": 0.05958878042673745,
+   "c_S2": 0.06158173486867842,
+   "c_S1": 0.06575124519364543,
+   "c_T70": 0.06302455140469794,
+   "w_out": 0.029673921016412214,
+   "w_v6_inner": -0.09399544512279763,
+   "w_ebm": -0.03272075762208525,
+   "beta_ins": -0.026002072723260158,
+   "off_BI": -0.026596399560286664,
+   "off_BJ": -0.04291793153154241,
+   "off_BK": 0.062063480373336866,
+   "seg_spread_BH": 0.017570933015372405,
+   "d_mean": 0.00171018158429214
+  },
+  "rho_b_vs_15axes_tr2024": {
+   "alpha": -0.7544018524775297,
+   "beta_skew": 0.3240937522387334,
+   "c_aa": -0.7600746727945147,
+   "c_S2": -0.7685459475936051,
+   "c_S1": -0.7733429234471773,
+   "c_T70": -0.7738573177833636,
+   "w_out": -0.7464958619575786,
+   "w_v6_inner": 0.3242114318229736,
+   "w_ebm": 0.14378842268943492,
+   "beta_ins": -0.3460440408157206,
+   "off_BI": -0.3384595139080614,
+   "off_BJ": -0.400016173492473,
+   "off_BK": 0.08552928488646978,
+   "seg_spread_BH": -0.021564373781600473,
+   "d_mean": -0.004234414406492501
+  },
+  "rho_c_vs_exp080_9axes": {
+   "v6_CAT_vs_NN": -0.09122934680250996,
+   "v6_CAT_vs_LEAF": 0.006332091685964297,
+   "v6_CAT_vs_LGB": -0.04344520176366514,
+   "q_beta": -0.04914217324281332,
+   "q_k": 0.037413375440731964,
+   "q_league_11": NaN,
+   "q_league_12": NaN,
+   "q_league_21": NaN,
+   "q_league_22": NaN
+  },
+  "rho_b_vs_exp080_9axes": {
+   "v6_CAT_vs_NN": -0.08284933478049497,
+   "v6_CAT_vs_LEAF": -0.20439030211869794,
+   "v6_CAT_vs_LGB": 0.0542086007408139,
+   "q_beta": -0.11911493732838808,
+   "q_k": 0.10117091075989909,
+   "q_league_11": NaN,
+   "q_league_12": NaN,
+   "q_league_21": NaN,
+   "q_league_22": NaN
+  },
+  "c_max_abs_rho_axis": "b_failtype",
+  "c_max_abs_rho": 0.6397783734774966,
+  "c_max_abs_rho_signed": -0.6397783734774966,
+  "note": "15축 δ 는 core078(tr2024 보정 프레임) · 9축은 exp_080 저장본. b 축과의 ρ 는 같은 프레임 δ 로 계산."
+ },
+ "stage2_honest_surface": {
+  "base_pts": 928.501461058684,
+  "base_alpha_free_pts": 933.1677492326774,
+  "alpha_free_a_star": 1.0774500331305774,
+  "alpha_free_headroom_pts": 4.666288173993394,
+  "🔴": "lg_mr·lg_wo 는 ≤2024 학습 Q 셀에서 나온다 — 2024 행에는 표본 내다. 정직면의 나머지 팔은 ≤2023 학습이므로 이 읽기는 위로 편향돼 있다. 상한으로만 읽을 것.",
+  "c_lg_wo": {
+   "raw_argmax_t": -0.006142939399853696,
+   "raw_gain_pts": 0.12450574932154268,
+   "sd_ratio_at_raw_argmax": 0.9998887329723813,
+   "sd_matched_gain_at_raw_argmax_pts": 0.13795872494392825,
+   "sd_matched_own_argmax_t": -0.006237885921039253,
+   "sd_matched_own_gain_pts": 0.13799069843446432,
+   "information_share": 1.108307842701272,
+   "alpha_free_gain_pts": 0.14494469994235715,
+   "alpha_free_a_star": 1.0776236598345712,
+   "gain_at_t_eq_0.05": -10.27518351033325,
+   "grid_raw_delta": {
+    "-0.300": -282.62389275423016,
+    "-0.200": -123.41644309477044,
+    "-0.100": -28.907987821547067,
+    "-0.050": -6.219239804117251,
+    "-0.020": -0.5089564544147152,
+    "+0.000": 0.0,
+    "+0.020": -2.1305544463001524,
+    "+0.050": -10.27518351033325,
+    "+0.100": -37.033744016989885,
+    "+0.200": -139.77733620142988,
+    "+0.300": -307.43048177279695
+   },
+   "grid_sd_matched_delta": {
+    "-0.300": -243.1330735042203,
+    "-0.200": -119.41962258243962,
+    "-0.100": -30.22919301491902,
+    "-0.050": -6.615320633329702,
+    "-0.020": -0.5333800517815916,
+    "+0.000": 0.0,
+    "+0.020": -2.298397668065718,
+    "+0.050": -10.969931675275461,
+    "+0.100": -38.54378620501427,
+    "+0.200": -133.39629777955338,
+    "+0.300": -259.3667600343741
+   }
+  },
+  "b_lg_mr": {
+   "raw_argmax_t": -0.2993696045546217,
+   "raw_gain_pts": 168.42241313652642,
+   "sd_ratio_at_raw_argmax": 1.377591580534469,
+   "sd_matched_gain_at_raw_argmax_pts": 170.03544146955153,
+   "sd_matched_own_argmax_t": -0.5999999214558481,
+   "sd_matched_own_gain_pts": 220.21840571115888,
+   "information_share": 1.3075362216348583,
+   "alpha_free_gain_pts": 191.84923842282547,
+   "alpha_free_a_star": 0.8602027743867764,
+   "gain_at_shipped_b_-0.05": 51.94414061199245,
+   "grid_raw_delta": {
+    "-0.300": 168.42168306291376,
+    "-0.200": 150.12860820027288,
+    "-0.100": 94.22851758532636,
+    "-0.050": 51.94414061199245,
+    "-0.020": 21.941194750840737,
+    "+0.000": 0.0,
+    "+0.020": -23.497190343979582,
+    "+0.050": -61.668342924559056,
+    "+0.100": -133.1143299737048,
+    "+0.200": -305.49623267011054,
+    "+0.300": -517.3428292644888
+   },
+   "grid_sd_matched_delta": {
+    "-0.300": 170.21623450578215,
+    "-0.200": 134.8593189753334,
+    "-0.100": 81.41066721992775,
+    "-0.050": 44.99735810588038,
+    "-0.020": 19.1505940120295,
+    "+0.000": 0.0,
+    "+0.020": -20.84447570114287,
+    "+0.050": -55.61013258558182,
+    "+0.100": -124.22521659491986,
+    "+0.200": -311.3828121455664,
+    "+0.300": -582.2125728773276
+   }
+  }
+ },
+ "stage3": {
+  "tr2024_cal": {
+   "L_b": -0.000183869622260887,
+   "G_bb": 0.004696242060001195,
+   "G_cc": 0.008178962417202283,
+   "G_bc": -0.003965097753605152,
+   "b_only_conditional_u_star": -0.039152501066105655,
+   "b_only_conditional_gain_pts": 2.881808141245827,
+   "joint_formula": "u* = G^-1 L 로 (b,c) 동시.  L_c 는 아직 없다 — c 프로브를 사서 g_c 를 재야 정해진다.",
+   "joint_gain_given_Lc": "gain = K·(Lb,Lc)ᵀ G⁻¹ (Lb,Lc);  G = [[4.696242e-03,-3.965098e-03],[-3.965098e-03,8.178962e-03]]",
+   "b_star_if_c_lands_at_u_c": "b* = (G_cc·L_b − G_bc·L_c)/(G_bb·G_cc − G_bc²)",
+   "G_det": 2.2688387115189775e-05,
+   "G_condition_2x2": 5.110754387736762,
+   "extra_gain_over_b_only_per_unit_Lc": "Δgain = K·(L_c − G_bc·L_b/G_bb)² / (G_cc − G_bc²/G_bb)",
+   "c_effective_G_after_orthogonalising_b": 0.004831179233377081
+  },
+  "cov": {
+   "L_b": -0.00020765923670948875,
+   "G_bb": 0.005648436584783349,
+   "G_cc": 0.00879272529525855,
+   "G_bc": -0.004723502480924034,
+   "b_only_conditional_u_star": -0.03676402020143309,
+   "b_only_conditional_gain_pts": 3.0561158932766945,
+   "joint_formula": "u* = G^-1 L 로 (b,c) 동시.  L_c 는 아직 없다 — c 프로브를 사서 g_c 를 재야 정해진다.",
+   "joint_gain_given_Lc": "gain = K·(Lb,Lc)ᵀ G⁻¹ (Lb,Lc);  G = [[5.648437e-03,-4.723502e-03],[-4.723502e-03,8.792725e-03]]",
+   "b_star_if_c_lands_at_u_c": "b* = (G_cc·L_b − G_bc·L_c)/(G_bb·G_cc − G_bc²)",
+   "G_det": 2.735367555039286e-05,
+   "G_condition_2x2": 5.44028608915416,
+   "extra_gain_over_b_only_per_unit_Lc": "Δgain = K·(L_c − G_bc·L_b/G_bb)² / (G_cc − G_bc²/G_bb)",
+   "c_effective_G_after_orthogonalising_b": 0.004842698530790363
+  },
+  "band": {
+   "L_b": -0.00016371922362251503,
+   "G_bb": 0.0038836516238325994,
+   "G_cc": 0.008005451331572043,
+   "G_bc": -0.0038021801435184632,
+   "b_only_conditional_u_star": -0.04215600148525886,
+   "b_only_conditional_gain_pts": 2.762833146000439,
+   "joint_formula": "u* = G^-1 L 로 (b,c) 동시.  L_c 는 아직 없다 — c 프로브를 사서 g_c 를 재야 정해진다.",
+   "joint_gain_given_Lc": "gain = K·(Lb,Lc)ᵀ G⁻¹ (Lb,Lc);  G = [[3.883652e-03,-3.802180e-03],[-3.802180e-03,8.005451e-03]]",
+   "b_star_if_c_lands_at_u_c": "b* = (G_cc·L_b − G_bc·L_c)/(G_bb·G_cc − G_bc²)",
+   "G_det": 1.6633810219606523e-05,
+   "G_condition_2x2": 6.340071669605457,
+   "extra_gain_over_b_only_per_unit_Lc": "Δgain = K·(L_c − G_bc·L_b/G_bb)² / (G_cc − G_bc²/G_bb)",
+   "c_effective_G_after_orthogonalising_b": 0.004283033554691338
+  },
+  "real5": {
+   "L_b": -0.00019454210359750554,
+   "G_bb": 0.005127707071364218,
+   "G_cc": 0.0016425976852778475,
+   "G_bc": -0.0025031945672673974,
+   "b_only_conditional_u_star": -0.037939394916673336,
+   "b_only_conditional_gain_pts": 2.954606016209376,
+   "joint_formula": "u* = G^-1 L 로 (b,c) 동시.  L_c 는 아직 없다 — c 프로브를 사서 g_c 를 재야 정해진다.",
+   "joint_gain_given_Lc": "gain = K·(Lb,Lc)ᵀ G⁻¹ (Lb,Lc);  G = [[5.127707e-03,-2.503195e-03],[-2.503195e-03,1.642598e-03]]",
+   "b_star_if_c_lands_at_u_c": "b* = (G_cc·L_b − G_bc·L_c)/(G_bb·G_cc − G_bc²)",
+   "G_det": 2.156776724608701e-06,
+   "G_condition_2x2": 19.200477847642446,
+   "extra_gain_over_b_only_per_unit_Lc": "Δgain = K·(L_c − G_bc·L_b/G_bb)² / (G_cc − G_bc²/G_bb)",
+   "c_effective_G_after_orthogonalising_b": 0.0004206123116223359
+  }
+ },
+ "stage3_🔴": "c 의 L 은 없다 — 착륙 해에 넣지 않는다.  진폭 설계까지만.",
+ "wall_sec": 14.525233268737793,
+ "runs": {
+  "bonly__band.csv": "043783f1b0466588976f15e21b5eab828daa0e08e296fb7906850957ac710149",
+  "bonly__cov.csv": "eefebfe6785023c09092cb8b5a6c8544f1c34002f8f6aa2b416489b1fe7393e1",
+  "bonly__real5.csv": "12d3334e38ed039d039a0e9b62c9354d3b5c78fb2e9c78ed9d83bdfcb9066a0e",
+  "boref__cov.csv": "7e9d2eb8a887f17cc75c08e3cd34d5eb996eed952785368d2f35ddd65b5478e8",
+  "ft_bonly__band.csv": "978fafbc2771424420ee05e65b1cf0d83d58f66df244e5ad2742b0d17e6fd691",
+  "ft_bonly__cov.csv": "f94a3aa1d0e5290670a6be784a8d41c82a2a13607482202bb653cbcaf61cd21d",
+  "ft_bonly__real5.csv": "c76c86069e74e97f2849e128f950fcf05f9d984595cfa19be6aaee917bfca003",
+  "ft_ident__cov.csv": "f94a3aa1d0e5290670a6be784a8d41c82a2a13607482202bb653cbcaf61cd21d",
+  "ft_matecal.csv": "9aee97eeb22ddc353d07dce557d62985069e95b3112fe600062b1033eebe5bf1",
+  "ident__cov.csv": "7e9d2eb8a887f17cc75c08e3cd34d5eb996eed952785368d2f35ddd65b5478e8",
+  "matecal_partner.csv": "cebf2e8b5a4480cf9ca0b6ad45dd77efc2054f33f6113e8f5c015b372ffa4823"
+ },
+ "prep": {
+  "G0_prep_exBO_matches_BO_zip": {
+   "n_members": 235,
+   "n_mismatch": 0,
+   "mismatch": {},
+   "PASS": true
+  },
+  "G0_prep_pkg_bonly_reconstructed": {
+   "n_files": 235,
+   "n_mismatch": 0,
+   "mismatch": {},
+   "PASS": true
+  },
+  "G0_prep_pkg_ident": {
+   "non_blend_files_identical_to_bonly": true,
+   "n_files": 235
+  },
+  "mate_cal": {
+   "shipped_anchor_sha256": "7b96e3de0baeac54bf8cb1727b8913a075efd487465adda1b762aef1f2d1b020",
+   "calibration_anchor_sha256": "0e4b586da41cd6e78c5e19d4dd656bc9df088413625945e2a88ae85d100e5eb7",
+   "expect_cal_anchor": "0e4b586da41cd6e78c5e19d4dd656bc9df088413625945e2a88ae85d100e5eb7",
+   "inner_w_v6": 0.6668397489,
+   "inner_w_ebm": -0.1,
+   "inner_beta_ins": 0.03,
+   "inner_d_adj": -0.019641085540766146,
+   "frame": "/home/<user>/SungjinPark/build_AC/work/tr2024",
+   "frame_test_sha256": "4db38113d5355546339c4391fbbf8b2e152a7c248ad9261caa1071f6bb81f5d0"
+  },
+  "shipped_constants": {
+   "b": -0.05,
+   "c": 0.0,
+   "mu_mr": -0.45376277509804325,
+   "mu_wo": -2.0056142032773767,
+   "d_adj_new": 0.028693042338963914,
+   "d_adj_BO": 0.02875748759679648,
+   "target_rate": 0.4847980356943589,
+   "alpha": 1.07911,
+   "beta_skew": -0.059151,
+   "beta_f": 0.0,
+   "w_v6_outer": 0.7
+  }
+ },
+ "S21_float_parser_per_frame": {
+  "tr2024_cal": {
+   "lg_mr": {
+    "n_rows_differ": 152137,
+    "share": 0.6001293849873968,
+    "max_abs_diff": 2.220446049250313e-16
+   },
+   "lg_wo": {
+    "n_rows_differ": 71145,
+    "share": 0.2806431380593041,
+    "max_abs_diff": 4.440892098500626e-16
+   },
+   "max_abs_dp_at_b_-0.05": 2.7755575615628915e-18,
+   "max_abs_pts_bound": 2.2221624475247813e-12
+  },
+  "cov": {
+   "lg_mr": {
+    "n_rows_differ": 128700,
+    "share": 0.5236198528005729,
+    "max_abs_diff": 2.220446049250313e-16
+   },
+   "lg_wo": {
+    "n_rows_differ": 69971,
+    "share": 0.28467913535593536,
+    "max_abs_diff": 4.440892098500626e-16
+   },
+   "max_abs_dp_at_b_-0.05": 2.7755575615628915e-18,
+   "max_abs_pts_bound": 2.2221624475247813e-12
+  },
+  "band": {
+   "lg_mr": {
+    "n_rows_differ": 149987,
+    "share": 0.6102266578243941,
+    "max_abs_diff": 2.220446049250313e-16
+   },
+   "lg_wo": {
+    "n_rows_differ": 69876,
+    "share": 0.28429262497508023,
+    "max_abs_diff": 4.440892098500626e-16
+   },
+   "max_abs_dp_at_b_-0.05": 2.7755575615628915e-18,
+   "max_abs_pts_bound": 2.2221624475247813e-12
+  },
+  "real5": {
+   "lg_mr": {
+    "n_rows_differ": 4,
+    "share": 0.8,
+    "max_abs_diff": 5.551115123125783e-17
+   },
+   "lg_wo": {
+    "n_rows_differ": 0,
+    "share": 0.0,
+    "max_abs_diff": 0.0
+   },
+   "max_abs_dp_at_b_-0.05": 6.938893903907229e-19,
+   "max_abs_pts_bound": 5.555406118811953e-13
+  }
+ },
+ "S21_verdict": "팀원 script.py:291 은 pd.read_csv 기본 파서로 failtype.csv 를 읽는다(쓸 때는 %.17g). round_trip 으로 다시 읽으면 lg_mr 이 tr2024 60.0% 행, lg_wo 가 28.1% 행에서 1 ulp 어긋난다. b=-0.05 에서 최종 예측에 주는 상한은 |Δp| ≤ 2.776e-18 (점수 상한 2.222e-12점) — 규칙 문제도 점수 문제도 아니다. 다만 **'바이트 동일'을 주장하는 재현 대조는 같은 파서를 태워야 성립한다**(S21). 이번 게이트는 양쪽 다 round_trip 으로 읽어 max|Δlogit| 8.9e-16 을 냈다.",
+ "honest_surface_calibration": {
+  "b_honest_gain_at_shipped_-0.05_pts": 51.94414061199245,
+  "b_LB_gain_at_same_point_pts": 2.6766924977,
+  "transfer_ratio_b": 0.051530210456153476,
+  "c_honest_raw_gain_pts": 0.12450574932154268,
+  "c_honest_sd_matched_gain_pts": 0.13799069843446432,
+  "c_implied_LB_gain_raw_pts": 0.006415807465540182,
+  "c_implied_LB_gain_sdm_pts": 0.007110689731319554,
+  "🔴": "정직면은 이 축 계열에 **오염돼 있다** — lg_mr·lg_wo 는 ≤2024 학습 Q 셀에서 나오는데 정직면 행이 바로 그 2024 행이다.  실패유형 셀은 라벨 정의에 직접 닿는 양이라 b 의 정직면 이득이 같은 점에서 **+51.94점**인데 실제 LB 는 **+2.6767점**이다 — **19.4배 부풀어 있다**.  따라서 c 의 정직면 원값·sd맞춤값은 그대로 읽으면 안 되고, 같은 면 위에서 LB 로 눈금이 잡힌 b 의 전이비로 환산해야 한다.  sd 맞춤은 이 오염을 **걷어내지 못한다**(척도가 아니라 정보 누출이다).",
+  "S25_S33_note": "c 의 sd 맞춤 이득 0.13799 은 원값 0.12451 보다 오히려 크다(정보몫 1.108) — 이 축의 이득은 척도가 아니다(sd비 0.99989).  alpha 통로와 겹치지 않는다는 뜻이며, 크기 자체가 작다는 결론은 그대로다."
+ },
+ "stage1_b_landing_table": {
+  "tr2024_cal": {
+   "b_now": -0.05,
+   "b_star": -0.0392870387694841,
+   "delta_b": 0.010712961230515905,
+   "remaining_pts": 0.21501825099984062,
+   "predicted_LB_at_vertex": 1118.8830972343999,
+   "K_G_bb_pts_at_u1": 1879.9488965281562
+  },
+  "cov": {
+   "b_now": -0.05,
+   "b_star": -0.036872986448192556,
+   "delta_b": 0.013127013551807447,
+   "remaining_pts": 0.3884815311322658,
+   "predicted_LB_at_vertex": 1119.0565605145323,
+   "K_G_bb_pts_at_u1": 2261.1211238694164
+  },
+  "band": {
+   "b_now": -0.05,
+   "b_star": -0.04225945829935676,
+   "delta_b": 0.007740541700643241,
+   "remaining_pts": 0.09292103318274902,
+   "predicted_LB_at_vertex": 1118.7610000165828,
+   "K_G_bb_pts_at_u1": 1554.6614700525083
+  },
+  "real5": {
+   "b_now": -0.05,
+   "b_star": -0.038092784691463544,
+   "delta_b": 0.011907215308536459,
+   "remaining_pts": 0.28985905302344817,
+   "predicted_LB_at_vertex": 1118.9579380364235,
+   "K_G_bb_pts_at_u1": 2052.668309547982
+  }
+ },
+ "stage1_primary_frame": "tr2024_cal — core078 의 K·Q 가 장부값(BA·BC·BH·BI·BJ·BK·BN 7건)을 그대로 재현하는 유일한 프레임이라 역사 눈금과 같은 자다.  cov·band 는 배포형 대역이지만 ins_* 가 축퇴해 있고(S11), real5 는 실제 대회 행이지만 n=5 다.",
+ "preregistered_verdict": {
+  "criterion_b_remaining_ge_0.5": {
+   "value_max_over_frames": 0.3917186255762375,
+   "value_primary_frame": 0.21501825099984062,
+   "threshold": 0.5,
+   "PASS": false
+  },
+  "criterion_c_new_direction_and_honest_ge_2.0": {
+   "max_abs_rho": 0.6397783734774966,
+   "rho_threshold": 0.5,
+   "rho_partner_axis": "b_failtype",
+   "sd_matched_honest_pts": 0.13799069843446432,
+   "honest_threshold": 2.0,
+   "PASS": false
+  },
+  "VERDICT": "C",
+  "S8": "문턱은 config 에 사전 등록된 값이며 결과를 보고 바꾸지 않았다."
+ },
+ "q_league_delta_NaN_note": "rho 표의 q_league_* 4축이 NaN 인 것은 그 δ 가 정확히 0 벡터이기 때문이다 — S32 (대역 프레임에서 리그 백오프가 한 행도 발동하지 않는다) 의 재확인이고 이번 실험의 결함이 아니다."
+}

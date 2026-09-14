@@ -1,0 +1,505 @@
+{
+  "exp_id": "exp_008",
+  "purpose": "CV<->LB anchor (organizers' RF baseline on our split)",
+  "seed": 42,
+  "n_jobs": 8,
+  "features": {
+    "n": 47,
+    "columns": [
+      "season",
+      "game_month",
+      "game_dayofweek",
+      "inning",
+      "top_bottom",
+      "game_type",
+      "balls_before",
+      "strikes_before",
+      "outs_before",
+      "run_top_before",
+      "run_bot_before",
+      "run_total_before",
+      "score_diff_home",
+      "score_diff_pitcher_team",
+      "runner_on_1b",
+      "runner_on_2b",
+      "runner_on_3b",
+      "num_runners_on",
+      "base_state",
+      "home_win_expectancy",
+      "away_win_expectancy",
+      "li",
+      "pitcher_id",
+      "batter_id",
+      "pitcher_hand",
+      "batter_hand",
+      "pitcher_team_id",
+      "batter_team_id",
+      "asof_pitcher_n",
+      "asof_pitcher_success_rate",
+      "asof_pitcher_reverse_rate",
+      "asof_pitcher_middle_rate",
+      "asof_pitcher_ball_rate",
+      "asof_pitcher_strike_rate",
+      "asof_pitcher_prev1_game_success_rate",
+      "asof_pitcher_prev3_game_success_rate",
+      "asof_pitcher_prev5_game_success_rate",
+      "asof_pitcher_prev1_game_middle_rate",
+      "asof_pitcher_prev3_game_middle_rate",
+      "asof_pitcher_prev5_game_middle_rate",
+      "asof_batter_n",
+      "asof_batter_success_rate",
+      "asof_batter_middle_rate",
+      "asof_pitcher_pitchmix_n",
+      "asof_pitcher_fastball_rate",
+      "asof_pitcher_breaking_rate",
+      "asof_pitcher_offspeed_rate"
+    ],
+    "categorical": [
+      "top_bottom",
+      "game_type",
+      "base_state"
+    ]
+  },
+  "rf_params": {
+    "n_estimators": 100,
+    "max_depth": 10,
+    "min_samples_leaf": 200,
+    "random_state": 42
+  },
+  "preprocessing": "ColumnTransformer[OrdinalEncoder(unknown=-1) on 3 cats, SimpleImputer(median) on 44 nums]",
+  "sha256": {
+    "train.csv": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+    "train.py": "27529ac0688483ca3750572b01f15b3c09deedcd14b25b8219c5f9089a99827f"
+  },
+  "versions": {
+    "python": "3.11.15",
+    "numpy": "1.26.4",
+    "pandas": "2.0.3",
+    "sklearn": "1.8.0"
+  },
+  "season_gametype_counts": {
+    "2019_F": 25786,
+    "2019_R": 211627,
+    "2020_F": 23213,
+    "2020_R": 220874,
+    "2021_F": 25861,
+    "2021_R": 221227,
+    "2022_F": 30448,
+    "2022_R": 217024,
+    "2023_F": 25686,
+    "2023_R": 219839,
+    "2024_F": 30010,
+    "2024_R": 223497
+  },
+  "R1": {
+    "spec": "organizers' RF baseline verbatim, no mask",
+    "fold_2022": {
+      "train_until": 2021,
+      "valid_year": 2022,
+      "n_train": 728588,
+      "train_time_min": 0.59,
+      "inference_time_sec": 0.63,
+      "valid_all": {
+        "n": 247472,
+        "brier": 0.243987,
+        "bss": 0.020775,
+        "score": 2077.49,
+        "base_rate": 0.52892,
+        "pred_mean": 0.530316,
+        "auc": 0.57457,
+        "logloss": 0.680843
+      },
+      "valid_R": {
+        "n": 217024,
+        "brier": 0.248951,
+        "bss": 0.004143,
+        "score": 414.301,
+        "base_rate": 0.503691,
+        "pred_mean": 0.511237,
+        "auc": 0.538918,
+        "logloss": 0.691049
+      },
+      "valid_F": {
+        "n": 30448,
+        "brier": 0.20861,
+        "bss": -0.010589,
+        "score": 0.0,
+        "base_rate": 0.708749,
+        "pred_mean": 0.666305,
+        "auc": 0.514542,
+        "logloss": 0.608099
+      },
+      "cold_start_R": {
+        "n": 33098,
+        "brier": 0.248615,
+        "bss": 0.004505,
+        "score": 450.512,
+        "base_rate": 0.516134,
+        "pred_mean": 0.517213,
+        "auc": 0.539179,
+        "logloss": 0.690373
+      },
+      "seen_R": {
+        "n": 183926,
+        "brier": 0.249011,
+        "bss": 0.003947,
+        "score": 394.696,
+        "base_rate": 0.501452,
+        "pred_mean": 0.510161,
+        "auc": 0.53831,
+        "logloss": 0.691171
+      }
+    },
+    "fold_2023": {
+      "train_until": 2022,
+      "valid_year": 2023,
+      "n_train": 976060,
+      "train_time_min": 0.81,
+      "inference_time_sec": 0.67,
+      "valid_all": {
+        "n": 245525,
+        "brier": 0.251651,
+        "bss": -0.006605,
+        "score": 0.0,
+        "base_rate": 0.499957,
+        "pred_mean": 0.520262,
+        "auc": 0.529158,
+        "logloss": 0.696709
+      },
+      "valid_R": {
+        "n": 219839,
+        "brier": 0.248582,
+        "bss": 0.005633,
+        "score": 563.309,
+        "base_rate": 0.503118,
+        "pred_mean": 0.505998,
+        "auc": 0.543186,
+        "logloss": 0.690304
+      },
+      "valid_F": {
+        "n": 25686,
+        "brier": 0.27792,
+        "bss": -0.114956,
+        "score": 0.0,
+        "base_rate": 0.472904,
+        "pred_mean": 0.64234,
+        "auc": 0.516524,
+        "logloss": 0.751531
+      },
+      "cold_start_R": {
+        "n": 30765,
+        "brier": 0.249233,
+        "bss": 0.00299,
+        "score": 298.958,
+        "base_rate": 0.504437,
+        "pred_mean": 0.502286,
+        "auc": 0.530518,
+        "logloss": 0.69161
+      },
+      "seen_R": {
+        "n": 189074,
+        "brier": 0.248476,
+        "bss": 0.006062,
+        "score": 606.19,
+        "base_rate": 0.502904,
+        "pred_mean": 0.506602,
+        "auc": 0.545156,
+        "logloss": 0.690092
+      }
+    },
+    "fold_2024": {
+      "train_until": 2023,
+      "valid_year": 2024,
+      "n_train": 1221585,
+      "train_time_min": 1.05,
+      "inference_time_sec": 0.66,
+      "valid_all": {
+        "n": 253507,
+        "brier": 0.248769,
+        "bss": 0.004156,
+        "score": 415.574,
+        "base_rate": 0.486105,
+        "pred_mean": 0.501199,
+        "auc": 0.539456,
+        "logloss": 0.690679
+      },
+      "valid_R": {
+        "n": 223497,
+        "brier": 0.248487,
+        "bss": 0.005632,
+        "score": 563.186,
+        "base_rate": 0.489707,
+        "pred_mean": 0.499729,
+        "auc": 0.54342,
+        "logloss": 0.690112
+      },
+      "valid_F": {
+        "n": 30010,
+        "brier": 0.25087,
+        "bss": -0.010179,
+        "score": 0.0,
+        "base_rate": 0.45928,
+        "pred_mean": 0.512149,
+        "auc": 0.521691,
+        "logloss": 0.694899
+      },
+      "cold_start_R": {
+        "n": 44033,
+        "brier": 0.248158,
+        "bss": 0.007293,
+        "score": 729.309,
+        "base_rate": 0.495696,
+        "pred_mean": 0.503111,
+        "auc": 0.551697,
+        "logloss": 0.689455
+      },
+      "seen_R": {
+        "n": 179464,
+        "brier": 0.248567,
+        "bss": 0.00518,
+        "score": 518.044,
+        "base_rate": 0.488237,
+        "pred_mean": 0.498899,
+        "auc": 0.541302,
+        "logloss": 0.690273
+      }
+    }
+  },
+  "R2": {
+    "spec": "same RF + exp_004 mask (drop season<=2022 & game_type=='F' from training)",
+    "fold_2023": {
+      "train_until": 2022,
+      "valid_year": 2023,
+      "n_train": 870752,
+      "train_time_min": 0.71,
+      "inference_time_sec": 0.69,
+      "valid_all": {
+        "n": 245525,
+        "brier": 0.248713,
+        "bss": 0.005147,
+        "score": 514.712,
+        "base_rate": 0.499957,
+        "pred_mean": 0.502859,
+        "auc": 0.540356,
+        "logloss": 0.690566
+      },
+      "valid_R": {
+        "n": 219839,
+        "brier": 0.248564,
+        "bss": 0.005707,
+        "score": 570.705,
+        "base_rate": 0.503118,
+        "pred_mean": 0.502989,
+        "auc": 0.542805,
+        "logloss": 0.690266
+      },
+      "valid_F": {
+        "n": 25686,
+        "brier": 0.249994,
+        "bss": -0.002921,
+        "score": 0.0,
+        "base_rate": 0.472904,
+        "pred_mean": 0.501749,
+        "auc": 0.517957,
+        "logloss": 0.693136
+      },
+      "cold_start_R": {
+        "n": 33398,
+        "brier": 0.249191,
+        "bss": 0.003225,
+        "score": 322.455,
+        "base_rate": 0.501737,
+        "pred_mean": 0.499953,
+        "auc": 0.531434,
+        "logloss": 0.691526
+      },
+      "seen_R": {
+        "n": 186441,
+        "brier": 0.248451,
+        "bss": 0.00615,
+        "score": 615.016,
+        "base_rate": 0.503366,
+        "pred_mean": 0.503533,
+        "auc": 0.544601,
+        "logloss": 0.69004
+      }
+    },
+    "fold_2024": {
+      "train_until": 2023,
+      "valid_year": 2024,
+      "n_train": 1116277,
+      "train_time_min": 0.93,
+      "inference_time_sec": 0.63,
+      "valid_all": {
+        "n": 253507,
+        "brier": 0.24843,
+        "bss": 0.005511,
+        "score": 551.092,
+        "base_rate": 0.486105,
+        "pred_mean": 0.496479,
+        "auc": 0.542807,
+        "logloss": 0.689999
+      },
+      "valid_R": {
+        "n": 223497,
+        "brier": 0.248455,
+        "bss": 0.005758,
+        "score": 575.816,
+        "base_rate": 0.489707,
+        "pred_mean": 0.49904,
+        "auc": 0.543655,
+        "logloss": 0.690048
+      },
+      "valid_F": {
+        "n": 30010,
+        "brier": 0.248245,
+        "bss": 0.00039,
+        "score": 38.97,
+        "base_rate": 0.45928,
+        "pred_mean": 0.477402,
+        "auc": 0.524146,
+        "logloss": 0.68963
+      },
+      "cold_start_R": {
+        "n": 44672,
+        "brier": 0.248242,
+        "bss": 0.006935,
+        "score": 693.451,
+        "base_rate": 0.495008,
+        "pred_mean": 0.502254,
+        "auc": 0.550707,
+        "logloss": 0.689622
+      },
+      "seen_R": {
+        "n": 178825,
+        "brier": 0.248508,
+        "bss": 0.005429,
+        "score": 542.925,
+        "base_rate": 0.488382,
+        "pred_mean": 0.498237,
+        "auc": 0.541919,
+        "logloss": 0.690155
+      }
+    }
+  },
+  "references": {
+    "exp_001_LGBM_valid_R_brier": 0.249337,
+    "exp_001_LGBM_valid_R_base_rate": 0.489707,
+    "exp_007_V1_postcalib_valid_R_brier": 0.249061,
+    "exp_007_V1_precalib_valid_R_brier": 0.249288,
+    "exp_001_LGBM_valid_all_brier": 0.24945,
+    "exp_001_LGBM_valid_all_base_rate": 0.486105,
+    "exp_007_V1_precalib_valid_all_brier": 0.249303
+  },
+  "anchor": {
+    "rf_lb_score_measured": 549.51193,
+    "rf_local_score_valid_all": 415.574,
+    "rf_local_score_valid_R": 563.186,
+    "factor_lb_over_local_all": 1.3223,
+    "factor_lb_over_local_R": 0.9757,
+    "exp_001_LGBM_local_score_valid_R": 222.916,
+    "exp_001_LGBM_lb_expected_via_R_factor": 217.5,
+    "exp_007_V1_postcalib_local_score_valid_R": 333.363,
+    "exp_007_V1_postcalib_lb_expected_via_R_factor": 325.3,
+    "exp_007_V1_precalib_local_score_valid_R": 242.524,
+    "exp_007_V1_precalib_lb_expected_via_R_factor": 236.6,
+    "targets": {
+      "LB_549.512": {
+        "local_valid_R_bss_needed": 0.00563,
+        "local_valid_R_brier_needed": 0.248487,
+        "local_valid_all_bss_needed": 0.00416,
+        "local_valid_all_brier_needed": 0.248769
+      },
+      "LB_930": {
+        "local_valid_R_bss_needed": 0.00953,
+        "local_valid_R_brier_needed": 0.247512,
+        "local_valid_all_bss_needed": 0.00703,
+        "local_valid_all_brier_needed": 0.24805
+      },
+      "LB_989": {
+        "local_valid_R_bss_needed": 0.01014,
+        "local_valid_R_brier_needed": 0.247361,
+        "local_valid_all_bss_needed": 0.00748,
+        "local_valid_all_brier_needed": 0.247939
+      }
+    },
+    "rf_minus_exp007V1_valid_R_brier": -0.000574,
+    "gap_top989_over_ours_expected": 3.04,
+    "gap_top989_over_rf": 1.8,
+    "note": "LB score == 100000 * BSS by definition, so the 'factor' is purely the split shift (<=2023->2024 valid vs <=2024->2025 test), not a unit change. valid_R gauge factor ~0.98, valid_all gauge factor ~1.32: the two bracket the true transfer. Ordering between models on identical valid rows is gauge-independent."
+  },
+  "train_time_min": 4.36,
+  "fold_2022": {
+    "run": "R1 (organizers' RF verbatim)",
+    "brier": 0.248951,
+    "bss": 0.004143,
+    "auc": 0.538918,
+    "score": 414.301,
+    "brier_all": 0.243987,
+    "bss_all": 0.020775,
+    "score_all": 2077.49,
+    "n_valid_R": 217024,
+    "n_valid_all": 247472
+  },
+  "fold_2023": {
+    "run": "R1 (organizers' RF verbatim)",
+    "brier": 0.248582,
+    "bss": 0.005633,
+    "auc": 0.543186,
+    "score": 563.309,
+    "brier_all": 0.251651,
+    "bss_all": -0.006605,
+    "score_all": 0.0,
+    "n_valid_R": 219839,
+    "n_valid_all": 245525
+  },
+  "fold_2024": {
+    "run": "R1 (organizers' RF verbatim)",
+    "brier": 0.248487,
+    "bss": 0.005632,
+    "auc": 0.54342,
+    "score": 563.186,
+    "brier_all": 0.248769,
+    "bss_all": 0.004156,
+    "score_all": 415.574,
+    "n_valid_R": 223497,
+    "n_valid_all": 253507
+  },
+  "inference_time_sec": 3.28,
+  "mask_effect_rf": {
+    "fold_2024_valid_R_delta": -3.2e-05,
+    "fold_2024_valid_all_delta": -0.000339,
+    "fold_2023_valid_R_delta": -1.8e-05,
+    "fold_2023_valid_all_delta": -0.002938,
+    "lgbm_reference_exp_004_valid_R_delta": -8.8e-05
+  },
+  "oracle_offset_probe": {
+    "source": "src/calib_probe.py (offset fitted ON valid -> ORACLE upper bound, not usable)",
+    "R1_valid_R": {
+      "offset": -0.0403,
+      "brier": 0.248386,
+      "gain": -0.000101
+    },
+    "R1_valid_all": {
+      "offset": -0.0607,
+      "brier": 0.24854,
+      "gain": -0.000228
+    },
+    "R2_valid_R": {
+      "offset": -0.0376,
+      "brier": 0.248368,
+      "gain": -8.7e-05
+    },
+    "R2_valid_all": {
+      "offset": -0.0417,
+      "brier": 0.248322,
+      "gain": -0.000108
+    },
+    "corr_R1_R2_preds": 0.9072,
+    "R1_pred_std": 0.03244,
+    "R1_pred_range": [
+      0.4082,
+      0.619
+    ]
+  }
+}

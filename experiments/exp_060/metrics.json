@@ -1,0 +1,85 @@
+{
+  "exp_id": "exp_060",
+  "fold_2024": {
+    "brier": 0.24771585956495176,
+    "bss": 837.06272,
+    "auc": 0.5517453067661,
+    "logloss": 0.6885608175756571,
+    "valid_R": {"n": 223497, "brier": 0.2478033716296468},
+    "valid_F": {"n": 30010, "brier": 0.2470641206804748},
+    "note": "headline = arm c15 (OneCycle 15에폭 사이클, best epoch 5). full15(사이클 완주) arm과 best state 비트 동일(npz sha 일치). 환산 = 100000*(1-Brier/0.2498069)"
+  },
+  "arms": {
+    "b60": {
+      "desc": "OneCycle total 60에폭 예산 + patience 5 — 웜업 중 ep9 조기 종료(사이클 미완주)",
+      "best_epoch": 4, "epochs_run": 9,
+      "valid_brier": 0.24771985540149014, "valid_score": 835.46315
+    },
+    "c15": {
+      "desc": "OneCycle total 15에폭 예산 + patience 5 — ep10 조기 종료. 변인: total_steps 60→15에폭",
+      "best_epoch": 5, "epochs_run": 10,
+      "valid_brier": 0.24771585956495176, "valid_score": 837.06272
+    },
+    "full15": {
+      "desc": "c15와 동일하되 patience 무효(사이클 15에폭 완주). 변인: patience 5→99. 어닐링 구간(ep11~15) valid 0.24779→0.24805로 악화 = 과적합, best 불변 ep5",
+      "best_epoch": 5, "epochs_run": 15,
+      "valid_brier": 0.24771585956495176, "valid_score": 837.06272
+    }
+  },
+  "train_time_min": 0.84,
+  "inference_time_sec": 2.35,
+  "gpu_walltime_measured": {
+    "epoch_train_s": 3.8, "epoch_eval_s": 0.02,
+    "steps_per_epoch": 272, "batch": 4096, "n_train_rows": 1116277,
+    "fit_15epoch_full_min": 0.84, "gpu": "NVIDIA RTX A5000 (GPU 0)",
+    "pipeline_wall_min": {
+      "stage0_tm_map": 0.09, "stage1_v6_year_units_P3": 3.5,
+      "stage1_v6_per_unit_min": {"2019": 0.13, "2020": 0.75, "2021": 1.24, "2022": 1.54, "2023": 2.08, "2024": 2.24},
+      "stage1_inssp": 0.26, "stage2_assemble": 0.31,
+      "stage3_train_b60": 0.78, "stage4_convert_verify": 0.5,
+      "driver_total_approx": 5.3, "extra_arms_c15_full15": 4.0
+    }
+  },
+  "numpy_reproduction": {
+    "max_abs_diff": 1.1920928955078125e-07,
+    "mean_abs_diff": 1.0335536207516987e-08,
+    "numpy_brier": 0.24771585948447253,
+    "torch_brier": 0.24771585956495176,
+    "numpy_inference_sec_253507rows": 2.35
+  },
+  "model": {
+    "features": "features_sp.txt 99열 = dense 95 + 범주 4(base_state, game_type, pitcher_team_id, batter_team_id) + 별도 범주 cnt_state(balls*3+strikes)",
+    "cats": ["base_state", "game_type", "pitcher_team_id", "batter_team_id", "cnt_state"],
+    "n_levels": [8, 2, 13, 13, 12], "edim": 6, "input_width": 125,
+    "arch": "125-256-128-64-1, BN@1,5, ReLU, Dropout 0.30@3,7 (출하 nn_infer.py 인덱스 규약 호환)",
+    "n_params": 74535,
+    "player_id_embedding": "제거 (팀원 요청 3-1)",
+    "hyperparams": {"optimizer": "AdamW", "weight_decay": 0.0001, "scheduler": "OneCycleLR",
+                    "max_lr": 0.003, "pct_start": 0.3, "div_factor": 25.0, "final_div_factor": 10000.0,
+                    "batch": 4096, "drop_last": true, "loss": "BCEWithLogits", "seed": 42,
+                    "deterministic": "torch.use_deterministic_algorithms(True, warn_only) + CUBLAS_WORKSPACE_CONFIG=:4096:8"}
+  },
+  "data": {
+    "split": "A — train season<=2023 (mask: season<=2022 & game_type=='F' 제외) 1,116,277행 -> valid 2024 전체 253,507행",
+    "extra22": "sp_def README §2 연도별 루프 그대로 (hist=season<Y). deploy_splits.npz/anchor.npz(배포용) 미사용. ins NaN 0, sp 2019 NaN 237,413 -> 0.0 채움",
+    "v6_44cols_reconstruction": "train.csv에 없는 v6 파생 44열(p6/sit/idea/i3/rt/r2/cg)을 연도별 as-of로 재구축: build_tables/build_pitch_model/build_anom_table/apply_* 전부 출하본 pipeline.py(sha a3181a10) 그대로, hist=season<Y. 구종모델 라벨: tagged_pitch_type 무모호 매핑만(1,722,459/1,793,078행 유지), 투수 매핑: exp_052 ref_exp002 pitcher_id_map 685명",
+    "normalization": "mu/sd 학습 분할 nanmean/nanstd(float32), 표준화 후 nan_to_num(0) — 출하 predict_nn과 동일 산술",
+    "provenance_sha256": {
+      "train_csv": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+      "features_sp": "783c650c6dd78cdcd641d0f18e35469ced247544b5d1ebf8d138171e04498924",
+      "pipeline_py": "a3181a10a1c621524460f14bc06b3c7f188fe23955814bb5e5b890e0df3016c9"
+    }
+  },
+  "server_paths": {
+    "workdir": "~/SungjinPark/exp060_nn/",
+    "frame_cache": "~/SungjinPark/exp060_nn/cache/frame99.parquet (1,475,092 x 102 — 본판 4시드 재사용용)",
+    "models": "~/SungjinPark/exp060_nn/out/nn99_a42*.pt/.npz"
+  },
+  "caveats": [
+    "1시드(42) 파일럿 — 채택 판정 아님",
+    "77열 기반 44열은 러너의 연도별 as-of 재구축 — 팀원 학습 행렬과 동일하지 않다. 팀원 예비치 842.98과의 차 -5.92점은 행렬+아키텍처가 함께 다른 '이 조합의 차'",
+    "아키텍처는 출하 numpy 추론기 호환 256-128-64 고정(config) — 팀원 요청 3-2의 용량/구조 스윕은 본판 영역",
+    "분할 B(2020~22 -> 2023R) 미측정(파일럿 범위 밖)",
+    "valid unknown-category cells 584 (기존 LUT 미지=0 규약대로 처리)"
+  ]
+}

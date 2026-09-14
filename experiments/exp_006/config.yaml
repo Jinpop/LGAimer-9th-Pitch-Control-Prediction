@@ -1,0 +1,27 @@
+# 실험 스펙 — 지휘자 작성 2026-08-05 (캠페인 2)
+exp_id: exp_006
+date: "2026-08-05"
+hypothesis: "early stopping 없이 iter를 고정하는 정책 중 'fold_2023 best_iter를 행수 비율로 스케일'이 ES 대비 손실 최소다 (제출 파이프라인 확정용 — 감사 지적 해소)"
+base_exp: "exp_001"          # 변경 변수 1개: iter 결정 방식 (모델·데이터·피처 불변)
+
+task: policy_experiment      # 목적 = 최종 제출 시 iter 고정 정책 결정
+method:
+  candidates:
+    - "P0 (참조): exp_001 그대로 — fold_2024 valid로 ES (낙관 기준선)"
+    - "P1: fold_2023의 best_iter(5)를 그대로 사용해 train≤2023 재학습 (valid 2024 미참조)"
+    - "P2: fold_2023 best_iter × (train≤2023 행수 / train≤2022 행수) 스케일"
+    - "P3: 안전 마진 고정 iter (P1·P2와 비교용, 예: 100/200/400 그리드)"
+  notes: >
+    각 정책을 "valid 연도를 보지 않고 iter를 정한다"는 본번 제약 하에 fold_2024로
+    평가. exp_001과 동일 시드·파라미터. ⚠️ fold_2023 best_iter=5는 라벨 단절
+    연도의 산물일 수 있음(exp_004 결과 참고 언급) — P3 그리드가 이 왜곡의 보험.
+    결론에는 "최종 제출 시 전체 데이터(≤2024) 학습에 적용할 정책 1개"를 명시적으로
+    권고하라 (zip전 체크리스트의 'iter 고정 정책 config 명기' 항목의 근거가 됨).
+
+validation:
+  primary_metric: brier       # fold_2024 valid-R Brier, 정책별 vs P0
+  report_also: ["정책별 iter 값", "P0 대비 delta", "권고 정책과 근거"]
+
+runtime:
+  where: a5000
+  expected_min: 20

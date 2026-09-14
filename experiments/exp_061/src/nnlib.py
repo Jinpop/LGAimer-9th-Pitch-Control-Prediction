@@ -1,0 +1,274 @@
+"""exp_061 공통 — 99열 NN 학습 유닛. exp_060 src/train_nn.py 승계·개조.
+
+승계(비트 동일 의도): 피처 99열·범주 5개(edim 6)·전처리 산술(float32 표준화 후
+nan_to_num 0)·AdamW+OneCycle·BCEWithLogits·batch 4096 drop_last·결정론 설정.
+개조: ① 폭/dropout/max_lr/seed/epochs 를 인자로 ② 분할(train/valid 마스크)을 인자로
+③ 한 프로세스 안에서 split 텐서를 재사용해 여러 fit 을 돌린다.
+
+층 수는 4층 고정 — 출하 mate/nn_infer.py predict_nn 이 인덱스를 하드코딩한다
+(lin0 -> bn1 -> relu -> drop3 -> lin4 -> bn5 -> relu -> drop7 -> lin8 -> relu -> lin10).
+"""
+import json
+import os
+import random
+import time
+
+os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
+
+import numpy as np
+import pandas as pd
+import torch
+import torch.nn as nn
+
+EXP60 = os.path.expanduser("~/SungjinPark/exp060_nn")
+SPD = os.path.expanduser("~/SungjinPark/sp_def_recv")
+B = os.path.expanduser("~/SungjinPark/exp061_nn")
+OUT = f"{B}/out"
+BATCH = 4096
+WD = 1e-4
+PCT_START = 0.3
+EDIM = 6
+REF = 0.2498069
+CATS = ["base_state", "game_type", "pitcher_team_id", "batter_team_id",
+        "cnt_state"]
+
+
+def conv(brier):
+    """LB 환산 점수 (CLAUDE.md 규약). 6자리 Brier 환산은 +-0.20 불확실."""
+    return 100000.0 * (1.0 - brier / REF)
+
+
+def lg(p, eps=1e-12):
+    p = np.clip(p, eps, 1.0 - eps)
+    return np.log(p / (1.0 - p))
+
+
+def load_frame():
+    """exp_060 캐시 재사용. 읽기 전용 — exp060_nn 을 절대 수정하지 않는다."""
+    prov = json.load(open(f"{EXP60}/cache/provenance.json"))
+    df = pd.read_parquet(f"{EXP60}/cache/frame99.parquet")
+    assert len(df) == 1475092 == prov["n_rows"], (len(df), prov["n_rows"])
+    FSP = [l.strip() for l in open(f"{SPD}/features_sp.txt", encoding="utf-8")
+           if l.strip()]
+    assert len(FSP) == 99
+    DENSE = [c for c in FSP if c not in CATS]
+    assert len(DENSE) == 95 and all(c in df.columns for c in CATS)
+    SP6 = [c for c in DENSE if c.startswith("sp_")]
+    df[SP6] = df[SP6].fillna(0.0)      # exp_060 과 동일: 2019 sp_* NaN -> 0.0
+    return df, DENSE, prov
+
+
+class Split:
+    """한 분할의 GPU 텐서·표준화 상수·범주 LUT. 여러 fit 이 공유한다."""
+
+    def __init__(self, df, DENSE, train_mask, valid_mask, name, dev="cuda"):
+        self.name = name
+        self.DENSE = DENSE
+        self.dev = dev
+        n_tr = int(train_mask.sum())
+        n_va = int(valid_mask.sum())
+        self.n_train, self.n_valid = n_tr, n_va
+
+        levels = {}
+        for c in CATS:
+            vals = df.loc[train_mask, c].unique()
+            try:
+                lv = sorted(vals, key=lambda x: int(x))
+            except (ValueError, TypeError):
+                lv = sorted(map(str, vals))
+            levels[c] = [str(v) for v in lv]
+        self.levels = levels
+        codes = np.zeros((len(df), len(CATS)), dtype=np.int64)
+        for i, c in enumerate(CATS):
+            lut = {v: j + 1 for j, v in enumerate(levels[c])}
+            codes[:, i] = (df[c].astype(str).map(lut).fillna(0)
+                           .astype(np.int64).values)
+        self.unknown_valid = int((codes[valid_mask] == 0).sum())
+
+        X = df[DENSE].astype("float32").values
+        mu = np.nanmean(X[train_mask], axis=0).astype(np.float32)
+        sd = np.nanstd(X[train_mask], axis=0).astype(np.float32)
+        sd[sd < 1e-6] = 1.0
+        X = (X - mu) / sd
+        X = np.nan_to_num(X, nan=0.0, posinf=0.0, neginf=0.0).astype(np.float32)
+        self.mu, self.sd = mu, sd
+        y = df["control_success"].to_numpy(np.float32)
+
+        self.Xt = torch.from_numpy(X[train_mask]).to(dev)
+        self.Ct = torch.from_numpy(codes[train_mask]).to(dev)
+        self.yt = torch.from_numpy(y[train_mask]).to(dev)
+        self.Xv = torch.from_numpy(X[valid_mask]).to(dev)
+        self.Cv = torch.from_numpy(codes[valid_mask]).to(dev)
+        self.yv64 = y[valid_mask].astype(np.float64)
+        self.nlev = [len(levels[c]) for c in CATS]
+        self.steps_per_epoch = n_tr // BATCH
+        del X, codes
+        print(f"[split {name}] train {n_tr} valid {n_va} "
+              f"unknown_valid_cells {self.unknown_valid} "
+              f"steps/epoch {self.steps_per_epoch}", flush=True)
+
+    def free(self):
+        for a in ("Xt", "Ct", "yt", "Xv", "Cv"):
+            setattr(self, a, None)
+        torch.cuda.empty_cache()
+
+
+class Net(nn.Module):
+    def __init__(self, nlev, din, widths, dropout, ed=EDIM):
+        super().__init__()
+        h1, h2, h3 = widths
+        self.embs = nn.ModuleList([nn.Embedding(k + 1, ed) for k in nlev])
+        self.mlp = nn.Sequential(
+            nn.Linear(din + len(nlev) * ed, h1), nn.BatchNorm1d(h1),
+            nn.ReLU(), nn.Dropout(dropout),
+            nn.Linear(h1, h2), nn.BatchNorm1d(h2), nn.ReLU(), nn.Dropout(dropout),
+            nn.Linear(h2, h3), nn.ReLU(), nn.Linear(h3, 1))
+
+    def forward(self, xc, xd):
+        e = [emb(xc[:, i]) for i, emb in enumerate(self.embs)]
+        return self.mlp(torch.cat(e + [xd], dim=1)).squeeze(1)
+
+
+def _seed_all(seed):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+
+
+def fit(sp, widths, dropout, max_lr, seed, epochs, sched_epochs=None,
+        take="best", tag=""):
+    """한 번의 학습. sched_epochs 는 OneCycle total_steps 산정용 에폭 수
+    (기본 = epochs). take='best' 면 valid Brier 최소 상태, 'final' 이면 마지막 상태.
+    반환: dict(요약) + p_valid(np.float64) + state(cpu)."""
+    _seed_all(seed)
+    torch.use_deterministic_algorithms(True, warn_only=True)
+    torch.backends.cudnn.benchmark = False
+    t0 = time.time()
+    sched_epochs = sched_epochs or epochs
+    model = Net(sp.nlev, len(sp.DENSE), widths, dropout).to(sp.dev)
+    n_params = sum(p.numel() for p in model.parameters())
+    opt = torch.optim.AdamW(model.parameters(), lr=max_lr, weight_decay=WD)
+    sched = torch.optim.lr_scheduler.OneCycleLR(
+        opt, max_lr=max_lr, total_steps=sched_epochs * sp.steps_per_epoch,
+        pct_start=PCT_START, div_factor=25.0, final_div_factor=1e4)
+    lossf = nn.BCEWithLogitsLoss()
+    gcpu = torch.Generator().manual_seed(seed)
+
+    @torch.no_grad()
+    def eval_valid():
+        model.eval()
+        ps = []
+        for s in range(0, len(sp.Xv), 65536):
+            z = model(sp.Cv[s:s + 65536], sp.Xv[s:s + 65536])
+            ps.append(torch.sigmoid(z).double().cpu().numpy())
+        p = np.concatenate(ps)
+        return p, float(np.mean((p - sp.yv64) ** 2))
+
+    best = {"brier": np.inf, "epoch": -1, "state": None}
+    curve = []
+    for ep in range(1, epochs + 1):
+        te0 = time.time()
+        model.train()
+        perm = torch.randperm(sp.n_train, generator=gcpu)
+        ep_loss, nb = 0.0, 0
+        for s in range(0, sp.steps_per_epoch * BATCH, BATCH):
+            idx = perm[s:s + BATCH].to(sp.dev)
+            opt.zero_grad(set_to_none=True)
+            loss = lossf(model(sp.Ct[idx], sp.Xt[idx]), sp.yt[idx])
+            loss.backward()
+            opt.step()
+            sched.step()
+            ep_loss += loss.item()
+            nb += 1
+        t_train = time.time() - te0
+        _, brier = eval_valid()
+        curve.append({"epoch": ep, "train_logloss": ep_loss / nb,
+                      "valid_brier": brier, "t_train_s": round(t_train, 2),
+                      "lr": sched.get_last_lr()[0]})
+        if brier < best["brier"]:
+            best = {"brier": brier, "epoch": ep,
+                    "state": {k: v.detach().cpu().clone()
+                              for k, v in model.state_dict().items()}}
+    if take == "final":
+        state = {k: v.detach().cpu().clone()
+                 for k, v in model.state_dict().items()}
+        sel_epoch = epochs
+    else:
+        state = best["state"]
+        model.load_state_dict(state)
+        sel_epoch = best["epoch"]
+    p_valid, brier = eval_valid()
+    res = {"tag": tag, "split": sp.name, "widths": list(widths),
+           "dropout": dropout, "max_lr": max_lr, "seed": seed,
+           "epochs_run": epochs, "sched_epochs": sched_epochs, "take": take,
+           "n_params": n_params, "sel_epoch": sel_epoch,
+           "best_epoch": best["epoch"], "best_brier": best["brier"],
+           "valid_brier": brier, "valid_score": conv(brier),
+           "n_train": sp.n_train, "n_valid": sp.n_valid,
+           "fit_wall_min": (time.time() - t0) / 60.0}
+    print(f"[fit {tag}] w{widths} do{dropout} lr{max_lr} s{seed} "
+          f"ep{epochs}/{sched_epochs} take={take} params {n_params} "
+          f"sel_ep {sel_epoch} brier {brier:.10f} score {conv(brier):.5f} "
+          f"({res['fit_wall_min']:.2f}min)", flush=True)
+    os.makedirs(f"{OUT}/curves", exist_ok=True)
+    json.dump(curve, open(f"{OUT}/curves/curve_{tag}.json", "w"), indent=1)
+    return res, p_valid, state
+
+
+def to_npz(state, nlev_len, path):
+    """torch state -> 출하 npz 포맷 (mate/nn_infer.py 키 규약)."""
+    npz = {}
+    for i in range(nlev_len):
+        npz[f"emb{i}"] = state[f"embs.{i}.weight"].numpy()
+    for i in (0, 4, 8, 10):
+        npz[f"mlp_{i}_weight"] = state[f"mlp.{i}.weight"].numpy()
+        npz[f"mlp_{i}_bias"] = state[f"mlp.{i}.bias"].numpy()
+    for i in (1, 5):
+        npz[f"mlp_{i}_weight"] = state[f"mlp.{i}.weight"].numpy()
+        npz[f"mlp_{i}_bias"] = state[f"mlp.{i}.bias"].numpy()
+        npz[f"mlp_{i}_running_mean"] = state[f"mlp.{i}.running_mean"].numpy()
+        npz[f"mlp_{i}_running_var"] = state[f"mlp.{i}.running_var"].numpy()
+        npz[f"mlp_{i}_num_batches_tracked"] = \
+            state[f"mlp.{i}.num_batches_tracked"].numpy()
+    np.savez(path, **npz)
+    return sorted(npz.keys())
+
+
+def predict_nn(df, npz_path, meta_path, chunk=100000):
+    """출하 mate/nn_infer.py predict_nn 사본 (numpy·CPU). 산술 동일."""
+    W = np.load(npz_path)
+    Mm = json.load(open(meta_path))
+    CATSl, DENSEl = Mm["CATS"], Mm["DENSE"]
+    mu = np.array(Mm["mu"], dtype=np.float32)
+    sd = np.array(Mm["sd"], dtype=np.float32)
+    codes = np.zeros((len(df), len(CATSl)), dtype=np.int64)
+    for i, c in enumerate(CATSl):
+        lut = {v: j + 1 for j, v in enumerate(Mm["levels"][c])}
+        codes[:, i] = df[c].astype(str).map(lut).fillna(0).astype(np.int64).values
+    X = df[DENSEl].astype("float32").values
+    X = (X - mu) / sd
+    X = np.nan_to_num(X, nan=0.0, posinf=0.0, neginf=0.0).astype(np.float32)
+    embs = [W[f"emb{i}"] for i in range(len(CATSl))]
+
+    def lin(z, i):
+        return z @ W[f"mlp_{i}_weight"].T + W[f"mlp_{i}_bias"]
+
+    def bn(z, i):
+        return ((z - W[f"mlp_{i}_running_mean"])
+                / np.sqrt(W[f"mlp_{i}_running_var"] + 1e-5)
+                * W[f"mlp_{i}_weight"] + W[f"mlp_{i}_bias"])
+
+    out = np.empty(len(df), dtype=np.float64)
+    for s in range(0, len(df), chunk):
+        e = min(s + chunk, len(df))
+        z = np.concatenate([embs[i][codes[s:e, i]] for i in range(len(CATSl))]
+                           + [X[s:e]], axis=1)
+        z = lin(z, 0)
+        z = np.maximum(bn(z, 1), 0.0)
+        z = lin(z, 4)
+        z = np.maximum(bn(z, 5), 0.0)
+        z = np.maximum(lin(z, 8), 0.0)
+        z = lin(z, 10)
+        out[s:e] = 1.0 / (1.0 + np.exp(-z.ravel()))
+    return out

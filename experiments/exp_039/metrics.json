@@ -1,0 +1,602 @@
+{
+ "exp_id": "exp_039",
+ "title": "the denominator of the adoption threshold, measured at n=9 instead of n=3 \u2014 R0 / fold_2024 / C5_B3, seed the only thing that moves",
+ "conversion": {
+  "formula": "100000 * (1 - brier / 0.2498069)",
+  "reference_brier": 0.2498069,
+  "points_per_unit_brier": 400309.19882517256,
+  "sensitivity": "Brier 1e-6 = 0.4003 points, so a 6-digit Brier carries +/-0.2 points of slack; the trailing decimals of a converted value are a machine transform of a rounded input, not a measurement"
+ },
+ "what_this_sigma_is": "the spread of the FIT randomness only. iteration counts are frozen across all nine seeds (inherited from exp_037 stage-1), so the variation that a seed would add by moving the argmin is NOT included and is NOT measured by this experiment",
+ "scope": "FORWARD ONLY. this sigma is registered for experiments opened AFTER exp_039. exp_033 / exp_036 / exp_037 and the in-flight exp_038 stand on the sigma they were registered against",
+ "rule_unchanged": "3 seeds agreeing in sign AND |mean delta| >= control sigma x 3, ddof=1. exp_039 re-estimates sigma and changes nothing else",
+ "inherit_gate": {
+  "PASS": true,
+  "failures": [],
+  "file": "inherit_gate.json"
+ },
+ "iter_contract": {
+  "stack_round": 481,
+  "cell_round": {
+   "is_mid_only": 577,
+   "is_rev_only": 1346,
+   "is_both": 449,
+   "is_wayoff_true": 897
+  },
+  "scale_full": 1.281968918819595,
+  "scale_mode": 1.2817279350106026,
+  "base_json": "/home/<user>/SungjinPark/experiments/exp_037/res/res_R0_u2023_seed42_st1.json",
+  "source": "read out of exp_037 res json \u2014 not hardcoded"
+ },
+ "code_path_identity": {
+  "b3_feat_sha256_distinct": [
+   "e3dc34a54e8c744732bfe2d36d48a77f7bb97fb6523ce9738aa42b2e1fdbdd13"
+  ],
+  "train_csv_sha256_distinct": [
+   "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff"
+  ],
+  "single_code_path": true
+ },
+ "units": {
+  "42": {
+   "origin": "inherited (exp_037, not refitted)",
+   "brier_valid_all": 0.2480393607892575,
+   "score_valid_all": 707.56221,
+   "stack_round": 481,
+   "cell_round": {
+    "is_mid_only": 577,
+    "is_rev_only": 1346,
+    "is_both": 449,
+    "is_wayoff_true": 897
+   },
+   "scale_full": 1.281968918819595,
+   "scale_mode": 1.2817279350106026,
+   "base_json": "/home/<user>/SungjinPark/experiments/exp_037/res/res_R0_u2023_seed42_st1.json",
+   "valid_R_brier": 0.248105,
+   "valid_F_brier": 0.24755,
+   "auc": 0.547762,
+   "pred_mean": 0.493557,
+   "minutes": 23.65,
+   "pred_sha256": "ef4bafad23f53798b60e221b497e448c70321ef14e0618233930ff54893d54bf",
+   "b3_feat_sha256": "e3dc34a54e8c744732bfe2d36d48a77f7bb97fb6523ce9738aa42b2e1fdbdd13",
+   "train_csv_sha256": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+   "n_train_full": 1116277,
+   "n_valid": 253507,
+   "res_path": "/home/<user>/SungjinPark/experiments/exp_037/res/res_R0_u2024_seed42_st2.json"
+  },
+  "7": {
+   "origin": "inherited (exp_037, not refitted)",
+   "brier_valid_all": 0.2479833583326968,
+   "score_valid_all": 729.9805,
+   "stack_round": 481,
+   "cell_round": {
+    "is_mid_only": 577,
+    "is_rev_only": 1346,
+    "is_both": 449,
+    "is_wayoff_true": 897
+   },
+   "scale_full": 1.281968918819595,
+   "scale_mode": 1.2817279350106026,
+   "base_json": "/home/<user>/SungjinPark/experiments/exp_037/res/res_R0_u2023_seed42_st1.json",
+   "valid_R_brier": 0.248049,
+   "valid_F_brier": 0.247497,
+   "auc": 0.54854,
+   "pred_mean": 0.493131,
+   "minutes": 23.68,
+   "pred_sha256": "d3c606b0433768250219de958864054294d0098fb724dc7377224b1b92153668",
+   "b3_feat_sha256": "e3dc34a54e8c744732bfe2d36d48a77f7bb97fb6523ce9738aa42b2e1fdbdd13",
+   "train_csv_sha256": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+   "n_train_full": 1116277,
+   "n_valid": 253507,
+   "res_path": "/home/<user>/SungjinPark/experiments/exp_037/res/res_R0_u2024_seed7_st2.json"
+  },
+  "2024": {
+   "origin": "inherited (exp_037, not refitted)",
+   "brier_valid_all": 0.2479648004372976,
+   "score_valid_all": 737.4094,
+   "stack_round": 481,
+   "cell_round": {
+    "is_mid_only": 577,
+    "is_rev_only": 1346,
+    "is_both": 449,
+    "is_wayoff_true": 897
+   },
+   "scale_full": 1.281968918819595,
+   "scale_mode": 1.2817279350106026,
+   "base_json": "/home/<user>/SungjinPark/experiments/exp_037/res/res_R0_u2023_seed42_st1.json",
+   "valid_R_brier": 0.248038,
+   "valid_F_brier": 0.247419,
+   "auc": 0.548763,
+   "pred_mean": 0.493511,
+   "minutes": 23.66,
+   "pred_sha256": "aa999bb9eee3c419a4239338330e086b72826e57c9cdf03e231768cc89ea330d",
+   "b3_feat_sha256": "e3dc34a54e8c744732bfe2d36d48a77f7bb97fb6523ce9738aa42b2e1fdbdd13",
+   "train_csv_sha256": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+   "n_train_full": 1116277,
+   "n_valid": 253507,
+   "res_path": "/home/<user>/SungjinPark/experiments/exp_037/res/res_R0_u2024_seed2024_st2.json"
+  },
+  "1": {
+   "origin": "exp_039 new fit",
+   "brier_valid_all": 0.2480181389023943,
+   "score_valid_all": 716.05752,
+   "stack_round": 481,
+   "cell_round": {
+    "is_mid_only": 577,
+    "is_rev_only": 1346,
+    "is_both": 449,
+    "is_wayoff_true": 897
+   },
+   "scale_full": 1.281968918819595,
+   "scale_mode": 1.2817279350106026,
+   "base_json": "/home/<user>/SungjinPark/experiments/exp_037/res/res_R0_u2023_seed42_st1.json",
+   "valid_R_brier": 0.248091,
+   "valid_F_brier": 0.247477,
+   "auc": 0.547954,
+   "pred_mean": 0.492985,
+   "minutes": 45.8,
+   "pred_sha256": "090e670a589d1d5febc3e8a3417bbb004379f32c124697ccdcd04bd22899fd49",
+   "b3_feat_sha256": "e3dc34a54e8c744732bfe2d36d48a77f7bb97fb6523ce9738aa42b2e1fdbdd13",
+   "train_csv_sha256": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+   "n_train_full": 1116277,
+   "n_valid": 253507,
+   "res_path": "/home/<user>/SungjinPark/experiments/exp_039/res/res_R0_u2024_seed1_st2.json"
+  },
+  "13": {
+   "origin": "exp_039 new fit",
+   "brier_valid_all": 0.24802276075353374,
+   "score_valid_all": 714.20735,
+   "stack_round": 481,
+   "cell_round": {
+    "is_mid_only": 577,
+    "is_rev_only": 1346,
+    "is_both": 449,
+    "is_wayoff_true": 897
+   },
+   "scale_full": 1.281968918819595,
+   "scale_mode": 1.2817279350106026,
+   "base_json": "/home/<user>/SungjinPark/experiments/exp_037/res/res_R0_u2023_seed42_st1.json",
+   "valid_R_brier": 0.248081,
+   "valid_F_brier": 0.247587,
+   "auc": 0.547881,
+   "pred_mean": 0.493303,
+   "minutes": 45.88,
+   "pred_sha256": "b5dd8293c007f737c8d74806f00641d2b1cbeb56da0281c04be41ad8cb6a2a26",
+   "b3_feat_sha256": "e3dc34a54e8c744732bfe2d36d48a77f7bb97fb6523ce9738aa42b2e1fdbdd13",
+   "train_csv_sha256": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+   "n_train_full": 1116277,
+   "n_valid": 253507,
+   "res_path": "/home/<user>/SungjinPark/experiments/exp_039/res/res_R0_u2024_seed13_st2.json"
+  },
+  "101": {
+   "origin": "exp_039 new fit",
+   "brier_valid_all": 0.24799757143206835,
+   "score_valid_all": 724.29087,
+   "stack_round": 481,
+   "cell_round": {
+    "is_mid_only": 577,
+    "is_rev_only": 1346,
+    "is_both": 449,
+    "is_wayoff_true": 897
+   },
+   "scale_full": 1.281968918819595,
+   "scale_mode": 1.2817279350106026,
+   "base_json": "/home/<user>/SungjinPark/experiments/exp_037/res/res_R0_u2023_seed42_st1.json",
+   "valid_R_brier": 0.248069,
+   "valid_F_brier": 0.247467,
+   "auc": 0.548211,
+   "pred_mean": 0.49293,
+   "minutes": 45.82,
+   "pred_sha256": "32b667225282de49d577a17a763d2d6b3d62551d0b1cdc54ac6b1ba2ecdfe286",
+   "b3_feat_sha256": "e3dc34a54e8c744732bfe2d36d48a77f7bb97fb6523ce9738aa42b2e1fdbdd13",
+   "train_csv_sha256": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+   "n_train_full": 1116277,
+   "n_valid": 253507,
+   "res_path": "/home/<user>/SungjinPark/experiments/exp_039/res/res_R0_u2024_seed101_st2.json"
+  },
+  "777": {
+   "origin": "exp_039 new fit",
+   "brier_valid_all": 0.24801096009725473,
+   "score_valid_all": 718.93126,
+   "stack_round": 481,
+   "cell_round": {
+    "is_mid_only": 577,
+    "is_rev_only": 1346,
+    "is_both": 449,
+    "is_wayoff_true": 897
+   },
+   "scale_full": 1.281968918819595,
+   "scale_mode": 1.2817279350106026,
+   "base_json": "/home/<user>/SungjinPark/experiments/exp_037/res/res_R0_u2023_seed42_st1.json",
+   "valid_R_brier": 0.248085,
+   "valid_F_brier": 0.247457,
+   "auc": 0.548021,
+   "pred_mean": 0.493239,
+   "minutes": 28.23,
+   "pred_sha256": "7716b5e8271f27755246f4a909763f64418ae3fb12bd7b0173f3ddace73d8992",
+   "b3_feat_sha256": "e3dc34a54e8c744732bfe2d36d48a77f7bb97fb6523ce9738aa42b2e1fdbdd13",
+   "train_csv_sha256": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+   "n_train_full": 1116277,
+   "n_valid": 253507,
+   "res_path": "/home/<user>/SungjinPark/experiments/exp_039/res/res_R0_u2024_seed777_st2.json"
+  },
+  "2025": {
+   "origin": "exp_039 new fit",
+   "brier_valid_all": 0.24794799666337877,
+   "score_valid_all": 744.13611,
+   "stack_round": 481,
+   "cell_round": {
+    "is_mid_only": 577,
+    "is_rev_only": 1346,
+    "is_both": 449,
+    "is_wayoff_true": 897
+   },
+   "scale_full": 1.281968918819595,
+   "scale_mode": 1.2817279350106026,
+   "base_json": "/home/<user>/SungjinPark/experiments/exp_037/res/res_R0_u2023_seed42_st1.json",
+   "valid_R_brier": 0.248024,
+   "valid_F_brier": 0.247385,
+   "auc": 0.548855,
+   "pred_mean": 0.493051,
+   "minutes": 26.15,
+   "pred_sha256": "bec36552ec994a0577686ceebccfcd38be6f267aa4c6492103e99c4554148b9f",
+   "b3_feat_sha256": "e3dc34a54e8c744732bfe2d36d48a77f7bb97fb6523ce9738aa42b2e1fdbdd13",
+   "train_csv_sha256": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+   "n_train_full": 1116277,
+   "n_valid": 253507,
+   "res_path": "/home/<user>/SungjinPark/experiments/exp_039/res/res_R0_u2024_seed2025_st2.json"
+  },
+  "31337": {
+   "origin": "exp_039 new fit",
+   "brier_valid_all": 0.24797577782345429,
+   "score_valid_all": 733.01505,
+   "stack_round": 481,
+   "cell_round": {
+    "is_mid_only": 577,
+    "is_rev_only": 1346,
+    "is_both": 449,
+    "is_wayoff_true": 897
+   },
+   "scale_full": 1.281968918819595,
+   "scale_mode": 1.2817279350106026,
+   "base_json": "/home/<user>/SungjinPark/experiments/exp_037/res/res_R0_u2023_seed42_st1.json",
+   "valid_R_brier": 0.248057,
+   "valid_F_brier": 0.247373,
+   "auc": 0.548375,
+   "pred_mean": 0.492822,
+   "minutes": 27.73,
+   "pred_sha256": "2d8c17fb0237900126352729f3bd5a396be876a7bf2dc839884f207145b1bfa5",
+   "b3_feat_sha256": "e3dc34a54e8c744732bfe2d36d48a77f7bb97fb6523ce9738aa42b2e1fdbdd13",
+   "train_csv_sha256": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+   "n_train_full": 1116277,
+   "n_valid": 253507,
+   "res_path": "/home/<user>/SungjinPark/experiments/exp_039/res/res_R0_u2024_seed31337_st2.json"
+  }
+ },
+ "missing_seeds": [],
+ "iter_drift": [],
+ "n_effective": 9,
+ "Q1_sigma": {
+  "n": 9,
+  "seed_order": [
+   42,
+   7,
+   2024,
+   1,
+   13,
+   101,
+   777,
+   2025,
+   31337
+  ],
+  "brier_values": [
+   0.2480393607892575,
+   0.2479833583326968,
+   0.2479648004372976,
+   0.2480181389023943,
+   0.24802276075353374,
+   0.24799757143206835,
+   0.24801096009725473,
+   0.24794799666337877,
+   0.24797577782345429
+  ],
+  "score_values": [
+   707.56221,
+   729.9805,
+   737.4094,
+   716.05752,
+   714.20735,
+   724.29087,
+   718.93126,
+   744.13611,
+   733.01505
+  ],
+  "mean_brier": 0.24799563613681508,
+  "mean_score": 725.06559,
+  "sigma_brier_ddof1": 2.9912352237109794e-05,
+  "sigma_score": 11.97419,
+  "min_brier": 0.24794799666337877,
+  "max_brier": 0.2480393607892575,
+  "range_brier": 9.136412587873455e-05,
+  "range_score": 36.5739,
+  "relative_standard_error_of_sigma": 0.25,
+  "n3_reference": {
+   "seeds": [
+    42,
+    7,
+    2024
+   ],
+   "mean_brier": 0.24799583985308396,
+   "sigma_brier_ddof1": 3.881562551959927e-05,
+   "sigma_score": 15.53825,
+   "relative_standard_error_of_sigma": 0.5
+  },
+  "ratio_sigma9_over_sigma3": 0.7706265669222843,
+  "threshold_3sigma_brier": {
+   "n9": 8.973705671132938e-05,
+   "n3": 0.00011644687655879783
+  },
+  "threshold_3sigma_score": {
+   "n9": 35.92257,
+   "n3": 46.61476
+  }
+ },
+ "Q2_jackknife": {
+  "note": "sigma recomputed on the other n-1 seeds. a large NEGATIVE pct_change means that one seed was carrying the spread",
+  "per_seed": [
+   {
+    "dropped_seed": 42,
+    "dropped_brier": 0.2480393607892575,
+    "z_of_dropped": 1.4617590785181656,
+    "sigma_without_it": 2.6745265657808115e-05,
+    "sigma_without_it_score": 10.70638,
+    "pct_change_vs_full": -10.587888756446695
+   },
+   {
+    "dropped_seed": 7,
+    "dropped_brier": 0.2479833583326968,
+    "z_of_dropped": -0.4104593320161858,
+    "sigma_without_it": 3.1596570785092666e-05,
+    "sigma_without_it_score": 12.6484,
+    "pct_change_vs_full": 5.6305118856329885
+   },
+   {
+    "dropped_seed": 2024,
+    "dropped_brier": 0.2479648004372976,
+    "z_of_dropped": -1.0308684276331581,
+    "sigma_without_it": 2.9491633487987903e-05,
+    "sigma_without_it_score": 11.80577,
+    "pct_change_vs_full": -1.4065050644861707
+   },
+   {
+    "dropped_seed": 1,
+    "dropped_brier": 0.2480181389023943,
+    "z_of_dropped": 0.7522900706986654,
+    "sigma_without_it": 3.067879506109618e-05,
+    "sigma_without_it_score": 12.281,
+    "pct_change_vs_full": 2.5622953952632517
+   },
+   {
+    "dropped_seed": 13,
+    "dropped_brier": 0.24802276075353374,
+    "z_of_dropped": 0.906803199683318,
+    "sigma_without_it": 3.007200310375731e-05,
+    "sigma_without_it_score": 12.0381,
+    "pct_change_vs_full": 0.5337288936088698
+   },
+   {
+    "dropped_seed": 101,
+    "dropped_brier": 0.24799757143206835,
+    "z_of_dropped": 0.06469886546982341,
+    "sigma_without_it": 3.1968236450249865e-05,
+    "sigma_without_it_score": 12.79718,
+    "pct_change_vs_full": 6.8730275601311765
+   },
+   {
+    "dropped_seed": 777,
+    "dropped_brier": 0.24801096009725473,
+    "z_of_dropped": 0.5122953995120727,
+    "sigma_without_it": 3.138200985290833e-05,
+    "sigma_without_it_score": 12.56251,
+    "pct_change_vs_full": 4.913213123959046
+   },
+   {
+    "dropped_seed": 2025,
+    "dropped_brier": 0.24794799666337877,
+    "z_of_dropped": -1.5926354791049755,
+    "sigma_without_it": 2.564811653597647e-05,
+    "sigma_without_it_score": 10.26718,
+    "pct_change_vs_full": -14.255768544484575
+   },
+   {
+    "dropped_seed": 31337,
+    "dropped_brier": 0.24797577782345429,
+    "z_of_dropped": -0.663883375114735,
+    "sigma_without_it": 3.097082462375125e-05,
+    "sigma_without_it_score": 12.39791,
+    "pct_change_vs_full": 3.5385795749232227
+   }
+  ],
+  "most_influential_seed": 2025,
+  "sigma_range_over_jackknife": [
+   2.564811653597647e-05,
+   3.1968236450249865e-05
+  ]
+ },
+ "Q3_confidence_interval": {
+  "n9_95pct": {
+   "df": 8,
+   "lo": 2.0204508734042338e-05,
+   "hi": 5.7305213456182716e-05,
+   "lo_score": 8.08805,
+   "hi_score": 22.9398,
+   "width_ratio_hi_over_lo": 2.836258689112784
+  },
+  "n3_95pct": {
+   "df": 2,
+   "lo": 2.0209676303864943e-05,
+   "hi": 0.0002439459084688089,
+   "lo_score": 8.09012,
+   "hi_score": 97.65379,
+   "width_ratio_hi_over_lo": 12.070747932867988
+  },
+  "intervals_overlap": true,
+  "n3_point_inside_n9_ci": true,
+  "n9_point_inside_n3_ci": true,
+  "reading": "the intervals overlap, so there is no ground to say the n=3 estimate was WRONG; what changed is how tightly sigma is pinned",
+  "historical_sigmas_vs_n9_ci": {
+   "exp_030_control": {
+    "sigma": 4.897825479068653e-06,
+    "sigma_score": 1.96064,
+    "inside_n9_95ci": false
+   },
+   "exp_036_argmin": {
+    "sigma": 3.491428813285408e-05,
+    "sigma_score": 13.97651,
+    "inside_n9_95ci": true
+   },
+   "exp_037_R0": {
+    "sigma": 3.881562551959927e-05,
+    "sigma_score": 15.53825,
+    "inside_n9_95ci": true
+   }
+  }
+ },
+ "Q4_distribution_shape_OBSERVATION_ONLY": {
+  "warning": "recorded, not concluded. n=9 has almost no power to reject normality, and this experiment was registered not to draw a conclusion here. a skew finding opens a SEPARATE question about whether an sd-based threshold is the right instrument; it does not answer it",
+  "sorted_brier": [
+   0.24794799666337877,
+   0.2479648004372976,
+   0.24797577782345429,
+   0.2479833583326968,
+   0.24799757143206835,
+   0.24801096009725473,
+   0.2480181389023943,
+   0.24802276075353374,
+   0.2480393607892575
+  ],
+  "z_scores_sorted": [
+   -1.5926354791049755,
+   -1.0308684276331581,
+   -0.663883375114735,
+   -0.4104593320161858,
+   0.06469886546982341,
+   0.5122953995120727,
+   0.7522900706986654,
+   0.906803199683318,
+   1.4617590785181656
+  ],
+  "mean_minus_median": -1.935295253274738e-06,
+  "skew_g1": -0.17154955084423062,
+  "excess_kurtosis_g2": -0.9776639155175775,
+  "shapiro_W": 0.976338382429544,
+  "shapiro_p": 0.9428517232789604,
+  "iqr_brier": 4.2361078940011954e-05,
+  "mad_brier": 2.1793608614067983e-05
+ },
+ "counterfactual_NOT_A_VERDICT": {
+  "warning": "ILLUSTRATIVE ONLY. do not put this column next to a verdict column, and do not re-judge exp_038 with it. choosing a denominator after seeing a numerator is the same error as the exp_033 / exp_036 ddof incident",
+  "threshold_score_under_n3_sigma": 46.61476,
+  "threshold_score_under_n9_sigma": 35.92257,
+  "threshold_moved_by_score": -10.69219
+ },
+ "train_time_min_new_units_sum": 219.61,
+ "new_unit_minutes": [
+  45.8,
+  45.88,
+  45.82,
+  28.23,
+  26.15,
+  27.73
+ ],
+ "fold_2024": {
+  "brier": 0.24799563613681508,
+  "score": 725.06559,
+  "bss": 0.007250655859325383,
+  "auc": 0.5482624444444445,
+  "n_seeds": 9,
+  "sigma_brier_ddof1": 2.9912352237109794e-05,
+  "note": "mean over the seeds; this experiment measures the spread, not a new model level"
+ },
+ "runtime_measured": {
+  "driver_wall_clock_min": 74.18,
+  "driver_start_utc": "2026-08-09T03:17:00Z",
+  "driver_end_utc": "2026-08-09T04:31:11Z",
+  "eta_declared_min": "90-110 (range 80-140)",
+  "verdict": "inside ETA. driver 74.2 min plus roughly 15 min of setup, gate and retrieval",
+  "wave1_minutes": [
+   45.8,
+   45.88,
+   45.82
+  ],
+  "wave2_minutes": [
+   28.23,
+   26.15,
+   27.73
+  ],
+  "exp_037_solo_reference_minutes": [
+   23.65,
+   23.68,
+   23.66
+  ],
+  "contention_factor_wave1": 1.94,
+  "contention_factor_wave2": 1.16,
+  "why_the_waves_differ": "exp_038 finished at 04:18:47Z, so wave 2 (started 04:02:53Z) overlapped it for only part of its run"
+ },
+ "variables_changed_vs_exp_037_R0": [
+  "1. six seeds added (1, 13, 101, 777, 2025, 31337); the three original seeds are inherited, not refitted",
+  "2. iterations frozen at exp_037 R0's values for all nine seeds instead of being re-searched per seed. THIS NARROWS WHAT SIGMA MEANS: it is the spread of fit randomness alone, and a sigma that also let the argmin move would be larger and is not measured here",
+  "3. TAGGED ALONG, unintended: the nine units did not all run under the same machine load. seeds 42/7/2024 ran under exp_037 conditions, seeds 1/13/101 under heavy contention with exp_038, seeds 777/2025/31337 under light contention. CatBoost with thread_count fixed at 6 is deterministic and load should not touch the numbers, but exp_039 did not itself re-verify that, so it is listed as a variable rather than dismissed"
+ ],
+ "contention_cohort_check_OBSERVATION_ONLY": {
+  "why": "if machine load had perturbed the fits, the three cohorts would not look like draws from one distribution. this is a weak check (n=3 per cohort) and is recorded, not concluded",
+  "cohorts": {
+   "inherited_exp037_solo_conditions": {
+    "seeds": [
+     42,
+     7,
+     2024
+    ],
+    "mean_brier": 0.24799583985308396,
+    "mean_z_vs_pooled": 0.006810439622631252,
+    "sigma_within_ddof1": 3.881562551959927e-05,
+    "minutes": [
+     23.65,
+     23.68,
+     23.66
+    ]
+   },
+   "exp039_wave1_heavy_contention": {
+    "seeds": [
+     1,
+     13,
+     101
+    ],
+    "mean_brier": 0.24801282369599878,
+    "mean_z_vs_pooled": 0.5745973786166504,
+    "sigma_within_ddof1": 1.3409475874983545e-05,
+    "minutes": [
+     45.8,
+     45.88,
+     45.82
+    ]
+   },
+   "exp039_wave2_light_contention": {
+    "seeds": [
+     777,
+     2025,
+     31337
+    ],
+    "mean_brier": 0.24797824486136258,
+    "mean_z_vs_pooled": -0.5814078182364979,
+    "sigma_within_ddof1": 3.155413139977e-05,
+    "minutes": [
+     28.23,
+     26.15,
+     27.73
+    ]
+   }
+  },
+  "reading": "wave 1 sits above the pooled mean and wave 2 below it, by about +0.58 and -0.58 pooled sd. with three units per cohort that separation is ordinary sampling noise, not evidence of a load effect - and it is also not proof that no effect exists"
+ }
+}

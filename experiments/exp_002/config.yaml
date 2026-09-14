@@ -1,0 +1,36 @@
+# 실험 스펙 — 지휘자 작성 2026-08-05 (모델 학습 아님: 데이터 자산 구축)
+exp_id: exp_002
+date: "2026-08-05"
+hypothesis: "경기 시그니처 매핑을 유일 매칭 2,650경기에서 투수 대응 전파로 확장하면 train 투수의 90%+에 trackman 물리 프로파일을 붙일 수 있다"
+base_exp: "exp_000_eda"
+
+task: data_asset            # 학습 없음 — 매핑 사전 + 정적 프로파일 테이블 구축
+method:
+  notes: >
+    exp_000_eda의 매핑 방법 재사용·확장 (경기 블록 복원 → (시즌,월,요일,총투구수)
+    시그니처 유일-유일 매칭 → 경기 내 투구 시퀀스(이닝·카운트·아웃·초말) 정렬로
+    투수 ID 대응 검증 → 투수 매핑을 비유일 경기로 전파 → 반복). 전파 각 단계에서
+    시퀀스 일치 검증 실패 시 해당 매칭 폐기 (오매핑이 무매핑보다 나쁨).
+
+outputs:
+  - "pitcher_id_map.csv (train pitcher_id ↔ pitcher_trackman_id, 신뢰등급 포함)"
+  - "batter_id_map.csv (가능한 범위)"
+  - "game_date_map.csv (train 경기블록 ↔ 실날짜·구장, 분석 전용 표기)"
+  - "pitcher_static_profile_2024.csv (투수별 2024년 말 기준: 구속 평균/std, 회전수, 릴리스 높이/사이드 std(일관성), 무브먼트, 익스텐션, 구종별 요약 — test 사용 가능 후보 피처)"
+  - "report.md (매핑 커버리지: 경기/투구/투수 기준 %, 검증 실패 사례)"
+
+validation:
+  checks:
+    - "매핑된 경기 표본 30개에서 투구 시퀀스 완전 일치 재확인"
+    - "투수 손(hand) 일치율 100% 확인"
+    - "커버리지: train 투구 행 기준 몇 %가 프로파일 보유 투수인가"
+  primary_metric: coverage
+
+runtime:
+  where: a5000              # RAM 251GB — 전체 메모리 조인. GPU 불사용
+  expected_min: 40
+
+notes: >
+  규정 유의: 매핑 로직은 투명 보존 (코드 검증 대비). 정적 프로파일은
+  2024년 말 기준으로만 산출 (test 재현 가능성 원칙, 전략 §12).
+  실날짜는 train 분석 전용 — 본번 피처 금지 표기를 산출물에 명시.

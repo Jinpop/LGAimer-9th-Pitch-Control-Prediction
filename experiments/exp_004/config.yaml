@@ -1,0 +1,28 @@
+# 실험 스펙 — 지휘자 작성 2026-08-05 (캠페인 2)
+exp_id: exp_004
+date: "2026-08-05"
+hypothesis: "라벨 체제가 다른 2019~2022 F리그 행(~10.5만)을 학습에서 제외하면 fold_2024 valid-R Brier가 개선된다"
+base_exp: "exp_001"          # 변경 변수 1개: 학습 데이터에서 season≤2022 & game_type==F 행 제거
+
+model:
+  type: lightgbm
+  params: exp_001과 완전 동일 (seed 42 포함) — exp_001/config.yaml 참조, 변경 금지
+  seed: 42
+
+features:
+  include: ["exp_001과 동일 48컬럼"]
+  exclude: ["row_id"]
+  notes: >
+    피처 변경 없음. 데이터 변경만: train 마스크에서 (season<=2022 & game_type=="F")
+    행 제외. valid 셋은 변경하지 않는다 (비교 가능성 유지 — valid-R가 주 지표이므로
+    F 제외 영향은 학습 분포에만). 2023~2024 F행은 유지 (라벨 체제 동질 추정 구간).
+    asof 컬럼은 제공값 그대로 (F 포함 집계지만 주최측 공식 피처 — 건드리지 않음).
+
+validation:
+  scheme: rolling-origin      # exp_001과 동일 3 fold
+  primary_metric: brier       # fold_2024 valid-R Brier
+  report_also: ["exp_001 대비 delta (fold별)", "fold_2023 BSS가 음수에서 회복되는가"]
+
+runtime:
+  where: a5000
+  expected_min: 15

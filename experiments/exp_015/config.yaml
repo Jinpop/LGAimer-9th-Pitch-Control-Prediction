@@ -1,0 +1,68 @@
+# exp_015 — 제출 후보 2종 빌드 (CV↔LB 신뢰도 테스트용) · 사용자 승인 2026-08-05
+exp_id: exp_015
+date: "2026-08-05"
+hypothesis: "로컬 valid_all 격차 59.9점(A 619.0 vs B 559.1)이 LB에서 같은 방향·비슷한 크기로 재현되면 CV를 모델 선택에 신뢰할 수 있다"
+purpose: submission_build     # 성능 실험 아님 — 제출물 2개 생성 + CV 신뢰도 측정
+
+candidates:
+  A:
+    name: "exp_010 D — 강규제 LightGBM"
+    base: "experiments/exp_010/src/train.py (D안)"
+    local_valid_all: 0.248261     # 환산 619.0, AUC 0.5451
+    spec: >
+      D안 하이퍼파라미터 그대로(exp_010 metrics.json의 lgb_params 참조).
+      학습 데이터: train ≤2024 전체, 마스크 적용(season<=2022 & game_type=="F" 제외).
+      seed 42, deterministic:true, force_row_wise:true, 스레드 고정.
+  B:
+    name: "exp_009 P0b — RF + 마스크, max_features=10"
+    base: "experiments/exp_009/src/train.py (P0b arm)"
+    local_valid_all: 0.248410     # 환산 559.1, AUC 0.5429
+    spec: >
+      운영진 RF 파이프라인(OrdinalEncoder 3범주 + SimpleImputer(median) + RandomForestClassifier)
+      에 max_features=10, 마스크 적용. n_estimators=100, max_depth=10, min_samples_leaf=200,
+      random_state=42. 학습 데이터: train ≤2024 전체.
+
+iter_policy_A:                # ⚠️ 가장 헷갈리는 지점 — 반드시 확인하고 진행
+  rule: "exp_006 P4 — 마지막 가용 fold의 valid_all Brier argmin을 스케일 없이 승계"
+  note: >
+    fold 검증에서 보고된 619.0은 iter 750(= fold_2023의 argmin 승계)에서 측정된 정직한 수치다.
+    **최종 모델(≤2024 학습 → 2025 예측)에서는 마지막 가용 fold가 fold_2024**이므로
+    fold_2024의 valid_all argmin을 승계해야 한다. exp_010 report에 그 값이 약 1550으로 언급돼 있으나
+    **exp_010/metrics.json의 `curves` 블록에서 D안 fold_2024 valid_all argmin을 직접 재확인하고
+    그 값을 쓸 것.** 보고서 숫자를 그대로 믿지 말고 곡선에서 산출하라.
+
+no_calibration: true          # 둘 다 보정 없음
+  # 근거: (1) exp_010에서 exp_005 보정이 D 모델에 해로움 확인(0.248329→0.248364)
+  #       (2) 한쪽에만 걸면 CV↔LB 비교가 오염된다 — 로컬에서 잰 그 스펙 그대로 올려야 테스트가 성립
+
+submission_requirements:      # 전부 이행 필수 (exp_001·exp_007 감사 지적 포함)
+  - "train-only category vocab (exp_001 감사 지적, exp_010에서 미이행 이월 — 이번에 반드시 처리)"
+  - "**범주형 dtype 가드**: pd.Categorical 캐스팅 전후 notna 수 assert (float↔int 불일치 시 전 행이 조용히 -1 결측이 됨)"
+  - "**행수 불변 assert**: test row_id 유일성 + len(sub)==len(sample)"
+  - "**test 통계 출력 금지** — 예측 평균 등을 로그에 찍지 말 것(코드 검증 심사자에게 test 분포 계산으로 보임). 행 수만"
+  - "입력 ./data/test.csv를 utf-8-sig로 읽고 ./output/submission.csv에 utf-8(BOM 없음)·index=False 저장"
+  - "sample_submission의 row_id 순서로 병합, 누락 시 placeholder 유지 + 경고"
+  - "zip 구조: script.py(진입점) + model/ + requirements.txt, __pycache__ 제외"
+
+verification:
+  - "5행 스텁 스모크: 형식·확률 범위·NaN 0·cold-start 경로 통과"
+  - "**스케일 리허설 245,789행 추론 시간 실측** (제한 600초) — 두 후보 각각"
+  - "2회 실행 산출물 byte 동일(결정론)"
+  - "행 독립성 프로브: 전체 실행 vs 부분 실행 예측 일치 확인(규칙 2-4)"
+
+post_build:
+  - "leak-auditor 독립 감사 (제출 직전 — 예외 없음)"
+  - "submission-packager zip 검증 → ZIP_READY 정지"
+  - "제출은 사용자가 직접"
+
+lb_test_design:
+  local_gap: 59.9             # A 619.0 − B 559.1
+  expected_lb: "환산계수 0.98~1.32 구간(exp_008) 적용 시 A ≈ 610~820, B ≈ 550~740"
+  what_we_learn:
+    - "① 실제 LB가 예상 구간에 들어오는가 → 환산계수 확정"
+    - "② A > B 순위가 유지되는가 → CV의 모델 선택 신뢰도"
+    - "③ LB 격차가 60~80점 근처인가 → delta 전이율"
+
+runtime:
+  where: a5000
+  expected_min: 60

@@ -1,0 +1,873 @@
+{
+ "exp_id": "exp_112",
+ "date": "2026-08-27",
+ "type": "read-only 측정 · 재학습 0 · zip 0 · 슬롯 0 · GPU 0 · 서버 CPU: 열 추출 1회(수 초)",
+ "question": "현 패키지 CW 의 조정 가능한 상수 중 아직 꼭지점에 착륙하지 않은 것이 무엇이고 각각 LB 몇 점인가",
+ "package": {
+  "zip": "submissions/submit_CW_batresid_flip.zip",
+  "parent": "CS3 (LB 1151.6566018102)",
+  "CW_own_LB": "미측정"
+ },
+ "frame": "우리 규약 캘프레임 build_AC/work/tr2024 (train season==2024, 253,507행). 성분 벡터는 CW 출하 빌드 산출물. 솔버팩(ct_vec.npz) 미사용 (S210)",
+ "🔴🔴_HEADLINE": {
+  "n_live_adjustable": 21,
+  "n_print_only_or_dead_that_look_adjustable": 8,
+  "n_never_bought_on_any_LB": 6,
+  "★답★": "아직 꼭지점에 착륙하지 않은 축은 ★1개★ 다 — 그리고 그것은 상수 하나가 아니라 ★(failtype b, failtype c) 평면★ 이다. 나머지 조정 가능한 상수는 전부 (a) 잔여가 0.25점 미만으로 닫혔거나 (b) 계열이 닫혔거나 (c) 재추론 없이는 못 재거나 (d) 애초에 산술에 안 들어간다.",
+  "★top3★": [
+   {
+    "rank": 1,
+    "axis": "blend.json /failtype_offset/c  (그리고 그것이 여는 (b,c) 평면)",
+    "now": 0.0,
+    "★LB_expected★": {
+     "c 만 옮김(b 동결)": 1.1558402628299163,
+     "(b,c) 동시 재착륙": 2.1693545695716336,
+     "독립_정직면_경로_확인": 2.317302439823015
+    },
+    "u_star_c_only": -0.01847659923496365,
+    "shrunk_steps": {
+     "0.50": {
+      "u": -0.009238299617481825,
+      "expected_gain_pts": 0.8668801971224371
+     },
+     "0.65": {
+      "u": -0.012009789502726373,
+      "expected_gain_pts": 1.0142498306332515
+     },
+     "0.80": {
+      "u": -0.01478127938797092,
+      "expected_gain_pts": 1.1096066523167196
+     },
+     "1.00": {
+      "u": -0.01847659923496365,
+      "expected_gain_pts": 1.1558402628299163
+     }
+    },
+    "why_not_bought_yet": "exp_082 가 c 를 ★단독으로★ 스크린해 무가치(정직면 +0.1245, LB 환산 +0.0022)로 판정하고 0 에 뒀다. 옳은 판정이었다. 그러나 ★(b,c) 동시 해는 아무도 풀지 않았다★ — c 의 값은 자기 신호가 아니라 출하 b 가 단독 꼭지점에 서 있어서 남은 교차 기울기다.",
+    "sign_robustness": "교차항 -59.82 가 c 자신의 L -2.74 를 21.8배 압도한다 → L_c 의 부호가 뒤집혀도 조건부 기울기의 부호는 안 변한다.",
+    "ship_cost": "blend.json 숫자 1개(+선택적으로 b 도 1개) + d_adj 종속 재유도. 코드 0줄 · 부스터 호출 0 · A단"
+   },
+   {
+    "rank": 2,
+    "axis": "blend.json /beta_f",
+    "now": 0.0,
+    "★LB_expected★": "미지 — 상한도 못 낸다",
+    "why_not_bought_yet": "🔴 우리 캘프레임에서 ★원리적으로 측정 불가★: has_form = 0/253,507행. 동결 경계가 ≤2024년 말이라 2024 행은 전부 n_season ≤ 0 이다. 배포(2025)에서만 발동한다."
+   },
+   {
+    "rank": 3,
+    "axis": "model/meta.json /branch_mix (F 행 0.5/0.5) · /offset/beta_by_segment (R .597044 F .492041)",
+    "now": [
+     0.5,
+     [
+      0.597044,
+      0.492041
+     ]
+    ],
+    "★LB_expected★": "미지 (LB 점 0개)",
+    "why_not_bought_yet": "meta 자신이 fold_2024 argmin 은 w=1.0 이고 안 맞춘 대가가 valid_all −2.768점이라 적는다. AA 팔 재추론이 필요해 이번 범위 밖."
+   }
+  ]
+ },
+ "🔴_L_VERDICT": {
+  "🔴🔴_VERDICT": "캘프레임은 L 을 읽지 못한다. LB 로 대조 가능한 축 3개 중 ★2개의 부호가 반대★ 이고, 그중 하나(ctrl_asof_psr)는 |t| 3.83 으로 잡음이 아니다. 따라서 이 프레임의 K·L 은 어떤 축의 방향 근거도 되지 못한다.",
+  "🟢_G_는_반대다": "같은 프레임의 K·G 는 독립 기록과 두 번 맞았다 — ctrl_asof_psr 28,500.5 vs 패키지 28,502.4 (0.007%) · count 2.2928 vs 패키지 2.30510 (0.5%).",
+  "cross_check_rows": [
+   {
+    "axis": "failtype_b",
+    "KL_cal": -401.57899824262955,
+    "t": -14.740919330040757,
+    "KL_LB": -72.63919944047124,
+    "LB_source": "LB 이득 +2.6766924977 + 캘프레임 G 로 역산",
+    "sign_agrees": true
+   },
+   {
+    "axis": "axis ctrl_asof_psr",
+    "KL_cal": -400.8241719988514,
+    "t": -3.8312604796471557,
+    "KL_LB": 165.65553288744022,
+    "LB_source": "blend.json axis_offsets[1].L_i_back_solved (BL 세대 LB 프로브 u=-0.006087, gain -3.0727297301)",
+    "recomputed_probe_gain": -3.0727297300999994,
+    "recorded_probe_gain": -3.0727297301,
+    "sign_agrees": false
+   },
+   {
+    "axis": "axis beta_ins_off",
+    "KL_cal": null,
+    "t": null,
+    "KL_LB": -165.65932077921255,
+    "LB_source": "blend.json axis_offsets[0].L_i_back_solved (LB 프로브 u=-0.006033, gain 0.9596987465)",
+    "recomputed_probe_gain": 0.9596987465000002,
+    "recorded_probe_gain": 0.9596987465,
+    "sign_agrees": null
+   },
+   {
+    "axis": "count_offsets (CS3)",
+    "KL_cal": -1.0180818316058955,
+    "t": -1.084617124021442,
+    "KL_LB": 1.5397416180211632,
+    "LB_source": "LB 이득 +0.7866627052 (부모 CT) + 캘프레임 G 로 역산",
+    "sign_agrees": false
+   }
+  ],
+  "K": 400309.19882517256
+ },
+ "positive_control_failtype_b": {
+  "🔴_G_LEDGER_정정": "CV_LB.md:1048 원문 — 그 LB 점의 걸음은 b = −0.05 이고 현 출하값 −0.036451 이 아니다. CA 가 5축 동시 해에서 나중에 옮겼다.",
+  "gate_reproduce_CA_b_solve": {
+   "my_2KL_with_CA_G": -147.2387933342835,
+   "CA_recorded_2KL": -147.23879333428016,
+   "my_vertex_with_CA_G": -0.0392825575745623,
+   "CA_recorded_vertex": -0.03928255757456141
+  },
+  "현_기반_캘프레임_G": {
+   "K_G_b": 1971.0232025536764,
+   "K_L_b_from_LB": -76.04250504084192,
+   "u_star": -0.03858021810312559,
+   "max_gain_pts": 2.9337364295837083,
+   "gain_at_shipped_b": 2.9247986707912075,
+   "residual_b_pts": 0.008937758792500805,
+   "shipped_pct_of_vertex": 94.48044877633077,
+   "transfer_ratio_L_cal_to_LB": 0.18935876969068458
+  },
+  "CA_가_쓴_BX세대_G": {
+   "K_G_b": 1874.0988676056702,
+   "K_L_b_from_LB": -73.61939666714176,
+   "u_star": -0.0392825575745623,
+   "max_gain_pts": 2.8919581881815364,
+   "gain_at_shipped_b": 2.8769296781074583,
+   "residual_b_pts": 0.015028510074078127,
+   "shipped_pct_of_vertex": 92.79121689959469,
+   "transfer_ratio_L_cal_to_LB": 0.18332481775518983
+  },
+  "failtype_c_bracket_corrected": {
+   "중심 0.18936": {
+    "ratio": 0.18935876969068458,
+    "K_L_c": -45.84227638065127,
+    "alone_max_pts": 0.6206955180081553,
+    "cond_on_shipped_b_max_pts": 3.297350839942083,
+    "u_star_cond": -0.03120726500604977
+   },
+   "절반 0.09468": {
+    "ratio": 0.09467938484534229,
+    "K_L_c": -22.921138190325635,
+    "alone_max_pts": 0.15517387950203881,
+    "cond_on_shipped_b_max_pts": 2.0219126519525608,
+    "u_star_cond": -0.024437362123673124
+   },
+   "두배 0.37872": {
+    "ratio": 0.37871753938136915,
+    "K_L_c": -91.68455276130254,
+    "alone_max_pts": 2.482782072032621,
+    "cond_on_shipped_b_max_pts": 6.7792704929333585,
+    "u_star_cond": -0.04474707077080305
+   },
+   "L_c=0": {
+    "ratio": 0.0,
+    "K_L_c": -0.0,
+    "alone_max_pts": 0.0,
+    "cond_on_shipped_b_max_pts": 1.0568222229671171,
+    "u_star_cond": -0.01766745924129649
+   }
+  },
+  "failtype_c_minimax": {
+   "step": -0.01765,
+   "worst_case_gain_pts": 1.0568211909082361,
+   "gain_by_scenario": {
+    "중심 0.18936": 2.675053547145226,
+    "절반 0.09468": 1.8659373690267307,
+    "두배 0.37872": 4.293285903382216,
+    "L_c=0": 1.0568211909082361
+   }
+  },
+  "🔴_still_untrusted": "위 브래킷은 캘프레임 L 에 의존한다. 같은 프레임이 ctrl_asof_psr(|t| 3.83)·count 의 부호를 틀렸으므로 ★판정 근거가 아니다★. 프로브 크기 고르는 데만 쓴다."
+ },
+ "failtype_c": {
+  "K_G_c": 3385.7410643206963,
+  "K_G_bc": -1641.0477312311968,
+  "b_shipped": -0.03645076320272027,
+  "K_L_c_calframe_raw": -242.09217484637293,
+  "hypotheses": {
+   "① b 계열 전이 (+0.18936) — 같은 파일·같은 계열, LB 점 1개": {
+    "ratio": 0.18935876969068458,
+    "K_L_c": -45.84227638065127,
+    "K_L_c_conditional": -105.65971863612097,
+    "u_star": -0.03120726500604977,
+    "max_gain_pts": 3.297350839942083,
+    "gain_at_probe_minus_0p0075": 1.3944478446737754,
+    "gain_at_minus_0p01765": 2.675053547145226
+   },
+   "② ctrl_asof_psr 형 부호반전 (−0.41328)": {
+    "ratio": -0.4132872827038857,
+    "K_L_c": 100.05361710613145,
+    "K_L_c_conditional": 40.23617485066176,
+    "u_star": 0.011884008282462857,
+    "max_gain_pts": 0.47816703517988807,
+    "gain_at_probe_minus_0p0075": -0.7939905576279656,
+    "gain_at_minus_0p01765": -2.475071492938204
+   },
+   "③ count 형 부호반전 (−1.51239)": {
+    "ratio": -1.512394750815281,
+    "K_L_c": 366.13893445110966,
+    "K_L_c_conditional": 306.32149219563996,
+    "u_star": 0.09047398675099193,
+    "max_gain_pts": 27.714126626452405,
+    "gain_at_probe_minus_0p0075": -4.785270317802638,
+    "gain_at_minus_0p01765": -11.867883195215935
+   },
+   "④ L_c = 0 (신호 없음)": {
+    "ratio": 0.0,
+    "K_L_c": -0.0,
+    "K_L_c_conditional": -59.81744225546969,
+    "u_star": -0.01766745924129649,
+    "max_gain_pts": 1.0568222229671171,
+    "gain_at_probe_minus_0p0075": 0.7068136989640063,
+    "gain_at_minus_0p01765": 1.0568211909082361
+   }
+  },
+  "★probe_recommendation★": {
+   "u": -0.0075,
+   "quadratic_cost_pts": 0.19044793486803915,
+   "hypothesis_separation_pts": 2.188438402301741,
+   "why_this_size": "가설 ①과 ②가 2.19점 갈린다 — 팀 원장 검출한계 +1.4 를 넘는다. 더 키우면 하방만 커진다(S42)",
+   "ship_cost": "blend.json 숫자 1개 + d_adj 종속 재유도. 코드 0줄 · 부스터 호출 0 · A단"
+  },
+  "🔴_no_floor": "“L_c=0 이어도 +1.06” 은 성립하지 않는다. ②형 반전이면 같은 걸음이 -2.48점을 잃는다. 방향은 사야 한다.",
+  "rho_with_other_live_axes": {
+   "ft_b": -0.6352555590530388,
+   "alpha": 0.0517143549114099,
+   "beta_skew": -0.12067520115292003,
+   "ctrl_asof_psr": -0.046852408247796545,
+   "count": 0.3348021656713676,
+   "bat": -0.04037972610260177
+  },
+  "t_calframe": -6.675304944627686,
+  "🔴_G_LEDGER": "형제 b 의 LB 점은 걸음 −0.05 (CV_LB.md:1048, 부모 BO 1115.9913864857 → 1118.6680789834). 현 출하 −0.036451 은 CA 의 5축 동시 해가 나중에 옮긴 값이다."
+ },
+ "calframe_signal_screen": {
+  "🔴_읽는_법": "K·L_cal 은 표본 안 암기가 실린 값이라 ★크기★ 로 못 쓴다. |t| 가 작으면 그 프레임에 신호가 없다는 뜻이고 부호도 못 읽는다(count 축이 그 사례, t −1.08 → LB 부호가 반대였다).",
+  "n": 253507,
+  "K": 400309.19882517256,
+  "failtype_b (출하 −0.036451)": {
+   "K_G": 1971.0232025536764,
+   "K_L_cal": -401.57899824262955,
+   "se": 27.242466311056003,
+   "t": -14.740919330040757
+  },
+  "failtype_c (출하 0.0)": {
+   "K_G": 3385.7410643206963,
+   "K_L_cal": -242.09217484637293,
+   "se": 36.266833778314464,
+   "t": -6.675304944627686
+  },
+  "alpha (출하 1.07911)": {
+   "K_G": 896.4225514715865,
+   "K_L_cal": 208.13325111255165,
+   "se": 18.336888329449156,
+   "t": 11.35052182099448
+  },
+  "beta_skew (출하 −0.059151)": {
+   "K_G": 82.720409389166,
+   "K_L_cal": -40.62821607839183,
+   "se": 5.483245479557385,
+   "t": -7.409519823590206
+  },
+  "axis ctrl_asof_psr (출하 +0.006544)": {
+   "K_G": 28500.525941007436,
+   "K_L_cal": -400.8241719988514,
+   "se": 104.61939983672573,
+   "t": -3.8312604796471557
+  },
+  "count_offsets 표 (출하 u=1)": {
+   "K_G": 2.2928205308423264,
+   "K_L_cal": -1.0180818316058955,
+   "se": 0.9386555025345229,
+   "t": -1.084617124021442
+  },
+  "bat_offsets 표 (출하 u=1)": {
+   "K_G": 0.7490157189120958,
+   "K_L_cal": -5.575654365194255,
+   "se": 0.5381755128120624,
+   "t": -10.360289965740867
+  }
+ },
+ "anchors": {
+  "anchor_count_CS3": {
+   "label": "count_offsets 표 전체 (u=1 = 출하 걸음)",
+   "K_G_calframe": 2.2928205308423264,
+   "K_L_calframe": -1.0180818316058955,
+   "u_star_calframe": -0.444030318950379,
+   "max_gain_calframe_pts": 0.45205920040555186,
+   "LB_gain_observed": 0.7866627052,
+   "u_of_LB_point": 1.0,
+   "K_L_implied_by_LB": 1.5397416180211632,
+   "transfer_ratio_L_cal_to_LB": -1.512394750815281,
+   "calframe_gain_at_that_step": -4.328984194054117,
+   "calframe_overreads_gain_by": -5.5029737210606955,
+   "u_star_LB": 0.6715491235833881,
+   "shipped_pct_of_vertex": 148.90943415486822,
+   "max_gain_LB_pts": 1.0340121341269801,
+   "residual_LB_pts": 0.24734942892698009,
+   "n_rows_in_grid": 253507
+  },
+  "CW_bat_axis": {
+   "label": "bat_offsets 표 전체 (u=1 = 출하 걸음, 부호 반전판)",
+   "K_G_calframe": 0.7490157189120958,
+   "K_L_calframe": -5.5756543651942545,
+   "u_star_calframe": -7.443975105479209,
+   "max_gain_calframe_pts": 41.505032291262516,
+   "n_hit": 253507,
+   "n_miss": 0
+  }
+ },
+ "master_table": {
+  "live_adjustable": [
+   {
+    "idx": 1,
+    "constant": "blend.json /failtype_offset/c",
+    "file": "blend.json",
+    "value": 0.0,
+    "live": "산술 O — script.py 가 ft_c*(lg_wo − mu_wo) 를 최종 블렌드 로짓에 가산",
+    "kind": "순수 오프셋 (파트너 Q 실패유형 way-off 로짓, 표 조회 없음)",
+    "K_G_calframe": 3385.7410643206963,
+    "K_L_calframe_UNTRUSTED": -242.09217484637293,
+    "t_calframe": -6.675304944627686,
+    "LB_points_on_this_axis": 0,
+    "base_of_those_points": null,
+    "why_not_bought": "측정 없음 — 이 축은 한 번도 제출된 적이 없다",
+    "ship_cost": "blend.json 숫자 1개 + d_adj 종속 재유도.  코드 변경 0줄, 부스터 호출 증가 0"
+   },
+   {
+    "idx": 2,
+    "constant": "blend.json /beta_f",
+    "file": "blend.json",
+    "value": 0.0,
+    "live": "산술 O — 단 0.0 이면 폼 항 전체가 정확히 죽는다 (preds = p_blend + 0.0*d_eff)",
+    "kind": "확률공간 가산 오프셋 (동결 폼 분해)",
+    "K_G_calframe": 0.0,
+    "K_L_calframe_UNTRUSTED": 0.0,
+    "t_calframe": null,
+    "LB_points_on_this_axis": null,
+    "base_of_those_points": null,
+    "why_not_bought": "🔴 캘프레임에서 ★구조적으로 측정 불가★ — has_form = 0/253,507행. 동결 경계가 ≤2024년 말이라 2024 행은 전부 n_season ≤ 0. S32 계열",
+    "ship_cost": "blend.json 숫자 1개"
+   },
+   {
+    "idx": 3,
+    "constant": "blend.json /alpha",
+    "file": "blend.json",
+    "value": 1.07911,
+    "live": "산술 O — expit(alpha*m + ...)",
+    "kind": "척도 (가중 계열)",
+    "K_G_calframe": 896.4225514715865,
+    "K_L_calframe_UNTRUSTED": 208.13325111255165,
+    "t_calframe": 11.35052182099448,
+    "LB_points_on_this_axis": "다수 (alpha_derivation 블록)",
+    "why_not_bought": "닫힘 — exp_078 잔여 +0.2546 · exp_106 sd 맞춤 후 정확히 0.0000 (S191). 🔴 캘프레임 L 이 양수인 것은 표본 안 암기가 척도 파라미터에 만드는 전형적 편향이라 근거가 아니다"
+   },
+   {
+    "idx": 4,
+    "constant": "blend.json /beta_skew",
+    "file": "blend.json",
+    "value": -0.059151,
+    "live": "산술 O",
+    "kind": "2차항 (모양 상수)",
+    "K_G_calframe": 82.720409389166,
+    "K_L_calframe_UNTRUSTED": -40.62821607839183,
+    "t_calframe": -7.409519823590206,
+    "LB_points_on_this_axis": "beta_skew_derivation 블록 (BC 세대 프로브 + 꼭지점)",
+    "why_not_bought": "기반 다름 — 꼭지점이 BC 세대 LB 점에서 풀렸다. 현 기반 LB 점 0개"
+   },
+   {
+    "idx": 5,
+    "constant": "blend.json /axis_offsets[1] ctrl_asof_psr .u",
+    "file": "blend.json",
+    "value": 0.006544,
+    "live": "산술 O (alpha 앞)",
+    "kind": "순수 오프셋 (test.csv 원열)",
+    "K_G_calframe": 28500.525941007436,
+    "K_L_calframe_UNTRUSTED": -400.8241719988514,
+    "t_calframe": -3.8312604796471557,
+    "LB_points_on_this_axis": 1,
+    "base_of_those_points": "BJ/BL 세대 (프로브 u=−0.006087, gain −3.0727297301)",
+    "residual_pts": 0.0152,
+    "why_not_bought": "사실상 닫힘 — 기록된 단일축 꼭지점의 112.6% 에 서 있고 잔여 +0.015. 🔴 기반이 다르나 K·G 가 그 세대 기록과 0.007% 일치해 기하는 안 변했다"
+   },
+   {
+    "idx": 6,
+    "constant": "blend.json /axis_offsets[0] beta_ins_off .u",
+    "file": "blend.json",
+    "value": -0.006534,
+    "live": "산술 O (alpha 앞)",
+    "kind": "순수 오프셋 (동결 앵커 대비 in-season 레벨)",
+    "LB_points_on_this_axis": 1,
+    "base_of_those_points": "BI/BL 세대 (프로브 u=−0.006033, gain +0.9596987465)",
+    "residual_pts": 0.0134,
+    "why_not_bought": "사실상 닫힘 — 기록 꼭지점의 112.6%, 잔여 +0.013"
+   },
+   {
+    "idx": 7,
+    "constant": "blend.json /axis_offsets[2] sp_pit_split .u",
+    "file": "blend.json",
+    "value": -0.014,
+    "live": "산술 O (alpha 앞)",
+    "kind": "표 조회 · EB 수축 (deploy_splits.npz)",
+    "LB_points_on_this_axis": 1,
+    "base_of_those_points": "CR→CT (현 기반 직전)",
+    "residual_pts": 0.042,
+    "why_not_bought": "닫힘 — exp_109 가 잔여 +0.042 (브래킷 0.042~0.26) 로 종결"
+   },
+   {
+    "idx": 8,
+    "constant": "blend.json /count_offsets/theta (12칸)",
+    "file": "blend.json",
+    "value": "표",
+    "live": "산술 O",
+    "kind": "순수 오프셋 (test.csv 원열 balls/strikes)",
+    "K_G_calframe": 2.2928205308423264,
+    "t_calframe": -1.084617124021442,
+    "LB_points_on_this_axis": 1,
+    "base_of_those_points": "CT→CS3 (현 기반)",
+    "residual_pts": 0.24734942892698009,
+    "why_not_bought": "닫힘 — S215 기록 잔여 +0.250, 본 실험 독립 재현 +0.2473"
+   },
+   {
+    "idx": 9,
+    "constant": "blend.json /bat_offsets/theta (526칸+miss)",
+    "file": "blend.json",
+    "value": "표",
+    "live": "산술 O",
+    "kind": "라벨 잔차 EB 수축 표 (batter_id 키)",
+    "K_G_calframe": 0.7490157189120958,
+    "t_calframe": -10.360289965740867,
+    "LB_points_on_this_axis": 1,
+    "base_of_those_points": "CS3→CV (부호 +, LB −3.9905355919)",
+    "why_not_bought": "측정 진행 중 — CW 가 부호를 뒤집어 0.65배로 다시 실었고 아직 LB 미측정"
+   },
+   {
+    "idx": 10,
+    "constant": "blend.json /aux_offsets[0] v6_nn_hidden_nact .u",
+    "file": "blend.json",
+    "value": 0.00035931005680782873,
+    "live": "산술 O",
+    "kind": "순수 오프셋",
+    "LB_points_on_this_axis": 1,
+    "base_of_those_points": "CA2 (프로브)",
+    "why_not_bought": "닫힘 — S78 잔여 +0.0369, 합성 방향 최대 +0.04124"
+   },
+   {
+    "idx": 11,
+    "constant": "blend.json /aux_offsets[1] aa_seed_sd18 .u",
+    "file": "blend.json",
+    "value": 0.0,
+    "live": "산술 O — 배선돼 있고 u=0 이라 항이 정확히 0",
+    "kind": "순수 오프셋",
+    "LB_points_on_this_axis": 1,
+    "base_of_those_points": "CA2 (프로브, 동시 해가 0 을 줬다)",
+    "why_not_bought": "닫힘 — S78 과 같은 절, 잔여 +0.04 이하"
+   },
+   {
+    "idx": 12,
+    "constant": "blend.json /w_v6 · /c_aa · /smooth_weights.T70",
+    "file": "blend.json",
+    "value": [
+     0.7,
+     0.25244,
+     0.04756
+    ],
+    "live": "산술 O",
+    "kind": "가중 축 (전이비 0.1137)",
+    "LB_points_on_this_axis": "없음(현 기반)",
+    "why_not_bought": "크기 미달 — exp_106 이 교차적합으로 측정: 전량 걸음 표본 밖 −1.418, 절반 걸음 +2.355(t 4.97) → LB 환산 ★+0.27★ (원장 0.247 로 봐도 +0.58)"
+   },
+   {
+    "idx": 13,
+    "constant": "mate/model/blend.json /w_deep",
+    "file": "mate/model/blend.json",
+    "value": 0.4,
+    "live": "산술 O",
+    "kind": "딥 계열 (전이비 0.348 — 계열 닫힘)",
+    "LB_points_on_this_axis": 1,
+    "base_of_those_points": "CF→CG",
+    "why_not_bought": "닫힘 — 우리 정직면 argmax 0.43, 이동 이득 +0.1184(t 0.191) → LB +0.0412 (S145)"
+   },
+   {
+    "idx": 14,
+    "constant": "mate/model/blend.json /w_v6 (내부)",
+    "file": "mate/model/blend.json",
+    "value": 0.6668397489,
+    "live": "산술 O",
+    "kind": "가중 축",
+    "LB_points_on_this_axis": 1,
+    "base_of_those_points": "BN→BO",
+    "why_not_bought": "기반 다름 + 크기 미달 — exp_106 이 mate 내부 3축 합 +1.434 vs 귀무 기대 +1.17 로 측정"
+   },
+   {
+    "idx": 15,
+    "constant": "mate/model/blend.json /w_ebm",
+    "file": "mate/model/blend.json",
+    "value": -0.1,
+    "live": "산술 O",
+    "kind": "가중 축",
+    "LB_points_on_this_axis": 0,
+    "why_not_bought": "측정 없음 — 팀원이 정한 값. 🔴 우리가 옮기려면 파트너 팔 재추론(약 5분/판)이 필요하고, exp_106 이 이 계열 전체를 표본 밖 −1.4 로 닫았다"
+   },
+   {
+    "idx": 16,
+    "constant": "mate/model/blend.json /beta_ins",
+    "file": "mate/model/blend.json",
+    "value": 0.03,
+    "live": "산술 O",
+    "kind": "순수 오프셋 (파트너 내부, in-season 레벨)",
+    "LB_points_on_this_axis": "후보 AS·AT 가 0.00/0.06 를 쟀다 — 장부 대조 필요",
+    "why_not_bought": "장부 대조 결과에 따름"
+   },
+   {
+    "idx": 17,
+    "constant": "mate/model_q/meta.json /offset/beta",
+    "file": "mate/model_q/meta.json",
+    "value": 0.59072,
+    "live": "산술 O — q_infer stage 3",
+    "kind": "표 조회 · EB 수축 계열",
+    "LB_points_on_this_axis": 0,
+    "why_not_bought": "측정 없음 — 파트너 팔 재추론 필요. 🔴 이 값을 옮기면 aa_infer/q_infer 의 기록-대조 assert 6계열 9자리를 함께 고쳐야 한다 (S35)"
+   },
+   {
+    "idx": 18,
+    "constant": "mate/model_q/meta.json /backoff/league_dev 4셀",
+    "file": "mate/model_q/meta.json",
+    "value": "4셀",
+    "live": "산술 O",
+    "kind": "표 조회 백오프",
+    "LB_points_on_this_axis": "4셀 각각 1~3개 (BS4·BW·BX·CJ·CN·CQ·CR)",
+    "why_not_bought": "닫힘 — exp_099 가 3셀 정산 완료, CR 이 마지막 1|2 를 착륙시켰다"
+   },
+   {
+    "idx": 19,
+    "constant": "model/meta.json /offset/beta_by_segment (R .597044 · F .492041)",
+    "file": "model/meta.json",
+    "value": [
+     0.597044,
+     0.492041
+    ],
+    "live": "산술 O — aa_infer stage 3",
+    "kind": "표 조회 · EB 수축 계열",
+    "LB_points_on_this_axis": 0,
+    "why_not_bought": "측정 없음 — AA 팔 재추론 필요. 후보 W 가 2022+2023 공급 블록에서 적합했고 그 뒤 한 번도 LB 로 안 옮겼다"
+   },
+   {
+    "idx": 20,
+    "constant": "model/meta.json /branch_mix (F 행 0.5/0.5)",
+    "file": "model/meta.json",
+    "value": 0.5,
+    "live": "산술 O — stage 2c",
+    "kind": "가중 축 (AA 팔 내부)",
+    "LB_points_on_this_axis": 0,
+    "why_not_bought": "측정 없음 — 🔴 meta 자신이 fold_2024 argmin 은 w=1.0 이고 안 맞춘 대가가 valid_all −2.768점이라 기록한다. 로컬 값이고 LB 로 산 적 없다"
+   },
+   {
+    "idx": 21,
+    "constant": "model/meta.json /backoff/league_dev 4셀 (AA 사본)",
+    "file": "model/meta.json",
+    "value": "4셀",
+    "live": "산술 O",
+    "kind": "표 조회 백오프",
+    "LB_points_on_this_axis": 0,
+    "why_not_bought": "측정 없음 — S66 이 이중 적재를 지적했으나 AA 사본은 한 번도 안 옮겼다. 실효 가중이 c_aa 0.25244 라 Q 사본보다 작다"
+   }
+  ],
+  "not_adjustable_or_dead": [
+   {
+    "key": "blend.json /target_rate = 0.48589279261815",
+    "verdict": "★PRINT-ONLY★ — f-string 1회, 산술 경로 0 (S209 재확인)"
+   },
+   {
+    "key": "blend.json /d_form_eb_k = 100",
+    "verdict": "★죽은 메타데이터★ — script.py 도 form_offset.py 도 이 키를 읽지 않는다. form_offset.py 가 K=100 을 하드코딩하고, 게다가 beta_f=0.0 이라 그 항 전체가 죽어 있다"
+   },
+   {
+    "key": "mate/model/blend.json /target_rate = 0.4785",
+    "verdict": "★PRINT-ONLY★"
+   },
+   {
+    "key": "model/meta.json /offset/eb_k = 400",
+    "verdict": "★PRINT-ONLY + 가드★ — aa_infer.py 3곳(대입·assert>0·print)뿐. 수축은 이미 lookup_d 표에 구워져 있어 이 숫자를 바꿔도 예측이 한 비트도 안 변한다"
+   },
+   {
+    "key": "mate/model_q/meta.json /offset/eb_k = 400",
+    "verdict": "★PRINT-ONLY + 가드★ — q_infer.py 3곳(514/536/620)뿐. 위와 같은 이유"
+   },
+   {
+    "key": "mate/model_q/meta.json /logit_calibration/gamma = −0.029941",
+    "verdict": "★죽은 코드★ — q_infer.py:694 가 \"블렌딩 빌드: stage 4(gamma)를 적용하지 않는다\" 로 preds = p_off 를 반환한다. 읽히고 assert 되지만 적용되지 않는다"
+   },
+   {
+    "key": "model/meta.json /logit_calibration/gamma_by_segment (R −0.031877 · F −0.003383)",
+    "verdict": "★블렌드 경로에서 죽은 코드★ — aa_infer 는 gamma 적용본을 _aa_ret[3] 로 내지만 script.py 는 _aa_ret[2](gamma 이전)를 쓴다. gamma 판본은 anchor_mode=\"AA\" 항등 앵커에서만 쓰인다"
+   },
+   {
+    "key": "blend.json /smooth_weights/S1 = S2 = 0.0",
+    "verdict": "조정 불가 — 지분 0 인 평활 팔은 벡터 자체를 안 싣는다. 0 이 아니게 하려면 그 팔들을 새로 출하해야 한다"
+   }
+  ]
+ },
+ "gates": {
+  "G1_reproduce_CA_b_solve_12_digits": {
+   "my_2KL_with_CA_G": -147.2387933342835,
+   "CA_recorded_2KL": -147.23879333428016,
+   "my_vertex_with_CA_G": -0.0392825575745623,
+   "CA_recorded_vertex": -0.03928255757456141
+  },
+  "G2_K_G_vs_package_ctrl_asof_psr": {
+   "mine": 28500.525941007436,
+   "package": 28501.877281588313,
+   "pct_diff": 0.0068
+  },
+  "G3_K_G_vs_package_count": {
+   "mine": 2.2928205308423264,
+   "package": 2.3051,
+   "pct_diff": 0.53
+  },
+  "G4_ledger_reproduction_count_residual": {
+   "mine": 0.24734942892698009,
+   "S215_recorded": 0.25
+  },
+  "G5_probe_gain_recompute_from_recorded_L_and_G": {
+   "ctrl_asof_psr": [
+    -3.0727297300999994,
+    -3.0727297301
+   ],
+   "beta_ins_off": [
+    0.9596987465000002,
+    0.9596987465
+   ]
+  },
+  "G6_m_logit_mix_recovery_max_resid": 2.1094237467877974e-15,
+  "G7_offline_CW_is_the_shipped_vector": "logit 차가 선언 d_adj 걸음과 5.62e-16 안에서 상수"
+ },
+ "limits": [
+  "캘프레임 L 은 판정 근거가 아니다 (본 실험이 그것을 증명했다).",
+  "aux_offsets[0] nact 의 raw 를 이 방에 보유하지 않아 m(logit_mix) 역산에 |m| ≤ 0.0139 의 미포함 항이 있다 (m 의 sd 0.196 의 7%).",
+  "mate 내부 상수(w_ebm·beta_ins·Q beta·league_dev AA 사본)와 AA 팔 내부 상수(branch_mix·beta_by_segment)는 재추론 없이 K·G 를 못 잰다 — 이번 실험은 런 0 규율로 안 쟀다.",
+  "b 의 LB 점은 부모 BO 세대다. 현 기반 캘프레임 G(1971.02)와 그 세대 G(1874.10)가 5.2% 다르다 — 두 G 로 모두 풀어 표에 실었다."
+ ],
+ "🔴🔴_failtype_c_ANSWER": {
+  "🔴🔴_ANSWER_why_c_is_zero": "c 는 “안 산” 것이 아니라 ★측정하고 버린★ 것이다. exp_082 가 b 와 나란히 정직면 단독 스크린을 돌려 c 의 최대이득 +0.12450574932154268점(꼭지점 t −0.006142939399853696)을 얻었다 — 같은 화면에서 b 는 +168.42241313652642 였다. ★1,353배 차이★. exp_082 metrics.json 이 /constants/c_shipped = 0.0 으로 그 결정을 기록한다. S54 가 인용한 sd비 0.9998887329723813 이 바로 이 측정의 값이다.",
+  "exp_082_honest_surface": {
+   "base_pts": 928.501461058684,
+   "🔴_실험자_경고": "lg_mr·lg_wo 는 ≤2024 학습 Q 셀에서 나온다 — 2024 행에는 표본 내다. 정직면의 나머지 팔은 ≤2023 학습이므로 이 읽기는 위로 편향돼 있다. 상한으로만 읽을 것.",
+   "b_lg_mr": {
+    "raw_argmax_t": -0.2993696045546217,
+    "raw_gain_pts": 168.42241313652642,
+    "sd_ratio_at_raw_argmax": 1.377591580534469,
+    "sd_matched_gain_at_raw_argmax_pts": 170.03544146955153,
+    "sd_matched_own_argmax_t": -0.5999999214558481,
+    "sd_matched_own_gain_pts": 220.21840571115888,
+    "information_share": 1.3075362216348583,
+    "alpha_free_gain_pts": 191.84923842282547,
+    "alpha_free_a_star": 0.8602027743867764,
+    "gain_at_shipped_b_-0.05": 51.94414061199245,
+    "grid_raw_delta": {
+     "-0.300": 168.42168306291376,
+     "-0.200": 150.12860820027288,
+     "-0.100": 94.22851758532636,
+     "-0.050": 51.94414061199245,
+     "-0.020": 21.941194750840737,
+     "+0.000": 0.0,
+     "+0.020": -23.497190343979582,
+     "+0.050": -61.668342924559056,
+     "+0.100": -133.1143299737048,
+     "+0.200": -305.49623267011054,
+     "+0.300": -517.3428292644888
+    },
+    "grid_sd_matched_delta": {
+     "-0.300": 170.21623450578215,
+     "-0.200": 134.8593189753334,
+     "-0.100": 81.41066721992775,
+     "-0.050": 44.99735810588038,
+     "-0.020": 19.1505940120295,
+     "+0.000": 0.0,
+     "+0.020": -20.84447570114287,
+     "+0.050": -55.61013258558182,
+     "+0.100": -124.22521659491986,
+     "+0.200": -311.3828121455664,
+     "+0.300": -582.2125728773276
+    }
+   },
+   "c_lg_wo": {
+    "raw_argmax_t": -0.006142939399853696,
+    "raw_gain_pts": 0.12450574932154268,
+    "sd_ratio_at_raw_argmax": 0.9998887329723813,
+    "sd_matched_gain_at_raw_argmax_pts": 0.13795872494392825,
+    "sd_matched_own_argmax_t": -0.006237885921039253,
+    "sd_matched_own_gain_pts": 0.13799069843446432,
+    "information_share": 1.108307842701272,
+    "alpha_free_gain_pts": 0.14494469994235715,
+    "alpha_free_a_star": 1.0776236598345712,
+    "gain_at_t_eq_0.05": -10.27518351033325,
+    "grid_raw_delta": {
+     "-0.300": -282.62389275423016,
+     "-0.200": -123.41644309477044,
+     "-0.100": -28.907987821547067,
+     "-0.050": -6.219239804117251,
+     "-0.020": -0.5089564544147152,
+     "+0.000": 0.0,
+     "+0.020": -2.1305544463001524,
+     "+0.050": -10.27518351033325,
+     "+0.100": -37.033744016989885,
+     "+0.200": -139.77733620142988,
+     "+0.300": -307.43048177279695
+    },
+    "grid_sd_matched_delta": {
+     "-0.300": -243.1330735042203,
+     "-0.200": -119.41962258243962,
+     "-0.100": -30.22919301491902,
+     "-0.050": -6.615320633329702,
+     "-0.020": -0.5333800517815916,
+     "+0.000": 0.0,
+     "+0.020": -2.298397668065718,
+     "+0.050": -10.969931675275461,
+     "+0.100": -38.54378620501427,
+     "+0.200": -133.39629777955338,
+     "+0.300": -259.3667600343741
+    }
+   },
+   "derived_K_L_K_G": {
+    "b": {
+     "K_L": -562.5902248395988,
+     "K_G": 1879.249650867448
+    },
+    "c": {
+     "K_L": -20.268106392927788,
+     "K_G": 3299.4149988538884
+    },
+    "rho_bc": -0.6397783734774966,
+    "K_G_bc": -1593.0898358131417
+   }
+  },
+  "GATE_두_면의_G_가_맞는가": {
+   "b": {
+    "정직면": 1879.249650867448,
+    "캘프레임(CW 기반)": 1971.0232025536764,
+    "CA_기록(BX 세대)": 1874.0988676056702,
+    "pct_honest_vs_CA": 0.2748405300707857
+   },
+   "c": {
+    "정직면": 3299.4149988538884,
+    "캘프레임(CW 기반)": 3385.7410643206963,
+    "pct": -2.5496948475038805
+   },
+   "rho_bc": {
+    "정직면": -0.6397783734774966,
+    "캘프레임": -0.6352555590530388
+   },
+   "🟢": "두 독립 면이 G 와 ρ 에서 3% 안으로 맞는다. G 는 믿을 수 있다."
+  },
+  "L_축척_정직면_to_LB": {
+   "ratio": 0.13516499520147643,
+   "근거": "b 의 LB 점 하나(u=−0.05, +2.6766924977) + 캘프레임 G",
+   "b_K_L_honest": -562.5902248395988,
+   "b_K_L_LB": -76.04250504084192,
+   "c_K_L_LB_implied": -2.7395385033430983,
+   "c_단독_최대이득_LB_pts": 0.002216670167245981
+  },
+  "🔑_THE_REAL_FINDING": {
+   "gain_at_current_point_pts": 2.9247986707912075,
+   "joint_bc_optimum_u": [
+    -0.06581251178154254,
+    -0.0327080569793333
+   ],
+   "joint_bc_max_pts": 5.094153240362841,
+   "available_in_the_bc_plane_pts": 2.1693545695716336,
+   "c_only_b_frozen": {
+    "K_L_c_conditional": -62.55698075881279,
+    "u_star": -0.01847659923496365,
+    "max_gain_pts": 1.1558402628299163
+   },
+   "🔑": "c 는 ★자기 신호로는 무가치★(LB 단독 최대 0.0022점)인데, ★출하 b 가 (b,c) 동시 꼭지점이 아닌 b 단독 꼭지점에 서 있어서★ c 방향에 기울기가 남아 있다. 그 기울기의 96% 는 c 자신의 L 이 아니라 교차항 −K·G_bc·b 다.",
+   "🟢_부호_견고성": "교차항 -59.82 가 c 자신의 L -2.74 를 21.8배 압도한다 → L_c 의 부호가 뒤집혀도 조건부 기울기의 부호는 안 변한다."
+  },
+  "독립확인_정직면에서_같은_계산": {
+   "joint_max_honest_pts": 295.26183453190527,
+   "b_alone_honest_pts": 168.42241313652642,
+   "available_honest_pts": 126.83942139537885,
+   "LB_환산": 2.317302439823015,
+   "🟢": "캘프레임 경로와 정직면 경로가 독립으로 같은 자리를 가리키는지 본다"
+  }
+ },
+ "failtype_c_cross_rho": {
+  "ft_b": -0.6352555590530388,
+  "alpha": 0.0517143549114099,
+  "beta_skew": -0.12067520115292003,
+  "ctrl_asof_psr": -0.046852408247796545,
+  "count": 0.3348021656713676,
+  "bat": -0.04037972610260177
+ },
+ "🔴_그리고_이_실험이_스스로_증명한_것": "캘프레임 L 을 믿었다면 c 의 조건부 최대이득을 +3.30 으로 보고했을 것이다. 정직면 + 형제 b 의 LB 점으로 다시 풀면 +1.16 이다. 2.8배 과대였고, 같은 프레임이 ctrl_asof_psr(|t| 3.83)·count 의 ★부호★ 를 틀렸다. ★캘프레임은 G 전용이다.★",
+ "ledger_original_lines": {
+  "blend.json /failtype_offset/c": {
+   "LB_points": 0,
+   "base": null,
+   "residual_computed": "아니오",
+   "ledger": "exp_082/metrics.json /constants/c_shipped = 0.0 · /stage2_honest_surface/c_lg_wo (정직면 단독 스크린)",
+   "verdict": "★측정하고 버렸다★ — 단독으로는 옳은 판정. (b,c) 동시 해는 미실행"
+  },
+  "blend.json /beta_f": {
+   "LB_points": 2,
+   "base": "AF(부모 AC, 2026-08-13) 와 AI(부모 AH, 2026-08-14) — 둘 다 약 40후보 전",
+   "ledger": "CV_LB.md:151 (AF β_f 0.19, +27.9504851031) · CV_LB.md:148 (AI β_f 0.19→0.0, +17.6298337629)",
+   "🔴": "AI 는 ★묶인 쌍★ 이다 — `ins_* 16열` 과 `β_f→0` 을 같이 바꿨다. β_f→0 자신의 몫은 ★분리된 적이 없다★.",
+   "rationale_recorded": "CV_LB.md:344 «약한 형태로 싣고 있던 신호를 강한 형태로 바꿨다» — ins_* 16열이 같은 시즌 내 폼 신호의 강한 형태라 약한 형태를 껐다",
+   "residual_computed": "아니오",
+   "verdict": "의도적으로 0 을 둔 것이 맞다(중복 제거). 다만 ① 귀속이 묶여 있고 ② 잔여 미계산 ③ 우리 캘프레임에서 측정 불가(has_form 0/253,507). 🔴 감사관 cov 프레임은 has_form 을 245,634/245,789 로 살렸다(CV_LB.md:324) — 재려면 그 프레임이 필요하다"
+  },
+  "mate/model/blend.json /beta_ins": {
+   "LB_points": 1,
+   "base": "AR (2026-08-17) — 딥 팔 이전",
+   "ledger": "CV_LB.md:934 — AT 가 0.03→0.06 으로 ★−1.0314113487★. 축 기울기 −34.3804/단위. 🔴 AS(0.00)는 ★제출되지 않았다★ — 1094.9667375 는 선형 ★예측★ 이다",
+   "residual_computed": "아니오",
+   "🔴_S138": "그 축은 mate 내부라 진폭이 (1−w_deep) 배로 움직인다. AR 시절 w_deep=0(배율 1.0) → 지금 0.40(배율 0.60). 같은 beta_ins 값이 지금은 0.6배 효과이므로 ★꼭지점이 beta_ins 단위로 1.667배 바깥으로 이동했다★ — AR 시절 «줄이는 게 낫다» 가 지금 그대로 성립하지 않는다",
+   "verdict": "방향 근거가 낡았고 재추론 없이 못 잰다. 방어 가능한 숫자 없음"
+  },
+  "blend.json /d_form_eb_k = 100": {
+   "LB_points": 0,
+   "verdict": "★죽은 메타데이터★ — 어떤 .py 도 이 키를 안 읽는다. form_offset.py 가 K=100 을 하드코딩하고, beta_f=0 이라 그 항 전체가 죽어 있다. 조정 가능한 상수가 아니다"
+  },
+  "mate/model_q/meta.json offset.eb_k = 400": {
+   "LB_points": 0,
+   "verdict": "★PRINT-ONLY + 가드★ — q_infer.py 514(대입)·536(assert>0)·620(print) 뿐. 수축은 lookup_d 표에 이미 구워져 있어 이 숫자를 바꿔도 예측이 한 비트도 안 변한다. 조정 가능한 상수가 아니다"
+  },
+  "model/meta.json offset.eb_k = 400": {
+   "LB_points": 0,
+   "verdict": "★PRINT-ONLY + 가드★ — aa_infer.py 1084·1136·1216 뿐. 위와 같다"
+  },
+  "blend.json /beta_skew = −0.059151": {
+   "LB_points": "프로브 1 + 꼭지점 착륙 (BC 세대)",
+   "base": "BC — 딥 팔 이전",
+   "ledger": "blend.json /beta_skew_derivation (Q·G·probe_sizing·vertex_machinery)",
+   "residual_computed": "그 세대 기준으로만",
+   "verdict": "기반 다름. 현 기반 LB 점 0개. 캘프레임 K·G 82.72 — LB +1.4 를 얻으려면 |K·L| ≥ 10.76 이 필요"
+  },
+  "blend.json /axis_offsets[1] ctrl_asof_psr": {
+   "LB_points": 1,
+   "base": "BJ/BL 세대",
+   "ledger": "blend.json /axis_offsets[1] {probe_u −0.006087, probe_gain_pts −3.0727297301, L_i_back_solved +0.0004138189513845949, G_ii 0.07119965607894004}",
+   "residual_pts": 0.0152,
+   "verdict": "사실상 닫힘. 🟢 그 세대 G_ii 를 K 배한 값 28,502.4 가 내 현 기반 캘프레임 28,500.5 와 ★0.007%★ 일치 — 기하가 안 변했다"
+  },
+  "blend.json /axis_offsets[0] beta_ins_off": {
+   "LB_points": 1,
+   "base": "BI/BL 세대",
+   "ledger": "blend.json /axis_offsets[0] {probe_u −0.006033, probe_gain_pts +0.9596987465, L_i_back_solved −0.0004138284137996067, G_ii 0.07132053755550466}",
+   "residual_pts": 0.0134,
+   "verdict": "사실상 닫힘"
+  },
+  "blend.json /failtype_offset/b": {
+   "LB_points": 1,
+   "base": "BO (팀원, 2026-08-19 21:46)",
+   "ledger": "CV_LB.md:1048 — «실패유형 오프셋 b = −0.05», BO 1115.9913864857 → 1118.6680789834, +2.6766924977. 🔴 그 걸음은 −0.05 이고 현 출하 −0.036451 은 CA 의 5축 동시 해가 나중에 옮긴 값이다(blend.json /CA_one_dimensional_LB_solves/b)",
+   "residual_pts": 0.0089,
+   "verdict": "단독으로는 닫힘. (b,c) 평면으로 보면 아니다"
+  }
+ }
+}

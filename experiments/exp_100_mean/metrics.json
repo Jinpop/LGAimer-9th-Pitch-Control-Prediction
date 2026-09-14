@@ -1,0 +1,368 @@
+{
+ "question": "Is the global-mean axis (root blend.json d_adj / its aim point) at its vertex on the current base CH, and if not how much is left?",
+ "headline": "NOT at the vertex. The axis was last OPTIMISED at candidate BG (2026-08-19, base BB, LB 1112.25). Everything after BG only RE-PINNED the parent's cal-frame mean, which is a no-op by construction and does NOT hold the deployed test mean. Over the 28.08 LB points from BG to CH the required aim has drifted UP by an estimated +0.0020 to +0.0046 in mean units = +1.5 to +8.5 points recoverable. Direction is supported by four independent lines; magnitude is model-bound, not measured.",
+ "G_LEDGER_note": "Every LB number below was re-read from submissions/CV_LB.md, BUILD_PLAN_*.yaml, AUDIT_*.md line by line; the E-solver reproduces two independently recorded ledger residuals exactly (AW +0.00001 pts, teammate +2.80391 pts).",
+ "what_the_knob_actually_is": {
+  "live_constant": "root blend.json `d_adj` = 0.032913480457649656 (script.py:502, `+ d_adj` inside expit, AFTER alpha*z + beta_skew*z^2)",
+  "target_rate_is_dead": "root blend.json `target_rate` = 0.4847980356943589 is PRINT-ONLY (script.py:217/219). AUDIT_BG proved it by rebuilding the parent output byte-identically without reverting it.",
+  "the_real_aim": "build_CM/src/03_solve.py: TARGET = float(p['PAR'].mean()) -- the aim is whatever the PARENT's mean is on the cal frame in use, re-measured every build. d_adj is then brentq-solved to reproduce it.",
+  "so_the_candidate_changes": "exactly one float: root blend.json d_adj. Nothing else. `target_rate` and three prose keys must be corrected for honesty (they are already false -- flagged by BE-N1, BG-N2 and AUDIT_CG N7, three audits in a row).",
+  "S36_name_trap": "mate/model/blend.json has its OWN d_adj (-0.019641085540766146) and its OWN target_rate (0.4785). Those are the mate-internal pair, applied after the deep mix (exp_098). Do not touch them; they are collinear with the root knob and add no degree of freedom.",
+  "unchanged_since_BG": "alpha = 1.07911 and beta_skew = -0.059151 -- read from the shipped package. The spread constants have NOT moved since the last mean landing."
+ },
+ "LB_points_on_this_axis": [
+  {
+   "cand": "P",
+   "base": "N (M-lineage)",
+   "base_lb": null,
+   "aim_move": "gamma retarget to 0.4785",
+   "d_before": null,
+   "d_after": null,
+   "lb": 953.1765186329,
+   "delta": -20.1196855618,
+   "source": "CV_LB.md:122 -- the first time this axis was priced. 0.4785 was a train-season trend extrapolation."
+  },
+  {
+   "cand": "AC",
+   "base": "teammate v6xQ",
+   "base_lb": null,
+   "aim_move": "0.4785 kept",
+   "d_before": null,
+   "d_after": null,
+   "lb": 1020.5223933433,
+   "delta": 0.6526133433,
+   "source": "CV_LB.md:135"
+  },
+  {
+   "cand": "AE",
+   "base": "AC",
+   "base_lb": 1020.5223933433,
+   "aim_move": "0.4785 -> 0.4856196",
+   "d_before": -0.031335347988186414,
+   "d_after": -0.002588953674811294,
+   "lb": 999.0127562234,
+   "delta": -21.5096371199,
+   "source": "CV_LB.md:138"
+  },
+  {
+   "cand": "teammate target_rate",
+   "base": "AR",
+   "base_lb": 1093.9353261813,
+   "aim_move": "0.4785 -> 0.4856196",
+   "d_before": -0.004710593992398,
+   "d_after": 0.0241050141371,
+   "lb": 1099.1407771684,
+   "delta": 5.2054509871,
+   "source": "CV_LB.md:933 -- SAME absolute move as AE, opposite outcome"
+  },
+  {
+   "cand": "AW",
+   "base": "AV",
+   "base_lb": 1094.8069785012,
+   "aim_move": "0.4785 -> 0.4829582933733939",
+   "d_before": -0.0046521158244170295,
+   "d_after": 0.013395858438940476,
+   "lb": 1102.7842569825,
+   "delta": 7.9772784813,
+   "source": "CV_LB.md:944"
+  },
+  {
+   "cand": "BE",
+   "base": "BB",
+   "base_lb": 1110.5899048276,
+   "aim_move": "0.4829582933733939 -> 0.480478737641231",
+   "d_before": 0.0209047558289546,
+   "d_after": 0.01084840202997513,
+   "lb": 1104.1395515075,
+   "delta": -6.4503533201,
+   "source": "CV_LB.md:1473 + BUILD_PLAN_BE.yaml:22"
+  },
+  {
+   "cand": "BG (joint alpha/beta/d)",
+   "base": "BB (ref) / BC (pkg)",
+   "base_lb": 1110.5899048276,
+   "aim_move": "-> 0.4847980356943589",
+   "d_before": 0.0209047558289546,
+   "d_after": 0.029492809613719313,
+   "lb": 1112.251888309,
+   "delta": 1.6619834814,
+   "source": "CV_LB.md:1440-1445 + BUILD_PLAN_BG.yaml:37-57. Three axes moved; d share was +0.007457."
+  }
+ ],
+ "E_solved_at_each_base": {
+  "model": "gain(eps) = K*(2*eps*E - eps^2); vertex eps* = E; K = 100000/0.2498069 = 400309.19882517256",
+  "validation": "AW row reproduces CV_LB.md:944's recorded residual +0.00001 pts; teammate row reproduces CV_LB.md:933's recorded '남은 몫 +2.80391'. Both to the printed digits.",
+  "rows": [
+   {
+    "cand": "AE",
+    "base": "AC",
+    "base_lb": 1020.5223933433,
+    "eps": 0.0071196,
+    "lb_delta": -21.5096371199,
+    "E_solved": -0.00021376576847515806,
+    "vertex_aim": 0.47828623423152483,
+    "max_gain_pts": 0.0182924505975515,
+    "left_after_that_move_pts": 21.52792957049755
+   },
+   {
+    "cand": "teammate",
+    "base": "AR",
+    "base_lb": 1093.9353261813,
+    "eps": 0.0071196,
+    "lb_delta": 5.2054509871,
+    "E_solved": 0.004473023758490218,
+    "vertex_aim": 0.4829730237584902,
+    "max_gain_pts": 8.009363049626714,
+    "left_after_that_move_pts": 2.803912062526713
+   },
+   {
+    "cand": "AW",
+    "base": "AV",
+    "base_lb": 1094.8069785012,
+    "eps": 0.0044582933733939,
+    "lb_delta": 7.9772784813,
+    "E_solved": 0.004464059287719039,
+    "vertex_aim": 0.482964059287719,
+    "max_gain_pts": 7.9772917898867535,
+    "left_after_that_move_pts": 1.3308586754344593e-05
+   },
+   {
+    "cand": "BE",
+    "base": "BB",
+    "base_lb": 1110.5899048276,
+    "eps": -0.0024795557587629,
+    "lb_delta": -6.4503533201,
+    "E_solved": 0.002009479091558416,
+    "vertex_aim": 0.4849677724649523,
+    "max_gain_pts": 1.616451034543256,
+    "left_after_that_move_pts": 8.066804354643255
+   }
+  ]
+ },
+ "vertex_trajectory": {
+  "AC  (LB 1020.5224)": 0.4782862,
+  "AR  (LB 1093.9353)": 0.482973,
+  "AV  (LB 1094.8070)": 0.4829641,
+  "BB  (LB 1110.5899)": 0.4849678,
+  "BG..CH (LB 1112.25 -> 1140.33)": "미측정",
+  "🔑": "monotone rising with the base. AC->AR 6.384e-05 per LB pt (span 73.41); AV->BB 1.270e-04 per LB pt (span 15.78).",
+  "🔴_AE_vs_teammate": "the SAME absolute move (0.4785 -> 0.4856196) scored -21.5096371199 on base AC and +5.2054509871 on base AR. That is the axis's vertex moving +0.004687 across 73.4 LB points -- direct proof that this constant expires."
+ },
+ "BG_landing": {
+  "BE_solved_required_shift": 0.0020094791397155475,
+  "BG_applied": 0.00183974232096501,
+  "residual_gap": 0.0001697368187505376,
+  "left_at_BB_after_BG_pts": 0.011533143255671823,
+  "verdict": "BG closed the axis at base BB to 0.0115 pts. So on 2026-08-19 it WAS at the vertex."
+ },
+ "three_way_verdict": {
+  "question": "the 0.0018397 gap between AW's vertex (0.4829582933733939) and the shipped target_rate (0.4847980356943589)",
+  "answer": "① SOMEONE MOVED IT WITH A REASON. 0.4847980356943589 - 0.4829582933733939 = 0.00183974232096501 EXACTLY, and that is candidate BG's deliberate d-step, sized from the LB point BE paid -6.4503533201 for. Not drift, not a frame artifact.",
+  "the_other_gap": {
+   "numbers": "shipped target_rate 0.4847980356943589 (BG, tr2024 SHIPPED-table frame) vs the aim actually used now 0.4848714926181514 (<=2023-table cal frame), difference +7.34569e-05",
+   "answer": "③-adjacent: BOOKKEEPING, not a move. The aim is re-measured every build as the parent's own mean on whichever frame that build uses; CE switched the frame convention to the <=2023-vintage tables. d_adj itself is continuous -- 03_solve.py's positive control re-derives the parent's shipped d_adj to 5e-15 every time. Worth K*(7.35e-05)^2 = 0.0022 pts either way. The stale `target_rate` label is the same thing AUDIT_CG N7 flagged.",
+   "🔴": "but the shipped `target_rate` field being stale means the zip's own prose is false about the axis it is describing (S30/S48/S73)."
+  },
+  "🔴_what_actually_matters": "NEITHER gap is the money. The money is ② -- the vertex itself moved because the arms changed, and that is unmeasured since BG."
+ },
+ "frame_curvature_measured": {
+  "frame": "build_CM/work/calp_PAR.npy -- CH on the <=2023-table cal frame, 253,507 rows; identical file in build_CJKL/work (verified byte-equal)",
+  "mean_reproduces_declared_aim_to": -1.4432899320127035e-15,
+  "K_G_in_aim_mean_units": 400442.3879517778,
+  "vs_K": "ratio 1.000333 -- the d_adj path really is a uniform probability shift to 0.033%. The orchestrator's 'K*G is essentially K' is right.",
+  "linearity": "K*G varies by 4.6 ppm over eps in [-0.005, +0.005]; K*mean(delta^2) is quadratic in eps to 6 digits.",
+  "d_adj_step_per_unit_eps": 4.0539411246869745,
+  "G_in_d_units": 0.06086736600183874,
+  "🟢_cross_check": "BUILD_PLAN_BE.yaml recorded G = 6.081638e-02 in d-units on the 2026-08-19 frame. Today's frame gives 6.086737e-02 -- 0.084% apart, seven candidates and one new deep arm later. This axis's curvature is stable and frame-insensitive (S56: it rides no lookup table).",
+  "🔑": "because G is known to <0.1%, ONE LB point fully determines the vertex (the AW machinery, CV_LB.md:947-955). No 3-point sweep is needed."
+ },
+ "cross_terms": {
+  "measured_on": "same cal frame, delta vectors taken from the actually-built anchored packages",
+  "rows": {
+   "q22 (candidate CM)": {
+    "rho": -1.15e-05,
+    "K_cross_pts": -1.06e-07,
+    "own_K_Q_pts": 0.6311546833013445
+   },
+   "q11 (candidate CN)": {
+    "rho": 0.0958,
+    "K_cross_pts": 0.0014956,
+    "own_K_Q_pts": 1.839487386417075
+   },
+   "q11 (candidate CJ)": {
+    "rho": -0.0926,
+    "K_cross_pts": -0.00012835,
+    "own_K_Q_pts": 0.014512576160884142
+   },
+   "R18 (CG2)": {
+    "rho": -0.0597,
+    "K_cross_pts": -0.00026748,
+    "own_K_Q_pts": 0.1513569545766213
+   },
+   "no-Q-retree (CK)": {
+    "rho": -0.0476,
+    "K_cross_pts": -0.00026137,
+    "own_K_Q_pts": 0.22735628405960315
+   },
+   "no-AA76 (CL)": {
+    "rho": -0.1461,
+    "K_cross_pts": -0.0047776,
+    "own_K_Q_pts": 8.07466132503934
+   }
+  },
+  "verdict": "NEGLIGIBLE. |rho| <= 0.146 and the largest cross cost is 0.005 pts against an axis worth 8 pts.",
+  "🔑_why": "the mean-pinning convention forces mean(delta) = 0 for EVERY other axis -- measured 4.0e-17 to 7.2e-17 across all six. The mean axis is the only direction with non-zero mean, so it is near-orthogonal to the whole post-hoc basis BY CONSTRUCTION. This is the one axis S19's conditioning disaster does not touch.",
+  "미측정": "alpha and beta_skew -- no delta vectors held. Same argument should apply (they are re-pinned too) but it is not measured."
+ },
+ "drift_since_BG": {
+  "🔴_the_pin_is_not_a_hold": "every build since BG re-pins the parent's CAL-frame mean. That is a no-op by construction. It does NOT hold the deployed test mean, because the cal->test mean gap moves when the arms move. AW->BB is the proof: the cal mean was pinned the whole way and the LB still said the vertex had moved +0.0020095.",
+  "estimates": {
+   "LB trajectory, slow rate (AC->AR, 6.384e-05/pt)": {
+    "E_now": 0.0019622,
+    "max_gain_pts": 1.5413
+   },
+   "LB trajectory, fast rate (AV->BB, 1.270e-04/pt)": {
+    "E_now": 0.0037342,
+    "max_gain_pts": 5.5819
+   },
+   "cov frame drift BG->CH (-0.0029799)": {
+    "E_now": 0.0031496,
+    "max_gain_pts": 3.971
+   },
+   "band frame drift BG->CH (-0.0044455)": {
+    "E_now": 0.0046152,
+    "max_gain_pts": 8.5266
+   },
+   "real5 drift BG->CH (-0.0101011)": {
+    "E_now": 0.0102708,
+    "max_gain_pts": 42.2287,
+    "🔴": "REJECT -- n=5, paired se ~0.006. Cannot support this."
+   }
+  },
+  "🔴_no_frame_is_validated": {
+   "the one calibration we have": "AW->BB, where the LB says the deployed mean fell -0.0020095",
+   "cov said": 0.0017001,
+   "band said": 2.04e-05,
+   "real5 said": -0.00268,
+   "verdict": "cov got the SIGN wrong, band said zero, real5 got the sign right but with se 0.00196 (n=5). Frames are worth direction-only here, and even that is one coin flip. This is exactly the trap BE fell into: BUILD_PLAN_BE.yaml:16 sized a -0.00248 move off the cov drift and lost -6.4503533201."
+  },
+  "🟢_what_all_four_agree_on": "the deployed mean has FALLEN since BG while the cal aim was held, so the correction is UP. Sign agreement: LB trajectory (monotone rising vertex), cov (-0.0030), band (-0.0044), real5 (-0.0101). Four for four.",
+  "bracket": "E_now in [0.0020, 0.0046] -> 1.5 to 8.5 pts. Central ~0.0032 -> ~4 pts."
+ },
+ "frame_series_validation": {
+  "cov row_id sha identical across all 32 packages measured": "37d657b73ca54307",
+  "BB - AZ cov mean": 0.0017299318422532,
+  "🟢": "reproduces AUDIT_BB N7's recorded '+0.001730' to 7 decimals -- the series is measuring the same thing the ledger measured.",
+  "BB->BE all frames": "cov -0.002487, band -0.002487, real5 -0.002467 vs the constructed cal move -0.00247956. A pure d move transfers 1:1 to every frame; only ARM changes make the frames disagree."
+ },
+ "step_design": {
+  "model": "gain(eps) = K*(2*eps*E - eps^2)",
+  "rows": [
+   {
+    "eps": 0.001,
+    "d_adj_step": 0.004053941124686974,
+    "gain_pts": {
+     "E=0.0": -0.4,
+     "E=0.0015": 0.801,
+     "E=0.002": 1.201,
+     "E=0.0031": 2.082,
+     "E=0.0046": 3.283
+    }
+   },
+   {
+    "eps": 0.0015,
+    "d_adj_step": 0.006080911687030462,
+    "gain_pts": {
+     "E=0.0": -0.901,
+     "E=0.0015": 0.901,
+     "E=0.002": 1.501,
+     "E=0.0031": 2.822,
+     "E=0.0046": 4.624
+    }
+   },
+   {
+    "eps": 0.002,
+    "d_adj_step": 0.008107882249373949,
+    "gain_pts": {
+     "E=0.0": -1.601,
+     "E=0.0015": 0.801,
+     "E=0.002": 1.601,
+     "E=0.0031": 3.363,
+     "E=0.0046": 5.764
+    }
+   },
+   {
+    "eps": 0.0025,
+    "d_adj_step": 0.010134852811717436,
+    "gain_pts": {
+     "E=0.0": -2.502,
+     "E=0.0015": 0.5,
+     "E=0.002": 1.501,
+     "E=0.0031": 3.703,
+     "E=0.0046": 6.705
+    }
+   },
+   {
+    "eps": 0.003,
+    "d_adj_step": 0.012161823374060923,
+    "gain_pts": {
+     "E=0.0": -3.603,
+     "E=0.0015": 0.0,
+     "E=0.002": 1.201,
+     "E=0.0031": 3.843,
+     "E=0.0046": 7.446
+    }
+   }
+  ],
+  "minimax": "worst-case-maximising step over E in [E_lo, E_hi] is eps = E_lo (gain is monotone in E). With E_lo = 0.0020 that is eps = 0.0020, guaranteeing +1.601 pts anywhere in the bracket.",
+  "recommended": 0.002,
+  "d_adj_recommended": 0.041020479121975005,
+  "d_adj_step": 0.008106998664325349,
+  "🔴_how_to_ship_it": "do NOT hard-code the number. Change 03_solve.py's TARGET from float(p['PAR'].mean()) to float(p['PAR'].mean()) + 0.0020 and let brentq solve d on the builder's own frame. Then the reconstruction bias cancels between parent and candidate exactly as G-AIM intends.",
+  "downside": {
+   "E=0": -1.601,
+   "E=-0.001": -3.204,
+   "🔴": "AE lost -21.5096371199 and BE lost -6.4503533201 on this axis. Both were over-moves. eps=0.0020 is 28% of AE's step and 81% of BE's.",
+   "🟢": "rank is the max over submission history, so a losing probe costs a slot, not a place."
+  },
+  "then_land": "G is known to <0.1%, so ONE LB point gives E exactly. Second slot lands eps = E and collects K*E^2."
+ },
+ "candidate_spec": {
+  "name": "suggest CP -- mean re-probe on CH",
+  "parent": "CH (submit_CF_3axis.zip lineage, LB 1140.3283619813)",
+  "changed": "root blend.json `d_adj` 0.032913480457649656 -> aim + 0.0020 re-solved on the build's own cal frame (nominal 0.041020479121975005 on build_CM's frame)",
+  "also_must_change_for_honesty": [
+   "root blend.json `target_rate` (print-only, currently 0.4847980356943589 and already stale -- AUDIT_CG N7)",
+   "root blend.json `derived_from` (still says 'mean pinned to the target rate 0.4829582933733939' -- false since BG; flagged BE-N1, BG-N2)",
+   "root blend.json `target_rate_provenance` (still narrates AW's solve)"
+  ],
+  "verification_tier": "A단 (post-hoc transform only). Boosters, tables, .py all byte-identical to parent.",
+  "gates": [
+   "identity anchor: put d_adj back to 0.032913480457649656, rebuild, output CSV sha == parent",
+   "rule 2-4: trivial -- a scalar added inside expit per row. Full shuffle + content/position split.",
+   "no recorded-value assert touches d_adj (S35/S107 four known asserts are n_trees, q_infer.py:536, aa_infer.py:1079-1080, anchor 3 fields)",
+   "S73 sweep: grep every file for sentences that describe target_rate/d_adj -- root blend.json AND mate/script.py:65's print AND script.py:6-7 header comment (which still says 'target_rate = 0.4785')"
+  ],
+  "narrative_for_the_rules": "this constant exists to put the deployed prediction mean on the 2025 base rate. Five LB observations (P, AE, teammate, AW, BE) show its optimum moves when the arms move; the last time it was re-solved was BG on 2026-08-19, 28 LB points ago. This candidate re-measures it once. One new fitted quantity, amplitude 0.0020, sized from the axis's own LB history -- not swept."
+ },
+ "미기록": [
+  "mean(p) on the real 2025 test frame for any package -- no candidate's real-test predictions are stored anywhere (cov/band are TRAIN_ stand-ins, keep110 is 110 real rows, real5 is 5). This is the single measurement that would collapse the 1.5-8.5 pt bracket to a point, and it costs two full inference runs (parent + BG-era package).",
+  "keep110 for any package before BX -- the frame was introduced at BX, so it cannot bracket BG->CH.",
+  "alpha / beta_skew cross terms against the mean axis -- no delta vectors held.",
+  "candidate BD, BF and BH's own LB rows were not needed here and were not re-read."
+ ],
+ "artifacts": {
+  "scripts": [
+   "s1_cov_series.py",
+   "s2_frames.py",
+   "s3_curvature.py"
+  ],
+  "data": [
+   "exp100_cov_series.json",
+   "exp100_frames.json",
+   "exp100_curv.json"
+  ],
+  "server": "a5000:~/SungjinPark/exp100_s1.py, exp100_s2.py, exp100_s3.py and their .json outputs",
+  "compute": "zero training, zero inference. Read 32 stored prediction CSVs + one 253,507-row probability vector. 2 cores, nice 15."
+ }
+}

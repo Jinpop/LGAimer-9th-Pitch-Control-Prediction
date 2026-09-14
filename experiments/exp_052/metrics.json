@@ -1,0 +1,500 @@
+{
+ "exp_id": "exp_052",
+ "stage": 0,
+ "date": "2026-08-15",
+ "title": "트랙맨 teacher 증류 — stage 0 관문 둘",
+ "scope_note": "stage 1은 실행하지 않았다. fold_2024는 열지 않았다. fold_2023 절대 Brier는 환산하지 않는다(ref 0.2498069은 2025 기저율 양이라 2023 면에 지시 대상이 없다) — 같은 면 위의 Δ만 환산했다.",
+ "G0a_행_대응": {
+  "판정": "통과",
+  "문턱_pct": 60.0,
+  "유일_매칭_pct": 86.826,
+  "다중_모호_pct": 0.0,
+  "미매칭_pct": 13.174,
+  "train_rows": 1475092,
+  "train_game_blocks": 4868,
+  "tm_games": 5980,
+  "matched_games": 4259,
+  "seed_games_exact_fingerprint": 2671,
+  "extend_added_games": 1588,
+  "aligned_row_pairs": 1285138,
+  "dropped_by_idmap_contradiction": 4374,
+  "hand_agreement_on_matched": 1.0,
+  "pitcher_map_vs_exp002": {
+   "overlap": 685,
+   "agree": 685,
+   "agree_pct": 100.0
+  },
+  "coverage_by_season_pct": {
+   "2019": 83.105,
+   "2020": 87.984,
+   "2021": 88.601,
+   "2022": 84.934,
+   "2023": 88.168,
+   "2024": 88.013
+  },
+  "coverage_by_game_type_pct": {
+   "R": 87.998,
+   "F": 77.258
+  },
+  "selection_bias": {
+   "base_rate_all": 0.523766,
+   "base_rate_matched": 0.520688,
+   "base_rate_unmatched": 0.544054,
+   "delta_matched_minus_all": -0.003078,
+   "game_type_F_share_all": 0.109148,
+   "game_type_F_share_matched": 0.09712
+  }
+ },
+ "G0b_teacher_상한": {
+  "판정": "통과",
+  "fold_2023": {
+   "definition": "train season<=2022 (exp_004 F-mask 적용, 870752행) -> valid season==2023 valid_all (245525행)",
+   "seed": 42,
+   "cap": 3000,
+   "eval_period": 25,
+   "any_argmin_at_cap": false,
+   "arms": {
+    "A_67col_student": {
+     "n_cols": 67,
+     "argmin_iter": 400,
+     "brier": 0.24822938130212688
+    },
+    "B_67col_plus_trackman": {
+     "n_cols": 79,
+     "argmin_iter": 650,
+     "brier": 0.2473182848430311
+    },
+    "C_81col_student": {
+     "n_cols": 81,
+     "argmin_iter": 425,
+     "brier": 0.24821406819694258
+    },
+    "D_81col_plus_trackman": {
+     "n_cols": 93,
+     "argmin_iter": 700,
+     "brier": 0.2472790209422709
+    }
+   }
+  },
+  "상한_81_gated": {
+   "brier": 0.0009350472546716948,
+   "score_points": 374.30802,
+   "gate_points": 40.0,
+   "pass": true,
+   "def": "brier(C) - brier(D)"
+  },
+  "상한_67_reference": {
+   "brier": 0.0009110964590957893,
+   "score_points": 364.72029,
+   "def": "brier(A) - brier(B)"
+  },
+  "p6_등_14열이_이미_나르는_몫": {
+   "brier": 1.531310518429474e-05,
+   "score_points": 6.12998,
+   "def": "brier(A) - brier(C)"
+  },
+  "trackman_gain_share": {
+   "arm_B": {
+    "물리_8종_pct": 17.9624,
+    "구종라벨_3열_pct": 6.137,
+    "has_tm_pct": 0.0,
+    "물리_대_라벨_비": 2.9269
+   },
+   "arm_D": {
+    "물리_8종_pct": 16.5705,
+    "구종라벨_3열_pct": 6.2034,
+    "has_tm_pct": 0.0064,
+    "물리_대_라벨_비": 2.6712,
+    "p6_6열_pct": 4.407
+   }
+  },
+  "arm_D_trackman_열_gain_순위": {
+   "induced_vert_break": 2,
+   "horz_break": 3,
+   "pitch_type_group": 4,
+   "tagged_pitch_type": 6,
+   "rel_side": 10,
+   "rel_height": 11,
+   "spin_rate": 12,
+   "zone_speed": 14,
+   "auto_pitch_type": 16,
+   "extension": 17,
+   "rel_speed": 26,
+   "has_tm": 92
+  }
+ },
+ "결측_정책": {
+  "미매칭_행": "물리 8종 NaN + 구종 3열 '__NOTM__' 레벨 + has_tm=0 (sentinel 수치 채움 없음)",
+  "매칭됐으나_트랙맨_자체_결측": "구종 3열 '__NA__' 레벨, 물리는 NaN 유지",
+  "매칭행_중_물리_결측_pct": {
+   "rel_speed": 0.1648,
+   "spin_rate": 0.4668,
+   "induced_vert_break": 0.2855,
+   "horz_break": 0.3011,
+   "extension": 0.1704,
+   "rel_height": 0.1648,
+   "rel_side": 0.1649,
+   "zone_speed": 0.1648
+  },
+  "ins16_nan_pct_by_season": {
+   "2019": 100.0,
+   "2020": 0.0,
+   "2021": 0.0,
+   "2022": 0.0,
+   "2023": 0.0
+  },
+  "oof4_nan_pct_by_season": {
+   "2019": 100.0,
+   "2020": 9.51,
+   "2021": 10.466,
+   "2022": 12.304,
+   "2023": 0.0,
+   "2024": 100.0
+  }
+ },
+ "train_time_min": {
+  "A": 4.04,
+  "B": 8.55,
+  "C": 5.88,
+  "D": 9.19,
+  "g0a_match": 0.71,
+  "g0b_prep": 0.45,
+  "wall_clock_total_min": 50
+ },
+ "inference_time_sec": null,
+ "inference_note": "stage 0은 측정 전용이라 배포 경로가 없다 — 추론 시간 측정 대상 없음",
+ "stage_0_5_도달가능성_프로브": {
+  "승인": "2026-08-15 사용자 '1해봐'. stage 1은 여전히 미승인 — λ 격자·teacher OOF 전면 생성 안 함. fold_2024 미개봉.",
+  "teacher": {
+   "arm": "D(93col)",
+   "rounds": 700,
+   "brier_recovered": 0.2472790209422709,
+   "abs_diff": 0.0,
+   "gate_pass": true,
+   "pred_sha256": "a9140747046b6f2e86f2166f45c01963d058fd2fdcbcfc7b3c28edf64cd344a5"
+  },
+  "plane": {
+   "n_2023": 245525,
+   "n_front": 147315,
+   "n_back": 98210,
+   "split": "time order (train.csv row order is chronological)",
+   "has_tm_pct_front": 89.2204,
+   "has_tm_pct_back": 86.59,
+   "base_rate_front": 0.497404,
+   "base_rate_back": 0.503788
+  },
+  "P_A_사영적합": {
+   "확률공간": {
+    "argmin_iter": 1825,
+    "argmin_at_cap_INVALID": false,
+    "Var_t_back40": 0.00270757251304803,
+    "Var_t_given_x_holdout_MSE": 0.000954941395423039,
+    "R2_holdout": 0.6473071761435409,
+    "R2_in_sample_reference": 0.6807454321458333,
+    "noise_ratio_soft_over_hard": 0.0038227182492678903,
+    "teacher_prob_range": [
+     0.2845355992889683,
+     0.6523268772194849
+    ]
+   },
+   "로짓공간": {
+    "cap": 6000,
+    "argmin_iter": 2300,
+    "argmin_at_cap_INVALID": false,
+    "Var_t_back40": 0.04424315948237433,
+    "Var_t_given_x_holdout_MSE": 0.015626555455636928,
+    "R2_holdout": 0.6468029038056773,
+    "R2_in_sample_reference": 0.6878507634675821
+   },
+   "로짓_cap2000_무효_기록": {
+    "argmin_at_cap": true,
+    "R2": 0.6465966118165369,
+    "조치": "cap 6000으로 재실행(exp_017 규칙), 위 '로짓공간'이 정본"
+   }
+  },
+  "P_B_미니증류": {
+   "P0_hard": {
+    "argmin_iter": 300,
+    "argmin_at_cap_INVALID": false,
+    "brier_back40_all": 0.2481909546983687,
+    "brier_back40_has_tm_at_same_iter": 0.2480210844582745,
+    "target_mean": 0.49740352306282454,
+    "target_var": 0.24999325830751476
+   },
+   "P1_soft": {
+    "argmin_iter": 475,
+    "argmin_at_cap_INVALID": false,
+    "brier_back40_all": 0.24853968105827964,
+    "brier_back40_has_tm_at_same_iter": 0.24848744896526978,
+    "target_mean": 0.49491775273749505,
+    "target_var": 0.02952873587273518,
+    "delta_vs_P0_all": {
+     "brier": -0.0003487263599109558,
+     "score_points": -139.59837
+    },
+    "delta_vs_P0_has_tm_only": {
+     "brier": -0.000466364506995276,
+     "score_points": -186.69
+    }
+   },
+   "P2_mix50": {
+    "argmin_iter": 450,
+    "argmin_at_cap_INVALID": false,
+    "brier_back40_all": 0.24812048487377822,
+    "brier_back40_has_tm_at_same_iter": 0.2480010787201395,
+    "target_mean": 0.4961606379001599,
+    "target_var": 0.08468685839162621,
+    "delta_vs_P0_all": {
+     "brier": 7.046982459046891e-05,
+     "score_points": 28.20972
+    },
+    "delta_vs_P0_has_tm_only": {
+     "brier": 2.000573813501494e-05,
+     "score_points": 8.00848
+    }
+   },
+   "reading": {
+    "pre_registered": "P1 or P2 beating P0 = distillation works on this scale; neither beating P0 = stage 1 stays shut",
+    "P1_beats_P0": false,
+    "P2_beats_P0": true,
+    "any_argmin_at_cap": false,
+    "caveat_scale": "~147k training rows here vs ~1.37M at deployment. Distillation gains SHRINK with more data, so a positive here must not be carried across as a deployment expectation; a negative here is the stronger signal.",
+    "caveat_seed": "seed 42 alone -- direction and size, not an adoption call"
+   }
+  },
+  "P_C_희석": {
+   "rows_without_soft_label_pct_back40": 13.41,
+   "rows_without_soft_label_pct_front60": 10.7796,
+   "rows_without_soft_label_pct_train_all_seasons": 13.174,
+   "policy": "no soft label -> hard label y (what stage 1 would do)",
+   "note": "delta_vs_P0_has_tm_only isolates the undiluted effect; the gap between it and delta_vs_P0_all IS the dilution share",
+   "subgroup_decomposition": {
+    "has_tm_share_back40": 0.8659,
+    "note": "exact decomposition of the measured back-40% Brier: brier_all = w*brier_has_tm + (1-w)*brier_no_tm. The no_tm term is ARITHMETIC from two measured numbers, not a separate fit.",
+    "P0_hard": {
+     "brier_has_tm": 0.2480210844582745,
+     "brier_no_tm": 0.24928782748656822
+    },
+    "P1_soft": {
+     "brier_has_tm": 0.24848744896526978,
+     "brier_no_tm": 0.24887695003171173,
+     "delta_vs_P0_no_tm_rows": {
+      "brier": 0.00041087745485648974,
+      "score_points": 164.47802
+     }
+    },
+    "P2_mix50": {
+     "brier_has_tm": 0.2480010787201395,
+     "brier_no_tm": 0.24889150492177067,
+     "delta_vs_P0_no_tm_rows": {
+      "brier": 0.00039632256479754657,
+      "score_points": 158.65157
+     }
+    },
+    "observation": "the P2 win is NOT located where the soft labels were applied: rows WITH a soft label gained +8.0 points, rows WITHOUT one (hard target in every arm) gained +158.7. The same holds for P1. So the effect measured here is a target-smoothness/regularisation effect that helps a subgroup the hard-label model fits badly, NOT teacher-to-student information transfer."
+   }
+  },
+  "실측_분": {
+   "probe": 5.06,
+   "logit_recap": 1.29
+  }
+ },
+ "stage_0_6": {
+  "승인": "2026-08-16 사용자 '측정해봐 그리고 다른 방법으로 이 축을 살릴 방법이 정녕 없는지도 검토해봐'. stage 1 여전히 미승인, fold_2024 미개봉.",
+  "과제A_시드잡음": {
+   "설계": "P-B를 시드 42/7/2024로 반복. arm은 P0(hard)·P2(0.5혼합) 둘만. P1은 stage 0.5에서 -186점으로 죽어 시드 미소모.",
+   "재현게이트_seed42_vs_stage05": {
+    "P0_hard": {
+     "stage05": 0.2481909546983687,
+     "here": 0.2481909546983687,
+     "abs_diff": 0.0,
+     "pass": true
+    },
+    "P2_mix50": {
+     "stage05": 0.24812048487377822,
+     "here": 0.24812048487377822,
+     "abs_diff": 0.0,
+     "pass": true
+    }
+   },
+   "any_argmin_at_cap": false,
+   "delta_P2_minus_P0": {
+    "all": {
+     "per_seed_brier": {
+      "42": 7.046982459046891e-05,
+      "7": 8.776752318276348e-05,
+      "2024": 6.93669492873028e-05
+     },
+     "per_seed_points": {
+      "42": 28.20972,
+      "7": 35.13415,
+      "2024": 27.76823
+     },
+     "mean_brier": 7.58680990201784e-05,
+     "mean_points": 30.3707,
+     "std_ddof1_brier": 1.0319946949205638e-05,
+     "std_ddof1_points": 4.13117,
+     "abs_mean_over_std": 7.3515977740581535,
+     "signs": [
+      1,
+      1,
+      1
+     ],
+     "sign_agreement": true
+    },
+    "has_tm": {
+     "per_seed_brier": {
+      "42": 2.000573813501494e-05,
+      "7": 5.889794905869494e-05,
+      "2024": 2.46606136716232e-05
+     },
+     "per_seed_points": {
+      "42": 8.00848,
+      "7": 23.57739,
+      "2024": 9.87187
+     },
+     "mean_brier": 3.4521433621777696e-05,
+     "mean_points": 13.81925,
+     "std_ddof1_brier": 2.123859329616788e-05,
+     "std_ddof1_points": 8.502,
+     "abs_mean_over_std": 1.6254105505192034,
+     "signs": [
+      1,
+      1,
+      1
+     ],
+     "sign_agreement": true
+    },
+    "no_tm": {
+     "per_seed_brier": {
+      "42": 0.0003963214504196233,
+      "7": 0.00027418123491457225,
+      "2024": 0.0003580402052289766
+     },
+     "per_seed_points": {
+      "42": 158.65112,
+      "7": 109.75727,
+      "2024": 143.32679
+     },
+     "mean_brier": 0.00034284763018772407,
+     "mean_points": 137.24506,
+     "std_ddof1_brier": 6.247134393618522e-05,
+     "std_ddof1_points": 25.00785,
+     "abs_mean_over_std": 5.48807835057854,
+     "signs": [
+      1,
+      1,
+      1
+     ],
+     "sign_agreement": true
+    }
+   },
+   "문턱": "없음(σ가 이 면·이 설정에서 측정된 적 없어 사후 문턱은 만들지 않는다). 부호 일치와 std 배수만 보고."
+  },
+  "과제B_피처증류": {
+   "물리량_예측기_holdout_R2": {
+    "induced_vert_break": {
+     "R2_by_cutoff": {
+      "2020": 0.12491,
+      "2021": 0.12615,
+      "2022": 0.1339,
+      "2023": 0.15488
+     },
+     "R2_2023": 0.15488,
+     "fit_rows_2023": 761828,
+     "nan_pct": 18.9583
+    },
+    "horz_break": {
+     "R2_by_cutoff": {
+      "2020": 0.33959,
+      "2021": 0.374,
+      "2022": 0.33954,
+      "2023": 0.31653
+     },
+     "R2_2023": 0.31653,
+     "fit_rows_2023": 761639,
+     "nan_pct": 18.9583
+    },
+    "rel_side": {
+     "R2_by_cutoff": {
+      "2020": 0.82739,
+      "2021": 0.90127,
+      "2022": 0.90108,
+      "2023": 0.90422
+     },
+     "R2_2023": 0.90422,
+     "fit_rows_2023": 763090,
+     "nan_pct": 18.9583
+    },
+    "rel_height": {
+     "R2_by_cutoff": {
+      "2020": 0.59904,
+      "2021": 0.56317,
+      "2022": 0.66571,
+      "2023": 0.78306
+     },
+     "R2_2023": 0.78306,
+     "fit_rows_2023": 763091,
+     "nan_pct": 18.9583
+    },
+    "spin_rate": {
+     "R2_by_cutoff": {
+      "2020": 0.1292,
+      "2021": 0.13393,
+      "2022": 0.16634,
+      "2023": 0.18233
+     },
+     "R2_2023": 0.18233,
+     "fit_rows_2023": 759437,
+     "nan_pct": 18.9583
+    },
+    "zone_speed": {
+     "R2_by_cutoff": {
+      "2020": 0.2022,
+      "2021": 0.10573,
+      "2022": 0.16192,
+      "2023": 0.14916
+     },
+     "R2_2023": 0.14916,
+     "fit_rows_2023": 763091,
+     "nan_pct": 18.9583
+    }
+   },
+   "예측기_입력": "문맥 22열(트랙맨 무관·라벨 무관, asof_* rate 전부 제외, 순수 카운터 2개만 포함)",
+   "as_of": "forward chaining — 시즌 s는 season<s 매칭행으로 학습. 2019는 NaN(sentinel 없음)",
+   "armE": {
+    "n_cols": 73,
+    "argmin_iter": 550,
+    "argmin_at_cap_INVALID": false,
+    "brier_E": 0.24824756541955523,
+    "control_arm_A": {
+     "brier": 0.24822938130212688,
+     "argmin_iter": 400,
+     "source": "res/g0b_armA.json (stage 0, cited not refit)",
+     "settings_identical_except_iterations": true
+    },
+    "E_minus_A": {
+     "brier": -1.8184117428349245e-05,
+     "score_points": -7.27927,
+     "gate_points": 40.0,
+     "pass": false
+    },
+    "pp_gain_pct_of_total": 9.212,
+    "pp_gain_ranks": {
+     "pp_induced_vert_break": 26,
+     "pp_horz_break": 27,
+     "pp_rel_side": 33,
+     "pp_rel_height": 32,
+     "pp_spin_rate": 31,
+     "pp_zone_speed": 41
+    }
+   },
+   "사전등록_읽기": "E-A >= 40점이면 축 생존, 미만이면 트랙맨을 모델 매개로 배포에 넣는 축 전체를 닫는다"
+  },
+  "실측_분": {
+   "taskA": 4.95,
+   "armE": 4.49,
+   "물리예측기_각": "0.49~0.57"
+  }
+ }
+}

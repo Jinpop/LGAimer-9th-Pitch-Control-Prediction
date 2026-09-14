@@ -1,0 +1,1425 @@
+{
+ "exp_id": "exp_088",
+ "title": "두 번째 딥 팔 — 배포 학습량(≤2024)으로 다시 재고, 팀원 딥 팔과의 중복도부터 판정",
+ "🔴_결론": {
+  "관문_A_stage0": {
+   "F1_FM_4시드_vs_DEEP_4시드": 0.8382196692790216,
+   "F1_FM_판정": "PASS(<0.90)",
+   "F2_EMB_4시드_vs_DEEP_4시드": 0.9192441432732662,
+   "F2_EMB_판정": "GRAY(0.90~0.95)",
+   "면": "fold_2024 valid_all 253,507행, 로짓 공간, 시드 등급 일치(우리 4 ↔ 딥 4, 같은 시드 라벨)"
+  },
+  "관문_A_배포학습량_stage1": {
+   "F1_FM_le2024_5시드_vs_DEEP_5시드": 0.8616392840903809,
+   "판정": "PASS(<0.90)",
+   "F1_FM_le2023_5시드_대조": 0.8346364589196414
+  },
+  "관문_B": "🔴 이 면에서 **측정 불가** — 판정하지 않았다. 아래 gate_B_why_unmeasurable 참조",
+  "행동": "F1_FM = 관문 A 통과 → stage 1 수행(배포 학습량 5시드 완료). F2_EMB = 회색(0.90~0.95) → 사전 등록 규칙대로 **학습하지 않고 정지**, 지휘자 판단 대기"
+ },
+ "score_conversion": {
+  "formula": "100000*(1 - Brier/0.2498069)",
+  "sensitivity": "Brier 1e-6 = 0.4003점 (S3)"
+ },
+ "stage0_surface_alignment": {
+  "exp_id": "exp_088",
+  "stage": "s0a_map",
+  "files": {
+   "cov_test_csv": {
+    "path": "~/build_CA/frames/cov/test.csv",
+    "sha256": "a6ad4ccebadf5e90e19562fecf2b5c5bf47af57b26373cdf130d76c8625f0fe1",
+    "n_rows": 245789
+   },
+   "deepdbg_csv": {
+    "path": "~/audit_deep/runs/dbg2__cov.deepdbg.csv",
+    "sha256": "8f9c4daf4dfa4d8f6c63646a4e134db6e2e49b89ccd3bf83c6ff265dffce1469",
+    "n_rows": 245789
+   },
+   "arms_ids_npy": {
+    "path": "~/arms/ids.npy",
+    "sha256": "8803791e44b5033077f30cb7e55f74043344b801d9e1808eb31a200100a0ad0d",
+    "n_rows": 253507
+   }
+  },
+  "deepdbg_order_eq_cov": true,
+  "deepdbg_season_all_2025": true,
+  "cov_season_all_2025": true,
+  "cov_rows_found_in_arms_ids": 245789,
+  "cov_rows_missing": 0,
+  "cov_is_prefix_of_arms_ids": false,
+  "cov_positions_monotonic": true,
+  "cov_position_min_max": [
+   0,
+   253506
+  ],
+  "cov_true_season_counts": {
+   "2024": 245789
+  },
+  "cov_train_row_index_min_max": [
+   1221585,
+   1475091
+  ],
+  "cov_train_index_contiguous": false,
+  "cov_game_type_counts": {
+   "R": 216689,
+   "F": 29100
+  },
+  "n_train_rows_season2024": 253507,
+  "cov_share_of_2024": 0.969555
+ },
+ "stage0_deep_logits": {
+  "exp_id": "exp_088",
+  "stage": "s0b_deep_logits",
+  "deep_input_spec": {
+   "n_num": 94,
+   "n_cat": 5,
+   "prep_sha256": "c8cb896e255858a6a83c85fe7e31e8d96fccc6f02eda6a631d1a2ae61488176b",
+   "npz_sha256": {
+    "42": "f85cef664778c6172c9412f64b592fdb4a24f6cc133f1ac7c86c2d41e3136683",
+    "777": "4aa47f71320cf2bc1501110288a343110209d366f797a99f3f2f9c7a78c609e8",
+    "2024": "12c4b87602296e30d1849644d584eb3301030c8c5e12fc63478568d8d381ec48",
+    "101": "ed9c1822c30a8b49cc0b1ee4d675761302e46dc473d5cefb26fb3bdbe6a782a0",
+    "7": "59d8573ef7e63abc2cdfc174cdf9f6fbfbf7ebf980665f212906ea008fa5b2cf"
+   }
+  },
+  "surface": {
+   "name": "fold_2024 valid_all (train<=2023 -> valid 2024)",
+   "n_rows": 253507,
+   "aligned_to": "arms/ids.npy",
+   "frame99_sha256": "f9f0620088f2f1215497119281b07d41f4c486ab6465abb4fa462226d0e1092d"
+  },
+  "deep_cat_unknown_on_our_surface": {
+   "game_type": {
+    "n_levels": 2,
+    "unk_rows": 0,
+    "unk_share": 0.0
+   },
+   "base_state": {
+    "n_levels": 8,
+    "unk_rows": 0,
+    "unk_share": 0.0
+   },
+   "pitcher_team_id": {
+    "n_levels": 13,
+    "unk_rows": 0,
+    "unk_share": 0.0
+   },
+   "batter_team_id": {
+    "n_levels": 13,
+    "unk_rows": 0,
+    "unk_share": 0.0
+   },
+   "idea_matchup_pitch": {
+    "n_levels": 24,
+    "unk_rows": 0,
+    "unk_share": 0.0
+   }
+  },
+  "deep_route1": {
+   "seeds5": [
+    42,
+    777,
+    2024,
+    101,
+    7
+   ],
+   "seeds4_matched_to_ours": [
+    42,
+    7,
+    2024,
+    101
+   ],
+   "logit_stats_seed5": {
+    "min": -0.6525535001036207,
+    "max": 0.553263875177975,
+    "mean": -0.04410253323358415,
+    "sd": 0.18338077930432237
+   },
+   "per_seed_sd": {
+    "42": 0.16265968014571108,
+    "777": 0.20664190133494117,
+    "2024": 0.1856858179974545,
+    "101": 0.19817347601544721,
+    "7": 0.18500513226986673
+   },
+   "sha256_seed5": "90228442f6f1a7bcebaf3696da95398a16a034cca1c54d6b98d5f424f4bff4d9"
+  },
+  "route2_cov_crosscheck": {
+   "n_matched": 245789,
+   "deepdbg_sha256": "8f9c4daf4dfa4d8f6c63646a4e134db6e2e49b89ccd3bf83c6ff265dffce1469",
+   "pearson_r_route1_vs_route2": 0.7171301655627184,
+   "max_abs_logit_diff": 1.2416437310120694,
+   "mean_abs_logit_diff": 0.12984067794393025,
+   "sd_route1_sub": 0.18338063915573977,
+   "sd_route2": 0.20661131577602268,
+   "note": "route2 는 cov 대역 프레임(season 2025 덮어쓰기)에서 배포 파이프라인이 조립한 입력으로 계산됐고, route1 은 frame99 의 정직한 2024 값이다. 차이는 그 조립 차이(시즌-내 폼 축퇴 포함)의 크기다"
+  },
+  "inseason_on_our_surface": {
+   "ins_p_n": {
+    "n_zero": 80,
+    "n_nan": 0,
+    "sd": 627.4963858858521
+   },
+   "ins_p_success": {
+    "n_zero": 0,
+    "n_nan": 0,
+    "sd": 0.050879202143811586
+   },
+   "ins_p_success_dev": {
+    "n_zero": 100,
+    "n_nan": 0,
+    "sd": 0.05436425575905639
+   },
+   "ins_p_reverse": {
+    "n_zero": 13,
+    "n_nan": 0,
+    "sd": 0.050253274688884735
+   }
+  },
+  "inseason_cols": [
+   "ins_p_n",
+   "ins_p_success",
+   "ins_p_success_dev",
+   "ins_p_reverse",
+   "ins_p_reverse_dev",
+   "ins_p_middle",
+   "ins_p_middle_dev",
+   "ins_p_ball",
+   "ins_p_ball_dev",
+   "ins_p_strike",
+   "ins_p_strike_dev",
+   "ins_b_n",
+   "ins_b_success",
+   "ins_b_success_dev",
+   "ins_b_middle",
+   "ins_b_middle_dev"
+  ],
+  "wall_sec": 41.51
+ },
+ "stage0_GATE_A": {
+  "exp_id": "exp_088",
+  "stage": "s0c_gateA",
+  "vectors": {
+   "F1_FM_4seed": {
+    "path": "~/exp086/out/preds/F1_FM_seedavg4.npy",
+    "kind": "prob->logit",
+    "sha256": "1871328d757ce050fea0ce0a5b319e31d962edaf2313dbdbe209e87a67d4f0cd"
+   },
+   "F2_EMB_4seed": {
+    "path": "~/exp086/out/preds/F2_EMB_seedavg4.npy",
+    "kind": "prob->logit",
+    "sha256": "ed5cf679770109346cf9e25cc78eb84323167684481b8138469d1ae96e9a1bbe"
+   },
+   "F1_FM_1seed42": {
+    "path": "~/exp085/out/preds/F1_FM_s42_r2_best.npy",
+    "kind": "prob->logit",
+    "sha256": "060e5626e9cdaf790368f57229c207db9e2b0ed58bab88964867408bcb829a52"
+   },
+   "F2_EMB_1seed42": {
+    "path": "~/exp085/out/preds/F2_EMB_s42_r2_best.npy",
+    "kind": "prob->logit",
+    "sha256": "db3b2b15b8a6695a44aee79ccb90166662b538574f9bd36d54b805886f3a8e16"
+   },
+   "DEEP_5seed": {
+    "path": "~/exp088/out/preds/deep_route1_logit_seed5.npy",
+    "kind": "logit",
+    "sha256": "59ed8edb4412a1780b22762027e972791bc14ad3ba4567ae4b87c2bb63649b61"
+   },
+   "DEEP_4seed": {
+    "path": "~/exp088/out/preds/deep_route1_logit_seed4.npy",
+    "kind": "logit",
+    "sha256": "0371fdae9c4424c22704763bfe9334ef40ddb7e697174ed5ef9f87e2602442be"
+   },
+   "DEEP_1seed42": {
+    "path": "~/exp088/out/preds/deep_route1_s42_logit.npy",
+    "kind": "logit",
+    "sha256": "f6b7c9cb8a2a1f05ed9ddfaa8a98fcadb1b5e51f63a11acf6e2561fcce0cd767"
+   },
+   "mate_v6": {
+    "path": "~/arms/lg_p_v6.npy",
+    "kind": "logit",
+    "sha256": "1a7a1528ab4d0fb12e5bbbd5139d5d4ffe512d5469051f7fa8f2ff2d34db68b9"
+   },
+   "mate_Q": {
+    "path": "~/arms/lg_p_q.npy",
+    "kind": "logit",
+    "sha256": "e98262462023dd64a15a581e985e9a97b16ab5ed5bd712be8b97e158652650b9"
+   },
+   "p_EBM": {
+    "path": "~/arms/p_ebm.npy",
+    "kind": "logit(S14)",
+    "sha256": "482818395a0f269838ece78ab09189ab542a1e55e008747ebd94315f429ea378"
+   },
+   "NN_ours_4seed": {
+    "path": "~/exp064/out/preds/A99ship_seedavg.npy",
+    "kind": "prob->logit",
+    "sha256": "74cc52d8932ab4242ddc1ee25a048dc7bab2871fdf9be40c4e784ae12058667e"
+   },
+   "AA67": {
+    "path": "~/experiments/exp_048/pred/pred_A1_u2024_seed42_at1400.npy",
+    "kind": "prob->logit",
+    "sha256": "0141db5678de394f56da78804ef6087cc20b30233c323f7e466f23f301f74b7f"
+   },
+   "T70": {
+    "path": "~/experiments/exp_055/pred/pred_T70_u2024_seed42_at1400.npy",
+    "kind": "prob->logit",
+    "sha256": "45b4c14cbace78b990529fab61ecb4ff1e1f84ef9c4ce40d2f08ed8f83c4b8d6"
+   }
+  },
+  "n_rows": 253507,
+  "corr_matrix": {
+   "names": [
+    "F1_FM_4seed",
+    "F2_EMB_4seed",
+    "F1_FM_1seed42",
+    "F2_EMB_1seed42",
+    "DEEP_5seed",
+    "DEEP_4seed",
+    "DEEP_1seed42",
+    "mate_v6",
+    "mate_Q",
+    "p_EBM",
+    "NN_ours_4seed",
+    "AA67",
+    "T70"
+   ],
+   "rho": {
+    "F1_FM_4seed": {
+     "F1_FM_4seed": 0.9999999999999999,
+     "F2_EMB_4seed": 0.9366603196417279,
+     "F1_FM_1seed42": 0.9959890195666893,
+     "F2_EMB_1seed42": 0.9166355527233941,
+     "DEEP_5seed": 0.8353318054639501,
+     "DEEP_4seed": 0.8382196692790216,
+     "DEEP_1seed42": 0.828204877442034,
+     "mate_v6": 0.8660736001587587,
+     "mate_Q": 0.8242549623982431,
+     "p_EBM": 0.7913226278698323,
+     "NN_ours_4seed": 0.8794912294630359,
+     "AA67": 0.8108840888194921,
+     "T70": 0.8729660263782646
+    },
+    "F2_EMB_4seed": {
+     "F1_FM_4seed": 0.936660319641728,
+     "F2_EMB_4seed": 1.0,
+     "F1_FM_1seed42": 0.9274664314158476,
+     "F2_EMB_1seed42": 0.9752760016195775,
+     "DEEP_5seed": 0.9171898171767191,
+     "DEEP_4seed": 0.9192441432732662,
+     "DEEP_1seed42": 0.906650903213076,
+     "mate_v6": 0.9207027721274795,
+     "mate_Q": 0.8944705312792348,
+     "p_EBM": 0.7963787181640609,
+     "NN_ours_4seed": 0.9525509852934658,
+     "AA67": 0.873706778231624,
+     "T70": 0.9113873374097465
+    },
+    "F1_FM_1seed42": {
+     "F1_FM_4seed": 0.9959890195666894,
+     "F2_EMB_4seed": 0.9274664314158475,
+     "F1_FM_1seed42": 1.0,
+     "F2_EMB_1seed42": 0.90539119279073,
+     "DEEP_5seed": 0.8324529374957866,
+     "DEEP_4seed": 0.8346933266234333,
+     "DEEP_1seed42": 0.8264729221623949,
+     "mate_v6": 0.8668012496251778,
+     "mate_Q": 0.8224371651189614,
+     "p_EBM": 0.8061845056074346,
+     "NN_ours_4seed": 0.8714300557380557,
+     "AA67": 0.803999824097992,
+     "T70": 0.8663502665104617
+    },
+    "F2_EMB_1seed42": {
+     "F1_FM_4seed": 0.9166355527233943,
+     "F2_EMB_4seed": 0.9752760016195775,
+     "F1_FM_1seed42": 0.90539119279073,
+     "F2_EMB_1seed42": 1.0,
+     "DEEP_5seed": 0.8817358838175691,
+     "DEEP_4seed": 0.8842017842453092,
+     "DEEP_1seed42": 0.8697358555640704,
+     "mate_v6": 0.8856314439398224,
+     "mate_Q": 0.8596797278604557,
+     "p_EBM": 0.7572064988238741,
+     "NN_ours_4seed": 0.9205848177574141,
+     "AA67": 0.8440799108544865,
+     "T70": 0.8846807388423948
+    },
+    "DEEP_5seed": {
+     "F1_FM_4seed": 0.83533180546395,
+     "F2_EMB_4seed": 0.917189817176719,
+     "F1_FM_1seed42": 0.8324529374957866,
+     "F2_EMB_1seed42": 0.8817358838175691,
+     "DEEP_5seed": 0.9999999999999999,
+     "DEEP_4seed": 0.9979791009481662,
+     "DEEP_1seed42": 0.9795735120684004,
+     "mate_v6": 0.9503633440534276,
+     "mate_Q": 0.9360261671331072,
+     "p_EBM": 0.8105503349590097,
+     "NN_ours_4seed": 0.9411894450895507,
+     "AA67": 0.8649094287878841,
+     "T70": 0.8704959482783329
+    },
+    "DEEP_4seed": {
+     "F1_FM_4seed": 0.8382196692790217,
+     "F2_EMB_4seed": 0.9192441432732661,
+     "F1_FM_1seed42": 0.8346933266234333,
+     "F2_EMB_1seed42": 0.884201784245309,
+     "DEEP_5seed": 0.9979791009481662,
+     "DEEP_4seed": 1.0,
+     "DEEP_1seed42": 0.980227366218682,
+     "mate_v6": 0.9510029156649644,
+     "mate_Q": 0.9369990277853426,
+     "p_EBM": 0.8021366366851433,
+     "NN_ours_4seed": 0.9405720586714641,
+     "AA67": 0.8691880618482218,
+     "T70": 0.8749381966022846
+    },
+    "DEEP_1seed42": {
+     "F1_FM_4seed": 0.828204877442034,
+     "F2_EMB_4seed": 0.906650903213076,
+     "F1_FM_1seed42": 0.826472922162395,
+     "F2_EMB_1seed42": 0.8697358555640703,
+     "DEEP_5seed": 0.9795735120684005,
+     "DEEP_4seed": 0.980227366218682,
+     "DEEP_1seed42": 0.9999999999999998,
+     "mate_v6": 0.9362342945422617,
+     "mate_Q": 0.9199109978723152,
+     "p_EBM": 0.8023128977036098,
+     "NN_ours_4seed": 0.9284191569581639,
+     "AA67": 0.8640907207701908,
+     "T70": 0.865927217496502
+    },
+    "mate_v6": {
+     "F1_FM_4seed": 0.8660736001587587,
+     "F2_EMB_4seed": 0.9207027721274795,
+     "F1_FM_1seed42": 0.8668012496251778,
+     "F2_EMB_1seed42": 0.8856314439398225,
+     "DEEP_5seed": 0.9503633440534275,
+     "DEEP_4seed": 0.9510029156649644,
+     "DEEP_1seed42": 0.9362342945422617,
+     "mate_v6": 1.0,
+     "mate_Q": 0.9558862860346194,
+     "p_EBM": 0.8550682295425378,
+     "NN_ours_4seed": 0.9262758485252325,
+     "AA67": 0.8788692985854268,
+     "T70": 0.8972631944879123
+    },
+    "mate_Q": {
+     "F1_FM_4seed": 0.824254962398243,
+     "F2_EMB_4seed": 0.8944705312792348,
+     "F1_FM_1seed42": 0.8224371651189614,
+     "F2_EMB_1seed42": 0.8596797278604558,
+     "DEEP_5seed": 0.9360261671331072,
+     "DEEP_4seed": 0.9369990277853425,
+     "DEEP_1seed42": 0.9199109978723153,
+     "mate_v6": 0.9558862860346194,
+     "mate_Q": 1.0,
+     "p_EBM": 0.8184777442245166,
+     "NN_ours_4seed": 0.9062449139300398,
+     "AA67": 0.8714063708904446,
+     "T70": 0.878148427233822
+    },
+    "p_EBM": {
+     "F1_FM_4seed": 0.7913226278698323,
+     "F2_EMB_4seed": 0.796378718164061,
+     "F1_FM_1seed42": 0.8061845056074346,
+     "F2_EMB_1seed42": 0.7572064988238741,
+     "DEEP_5seed": 0.8105503349590096,
+     "DEEP_4seed": 0.8021366366851435,
+     "DEEP_1seed42": 0.8023128977036099,
+     "mate_v6": 0.8550682295425378,
+     "mate_Q": 0.8184777442245166,
+     "p_EBM": 1.0,
+     "NN_ours_4seed": 0.8025934722520942,
+     "AA67": 0.7566406872284236,
+     "T70": 0.777671464600818
+    },
+    "NN_ours_4seed": {
+     "F1_FM_4seed": 0.879491229463036,
+     "F2_EMB_4seed": 0.9525509852934659,
+     "F1_FM_1seed42": 0.8714300557380555,
+     "F2_EMB_1seed42": 0.9205848177574141,
+     "DEEP_5seed": 0.9411894450895507,
+     "DEEP_4seed": 0.940572058671464,
+     "DEEP_1seed42": 0.9284191569581638,
+     "mate_v6": 0.9262758485252324,
+     "mate_Q": 0.9062449139300399,
+     "p_EBM": 0.8025934722520943,
+     "NN_ours_4seed": 0.9999999999999999,
+     "AA67": 0.8857940267432443,
+     "T70": 0.9039824548028527
+    },
+    "AA67": {
+     "F1_FM_4seed": 0.8108840888194921,
+     "F2_EMB_4seed": 0.8737067782316241,
+     "F1_FM_1seed42": 0.803999824097992,
+     "F2_EMB_1seed42": 0.8440799108544864,
+     "DEEP_5seed": 0.864909428787884,
+     "DEEP_4seed": 0.869188061848222,
+     "DEEP_1seed42": 0.8640907207701908,
+     "mate_v6": 0.8788692985854268,
+     "mate_Q": 0.8714063708904446,
+     "p_EBM": 0.7566406872284237,
+     "NN_ours_4seed": 0.8857940267432441,
+     "AA67": 1.0,
+     "T70": 0.9532390299288833
+    },
+    "T70": {
+     "F1_FM_4seed": 0.8729660263782646,
+     "F2_EMB_4seed": 0.9113873374097466,
+     "F1_FM_1seed42": 0.8663502665104618,
+     "F2_EMB_1seed42": 0.884680738842395,
+     "DEEP_5seed": 0.870495948278333,
+     "DEEP_4seed": 0.8749381966022844,
+     "DEEP_1seed42": 0.8659272174965021,
+     "mate_v6": 0.8972631944879123,
+     "mate_Q": 0.878148427233822,
+     "p_EBM": 0.7776714646008182,
+     "NN_ours_4seed": 0.9039824548028527,
+     "AA67": 0.9532390299288833,
+     "T70": 1.0
+    }
+   }
+  },
+  "GATE_A": {
+   "F1_FM_4seed": {
+    "DEEP_4seed": {
+     "rho": 0.8382196692790216,
+     "abs_rho": 0.8382196692790216,
+     "resid_sd": 0.09153835963881844,
+     "our_sd": 0.16785781351617665,
+     "resid_share_of_our_sd": 0.5453327296557261,
+     "verdict": "PASS(<0.90)"
+    },
+    "DEEP_5seed": {
+     "rho": 0.8353318054639501,
+     "abs_rho": 0.8353318054639501,
+     "resid_sd": 0.09227917838315539,
+     "our_sd": 0.16785781351617665,
+     "resid_share_of_our_sd": 0.5497461002866115,
+     "verdict": "PASS(<0.90)"
+    },
+    "1seed_vs_DEEP_1seed42": 0.8264729221623949
+   },
+   "F2_EMB_4seed": {
+    "DEEP_4seed": {
+     "rho": 0.9192441432732662,
+     "abs_rho": 0.9192441432732662,
+     "resid_sd": 0.07005700725003663,
+     "our_sd": 0.1779505990807067,
+     "resid_share_of_our_sd": 0.3936879539150266,
+     "verdict": "GRAY(0.90~0.95)"
+    },
+    "DEEP_5seed": {
+     "rho": 0.9171898171767191,
+     "abs_rho": 0.9171898171767191,
+     "resid_sd": 0.07090451373533724,
+     "our_sd": 0.1779505990807067,
+     "resid_share_of_our_sd": 0.3984505480826148,
+     "verdict": "GRAY(0.90~0.95)"
+    },
+    "1seed_vs_DEEP_1seed42": 0.8697358555640704
+   }
+  },
+  "standalone_on_this_surface": {
+   "F1_FM_4seed": {
+    "brier": 0.24799050275577736,
+    "score": 727.1205255830138
+   },
+   "F2_EMB_4seed": {
+    "brier": 0.24764310348504168,
+    "score": 866.1876493236687
+   },
+   "F1_FM_1seed42": {
+    "brier": 0.248008671014153,
+    "score": 719.8476046286206
+   },
+   "F2_EMB_1seed42": {
+    "brier": 0.24783708036928725,
+    "score": 788.5369182007107
+   },
+   "DEEP_5seed": {
+    "brier": 0.24711908660028672,
+    "score": 1075.9564286307866
+   },
+   "DEEP_4seed": {
+    "brier": 0.24713055132461847,
+    "score": 1071.3669940187854
+   },
+   "DEEP_1seed42": {
+    "brier": 0.24732312223302252,
+    "score": 994.2790879585273
+   },
+   "mate_v6": {
+    "brier": 0.24635621129170715,
+    "score": 1381.342432211785
+   },
+   "mate_Q": {
+    "brier": 0.24550766203013386,
+    "score": 1721.0245072758812
+   },
+   "p_EBM": {
+    "brier": 0.24773846850591769,
+    "score": 828.0121542208474
+   },
+   "NN_ours_4seed": {
+    "brier": 0.24756767168405058,
+    "score": 896.3836931443536
+   },
+   "AA67": {
+    "brier": 0.2478610966346746,
+    "score": 778.9229862447345
+   },
+   "T70": {
+    "brier": 0.24783713924616857,
+    "score": 788.5133492435248
+   }
+  },
+  "🔴_standalone_warning": "DEEP_* 는 <=2024 학습이라 이 면(2024)에서 **표본 내**다. 우리 팔·AA·T70·NN 은 <=2023 학습 out-of-time. 단독 점수를 서로 비교하지 말 것 — 상관 판정용 문맥일 뿐이다",
+  "reproduce_check_exp086": {
+   "F2_EMB_4seed_vs_mate_v6": 0.9207027721274795,
+   "exp086_recorded": 0.920703,
+   "F1_FM_4seed_vs_mate_v6": 0.8660736001587587,
+   "exp086_recorded_F1": 0.866074,
+   "F2_EMB_4seed_vs_NN_ours_4seed": 0.952550985293466,
+   "exp086_recorded_NN": 0.952551
+  }
+ },
+ "stage0_gateB_preview": {
+  "exp_id": "exp_088",
+  "stage": "s0d_gateB_preview",
+  "surface": {
+   "fold": "fold_2024 valid_all",
+   "n": 253507
+  },
+  "🔴_limits": [
+   "DEEP·mate 팔은 <=2024 학습 → 이 면에서 표본 내(기준선 과대) → 우리 증분 과소평가",
+   "우리 팔은 <=2023 out-of-time — 일반화 오차 등급이 다르다",
+   "S78: 이득의 크기를 외삽하지 않는다. 부호와 t 만 읽는다"
+  ],
+  "baseline_A_ours_only": {
+   "weights": {
+    "NN_avg4": 0.75,
+    "AA67": 0.25
+   },
+   "score": 907.5995596662945,
+   "exp086_recorded": 907.5995596662945
+  },
+  "deep_added_to_A": {
+   "w_star": 0.8,
+   "gain_pts": 150.77792781520228,
+   "se_pts": 16.38666504858348,
+   "t": 9.20125769143222,
+   "base_score": 907.5995596662945,
+   "blend_score": 1058.3774874814987,
+   "w_at_cap": true
+  },
+  "GATE_B_preview_on_A_plus_deep": {
+   "F1_FM": {
+    "w_star": 0.0,
+    "gain_pts": 0.0,
+    "se_pts": 0.0,
+    "t": 0.0,
+    "base_score": 1058.3774874814987,
+    "blend_score": 1058.3774874814987,
+    "w_at_cap": false
+   },
+   "F2_EMB": {
+    "w_star": 0.0,
+    "gain_pts": 0.0,
+    "se_pts": 0.0,
+    "t": 0.0,
+    "base_score": 1058.3774874814987,
+    "blend_score": 1058.3774874814987,
+    "w_at_cap": false
+   }
+  },
+  "GATE_B_ref_on_A_only": {
+   "F1_FM": {
+    "w_star": 0.035,
+    "gain_pts": 0.23041999907692257,
+    "se_pts": 0.791012607213831,
+    "t": 0.29129750521742837,
+    "base_score": 907.5995596662945,
+    "blend_score": 907.8299796653755,
+    "w_at_cap": false
+   },
+   "F2_EMB": {
+    "w_star": 0.24,
+    "gain_pts": 4.685165961340015,
+    "se_pts": 3.1815428928669105,
+    "t": 1.4726081398570048,
+    "base_score": 907.5995596662945,
+    "blend_score": 912.2847256276323,
+    "w_at_cap": false
+   }
+  },
+  "baseline_B_deployed_recon": {
+   "coeffs": {
+    "w_v6": 0.6668397489,
+    "w_ebm": -0.1,
+    "beta_ins": 0.03,
+    "w_deep": 0.2,
+    "w_outer_mate": 0.7
+   },
+   "score_no_deep": 1688.6574051405034,
+   "score_with_deep": 1635.061460116427,
+   "deep_delta_pts_on_this_surface": -53.5959450240764,
+   "🔴": "전 구성원이 이 면에서 표본 내라 절대점수는 우리 팔과 비교 불가. d_adj·alpha·beta_skew·failtype 상수는 뺐다(재구성 근사)"
+  },
+  "GATE_B_preview_on_B_deployed": {
+   "F1_FM": {
+    "w_star": 0.0,
+    "gain_pts": 0.0,
+    "se_pts": 0.0,
+    "t": 0.0,
+    "base_score": 1635.061460116427,
+    "blend_score": 1635.061460116427,
+    "w_at_cap": false
+   },
+   "F2_EMB": {
+    "w_star": 0.0,
+    "gain_pts": 0.0,
+    "se_pts": 0.0,
+    "t": 0.0,
+    "base_score": 1635.061460116427,
+    "blend_score": 1635.061460116427,
+    "w_at_cap": false
+   }
+  },
+  "GATE_B_ref_on_B_nodeep": {
+   "F1_FM": {
+    "w_star": 0.0,
+    "gain_pts": 0.0,
+    "se_pts": 0.0,
+    "t": 0.0,
+    "base_score": 1688.6574051405034,
+    "blend_score": 1688.6574051405034,
+    "w_at_cap": false
+   },
+   "F2_EMB": {
+    "w_star": 0.0,
+    "gain_pts": 0.0,
+    "se_pts": 0.0,
+    "t": 0.0,
+    "base_score": 1688.6574051405034,
+    "blend_score": 1688.6574051405034,
+    "w_at_cap": false
+   }
+  },
+  "wall_sec": 8.11
+ },
+ "stage1_derivation": {
+  "prep088": {
+   "src": "~/exp085/src/prep085.py",
+   "dst": "~/exp088/src/prep088.py",
+   "src_sha256": "034c5db54927a8b04c5ddef15d1dacd28c7eb76565287ce6d20585e49c7f024b",
+   "dst_sha256": "b02cded9e598fb36c769ebf6f7561a265b21a0dc3cf660a3e49c6059ac82d0d0",
+   "n_substitutions": 5,
+   "substitutions": [
+    {
+     "from": "\"\"\"exp_085 stage 1 — 학습 행렬 조립. 학습 없음, 캐시만 만든다.\n",
+     "to": "\"\"\"exp_088 stage 1 — 학습 행렬 조립 (**배포 학습량 ≤2024 전량**).\n\n🔴 이 파일은 exp_085 `prep085.py` 에서 `make088.py` 가 기계로 파생했다.\n   의도적 변경은 학습 분할 하나 — 표준화 통계·어휘가 전 행에서 만들어진다.\n   나머지(열 목록·결측 플래그·정렬 assert·<UNK> 규약)는 바이트 그대로다.\n",
+     "count": 1
+    },
+    {
+     "from": "B = f\"{H}/exp085\"\n",
+     "to": "B = f\"{H}/exp088\"\n",
+     "count": 1
+    },
+    {
+     "from": "M = {\"exp_id\": \"exp_085\", \"stage\": \"prep\"}\n",
+     "to": "M = {\"exp_id\": \"exp_088\", \"stage\": \"prep_le2024_full\"}\n",
+     "count": 1
+    },
+    {
+     "from": "train_mask = (season <= 2023) & ~((season <= 2022) & (gt == \"F\"))\n",
+     "to": "train_mask = np.ones(len(season), dtype=bool)   # ≤2024 전량 (배포 학습량)\n",
+     "count": 1
+    },
+    {
+     "from": "    \"train_mask_rule\": \"season<=2023 & ~((season<=2022)&(game_type=='F'))  (exp_060 승계)\",\n",
+     "to": "    \"train_mask_rule\": \"전 행 (season<=2024 전량, F 필터 없음) — 팀원 딥 팔과 같은 1,475,092행\",\n",
+     "count": 1
+    }
+   ],
+   "diff_added_lines": 9,
+   "diff_removed_lines": 5,
+   "hard_recipe_lines_touched": [],
+   "recipe_intact": true,
+   "soft_lines_touched": [
+    "-train_mask = (season <= 2023) & ~((season <= 2022) & (gt == \"F\"))\n",
+    "+train_mask = np.ones(len(season), dtype=bool)   # ≤2024 전량 (배포 학습량)\n",
+    "-    \"train_mask_rule\": \"season<=2023 & ~((season<=2022)&(game_type=='F'))  (exp_060 승계)\",\n",
+    "+    \"train_mask_rule\": \"전 행 (season<=2024 전량, F 필터 없음) — 팀원 딥 팔과 같은 1,475,092행\",\n"
+   ],
+   "declared_change": "train_mask: (season<=2023 & F필터) → 전 행. 그 결과 mu/sd·어휘도 전 행에서 나온다",
+   "unified_diff": "--- ~/exp085/src/prep085.py\n+++ ~/exp088/src/prep088.py\n@@ -1,4 +1,8 @@\n-\"\"\"exp_085 stage 1 — 학습 행렬 조립. 학습 없음, 캐시만 만든다.\n+\"\"\"exp_088 stage 1 — 학습 행렬 조립 (**배포 학습량 ≤2024 전량**).\n+\n+🔴 이 파일은 exp_085 `prep085.py` 에서 `make088.py` 가 기계로 파생했다.\n+   의도적 변경은 학습 분할 하나 — 표준화 통계·어휘가 전 행에서 만들어진다.\n+   나머지(열 목록·결측 플래그·정렬 assert·<UNK> 규약)는 바이트 그대로다.\n \n 면: fold_2024 (train season<=2023, F 마스크는 exp_060 규약 승계 / valid season==2024 전체).\n \n@@ -24,7 +28,7 @@\n import pandas as pd\n \n H = \"/home/<user>/SungjinPark\"\n-B = f\"{H}/exp085\"\n+B = f\"{H}/exp088\"\n E60 = f\"{H}/exp060_nn\"\n SPD = f\"{H}/sp_def_recv\"\n W = f\"{B}/work\"\n@@ -47,7 +51,7 @@\n     return h.hexdigest()\n \n \n-M = {\"exp_id\": \"exp_085\", \"stage\": \"prep\"}\n+M = {\"exp_id\": \"exp_088\", \"stage\": \"prep_le2024_full\"}\n \n FSP = [l.strip() for l in open(f\"{SPD}/features_sp.txt\", encoding=\"utf-8\") if l.strip()]\n DENSE = [c for c in FSP if c not in CATS5]\n@@ -70,7 +74,7 @@\n \n season = df.season.to_numpy(np.int64)\n gt = df.game_type.to_numpy().astype(str)\n-train_mask = (season <= 2023) & ~((season <= 2022) & (gt == \"F\"))\n+train_mask = np.ones(len(season), dtype=bool)   # ≤2024 전량 (배포 학습량)\n valid_mask = season == 2024\n n_tr, n_va = int(train_mask.sum()), int(valid_mask.sum())\n assert n_va == 253507, n_va\n@@ -83,7 +87,7 @@\n M[\"alignment\"] = {\n     \"n_rows\": int(N), \"n_train\": n_tr, \"n_valid\": n_va,\n     \"n_masked_out\": int(N - n_tr - n_va),\n-    \"train_mask_rule\": \"season<=2023 & ~((season<=2022)&(game_type=='F'))  (exp_060 승계)\",\n+    \"train_mask_rule\": \"전 행 (season<=2024 전량, F 필터 없음) — 팀원 딥 팔과 같은 1,475,092행\",\n     \"valid_order_eq_arms_ids\": True,\n     \"valid_order_eq_train_csv_natural_2024\": True,\n     \"y_valid_sha256\": sha_arr(y[valid_mask].astype(np.float64)),\n"
+  },
+  "train088": {
+   "src": "~/exp086/src/train086.py",
+   "dst": "~/exp088/src/train088.py",
+   "src_sha256": "938c92550c7578c622bdf289aa81243a70b659cb89aab50b5a61160311da0240",
+   "dst_sha256": "0f76b9ce07694bca205b5f59513d76dda209779e12b9742560f7eb8d369b0404",
+   "n_substitutions": 4,
+   "substitutions": [
+    {
+     "from": "\"\"\"exp_086 stage 2 — 팔 1개 학습 (F1_FM 또는 F2_EMB), fold_2024, 시드 인자.\n",
+     "to": "\"\"\"exp_088 stage 2 — 팔 1개 학습, 조립 캐시·에폭 못박기를 인자로.\n\n🔴 이 파일은 exp_086 `train086.py` 에서 `make088.py` 가 기계로 파생했다.\n   사용: train088.py <ARM> <DEV> <RUNTAG> <SEED> <CACHE_DIR> <PIN_EP>\n   PIN_EP=0 이면 exp_086 과 동일하게 valid 2024 최소 Brier 에폭의 상태를 쓴다.\n   PIN_EP>0 이면 그 에폭의 상태를 쓴다 — ≤2024 전량 학습에는 held-out valid 가\n   없으므로 ≤2023 면에서 고른 에폭을 못박는 것이 유일하게 정의된 규칙이다.\n   스케줄·에폭 수·LR·batch·손실·최적화기는 한 글자도 안 바뀐다.\n",
+     "count": 1
+    },
+    {
+     "from": "B = f\"{H}/exp086\"\nWIN = f\"{H}/exp085/work\"   # 읽기 전용 — exp_085 조립 캐시\n",
+     "to": "B = f\"{H}/exp088\"\nWIN = sys.argv[5] if len(sys.argv) > 5 else f\"{H}/exp088/work\"\nPIN_EP = int(sys.argv[6]) if len(sys.argv) > 6 else 0\n",
+     "count": 1
+    },
+    {
+     "from": "    if br < best[\"brier\"]:\n",
+     "to": "    if (ep == PIN_EP) if PIN_EP else (br < best[\"brier\"]):\n",
+     "count": 1
+    },
+    {
+     "from": "    \"take\": \"best\", \"best_epoch\": best[\"epoch\"],\n",
+     "to": "    \"take\": (\"pinned_epoch\" if PIN_EP else \"best\"), \"pin_ep\": PIN_EP,\n    \"cache_dir\": WIN.replace(H, \"~\"), \"best_epoch\": best[\"epoch\"],\n",
+     "count": 1
+    }
+   ],
+   "diff_added_lines": 14,
+   "diff_removed_lines": 5,
+   "hard_recipe_lines_touched": [],
+   "recipe_intact": true,
+   "soft_lines_touched": [
+    "-    if br < best[\"brier\"]:\n",
+    "+    if (ep == PIN_EP) if PIN_EP else (br < best[\"brier\"]):\n",
+    "-    \"take\": \"best\", \"best_epoch\": best[\"epoch\"],\n",
+    "+    \"take\": (\"pinned_epoch\" if PIN_EP else \"best\"), \"pin_ep\": PIN_EP,\n",
+    "+    \"cache_dir\": WIN.replace(H, \"~\"), \"best_epoch\": best[\"epoch\"],\n"
+   ],
+   "declared_change": "상태 선택 1줄: PIN_EP>0 이면 valid-argmin 대신 그 에폭의 상태. ≤2024 전량 학습에는 held-out valid 가 없다. 그 밖의 레시피는 불변",
+   "unified_diff": "--- ~/exp086/src/train086.py\n+++ ~/exp088/src/train088.py\n@@ -1,4 +1,11 @@\n-\"\"\"exp_086 stage 2 — 팔 1개 학습 (F1_FM 또는 F2_EMB), fold_2024, 시드 인자.\n+\"\"\"exp_088 stage 2 — 팔 1개 학습, 조립 캐시·에폭 못박기를 인자로.\n+\n+🔴 이 파일은 exp_086 `train086.py` 에서 `make088.py` 가 기계로 파생했다.\n+   사용: train088.py <ARM> <DEV> <RUNTAG> <SEED> <CACHE_DIR> <PIN_EP>\n+   PIN_EP=0 이면 exp_086 과 동일하게 valid 2024 최소 Brier 에폭의 상태를 쓴다.\n+   PIN_EP>0 이면 그 에폭의 상태를 쓴다 — ≤2024 전량 학습에는 held-out valid 가\n+   없으므로 ≤2023 면에서 고른 에폭을 못박는 것이 유일하게 정의된 규칙이다.\n+   스케줄·에폭 수·LR·batch·손실·최적화기는 한 글자도 안 바뀐다.\n \n 🔴 이 파일은 exp_085 `train085.py` 에서 `make_train086.py` 가 기계로 파생했다.\n    의도적 변경은 **시드를 인자로 받는 것 하나**이고 나머지는 경로뿐이다.\n@@ -46,8 +53,9 @@\n WD = 1e-4\n PCT_START = 0.3\n H = \"/home/<user>/SungjinPark\"\n-B = f\"{H}/exp086\"\n-WIN = f\"{H}/exp085/work\"   # 읽기 전용 — exp_085 조립 캐시\n+B = f\"{H}/exp088\"\n+WIN = sys.argv[5] if len(sys.argv) > 5 else f\"{H}/exp088/work\"\n+PIN_EP = int(sys.argv[6]) if len(sys.argv) > 6 else 0\n W = f\"{B}/work\"\n OUT = f\"{B}/out\"\n os.makedirs(f\"{OUT}/preds\", exist_ok=True)\n@@ -187,7 +195,7 @@\n     print(f\"ep {ep:3d} loss {tot/steps:.6f} brier {br:.9f} \"\n           f\"score {100000.0*(1.0-br/0.2498069):.5f} lr {sched.get_last_lr()[0]:.6g}\",\n           flush=True)\n-    if br < best[\"brier\"]:\n+    if (ep == PIN_EP) if PIN_EP else (br < best[\"brier\"]):\n         best = {\"brier\": br, \"epoch\": ep,\n                 \"state\": {k: v.detach().cpu().clone()\n                           for k, v in model.state_dict().items()}}\n@@ -220,7 +228,8 @@\n     \"arm\": ARM, \"runtag\": RUNTAG, \"seed\": SEED, \"device\": DEV,\n     \"n_params\": int(n_params), \"dense_width\": int(D), \"n_train\": n_tr,\n     \"n_valid\": int(len(yv)), \"epochs\": EPOCHS, \"early_stop\": False,\n-    \"take\": \"best\", \"best_epoch\": best[\"epoch\"],\n+    \"take\": (\"pinned_epoch\" if PIN_EP else \"best\"), \"pin_ep\": PIN_EP,\n+    \"cache_dir\": WIN.replace(H, \"~\"), \"best_epoch\": best[\"epoch\"],\n     \"best_valid_brier\": best[\"brier\"],\n     \"best_valid_score\": 100000.0 * (1.0 - best[\"brier\"] / 0.2498069),\n     \"last_valid_brier\": last_brier,\n"
+  }
+ },
+ "stage1_prep": {
+  "exp_id": "exp_088",
+  "stage": "prep_le2024_full",
+  "alignment": {
+   "n_rows": 1475092,
+   "n_train": 1475092,
+   "n_valid": 253507,
+   "n_masked_out": -253507,
+   "train_mask_rule": "전 행 (season<=2024 전량, F 필터 없음) — 팀원 딥 팔과 같은 1,475,092행",
+   "valid_order_eq_arms_ids": true,
+   "valid_order_eq_train_csv_natural_2024": true,
+   "y_valid_sha256": "e0483e6a48d9f699ca9c4abf7b4b81aed4d679c359c7e9c3752b3f9e6e27c9d3",
+   "y_valid_mean": 0.48610490560531616,
+   "train_csv_sha256": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+   "frame99_sha256": "f9f0620088f2f1215497119281b07d41f4c486ab6465abb4fa462226d0e1092d",
+   "features_sp_sha256": "783c650c6dd78cdcd641d0f18e35469ced247544b5d1ebf8d138171e04498924"
+  },
+  "dense": {
+   "n_v6_cols": 95,
+   "n_missing_flags": 62,
+   "width": 157,
+   "missing_flag_cols": [
+    "asof_pitcher_success_rate",
+    "asof_pitcher_reverse_rate",
+    "asof_pitcher_middle_rate",
+    "asof_pitcher_ball_rate",
+    "asof_pitcher_strike_rate",
+    "asof_pitcher_prev1_game_success_rate",
+    "asof_pitcher_prev3_game_success_rate",
+    "asof_pitcher_prev5_game_success_rate",
+    "asof_pitcher_prev1_game_middle_rate",
+    "asof_pitcher_prev3_game_middle_rate",
+    "asof_pitcher_prev5_game_middle_rate",
+    "asof_batter_success_rate",
+    "asof_batter_middle_rate",
+    "asof_pitcher_fastball_rate",
+    "asof_pitcher_breaking_rate",
+    "asof_pitcher_offspeed_rate",
+    "p6_curve",
+    "p6_cutter",
+    "p6_fastball",
+    "p6_offspeed",
+    "p6_sinker",
+    "p6_slider",
+    "sit_cnt",
+    "sit_cnt_dev",
+    "sit_run",
+    "sit_run_dev",
+    "sit_sc",
+    "sit_sc_dev",
+    "idea_matchup_pitch",
+    "idea_cnt_te",
+    "i3_anom_curve",
+    "i3_anom_cutter",
+    "i3_anom_fastball",
+    "i3_anom_offspeed",
+    "i3_anom_sinker",
+    "i3_anom_slider",
+    "i3_anom_l1",
+    "i3_te48",
+    "rt_form",
+    "rt_form1",
+    "rt_srev",
+    "rt_ballsuc",
+    "r2_strball",
+    "r2_midball",
+    "r2_pb_rev",
+    "r2_sitrun",
+    "r2_sitsc",
+    "r2_vs_cnt",
+    "r2_vs_te48",
+    "r2_sit_vs_te",
+    "r2_x_pb",
+    "r2_x_prev",
+    "r2_x_revmid",
+    "r2_x_ball_cnt",
+    "r2_lg_srev",
+    "r2_lg_form",
+    "sp_pit_bhand",
+    "sp_bat_phand",
+    "sp_pit_strk2",
+    "sp_pit_ball3",
+    "sp_pit_bhand_all",
+    "sp_bat_phand_all"
+   ],
+   "standardize": "train 분할 nanmean/nanstd, sd<1e-6→1.0, 이후 nan_to_num(0)",
+   "note": "sentinel 대입 아님 — 결측 정보는 플래그 62열이 따로 싣는다"
+  },
+  "categorical": {
+   "fields": [
+    "base_state",
+    "game_type",
+    "pitcher_team_id",
+    "batter_team_id",
+    "cnt_state",
+    "pitcher_id",
+    "batter_id",
+    "pitcher_hand",
+    "batter_hand",
+    "dom6"
+   ],
+   "n_levels": [
+    8,
+    2,
+    13,
+    13,
+    12,
+    792,
+    830,
+    2,
+    2,
+    7
+   ],
+   "unknown_index": 0,
+   "unknown_policy": "train 분할 미등장 레벨 → 학습된 <UNK> 행 0번",
+   "valid_unknown": {
+    "base_state": {
+     "n_levels_train": 8,
+     "valid_unknown_rows": 0,
+     "valid_unknown_share": 0.0,
+     "valid_unknown_distinct": 0
+    },
+    "game_type": {
+     "n_levels_train": 2,
+     "valid_unknown_rows": 0,
+     "valid_unknown_share": 0.0,
+     "valid_unknown_distinct": 0
+    },
+    "pitcher_team_id": {
+     "n_levels_train": 13,
+     "valid_unknown_rows": 0,
+     "valid_unknown_share": 0.0,
+     "valid_unknown_distinct": 0
+    },
+    "batter_team_id": {
+     "n_levels_train": 13,
+     "valid_unknown_rows": 0,
+     "valid_unknown_share": 0.0,
+     "valid_unknown_distinct": 0
+    },
+    "cnt_state": {
+     "n_levels_train": 12,
+     "valid_unknown_rows": 0,
+     "valid_unknown_share": 0.0,
+     "valid_unknown_distinct": 0
+    },
+    "pitcher_id": {
+     "n_levels_train": 792,
+     "valid_unknown_rows": 0,
+     "valid_unknown_share": 0.0,
+     "valid_unknown_distinct": 0
+    },
+    "batter_id": {
+     "n_levels_train": 830,
+     "valid_unknown_rows": 0,
+     "valid_unknown_share": 0.0,
+     "valid_unknown_distinct": 0
+    },
+    "pitcher_hand": {
+     "n_levels_train": 2,
+     "valid_unknown_rows": 0,
+     "valid_unknown_share": 0.0,
+     "valid_unknown_distinct": 0
+    },
+    "batter_hand": {
+     "n_levels_train": 2,
+     "valid_unknown_rows": 0,
+     "valid_unknown_share": 0.0,
+     "valid_unknown_distinct": 0
+    },
+    "dom6": {
+     "n_levels_train": 7,
+     "valid_unknown_rows": 0,
+     "valid_unknown_share": 0.0,
+     "valid_unknown_distinct": 0
+    }
+   },
+   "dom6_def": "argmax(p6_*), 동점은 열 순서, 전부 NaN 이면 'NA' 레벨. p6 는 투구 전 정보만 보는 구종 예측 — 현재 행 TrackMan 아님",
+   "p6_allnan_rows": {
+    "total": 237413,
+    "train": 237413,
+    "valid": 0
+   }
+  },
+  "cache_sha256": {
+   "Xd": "b0c93d2795b290abf49b5a4b22afc255cf47f187129740aefaff28aa7fd23ece",
+   "codes": "9a874766ba03c26fd999d4902b46308d3585e3f3390e9871a91221ae487f73ea",
+   "y": "5d507684a1e12fc7666d52bd5bba1289dc32ebc35260497a4ee3a6404c5feccd"
+  },
+  "wall_sec": 34.5
+ },
+ "stage1_eval": {
+  "exp_id": "exp_088",
+  "stage": "s1b_eval_le2024",
+  "surface": {
+   "rows": "train season==2024, 253,507행 (arms/ids.npy 정렬)"
+  },
+  "🔴_limits": [
+   "≤2024 학습 팔은 이 2024 행에서 **표본 내**다. Brier·이득은 판정에 쓸 수 없다",
+   "상관(rho)은 라벨을 안 쓰므로 표본 내 여부와 무관하게 읽을 수 있다 — 이것이 이 단계의 산출물이다",
+   "PIN_EP 는 ≤2023 면에서 고른 에폭이다. held-out valid 가 없는 상태의 유일하게 정의된 규칙"
+  ],
+  "per_seed": {
+   "le2023": {
+    "42": {
+     "brier": 0.248008671014153,
+     "score": 719.8476046286206,
+     "best_epoch": 1,
+     "take": "best",
+     "n_train": 1116277,
+     "fit_wall_min": 2.269,
+     "row_independence": {
+      "chunk_65536_vs_4096_max_abs_diff": 0.0,
+      "shuffled_roundtrip_max_abs_diff": 0.0,
+      "bitwise_identical_chunk": true,
+      "bitwise_identical_shuffle": true
+     },
+     "pred_sha256": "060e5626e9cdaf790368f57229c207db9e2b0ed58bab88964867408bcb829a52",
+     "path": "~/exp085/out/preds/F1_FM_s42_r2_best.npy"
+    },
+    "7": {
+     "brier": 0.24802782776950208,
+     "score": 712.178979242739,
+     "best_epoch": 1,
+     "take": "best",
+     "n_train": 1116277,
+     "fit_wall_min": 1.822,
+     "row_independence": {
+      "chunk_65536_vs_4096_max_abs_diff": 0.0,
+      "shuffled_roundtrip_max_abs_diff": 0.0,
+      "bitwise_identical_chunk": true,
+      "bitwise_identical_shuffle": true
+     },
+     "pred_sha256": "a0413c8996d646632f0df9547253de5d63e848772a6cc2d553ede2c78c9fa95f",
+     "path": "~/exp086/out/preds/F1_FM_s7_r2_best.npy"
+    },
+    "2024": {
+     "brier": 0.24804464384728003,
+     "score": 705.4473486200585,
+     "best_epoch": 1,
+     "take": "best",
+     "n_train": 1116277,
+     "fit_wall_min": 1.827,
+     "row_independence": {
+      "chunk_65536_vs_4096_max_abs_diff": 0.0,
+      "shuffled_roundtrip_max_abs_diff": 0.0,
+      "bitwise_identical_chunk": true,
+      "bitwise_identical_shuffle": true
+     },
+     "pred_sha256": "b9d10ef40668f275767024bb03cb3e6cd7fdf7f4568e58ddd885a46abdc877db",
+     "path": "~/exp086/out/preds/F1_FM_s2024_r2_best.npy"
+    },
+    "101": {
+     "brier": 0.24802083591918384,
+     "score": 714.9778812419405,
+     "best_epoch": 2,
+     "take": "best",
+     "n_train": 1116277,
+     "fit_wall_min": 1.776,
+     "row_independence": {
+      "chunk_65536_vs_4096_max_abs_diff": 0.0,
+      "shuffled_roundtrip_max_abs_diff": 0.0,
+      "bitwise_identical_chunk": true,
+      "bitwise_identical_shuffle": true
+     },
+     "pred_sha256": "bf55f09076ac074b450d4196555cd4abe1102ce48954b6c87050b0cce00b2fc0",
+     "path": "~/exp086/out/preds/F1_FM_s101_r2_best.npy"
+    },
+    "777": {
+     "brier": 0.248037024644986,
+     "score": 708.4973853860754,
+     "best_epoch": 1,
+     "take": "best",
+     "n_train": 1116277,
+     "fit_wall_min": 1.833,
+     "row_independence": {
+      "chunk_65536_vs_4096_max_abs_diff": 0.0,
+      "shuffled_roundtrip_max_abs_diff": 0.0,
+      "bitwise_identical_chunk": true,
+      "bitwise_identical_shuffle": true
+     },
+     "pred_sha256": "e40cc615135762127dd74487dde030cf1928950ad21389483f1e4a2e378d5b5f",
+     "path": "~/exp088/out/preds/F1_FM_s777_le2023_best.npy"
+    }
+   },
+   "le2024": {
+    "42": {
+     "brier": 0.24790218838490705,
+     "score": 762.4735806308624,
+     "best_epoch": 1,
+     "take": "pinned_epoch",
+     "n_train": 1475092,
+     "fit_wall_min": 2.334,
+     "row_independence": {
+      "chunk_65536_vs_4096_max_abs_diff": 0.0,
+      "shuffled_roundtrip_max_abs_diff": 0.0,
+      "bitwise_identical_chunk": true,
+      "bitwise_identical_shuffle": true
+     },
+     "pred_sha256": "650fb70bd54f363df8f06382692304602d28e97feb13ca2ca5e057aa233a368c",
+     "path": "~/exp088/out/preds/F1_FM_s42_le2024_best.npy"
+    },
+    "7": {
+     "brier": 0.24791344463947776,
+     "score": 757.9675983818812,
+     "best_epoch": 1,
+     "take": "pinned_epoch",
+     "n_train": 1475092,
+     "fit_wall_min": 2.391,
+     "row_independence": {
+      "chunk_65536_vs_4096_max_abs_diff": 0.0,
+      "shuffled_roundtrip_max_abs_diff": 0.0,
+      "bitwise_identical_chunk": true,
+      "bitwise_identical_shuffle": true
+     },
+     "pred_sha256": "81be94accb6b144e94d1d42b3a48baf06483a3586879f20a717ea28624113449",
+     "path": "~/exp088/out/preds/F1_FM_s7_le2024_best.npy"
+    },
+    "2024": {
+     "brier": 0.24789311076166087,
+     "score": 766.1074367197762,
+     "best_epoch": 1,
+     "take": "pinned_epoch",
+     "n_train": 1475092,
+     "fit_wall_min": 2.411,
+     "row_independence": {
+      "chunk_65536_vs_4096_max_abs_diff": 0.0,
+      "shuffled_roundtrip_max_abs_diff": 0.0,
+      "bitwise_identical_chunk": true,
+      "bitwise_identical_shuffle": true
+     },
+     "pred_sha256": "219b2dcaa0c1977c8d42bd7b91dbacb8104dcaaf51877a98e7019789818c4d7b",
+     "path": "~/exp088/out/preds/F1_FM_s2024_le2024_best.npy"
+    },
+    "101": {
+     "brier": 0.24752744304647242,
+     "score": 912.4875868230964,
+     "best_epoch": 2,
+     "take": "pinned_epoch",
+     "n_train": 1475092,
+     "fit_wall_min": 2.464,
+     "row_independence": {
+      "chunk_65536_vs_4096_max_abs_diff": 0.0,
+      "shuffled_roundtrip_max_abs_diff": 0.0,
+      "bitwise_identical_chunk": true,
+      "bitwise_identical_shuffle": true
+     },
+     "pred_sha256": "067e0cafd3c04e09b89e58b21664ae0ec0e4f107ad3250465a67e98b3fa23729",
+     "path": "~/exp088/out/preds/F1_FM_s101_le2024_best.npy"
+    },
+    "777": {
+     "brier": 0.24790554859361094,
+     "score": 761.1284581767186,
+     "best_epoch": 1,
+     "take": "pinned_epoch",
+     "n_train": 1475092,
+     "fit_wall_min": 2.371,
+     "row_independence": {
+      "chunk_65536_vs_4096_max_abs_diff": 0.0,
+      "shuffled_roundtrip_max_abs_diff": 0.0,
+      "bitwise_identical_chunk": true,
+      "bitwise_identical_shuffle": true
+     },
+     "pred_sha256": "5d4227f2b80df3e29106ad3e7c089b2bd690d61aae7a4de5169d6ebb23f31d97",
+     "path": "~/exp088/out/preds/F1_FM_s777_le2024_best.npy"
+    }
+   }
+  },
+  "seedavg5": {
+   "le2023": {
+    "brier": 0.24799557460051064,
+    "score": 725.0902194812725,
+    "status": "out-of-time (정직)"
+   },
+   "le2024": {
+    "brier": 0.2477834668332097,
+    "score": 809.99890987411,
+    "status": "🔴 표본 내 — 비교 금지"
+   }
+  },
+  "GATE_A_deployment_scale": {
+   "F1_FM_le2024_5seed_vs_DEEP_5seed": 0.8616392840903809,
+   "F1_FM_le2023_5seed_vs_DEEP_5seed": 0.8346364589196414,
+   "F1_FM_le2023_4seed_vs_DEEP_4seed_stage0": 0.8382196692790216,
+   "thresholds": {
+    "pass": "<0.90",
+    "gray": "0.90~0.95",
+    "reject": ">=0.95"
+   },
+   "verdict_le2024": "PASS(<0.90)"
+  },
+  "rho_full": {
+   "F1_FM_le2023_5seed": {
+    "DEEP_5seed": 0.8346364589196414,
+    "DEEP_4seed": 0.8372803983747908,
+    "mate_v6": 0.866402229064542,
+    "mate_Q": 0.8237524772380308,
+    "p_EBM": 0.7932005901335633,
+    "AA_dep": 0.8195421138434793,
+    "NN_ours_4seed": 0.878210780129155,
+    "AA67": 0.8099966701143633,
+    "T70": 0.8725346644300583,
+    "F2_EMB_le2023_4seed": 0.9353343069717065
+   },
+   "F1_FM_le2024_5seed": {
+    "DEEP_5seed": 0.8616392840903809,
+    "DEEP_4seed": 0.8542646535557096,
+    "mate_v6": 0.8808776492540652,
+    "mate_Q": 0.852605098500019,
+    "p_EBM": 0.8931424122528532,
+    "AA_dep": 0.84744083349996,
+    "NN_ours_4seed": 0.8532257478011371,
+    "AA67": 0.7601300715452115,
+    "T70": 0.7922126334724476,
+    "F2_EMB_le2023_4seed": 0.8697050516978404
+   },
+   "F1_FM_le2023_vs_le2024": 0.8914535223327464
+  },
+  "attenuation_transfer_ESTIMATE": {
+   "method": "Fisher z 이동을 같은 크기로 옮긴다",
+   "F1_FM_rho_le2023": 0.8346364589196414,
+   "F1_FM_rho_le2024": 0.8616392840903809,
+   "delta_fisher_z": 0.09644662973355889,
+   "F2_EMB_rho_le2023_measured": 0.9171898171767191,
+   "F2_EMB_rho_le2024_ESTIMATED": 0.9312175943615658,
+   "🔴": "이것은 **추정**이다 — F2_EMB 는 학습하지 않았다(관문 A 회색 → 정지 규칙). 두 팔의 감쇠가 같다는 보장이 없다. 판정 근거로 쓰지 말고 '그 팔을 학습할 값이 있는가'의 사전 확률로만 쓸 것"
+  },
+  "orthogonal_component_vs_all_arms": {
+   "basis": [
+    "DEEP_5seed",
+    "mate_v6",
+    "mate_Q",
+    "p_EBM",
+    "AA_dep",
+    "NN_ours_4seed",
+    "T70"
+   ],
+   "F1_FM_le2023_5seed": {
+    "resid_sd": 0.07002507890796318,
+    "arm_sd": 0.16744887535321057,
+    "resid_share": 0.4181878126099971
+   },
+   "F1_FM_le2024_5seed": {
+    "resid_sd": 0.06788969837307293,
+    "arm_sd": 0.18223650104916345,
+    "resid_share": 0.37253622617983523
+   },
+   "F2_EMB_le2023_4seed": {
+    "resid_sd": 0.04858741837370526,
+    "arm_sd": 0.1779505990807067,
+    "resid_share": 0.2730388019186673
+   },
+   "F1_FM_le2024_vs_DEEP_only": {
+    "resid_sd": 0.0924888833268684,
+    "arm_sd": 0.18223650104916345,
+    "resid_share": 0.5075211760234406
+   },
+   "F2_EMB_vs_DEEP_only": {
+    "resid_sd": 0.07090451373533725,
+    "arm_sd": 0.1779505990807067,
+    "resid_share": 0.3984505480826149
+   }
+  },
+  "GATE_B_record_only": {
+   "deep_on_our_baseline": {
+    "w_star": 0.8,
+    "gain_pts": 150.77792781520228,
+    "se_pts": 16.38666504858348,
+    "t": 9.20125769143222,
+    "base_score": 907.5995596662945,
+    "blend_score": 1058.3774874814987,
+    "w_at_cap": true
+   },
+   "F1_FM_le2023_5seed_on_A_plus_deep": {
+    "w_star": 0.0,
+    "gain_pts": 0.0,
+    "se_pts": 0.0,
+    "t": 0.0,
+    "base_score": 1058.3774874814987,
+    "blend_score": 1058.3774874814987,
+    "w_at_cap": false
+   },
+   "F1_FM_le2024_5seed_on_A_plus_deep": {
+    "w_star": 0.0,
+    "gain_pts": 0.0,
+    "se_pts": 0.0,
+    "t": 0.0,
+    "base_score": 1058.3774874814987,
+    "blend_score": 1058.3774874814987,
+    "w_at_cap": false
+   },
+   "F1_FM_le2023_5seed_on_A_only": {
+    "w_star": 0.035,
+    "gain_pts": 0.20441819813036155,
+    "se_pts": 0.7967204328723305,
+    "t": 0.2565745645475598,
+    "base_score": 907.5995596662945,
+    "blend_score": 907.8039778644298,
+    "w_at_cap": false
+   },
+   "F1_FM_le2024_5seed_on_A_only": {
+    "w_star": 0.31,
+    "gain_pts": 24.274347905736548,
+    "se_pts": 8.541102449785708,
+    "t": 2.842062608246267,
+    "base_score": 907.5995596662945,
+    "blend_score": 931.8739075720339,
+    "w_at_cap": false
+   },
+   "🔴_왜_판정_불가": "① 딥 팔이 이 면에서 표본 내라 기준선이 실제보다 훨씬 강하다 — w*(deep) 가 격자 상한 0.8 에 닿는다. ② ≤2024 팔은 평가 행을 학습에서 봤다 — 이득이 기억이다. 두 오염이 반대 방향이라 상쇄 여부도 알 수 없다. 부호·t 둘 다 못 읽는다"
+  },
+  "wall_sec": 6.69
+ },
+ "stage1_extra": {
+  "exp_id": "exp_088",
+  "stage": "s1c_extra",
+  "deep_arm_own_overlap": {
+   "vs_mate_v6": 0.9503633440534276,
+   "vs_mate_Q": 0.9360261671331074,
+   "vs_p_EBM": 0.8105503349590099,
+   "vs_AA_deployed": 0.9292357893426629,
+   "vs_partner_internal_mix_z_mate": 0.9539049353036213,
+   "w_deep_deployed": 0.2,
+   "LB_delta_bought": 5.0813180433,
+   "🔑": "딥 팔은 파트너 내부 혼합 로짓의 20% 를 갈아끼우며 LB +5.0813180433 을 샀다. 그 팔이 기존 팔들과 갖는 상관이 우리 관문 A 문턱 근처/위라면, 문턱 자체가 LB 실적으로 눈금이 안 잡혀 있다는 뜻이다"
+  },
+  "inference_time_sec": {
+   "rows": 253507,
+   "threads": 6,
+   "device": "cpu",
+   "per_seed_sec": [
+    0.0489,
+    0.0372,
+    0.0351,
+    0.034,
+    0.0347
+   ],
+   "sum_5seed_sec": 0.19,
+   "note": "가중치 적재는 제외한 순전파만. S24 — 추론 시간은 현재 제약이 아니다"
+  }
+ },
+ "⭐_문턱_눈금_반례": {
+  "무엇": "LB +5.0813180433 을 실제로 산 팀원 딥 팔 자신의 중복도",
+  "rho_vs_partner_internal_mix": 0.9539049353036213,
+  "rho_vs_mate_v6": 0.9503633440534276,
+  "rho_vs_mate_Q": 0.9360261671331074,
+  "우리_관문A_기각선": 0.95,
+  "함의": "그 팔은 우리 사전 등록 기각선 0.95 를 넘거나 붙는다. 그런데 팀 신기록을 샀다. → 상관으로 잰 '새로움'은 LB 이득을 예측하지 못한다. 관문 A 는 무엇을 거르는 자인지 다시 정의되어야 한다"
+ },
+ "gate_B_why_unmeasurable": "① 딥 팔이 이 면에서 표본 내라 기준선이 실제보다 훨씬 강하다 — w*(deep) 가 격자 상한 0.8 에 닿는다. ② ≤2024 팔은 평가 행을 학습에서 봤다 — 이득이 기억이다. 두 오염이 반대 방향이라 상쇄 여부도 알 수 없다. 부호·t 둘 다 못 읽는다",
+ "fold_2022": null,
+ "fold_2023": null,
+ "fold_2024": {
+  "note": "이 실험의 유일한 면. train<=2023 -> valid 2024 valid_all 253,507행",
+  "n_valid_all": 253507,
+  "우리_팔_out_of_time": {
+   "F1_FM_le2023_5seed": {
+    "brier": 0.24799557460051064,
+    "score": 725.0902194812725,
+    "bss_vs_ref_0.2498069": 0.007250902194812725
+   },
+   "F1_FM_le2023_4seed_exp086": {
+    "score": 727.12053,
+    "출처": "exp_086 재사용"
+   },
+   "F2_EMB_le2023_4seed_exp086": {
+    "score": 866.18765,
+    "출처": "exp_086 재사용"
+   }
+  },
+  "🔴_표본_내_비교_금지": {
+   "F1_FM_le2024_5seed": {
+    "brier": 0.2477834668332097,
+    "score": 809.99890987411,
+    "왜": "이 253,507행이 학습에 들어 있다"
+   },
+   "DEEP_5seed": {
+    "score": 1075.9564286307866,
+    "왜": "팀원 딥 팔은 <=2024 전량 학습"
+   }
+  }
+ },
+ "train_time_min": {
+  "prep088_le2024_assembly_sec": 34.5,
+  "le2023_s777_1fit_min": 1.833,
+  "le2024_5fit_min": [
+   2.334,
+   2.391,
+   2.411,
+   2.464,
+   2.371
+  ],
+  "le2024_5fit_sum_min": 11.971,
+  "note": "le2024 fit 은 25에폭 전량을 돌리고 못박은 에폭의 상태를 취한다. 동시 3개(wave1) + 2개(wave2), GPU 2장. 학습행 1,116,277 -> 1,475,092 (1.321배)"
+ },
+ "inference_time_sec": {
+  "rows": 253507,
+  "threads": 6,
+  "device": "cpu",
+  "per_seed_sec": [
+   0.0489,
+   0.0372,
+   0.0351,
+   0.034,
+   0.0347
+  ],
+  "sum_5seed_sec": 0.19,
+  "note": "가중치 적재는 제외한 순전파만. S24 — 추론 시간은 현재 제약이 아니다"
+ },
+ "artifacts_server": {
+  "root": "~/SungjinPark/exp088/",
+  "preds": [
+   "out/preds/deep_route1_logit_seed{4,5}.npy — 팀원 딥 팔 로짓, 우리 면",
+   "out/preds/deep_route1_s{42,777,2024,101,7}_logit.npy",
+   "out/preds/deep_route2_cov_logit.npy — cov 대역 프레임(대조)",
+   "out/preds/F1_FM_s{42,7,2024,101,777}_le2024_best.npy",
+   "out/preds/F1_FM_s777_le2023_best.npy",
+   "out/preds/F1_FM_le202{3,4}_seedavg5.npy"
+  ],
+  "weights": "work/F1_FM_s*_le2024_best.pt (로컬 미복사)",
+  "cache": "work/{Xd,codes,y,train_mask,valid_mask,gt}.npy · work/schema.json (≤2024 전량 조립)",
+  "🔴": "기존 디렉터리(audit_deep·exp085·exp086·build_*)는 읽기만. 삭제·덮어쓰기 0건"
+ }
+}

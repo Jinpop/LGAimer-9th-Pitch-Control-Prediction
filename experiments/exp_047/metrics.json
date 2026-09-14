@@ -1,0 +1,2774 @@
+{
+ "exp_id": "exp_047",
+ "title": "in-season form decomposition extended to the remaining nine asof rate columns + the trajectory/deviation split",
+ "primary_metric": "fold_2024 valid_all Brier (train<=2023 -> valid 2024)",
+ "control_for_this_experiment": "F1 (= exp_046 A1).  R0 (exp_030, 47 columns) appears below for scale only; the F1-R0 gap is exp_046's result, not this experiment's.",
+ "brier_ref": 0.2498069,
+ "score_formula": "100000*(1 - brier/0.2498069)",
+ "score_conversion_uncertainty_note": "score digits beyond ~0.2 are a machine transform of a rounded Brier, not measured resolution (Brier 1e-6 = score 0.4003)",
+ "sigma_score": 8.55113,
+ "threshold_3sigma": 25.65339,
+ "arms_found": [
+  "F1",
+  "F1anchor",
+  "F2",
+  "F2R",
+  "F3"
+ ],
+ "stage1_diagnostic": {
+  "fits_run": 0,
+  "minutes": 0.75,
+  "pre_registered": {
+   "K_GRID": [
+    25,
+    50,
+    100,
+    200,
+    400,
+    800,
+    1600
+   ],
+   "K_TRAJ_GRID": [
+    50,
+    100,
+    200,
+    400,
+    800,
+    1600,
+    3200
+   ],
+   "K_DEV_GRID": [
+    25,
+    50,
+    100,
+    200,
+    400,
+    800
+   ],
+   "incr_r2_residual_min": 0.3,
+   "block_gain_min_pts": 10.0,
+   "max_abs_corr": 0.7,
+   "max_axes": 4,
+   "selection_rows": "seasons 2022+2023 only (fold_2024 is never consulted for any choice)"
+  },
+  "G1": {
+   "rev": {
+    "violations": 0,
+    "PASS": true
+   },
+   "mid": {
+    "violations": 0,
+    "PASS": true
+   },
+   "ball": {
+    "violations": 0,
+    "PASS": true
+   },
+   "strk": {
+    "violations": 0,
+    "PASS": true
+   },
+   "fb": {
+    "violations": 0,
+    "PASS": true
+   },
+   "brk": {
+    "violations": 0,
+    "PASS": true
+   },
+   "ofs": {
+    "violations": 0,
+    "PASS": true
+   },
+   "bsuc": {
+    "violations": 0,
+    "PASS": true
+   },
+   "bmid": {
+    "violations": 0,
+    "PASS": true
+   },
+   "success_exp046_convention": {
+    "violations": 0,
+    "PASS": true
+   },
+   "ALL_PASS": true
+  },
+  "G2a": {
+   "rev": {
+    "n_with_successor": 1474300,
+    "out_of_01": 0,
+    "PASS": true
+   },
+   "mid": {
+    "n_with_successor": 1474300,
+    "out_of_01": 0,
+    "PASS": true
+   },
+   "ball": {
+    "n_with_successor": 1474300,
+    "out_of_01": 0,
+    "PASS": true
+   },
+   "strk": {
+    "n_with_successor": 1474300,
+    "out_of_01": 0,
+    "PASS": true
+   },
+   "fb": {
+    "n_with_successor": 1474300,
+    "out_of_01": 0,
+    "PASS": true
+   },
+   "brk": {
+    "n_with_successor": 1474300,
+    "out_of_01": 0,
+    "PASS": true
+   },
+   "ofs": {
+    "n_with_successor": 1474300,
+    "out_of_01": 0,
+    "PASS": true
+   },
+   "bsuc": {
+    "n_with_successor": 1474262,
+    "out_of_01": 0,
+    "PASS": true
+   },
+   "bmid": {
+    "n_with_successor": 1474262,
+    "out_of_01": 0,
+    "PASS": true
+   },
+   "success_anchor": {
+    "n_with_successor": 1474300,
+    "out_of_01": 0,
+    "agree_with_control_success_pct": 100.0,
+    "PASS": true
+   }
+  },
+  "G2b": {
+   "checked_seasons": [
+    {
+     "season": 2019,
+     "n_rows": 237413,
+     "mismatch_n": 0,
+     "mismatch_S": 0
+    },
+    {
+     "season": 2020,
+     "n_rows": 244087,
+     "mismatch_n": 0,
+     "mismatch_S": 0
+    },
+    {
+     "season": 2021,
+     "n_rows": 247088,
+     "mismatch_n": 0,
+     "mismatch_S": 0
+    },
+    {
+     "season": 2022,
+     "n_rows": 247472,
+     "mismatch_n": 0,
+     "mismatch_S": 0
+    },
+    {
+     "season": 2023,
+     "n_rows": 245525,
+     "mismatch_n": 0,
+     "mismatch_S": 0
+    },
+    {
+     "season": 2024,
+     "n_rows": 253507,
+     "mismatch_n": 0,
+     "mismatch_S": 0
+    }
+   ],
+   "rule": "pre-boundary decomposition of the SUCCESS column == within-season label cumulation + the boundary row's own label; the ONE-PITCH offset is explicit here",
+   "n_rows_checked": 1475092,
+   "mismatch_n_season": 0,
+   "mismatch_S_season": 0,
+   "PASS": true
+  },
+  "G2c": {
+   "rev": {
+    "entity_seasons_with_nonconstant_n_offset": 0,
+    "entity_seasons_with_nonconstant_S_offset": 0,
+    "PASS": true
+   },
+   "mid": {
+    "entity_seasons_with_nonconstant_n_offset": 0,
+    "entity_seasons_with_nonconstant_S_offset": 0,
+    "PASS": true
+   },
+   "ball": {
+    "entity_seasons_with_nonconstant_n_offset": 0,
+    "entity_seasons_with_nonconstant_S_offset": 0,
+    "PASS": true
+   },
+   "strk": {
+    "entity_seasons_with_nonconstant_n_offset": 0,
+    "entity_seasons_with_nonconstant_S_offset": 0,
+    "PASS": true
+   },
+   "fb": {
+    "entity_seasons_with_nonconstant_n_offset": 0,
+    "entity_seasons_with_nonconstant_S_offset": 0,
+    "PASS": true
+   },
+   "brk": {
+    "entity_seasons_with_nonconstant_n_offset": 0,
+    "entity_seasons_with_nonconstant_S_offset": 0,
+    "PASS": true
+   },
+   "ofs": {
+    "entity_seasons_with_nonconstant_n_offset": 0,
+    "entity_seasons_with_nonconstant_S_offset": 0,
+    "PASS": true
+   },
+   "bsuc": {
+    "entity_seasons_with_nonconstant_n_offset": 0,
+    "entity_seasons_with_nonconstant_S_offset": 0,
+    "PASS": true
+   },
+   "bmid": {
+    "entity_seasons_with_nonconstant_n_offset": 0,
+    "entity_seasons_with_nonconstant_S_offset": 0,
+    "PASS": true
+   },
+   "ALL_PASS": true
+  },
+  "G3": {
+   "pitchmix_n_equals_pitcher_n_pct": 100.0,
+   "denominator_note": "config asked which denominator the pitch-mix rates use.  Measured: asof_pitcher_pitchmix_n is elementwise EQUAL to asof_pitcher_n on the share above, so the question is moot for this file — both give the same counts.  The code uses asof_pitcher_n for every pitcher axis.",
+   "step_plus1_pct_pitcher": 100.0,
+   "step_violations_pitcher": 0,
+   "step_plus1_pct_pitchmix": 100.0,
+   "step_violations_pitchmix": 0,
+   "step_plus1_pct_batter": 100.0,
+   "step_violations_batter": 0,
+   "pitchmix_sum_on_defined_rows": {
+    "n": 1474300,
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "pct_within_2e-6_of_1": 100.0,
+    "verdict": "the three pitch-mix rates are an exact partition up to 6-decimal rounding -> at most TWO of the three axes may enter a model (pre-registered in config)"
+   },
+   "PASS": true
+  },
+  "gates_all_pass": true,
+  "rounding": {
+   "max_abs_residual_raw_minus_round": 0.007588000000396278,
+   "min_distance_of_raw_frac_to_0.5": 0.4924119999996037,
+   "bankers_rounding_can_bite": false
+  },
+  "selection": {
+   "rule": "block-selected; fold_2024 not consulted",
+   "axes": {
+    "rev": {
+     "k_star": 25,
+     "beta_block": -0.21628,
+     "block_gain_pts": 70.0215,
+     "per_k": {
+      "25": {
+       "beta": -0.21628,
+       "mean_block_dScore": 70.0215,
+       "per_unit": [
+        68.37328,
+        72.76216,
+        70.07493,
+        68.87561
+       ]
+      },
+      "50": {
+       "beta": -0.22554,
+       "mean_block_dScore": 62.47885,
+       "per_unit": [
+        55.23411,
+        59.38731,
+        68.15106,
+        67.14292
+       ]
+      },
+      "100": {
+       "beta": -0.24081,
+       "mean_block_dScore": 54.40549,
+       "per_unit": [
+        42.52596,
+        46.37497,
+        64.78324,
+        63.9378
+       ]
+      },
+      "200": {
+       "beta": -0.26738,
+       "mean_block_dScore": 46.68842,
+       "per_unit": [
+        31.83083,
+        35.36445,
+        60.14524,
+        59.41314
+       ]
+      },
+      "400": {
+       "beta": -0.31465,
+       "mean_block_dScore": 40.04811,
+       "per_unit": [
+        23.98422,
+        27.24439,
+        54.81827,
+        54.14557
+       ]
+      },
+      "800": {
+       "beta": -0.39965,
+       "mean_block_dScore": 34.77836,
+       "per_unit": [
+        18.90929,
+        21.95873,
+        49.45059,
+        48.79481
+       ]
+      },
+      "1600": {
+       "beta": -0.55485,
+       "mean_block_dScore": 30.79617,
+       "per_unit": [
+        15.87843,
+        18.77334,
+        44.59602,
+        43.93691
+       ]
+      }
+     },
+     "related_cols": [
+      "asof_pitcher_reverse_rate",
+      "asof_pitcher_n"
+     ],
+     "r2_on_related": 0.01425,
+     "incr_r2_residual": 0.98575,
+     "r2_on_all_numeric_base": 0.29123,
+     "n_r2_rows": 420169,
+     "coverage_block_pct": 85.2275
+    },
+    "mid": {
+     "k_star": 25,
+     "beta_block": -0.02065,
+     "block_gain_pts": 0.20352,
+     "per_k": {
+      "25": {
+       "beta": -0.02065,
+       "mean_block_dScore": 0.20352,
+       "per_unit": [
+        -3.46212,
+        -3.43157,
+        3.81814,
+        3.88962
+       ]
+      },
+      "50": {
+       "beta": -0.01012,
+       "mean_block_dScore": 0.04325,
+       "per_unit": [
+        -1.676,
+        -1.6661,
+        1.74254,
+        1.77257
+       ]
+      },
+      "100": {
+       "beta": 0.00333,
+       "mean_block_dScore": 0.00091,
+       "per_unit": [
+        0.52122,
+        0.51996,
+        -0.51479,
+        -0.52272
+       ]
+      },
+      "200": {
+       "beta": 0.01826,
+       "mean_block_dScore": 0.05209,
+       "per_unit": [
+        2.53073,
+        2.53329,
+        -2.412,
+        -2.44364
+       ]
+      },
+      "400": {
+       "beta": 0.03233,
+       "mean_block_dScore": 0.10674,
+       "per_unit": [
+        3.62693,
+        3.64029,
+        -3.40263,
+        -3.43765
+       ]
+      },
+      "800": {
+       "beta": 0.04328,
+       "mean_block_dScore": 0.10416,
+       "per_unit": [
+        3.55052,
+        3.56844,
+        -3.33944,
+        -3.36289
+       ]
+      },
+      "1600": {
+       "beta": 0.04994,
+       "mean_block_dScore": 0.06263,
+       "per_unit": [
+        2.70188,
+        2.71549,
+        -2.57871,
+        -2.58814
+       ]
+      }
+     },
+     "related_cols": [
+      "asof_pitcher_middle_rate",
+      "asof_pitcher_prev1_game_middle_rate",
+      "asof_pitcher_prev3_game_middle_rate",
+      "asof_pitcher_prev5_game_middle_rate",
+      "asof_pitcher_n"
+     ],
+     "r2_on_related": 0.22129,
+     "incr_r2_residual": 0.77871,
+     "r2_on_all_numeric_base": 0.2549,
+     "n_r2_rows": 420169,
+     "coverage_block_pct": 85.2275
+    },
+    "ball": {
+     "k_star": 200,
+     "beta_block": -0.53978,
+     "block_gain_pts": 45.27429,
+     "per_k": {
+      "25": {
+       "beta": -0.32287,
+       "mean_block_dScore": 38.97864,
+       "per_unit": [
+        108.16404,
+        103.46329,
+        -27.29195,
+        -28.42081
+       ]
+      },
+      "50": {
+       "beta": -0.37741,
+       "mean_block_dScore": 42.42482,
+       "per_unit": [
+        115.03137,
+        109.91851,
+        -26.98143,
+        -28.26919
+       ]
+      },
+      "100": {
+       "beta": -0.44752,
+       "mean_block_dScore": 44.78672,
+       "per_unit": [
+        118.57393,
+        113.05262,
+        -25.50868,
+        -26.971
+       ]
+      },
+      "200": {
+       "beta": -0.53978,
+       "mean_block_dScore": 45.27429,
+       "per_unit": [
+        116.85115,
+        110.95661,
+        -22.53837,
+        -24.17223
+       ]
+      },
+      "400": {
+       "beta": -0.66846,
+       "mean_block_dScore": 43.63276,
+       "per_unit": [
+        109.48059,
+        103.26158,
+        -18.22246,
+        -19.98867
+       ]
+      },
+      "800": {
+       "beta": -0.86492,
+       "mean_block_dScore": 40.41747,
+       "per_unit": [
+        98.26515,
+        91.77558,
+        -13.27223,
+        -15.09863
+       ]
+      },
+      "1600": {
+       "beta": -1.19613,
+       "mean_block_dScore": 36.69747,
+       "per_unit": [
+        86.34556,
+        79.65238,
+        -8.69741,
+        -10.51064
+       ]
+      }
+     },
+     "related_cols": [
+      "asof_pitcher_ball_rate",
+      "asof_pitcher_n"
+     ],
+     "r2_on_related": 0.00552,
+     "incr_r2_residual": 0.99448,
+     "r2_on_all_numeric_base": 0.15306,
+     "n_r2_rows": 420169,
+     "coverage_block_pct": 85.2275
+    },
+    "strk": {
+     "k_star": 400,
+     "beta_block": 0.39702,
+     "block_gain_pts": 16.5736,
+     "per_k": {
+      "25": {
+       "beta": 0.16691,
+       "mean_block_dScore": 11.37515,
+       "per_unit": [
+        46.90387,
+        44.54178,
+        -22.99572,
+        -22.94931
+       ]
+      },
+      "50": {
+       "beta": 0.20108,
+       "mean_block_dScore": 13.22056,
+       "per_unit": [
+        53.29144,
+        50.60207,
+        -25.53855,
+        -25.47272
+       ]
+      },
+      "100": {
+       "beta": 0.24669,
+       "mean_block_dScore": 14.96078,
+       "per_unit": [
+        58.69994,
+        55.68231,
+        -27.30516,
+        -27.23395
+       ]
+      },
+      "200": {
+       "beta": 0.3088,
+       "mean_block_dScore": 16.19508,
+       "per_unit": [
+        61.83062,
+        58.49917,
+        -27.79906,
+        -27.7504
+       ]
+      },
+      "400": {
+       "beta": 0.39702,
+       "mean_block_dScore": 16.5736,
+       "per_unit": [
+        61.77815,
+        58.16162,
+        -26.81989,
+        -26.82547
+       ]
+      },
+      "800": {
+       "beta": 0.53136,
+       "mean_block_dScore": 16.06258,
+       "per_unit": [
+        58.72361,
+        54.87334,
+        -24.63465,
+        -24.71199
+       ]
+      },
+      "1600": {
+       "beta": 0.75479,
+       "mean_block_dScore": 15.00944,
+       "per_unit": [
+        54.0376,
+        50.02759,
+        -21.94198,
+        -22.08544
+       ]
+      }
+     },
+     "related_cols": [
+      "asof_pitcher_strike_rate",
+      "asof_pitcher_n"
+     ],
+     "r2_on_related": 0.00097,
+     "incr_r2_residual": 0.99903,
+     "r2_on_all_numeric_base": 0.09849,
+     "n_r2_rows": 420169,
+     "coverage_block_pct": 85.2275
+    },
+    "fb": {
+     "k_star": 50,
+     "beta_block": -0.0656,
+     "block_gain_pts": 7.39182,
+     "per_k": {
+      "25": {
+       "beta": -0.05966,
+       "mean_block_dScore": 7.16424,
+       "per_unit": [
+        12.90922,
+        11.22231,
+        2.28232,
+        2.2431
+       ]
+      },
+      "50": {
+       "beta": -0.0656,
+       "mean_block_dScore": 7.39182,
+       "per_unit": [
+        13.12367,
+        11.33473,
+        2.55904,
+        2.54985
+       ]
+      },
+      "100": {
+       "beta": -0.07297,
+       "mean_block_dScore": 7.3387,
+       "per_unit": [
+        12.62401,
+        10.76436,
+        2.97177,
+        2.99467
+       ]
+      },
+      "200": {
+       "beta": -0.08291,
+       "mean_block_dScore": 6.99007,
+       "per_unit": [
+        11.46153,
+        9.5803,
+        3.43068,
+        3.48776
+       ]
+      },
+      "400": {
+       "beta": -0.09772,
+       "mean_block_dScore": 6.4034,
+       "per_unit": [
+        9.87554,
+        8.0294,
+        3.80615,
+        3.9025
+       ]
+      },
+      "800": {
+       "beta": -0.12182,
+       "mean_block_dScore": 5.6984,
+       "per_unit": [
+        8.20684,
+        6.44505,
+        4.00007,
+        4.14165
+       ]
+      },
+      "1600": {
+       "beta": -0.16433,
+       "mean_block_dScore": 5.02946,
+       "per_unit": [
+        6.77081,
+        5.11881,
+        4.02028,
+        4.20795
+       ]
+      }
+     },
+     "related_cols": [
+      "asof_pitcher_fastball_rate",
+      "asof_pitcher_breaking_rate",
+      "asof_pitcher_offspeed_rate",
+      "asof_pitcher_n"
+     ],
+     "r2_on_related": 0.00883,
+     "incr_r2_residual": 0.99117,
+     "r2_on_all_numeric_base": 0.05562,
+     "n_r2_rows": 420169,
+     "coverage_block_pct": 85.2275
+    },
+    "brk": {
+     "k_star": 25,
+     "beta_block": 0.03191,
+     "block_gain_pts": 2.09576,
+     "per_k": {
+      "25": {
+       "beta": 0.03191,
+       "mean_block_dScore": 2.09576,
+       "per_unit": [
+        10.36021,
+        9.99733,
+        -5.89535,
+        -6.07916
+       ]
+      },
+      "50": {
+       "beta": 0.03428,
+       "mean_block_dScore": 2.05982,
+       "per_unit": [
+        10.42142,
+        10.04288,
+        -6.01805,
+        -6.207
+       ]
+      },
+      "100": {
+       "beta": 0.03688,
+       "mean_block_dScore": 1.90094,
+       "per_unit": [
+        10.02161,
+        9.63763,
+        -5.92983,
+        -6.12566
+       ]
+      },
+      "200": {
+       "beta": 0.03989,
+       "mean_block_dScore": 1.6194,
+       "per_unit": [
+        9.08727,
+        8.71191,
+        -5.55945,
+        -5.76214
+       ]
+      },
+      "400": {
+       "beta": 0.04377,
+       "mean_block_dScore": 1.25972,
+       "per_unit": [
+        7.68091,
+        7.32729,
+        -4.88286,
+        -5.08647
+       ]
+      },
+      "800": {
+       "beta": 0.04963,
+       "mean_block_dScore": 0.90185,
+       "per_unit": [
+        6.06664,
+        5.74335,
+        -4.00457,
+        -4.19804
+       ]
+      },
+      "1600": {
+       "beta": 0.05993,
+       "mean_block_dScore": 0.6174,
+       "per_unit": [
+        4.60479,
+        4.31483,
+        -3.13795,
+        -3.31206
+       ]
+      }
+     },
+     "related_cols": [
+      "asof_pitcher_fastball_rate",
+      "asof_pitcher_breaking_rate",
+      "asof_pitcher_offspeed_rate",
+      "asof_pitcher_n"
+     ],
+     "r2_on_related": 0.02421,
+     "incr_r2_residual": 0.97579,
+     "r2_on_all_numeric_base": 0.09305,
+     "n_r2_rows": 420169,
+     "coverage_block_pct": 85.2275
+    },
+    "ofs": {
+     "k_star": 1600,
+     "beta_block": 0.162,
+     "block_gain_pts": 3.28808,
+     "per_k": {
+      "25": {
+       "beta": 0.04155,
+       "mean_block_dScore": 2.26032,
+       "per_unit": [
+        -4.34463,
+        -5.04706,
+        9.11045,
+        9.32251
+       ]
+      },
+      "50": {
+       "beta": 0.04639,
+       "mean_block_dScore": 2.43902,
+       "per_unit": [
+        -4.65433,
+        -5.40715,
+        9.78416,
+        10.03339
+       ]
+      },
+      "100": {
+       "beta": 0.05321,
+       "mean_block_dScore": 2.60817,
+       "per_unit": [
+        -5.06836,
+        -5.87047,
+        10.53613,
+        10.83537
+       ]
+      },
+      "200": {
+       "beta": 0.06369,
+       "mean_block_dScore": 2.78283,
+       "per_unit": [
+        -5.50023,
+        -6.34594,
+        11.30501,
+        11.67249
+       ]
+      },
+      "400": {
+       "beta": 0.08083,
+       "mean_block_dScore": 2.96958,
+       "per_unit": [
+        -5.78517,
+        -6.65925,
+        11.93349,
+        12.38924
+       ]
+      },
+      "800": {
+       "beta": 0.11005,
+       "mean_block_dScore": 3.1469,
+       "per_unit": [
+        -5.77906,
+        -6.65373,
+        12.23176,
+        12.78863
+       ]
+      },
+      "1600": {
+       "beta": 0.162,
+       "mean_block_dScore": 3.28808,
+       "per_unit": [
+        -5.49169,
+        -6.33647,
+        12.16242,
+        12.81808
+       ]
+      }
+     },
+     "related_cols": [
+      "asof_pitcher_fastball_rate",
+      "asof_pitcher_breaking_rate",
+      "asof_pitcher_offspeed_rate",
+      "asof_pitcher_n"
+     ],
+     "r2_on_related": 0.02265,
+     "incr_r2_residual": 0.97735,
+     "r2_on_all_numeric_base": 0.08254,
+     "n_r2_rows": 420169,
+     "coverage_block_pct": 85.2275
+    },
+    "bsuc": {
+     "k_star": 25,
+     "beta_block": 0.07519,
+     "block_gain_pts": 8.50606,
+     "per_k": {
+      "25": {
+       "beta": 0.07519,
+       "mean_block_dScore": 8.50606,
+       "per_unit": [
+        6.01803,
+        9.28912,
+        9.32143,
+        9.39564
+       ]
+      },
+      "50": {
+       "beta": 0.07295,
+       "mean_block_dScore": 6.55096,
+       "per_unit": [
+        3.79856,
+        6.73502,
+        7.7889,
+        7.88136
+       ]
+      },
+      "100": {
+       "beta": 0.07001,
+       "mean_block_dScore": 4.59313,
+       "per_unit": [
+        1.7337,
+        4.24894,
+        6.1438,
+        6.24607
+       ]
+      },
+      "200": {
+       "beta": 0.06722,
+       "mean_block_dScore": 2.92709,
+       "per_unit": [
+        0.14002,
+        2.19215,
+        4.63858,
+        4.7376
+       ]
+      },
+      "400": {
+       "beta": 0.06586,
+       "mean_block_dScore": 1.71682,
+       "per_unit": [
+        -0.84309,
+        0.75943,
+        3.43384,
+        3.5171
+       ]
+      },
+      "800": {
+       "beta": 0.06826,
+       "mean_block_dScore": 0.96935,
+       "per_unit": [
+        -1.27728,
+        -0.0547,
+        2.57398,
+        2.63538
+       ]
+      },
+      "1600": {
+       "beta": 0.07882,
+       "mean_block_dScore": 0.57367,
+       "per_unit": [
+        -1.37122,
+        -0.42172,
+        2.02303,
+        2.0646
+       ]
+      }
+     },
+     "related_cols": [
+      "asof_batter_success_rate",
+      "asof_batter_n"
+     ],
+     "r2_on_related": 0.04701,
+     "incr_r2_residual": 0.95299,
+     "r2_on_all_numeric_base": 0.08767,
+     "n_r2_rows": 442628,
+     "coverage_block_pct": 89.7831
+    },
+    "bmid": {
+     "k_star": 400,
+     "beta_block": 0.15092,
+     "block_gain_pts": 2.299,
+     "per_k": {
+      "25": {
+       "beta": 0.05655,
+       "mean_block_dScore": 1.21194,
+       "per_unit": [
+        13.15923,
+        12.10427,
+        -10.14521,
+        -10.27053
+       ]
+      },
+      "50": {
+       "beta": 0.06796,
+       "mean_block_dScore": 1.41981,
+       "per_unit": [
+        14.25997,
+        13.0588,
+        -10.74721,
+        -10.89232
+       ]
+      },
+      "100": {
+       "beta": 0.08597,
+       "mean_block_dScore": 1.72894,
+       "per_unit": [
+        15.64028,
+        14.25609,
+        -11.4081,
+        -11.57251
+       ]
+      },
+      "200": {
+       "beta": 0.11268,
+       "mean_block_dScore": 2.06903,
+       "per_unit": [
+        16.82173,
+        15.25807,
+        -11.81475,
+        -11.98893
+       ]
+      },
+      "400": {
+       "beta": 0.15092,
+       "mean_block_dScore": 2.299,
+       "per_unit": [
+        17.18716,
+        15.50491,
+        -11.66583,
+        -11.83024
+       ]
+      },
+      "800": {
+       "beta": 0.20614,
+       "mean_block_dScore": 2.29339,
+       "per_unit": [
+        16.40314,
+        14.70489,
+        -10.90056,
+        -11.0339
+       ]
+      },
+      "1600": {
+       "beta": 0.29195,
+       "mean_block_dScore": 2.07636,
+       "per_unit": [
+        14.80068,
+        13.17894,
+        -9.79083,
+        -9.88334
+       ]
+      }
+     },
+     "related_cols": [
+      "asof_batter_middle_rate",
+      "asof_batter_n"
+     ],
+     "r2_on_related": 0.00857,
+     "incr_r2_residual": 0.99143,
+     "r2_on_all_numeric_base": 0.0828,
+     "n_r2_rows": 442628,
+     "coverage_block_pct": 89.7831
+    }
+   },
+   "F1_incumbent": {
+    "column": "d_form_eb (k=100, exp_046 A1)",
+    "beta_block": 0.23682,
+    "block_gain_pts": 53.83133
+   },
+   "corr_matrix_block": {
+    "d_form_eb": {
+     "d_form_eb": 1.0,
+     "rev": -0.81195,
+     "mid": -0.33651,
+     "ball": -0.13609,
+     "strk": 0.05621,
+     "fb": 0.03102,
+     "brk": -0.03239,
+     "ofs": -0.00256,
+     "bsuc": 0.06429,
+     "bmid": 0.02029
+    },
+    "rev": {
+     "d_form_eb": -0.81195,
+     "rev": 1.0,
+     "mid": 0.01235,
+     "ball": 0.09117,
+     "strk": -0.02088,
+     "fb": -0.0045,
+     "brk": 0.01038,
+     "ofs": 0.00052,
+     "bsuc": -0.0903,
+     "bmid": -0.03995
+    },
+    "mid": {
+     "d_form_eb": -0.33651,
+     "rev": 0.01235,
+     "mid": 1.0,
+     "ball": -0.14095,
+     "strk": 0.12344,
+     "fb": 0.00712,
+     "brk": -0.07072,
+     "ofs": 0.03176,
+     "bsuc": 0.03281,
+     "bmid": 0.01372
+    },
+    "ball": {
+     "d_form_eb": -0.13609,
+     "rev": 0.09117,
+     "mid": -0.14095,
+     "ball": 1.0,
+     "strk": -0.73522,
+     "fb": 0.0667,
+     "brk": -0.04081,
+     "ofs": 0.00459,
+     "bsuc": -0.02468,
+     "bmid": -0.00353
+    },
+    "strk": {
+     "d_form_eb": 0.05621,
+     "rev": -0.02088,
+     "mid": 0.12344,
+     "ball": -0.73522,
+     "strk": 1.0,
+     "fb": -0.09973,
+     "brk": 0.05809,
+     "ofs": 0.01732,
+     "bsuc": 0.02424,
+     "bmid": 0.00436
+    },
+    "fb": {
+     "d_form_eb": 0.03102,
+     "rev": -0.0045,
+     "mid": 0.00712,
+     "ball": 0.0667,
+     "strk": -0.09973,
+     "fb": 1.0,
+     "brk": -0.67222,
+     "ofs": -0.35507,
+     "bsuc": -0.00244,
+     "bmid": -0.01035
+    },
+    "brk": {
+     "d_form_eb": -0.03239,
+     "rev": 0.01038,
+     "mid": -0.07072,
+     "ball": -0.04081,
+     "strk": 0.05809,
+     "fb": -0.67222,
+     "brk": 1.0,
+     "ofs": -0.354,
+     "bsuc": 0.00577,
+     "bmid": 0.00431
+    },
+    "ofs": {
+     "d_form_eb": -0.00256,
+     "rev": 0.00052,
+     "mid": 0.03176,
+     "ball": 0.00459,
+     "strk": 0.01732,
+     "fb": -0.35507,
+     "brk": -0.354,
+     "ofs": 1.0,
+     "bsuc": -0.0092,
+     "bmid": 0.0109
+    },
+    "bsuc": {
+     "d_form_eb": 0.06429,
+     "rev": -0.0903,
+     "mid": 0.03281,
+     "ball": -0.02468,
+     "strk": 0.02424,
+     "fb": -0.00244,
+     "brk": 0.00577,
+     "ofs": -0.0092,
+     "bsuc": 1.0,
+     "bmid": -0.31813
+    },
+    "bmid": {
+     "d_form_eb": 0.02029,
+     "rev": -0.03995,
+     "mid": 0.01372,
+     "ball": -0.00353,
+     "strk": 0.00436,
+     "fb": -0.01035,
+     "brk": 0.00431,
+     "ofs": 0.0109,
+     "bsuc": -0.31813,
+     "bmid": 1.0
+    }
+   },
+   "filter_steps": [
+    {
+     "filter": "incremental R2 residual",
+     "survivors": [
+      "rev",
+      "mid",
+      "ball",
+      "strk",
+      "fb",
+      "brk",
+      "ofs",
+      "bsuc",
+      "bmid"
+     ]
+    },
+    {
+     "filter": "block gain >= 10 pts",
+     "survivors": [
+      "rev",
+      "ball",
+      "strk"
+     ]
+    },
+    {
+     "filter": "pitch-mix collinearity (<=2 of 3)",
+     "survivors": [
+      "rev",
+      "ball",
+      "strk"
+     ]
+    },
+    {
+     "filter": "|r| vs incumbent d_form_eb",
+     "survivors": [
+      "ball",
+      "strk"
+     ]
+    },
+    {
+     "filter": "pairwise |r|",
+     "survivors": [
+      "ball"
+     ]
+    },
+    {
+     "filter": "column budget",
+     "survivors": [
+      "ball"
+     ]
+    }
+   ],
+   "dropped": {
+    "mid": "block_gain 0.20352 < 10.0",
+    "fb": "block_gain 7.39182 < 10.0",
+    "brk": "block_gain 2.09576 < 10.0",
+    "ofs": "block_gain 3.28808 < 10.0",
+    "bsuc": "block_gain 8.50606 < 10.0",
+    "bmid": "block_gain 2.299 < 10.0",
+    "rev": "|r| -0.81195 with incumbent d_form_eb > 0.7",
+    "strk": "|r| -0.73522 with ball > 0.7"
+   },
+   "SELECTED_AXES": [
+    "ball"
+   ],
+   "SELECTED_COLUMNS": [
+    "d_ball_eb"
+   ],
+   "SELECTED_K": {
+    "ball": 200
+   },
+   "needs_has_form_bat": false,
+   "B_axis": {
+    "k_traj": 50,
+    "k_dev": 25,
+    "beta_traj": 0.17168,
+    "beta_dev": 0.23812,
+    "block_gain_2term_pts": 64.00972,
+    "block_gain_1term_incumbent_pts": 53.83133,
+    "incremental_over_incumbent_pts": 10.17839,
+    "corr_traj_dev_block": -0.68366,
+    "has_traj_pct_block": 69.30225,
+    "traj_r2_on_existing": 0.01721,
+    "traj_incr_r2_residual": 0.98279,
+    "n_r2_rows": 341658,
+    "PASS": true
+   },
+   "PROCEED_TO_STAGE2": true
+  },
+  "fold2024_descriptives": {
+   "note": "computed AFTER stage1_selection.json was written; nothing here influenced any choice",
+   "n_rows": 253507,
+   "dilution_w_pitcher_pre_boundary": {
+    "mean": 0.35496,
+    "median": 0.18339,
+    "q90": 1.0,
+    "interpretation": "1-w is the share of this season's form that the existing cumulative column dilutes away"
+   },
+   "dilution_w_batter_pre_boundary": {
+    "mean": 0.25912,
+    "median": 0.1467,
+    "q90": 0.79088,
+    "interpretation": "1-w is the share of this season's form that the existing cumulative column dilutes away"
+   },
+   "dilution_w_pitcher_exp046": {
+    "mean": 0.35446,
+    "median": 0.18288,
+    "q90": 1.0,
+    "interpretation": "1-w is the share of this season's form that the existing cumulative column dilutes away"
+   },
+   "per_axis": {
+    "rev": {
+     "rate_col": "asof_pitcher_reverse_rate",
+     "entity": "pitcher_id",
+     "k_star": 25,
+     "coverage_fold2024_pct": 80.1394,
+     "coverage_fold2024_R_pct": 80.29817,
+     "coverage_fold2024_F_pct": 78.95701,
+     "true_sd_min_n100": {
+      "n_cells": 853,
+      "obs_sd_pp": 6.90869,
+      "noise_sd_pp": 2.44899,
+      "true_sd_pp": 6.46006,
+      "reliability": 0.87434
+     },
+     "sd_of_block_correction": 0.01132,
+     "gain_ceiling_pts_from_true_sd": 1338.79716,
+     "gain_estimate_from_block_beta_pts": 51.29658
+    },
+    "mid": {
+     "rate_col": "asof_pitcher_middle_rate",
+     "entity": "pitcher_id",
+     "k_star": 25,
+     "coverage_fold2024_pct": 80.1394,
+     "coverage_fold2024_R_pct": 80.29817,
+     "coverage_fold2024_F_pct": 78.95701,
+     "true_sd_min_n100": {
+      "n_cells": 853,
+      "obs_sd_pp": 3.70793,
+      "noise_sd_pp": 2.05796,
+      "true_sd_pp": 3.0844,
+      "reliability": 0.69196
+     },
+     "sd_of_block_correction": 0.00068,
+     "gain_ceiling_pts_from_true_sd": 305.19897,
+     "gain_estimate_from_block_beta_pts": 0.1851
+    },
+    "ball": {
+     "rate_col": "asof_pitcher_ball_rate",
+     "entity": "pitcher_id",
+     "k_star": 200,
+     "coverage_fold2024_pct": 80.1394,
+     "coverage_fold2024_R_pct": 80.29817,
+     "coverage_fold2024_F_pct": 78.95701,
+     "true_sd_min_n100": {
+      "n_cells": 853,
+      "obs_sd_pp": 3.50938,
+      "noise_sd_pp": 2.94383,
+      "true_sd_pp": 1.9104,
+      "reliability": 0.29634
+     },
+     "sd_of_block_correction": 0.01028,
+     "gain_ceiling_pts_from_true_sd": 117.08205,
+     "gain_estimate_from_block_beta_pts": 42.30404
+    },
+    "strk": {
+     "rate_col": "asof_pitcher_strike_rate",
+     "entity": "pitcher_id",
+     "k_star": 400,
+     "coverage_fold2024_pct": 80.1394,
+     "coverage_fold2024_R_pct": 80.29817,
+     "coverage_fold2024_F_pct": 78.95701,
+     "true_sd_min_n100": {
+      "n_cells": 853,
+      "obs_sd_pp": 3.50813,
+      "noise_sd_pp": 2.97671,
+      "true_sd_pp": 1.8564,
+      "reliability": 0.28002
+     },
+     "sd_of_block_correction": 0.00537,
+     "gain_ceiling_pts_from_true_sd": 110.55663,
+     "gain_estimate_from_block_beta_pts": 11.54368
+    },
+    "fb": {
+     "rate_col": "asof_pitcher_fastball_rate",
+     "entity": "pitcher_id",
+     "k_star": 50,
+     "coverage_fold2024_pct": 80.1394,
+     "coverage_fold2024_R_pct": 80.29817,
+     "coverage_fold2024_F_pct": 78.95701,
+     "true_sd_min_n100": {
+      "n_cells": 853,
+      "obs_sd_pp": 8.23944,
+      "noise_sd_pp": 2.89512,
+      "true_sd_pp": 7.71406,
+      "reliability": 0.87654
+     },
+     "sd_of_block_correction": 0.00455,
+     "gain_ceiling_pts_from_true_sd": 1909.00781,
+     "gain_estimate_from_block_beta_pts": 8.2874
+    },
+    "brk": {
+     "rate_col": "asof_pitcher_breaking_rate",
+     "entity": "pitcher_id",
+     "k_star": 25,
+     "coverage_fold2024_pct": 80.1394,
+     "coverage_fold2024_R_pct": 80.29817,
+     "coverage_fold2024_F_pct": 78.95701,
+     "true_sd_min_n100": {
+      "n_cells": 853,
+      "obs_sd_pp": 8.47569,
+      "noise_sd_pp": 2.63004,
+      "true_sd_pp": 8.0573,
+      "reliability": 0.90371
+     },
+     "sd_of_block_correction": 0.00249,
+     "gain_ceiling_pts_from_true_sd": 2082.67138,
+     "gain_estimate_from_block_beta_pts": 2.48196
+    },
+    "ofs": {
+     "rate_col": "asof_pitcher_offspeed_rate",
+     "entity": "pitcher_id",
+     "k_star": 1600,
+     "coverage_fold2024_pct": 80.1394,
+     "coverage_fold2024_R_pct": 80.29817,
+     "coverage_fold2024_F_pct": 78.95701,
+     "true_sd_min_n100": {
+      "n_cells": 853,
+      "obs_sd_pp": 7.11961,
+      "noise_sd_pp": 1.91407,
+      "true_sd_pp": 6.85749,
+      "reliability": 0.92772
+     },
+     "sd_of_block_correction": 0.00256,
+     "gain_ceiling_pts_from_true_sd": 1508.59286,
+     "gain_estimate_from_block_beta_pts": 2.62347
+    },
+    "bsuc": {
+     "rate_col": "asof_batter_success_rate",
+     "entity": "batter_id",
+     "k_star": 25,
+     "coverage_fold2024_pct": 90.65115,
+     "coverage_fold2024_R_pct": 92.94666,
+     "coverage_fold2024_F_pct": 73.55548,
+     "true_sd_min_n100": {
+      "n_cells": 862,
+      "obs_sd_pp": 6.4745,
+      "noise_sd_pp": 3.04883,
+      "true_sd_pp": 5.71173,
+      "reliability": 0.77826
+     },
+     "sd_of_block_correction": 0.00341,
+     "gain_ceiling_pts_from_true_sd": 1183.87052,
+     "gain_estimate_from_block_beta_pts": 4.65484
+    },
+    "bmid": {
+     "rate_col": "asof_batter_middle_rate",
+     "entity": "batter_id",
+     "k_star": 400,
+     "coverage_fold2024_pct": 90.65115,
+     "coverage_fold2024_R_pct": 92.94666,
+     "coverage_fold2024_F_pct": 73.55548,
+     "true_sd_min_n100": {
+      "n_cells": 862,
+      "obs_sd_pp": 3.52176,
+      "noise_sd_pp": 2.12646,
+      "true_sd_pp": 2.80731,
+      "reliability": 0.63542
+     },
+     "sd_of_block_correction": 0.00309,
+     "gain_ceiling_pts_from_true_sd": 285.98919,
+     "gain_estimate_from_block_beta_pts": 3.82219
+    }
+   },
+   "B_axis": {
+    "has_traj_pct_fold2024": 70.0383,
+    "has_form_pct_fold2024": 80.01712,
+    "traj_and_form_pct_fold2024": 69.93653
+   },
+   "fold2024_offset_readout_context_only": {
+    "rev": {
+     "per_seed_dScore": {
+      "42": 28.49149,
+      "7": 30.89937,
+      "2024": 29.93463
+     },
+     "mean_dScore": 29.77516
+    },
+    "mid": {
+     "per_seed_dScore": {
+      "42": 5.11624,
+      "7": 4.84605,
+      "2024": 4.89318
+     },
+     "mean_dScore": 4.95182
+    },
+    "ball": {
+     "per_seed_dScore": {
+      "42": -38.73457,
+      "7": -38.34337,
+      "2024": -38.67003
+     },
+     "mean_dScore": -38.58266
+    },
+    "strk": {
+     "per_seed_dScore": {
+      "42": -7.07795,
+      "7": -7.49754,
+      "2024": -6.41779
+     },
+     "mean_dScore": -6.99776
+    },
+    "fb": {
+     "per_seed_dScore": {
+      "42": -22.62943,
+      "7": -23.40858,
+      "2024": -22.22062
+     },
+     "mean_dScore": -22.75288
+    },
+    "brk": {
+     "per_seed_dScore": {
+      "42": -7.92338,
+      "7": -8.54475,
+      "2024": -7.56478
+     },
+     "mean_dScore": -8.01097
+    },
+    "ofs": {
+     "per_seed_dScore": {
+      "42": -7.09958,
+      "7": -6.62936,
+      "2024": -7.46478
+     },
+     "mean_dScore": -7.06457
+    },
+    "bsuc": {
+     "per_seed_dScore": {
+      "42": 19.59059,
+      "7": 19.14919,
+      "2024": 19.78262
+     },
+     "mean_dScore": 19.50747
+    },
+    "bmid": {
+     "per_seed_dScore": {
+      "42": -40.33102,
+      "7": -38.66766,
+      "2024": -39.20845
+     },
+     "mean_dScore": -39.40238
+    },
+    "_F1_incumbent": {
+     "mean_dScore": 39.55521
+    },
+    "_B_axis_2term": {
+     "mean_dScore": 55.03466
+    }
+   },
+   "batter_interpretation_risk": {
+    "bsuc_corr_with_opposing_pitcher_career_success_rate": 0.04919,
+    "bsuc_corr_season_deviation_vs_mean_opposing_pitcher_rate": 0.24465,
+    "bsuc_n_batter_seasons": 1225,
+    "bmid_corr_with_opposing_pitcher_career_success_rate": -0.0141,
+    "bmid_corr_season_deviation_vs_mean_opposing_pitcher_rate": 0.0416,
+    "bmid_n_batter_seasons": 1225,
+    "reading": "asof_batter_* is the success rate of the PITCHES THROWN TO that batter, so a batter facing weak pitchers inherits their rate.  A large |corr| with the opposing-pitcher quality means the axis is a schedule proxy rather than a batter-skill signal; it does not by itself make the axis useless (schedule composition is legal, as-of information) but it changes what the column MEANS and is reported here rather than left implicit."
+   }
+  }
+ },
+ "reference_arms": {
+  "R0_exp030_C5_B3_47col": {
+   "fold_2022": {
+    "42": {
+     "brier_full": 0.24810484064910457,
+     "score_ref0.2498069": 681.35002,
+     "stack_iter_used": 282,
+     "curve_argmin_is_interior": true,
+     "pred_sha256": "85474def1bbf996e5ab7f96862ad8b45531f8daa630b0b973e98ed442ee0237f"
+    },
+    "7": {
+     "brier_full": 0.24812844147674445,
+     "score_ref0.2498069": 671.90239,
+     "stack_iter_used": 282,
+     "curve_argmin_is_interior": true,
+     "pred_sha256": "2abd566121f029f31bb8e12b306c1e63c505cb917d5e7e9a3194a91d406ba5c0"
+    }
+   },
+   "fold_2023": {
+    "42": {
+     "brier_full": 0.24867962923638576,
+     "score_ref0.2498069": 451.25686,
+     "stack_iter_used": 375,
+     "curve_argmin_is_interior": true,
+     "pred_sha256": "bd8c17ec35e0b9c86a291d361d5fe94b5f7605bf13eff9ece15e86859298ae56"
+    },
+    "7": {
+     "brier_full": 0.24866143214186356,
+     "score_ref0.2498069": 458.54132,
+     "stack_iter_used": 375,
+     "curve_argmin_is_interior": true,
+     "pred_sha256": "41f01728f679423adc51366515cd57e9aeba3341da2f2f11cb4a930f84088f83"
+    }
+   },
+   "fold_2024": {
+    "2024": {
+     "brier_full": 0.2479648004372976,
+     "score_ref0.2498069": 737.4094,
+     "stack_iter_used": 481,
+     "curve_argmin_is_interior": false,
+     "pred_sha256": "aa999bb9eee3c419a4239338330e086b72826e57c9cdf03e231768cc89ea330d"
+    },
+    "42": {
+     "brier_full": 0.2480393607892575,
+     "score_ref0.2498069": 707.56221,
+     "stack_iter_used": 481,
+     "curve_argmin_is_interior": true,
+     "pred_sha256": "ef4bafad23f53798b60e221b497e448c70321ef14e0618233930ff54893d54bf"
+    },
+    "7": {
+     "brier_full": 0.2479833583326968,
+     "score_ref0.2498069": 729.9805,
+     "stack_iter_used": 481,
+     "curve_argmin_is_interior": false,
+     "pred_sha256": "d3c606b0433768250219de958864054294d0098fb724dc7377224b1b92153668"
+    }
+   }
+  },
+  "A1_exp046_51col": {
+   "fold_2023": {
+    "42": {
+     "brier_full": 0.248303957885636,
+     "score_ref0.2498069": 601.64155,
+     "stack_iter_used": 200,
+     "curve_argmin_is_interior": true,
+     "pred_sha256": "3ddc557a2b41c4aa7817d4748606becaa06270613579607553912a16250a3b34"
+    }
+   },
+   "fold_2024": {
+    "2024": {
+     "brier_full": 0.2478867478292848,
+     "score_ref0.2498069": 768.65458,
+     "stack_iter_used": 256,
+     "curve_argmin_is_interior": false,
+     "pred_sha256": "65c3b871fd476a6d2bc812cc1acedbae56af25a652886671f5f95a4abfb35f44"
+    },
+    "42": {
+     "brier_full": 0.2478776437875024,
+     "score_ref0.2498069": 772.29901,
+     "stack_iter_used": 256,
+     "curve_argmin_is_interior": false,
+     "pred_sha256": "dc11b6d4ddf9d044bd996ba2c6970c2f1ec597e9eead830cd0568cc6bfd42a2f"
+    },
+    "7": {
+     "brier_full": 0.24788461584997817,
+     "score_ref0.2498069": 769.50803,
+     "stack_iter_used": 256,
+     "curve_argmin_is_interior": false,
+     "pred_sha256": "bce59452b18127dd939485aaa79ab1bc816482936479577dcc388a88f799847a"
+    }
+   }
+  }
+ },
+ "arms": {
+  "F1": {
+   "description": "47 base + exp_046 A1's four success-form columns (n_season, rate_season, d_form_eb@k=100, has_form) = 51.  THE CONTROL for exp_047; it is exp_046 A1 re-fitted with the extended stacker curve.",
+   "fold_2024": {
+    "42": {
+     "brier_full": 0.2478776437875024,
+     "score_ref0.2498069": 772.29901,
+     "valid_all": {
+      "n": 253507,
+      "brier": 0.247878,
+      "bss": 0.007723,
+      "score": 772.31,
+      "base_rate": 0.486105,
+      "pred_mean": 0.493302,
+      "auc": 0.549872,
+      "logloss": 0.688886
+     },
+     "valid_R": {
+      "n": 223497,
+      "brier": 0.247947,
+      "bss": 0.00779,
+      "score": 778.957,
+      "base_rate": 0.489707,
+      "pred_mean": 0.49722,
+      "auc": 0.550208,
+      "logloss": 0.689027
+     },
+     "valid_F": {
+      "n": 30010,
+      "brier": 0.247358,
+      "bss": 0.003964,
+      "score": 396.378,
+      "base_rate": 0.45928,
+      "pred_mean": 0.464125,
+      "auc": 0.536851,
+      "logloss": 0.687843
+     },
+     "stage": 2,
+     "n_features_base": 51,
+     "new_columns": [],
+     "nan_pct": null,
+     "cell_iter_used": {
+      "is_mid_only": 577,
+      "is_rev_only": 897,
+      "is_both": 641,
+      "is_wayoff_true": 993
+     },
+     "stack_iter_used": 256,
+     "stack_policy_round": 256,
+     "stack_fit_rounds": 1536,
+     "stack_argmin_iter": 550,
+     "curve_argmin_is_interior_extended": true,
+     "brier_at_extended_argmin_ORACLE": 0.2478525372,
+     "policy_cost_vs_extended_min_pts": -10.0504,
+     "pred_sha256": "dc11b6d4ddf9d044bd996ba2c6970c2f1ec597e9eead830cd0568cc6bfd42a2f",
+     "minutes": 19.4,
+     "src": "exp_047/res/res_F1_u2024_seed42_st2.json"
+    },
+    "7": {
+     "brier_full": 0.24788461584997817,
+     "score_ref0.2498069": 769.50803,
+     "stack_iter_used": 256,
+     "curve_argmin_is_interior_extended": null,
+     "brier_at_extended_argmin_ORACLE": null,
+     "policy_cost_vs_extended_min_pts": null,
+     "stack_policy_round": 256,
+     "stack_fit_rounds": 256,
+     "stack_argmin_iter": null,
+     "pred_sha256": "bce59452b18127dd939485aaa79ab1bc816482936479577dcc388a88f799847a",
+     "REUSED_FROM": "exp_046 A1 (identical code path, proven by the seed-42 sha256 identity anchor)",
+     "minutes": null,
+     "src": "exp_046/res/res_C5B3form_u2024_seed7_st2.json"
+    },
+    "2024": {
+     "brier_full": 0.2478867478292848,
+     "score_ref0.2498069": 768.65458,
+     "stack_iter_used": 256,
+     "curve_argmin_is_interior_extended": null,
+     "brier_at_extended_argmin_ORACLE": null,
+     "policy_cost_vs_extended_min_pts": null,
+     "stack_policy_round": 256,
+     "stack_fit_rounds": 256,
+     "stack_argmin_iter": null,
+     "pred_sha256": "65c3b871fd476a6d2bc812cc1acedbae56af25a652886671f5f95a4abfb35f44",
+     "REUSED_FROM": "exp_046 A1 (identical code path, proven by the seed-42 sha256 identity anchor)",
+     "minutes": null,
+     "src": "exp_046/res/res_C5B3form_u2024_seed2024_st2.json"
+    }
+   },
+   "_reuse_note": "seeds 7, 2024 reused from exp_046 A1; only seed 42 was re-fitted here"
+  },
+  "F1anchor": {
+   "description": "(undescribed arm)",
+   "fold_2024": {
+    "42": {
+     "brier_full": 0.2478776437875024,
+     "score_ref0.2498069": 772.29901,
+     "valid_all": {
+      "n": 253507,
+      "brier": 0.247878,
+      "bss": 0.007723,
+      "score": 772.31,
+      "base_rate": 0.486105,
+      "pred_mean": 0.493302,
+      "auc": 0.549872,
+      "logloss": 0.688886
+     },
+     "valid_R": {
+      "n": 223497,
+      "brier": 0.247947,
+      "bss": 0.00779,
+      "score": 778.957,
+      "base_rate": 0.489707,
+      "pred_mean": 0.49722,
+      "auc": 0.550208,
+      "logloss": 0.689027
+     },
+     "valid_F": {
+      "n": 30010,
+      "brier": 0.247358,
+      "bss": 0.003964,
+      "score": 396.378,
+      "base_rate": 0.45928,
+      "pred_mean": 0.464125,
+      "auc": 0.536851,
+      "logloss": 0.687843
+     },
+     "stage": 2,
+     "n_features_base": 51,
+     "new_columns": [],
+     "nan_pct": null,
+     "cell_iter_used": {
+      "is_mid_only": 577,
+      "is_rev_only": 897,
+      "is_both": 641,
+      "is_wayoff_true": 993
+     },
+     "stack_iter_used": 256,
+     "stack_policy_round": 256,
+     "stack_fit_rounds": 256,
+     "stack_argmin_iter": 256,
+     "curve_argmin_is_interior_extended": false,
+     "brier_at_extended_argmin_ORACLE": 0.2478776438,
+     "policy_cost_vs_extended_min_pts": -0.0,
+     "pred_sha256": "dc11b6d4ddf9d044bd996ba2c6970c2f1ec597e9eead830cd0568cc6bfd42a2f",
+     "minutes": 16.28,
+     "src": "exp_047/res/res_F1anchor_u2024_seed42_st2.json"
+    }
+   }
+  },
+  "F2": {
+   "description": "F1 + d_ball_eb@k=200 = 52.  The one axis that passed the pre-registered stage-1 screen.",
+   "fold_2023": {
+    "42": {
+     "brier_full": 0.24829337140777233,
+     "score_ref0.2498069": 605.87942,
+     "valid_all": {
+      "n": 245525,
+      "brier": 0.248293,
+      "bss": 0.006827,
+      "score": 682.651,
+      "base_rate": 0.499957,
+      "pred_mean": 0.4949,
+      "auc": 0.54715,
+      "logloss": 0.689723
+     },
+     "valid_R": {
+      "n": 219839,
+      "brier": 0.248252,
+      "bss": 0.006954,
+      "score": 695.362,
+      "base_rate": 0.503118,
+      "pred_mean": 0.497536,
+      "auc": 0.547677,
+      "logloss": 0.689639
+     },
+     "valid_F": {
+      "n": 25686,
+      "brier": 0.248648,
+      "bss": 0.002479,
+      "score": 247.851,
+      "base_rate": 0.472904,
+      "pred_mean": 0.472344,
+      "auc": 0.533026,
+      "logloss": 0.690436
+     },
+     "stage": 1,
+     "n_features_base": 52,
+     "new_columns": [
+      "d_ball_eb"
+     ],
+     "nan_pct": {
+      "d_ball_eb": 31.5932
+     },
+     "cell_iter_used": {
+      "is_mid_only": 400,
+      "is_rev_only": 700,
+      "is_both": 700,
+      "is_wayoff_true": 650
+     },
+     "stack_iter_used": 280,
+     "stack_policy_round": 1650,
+     "stack_fit_rounds": 1650,
+     "stack_argmin_iter": 280,
+     "curve_argmin_is_interior_extended": true,
+     "brier_at_extended_argmin_ORACLE": 0.2482933714,
+     "policy_cost_vs_extended_min_pts": -0.0,
+     "pred_sha256": "b3a111db6c3d98c200c9abc0e2a21e55579510fe053ff71a6239773314e36871",
+     "minutes": 15.05,
+     "src": "exp_047/res/res_F2_u2023_seed42_st1.json"
+    }
+   },
+   "fold_2024": {
+    "2024": {
+     "brier_full": 0.2478768728736185,
+     "score_ref0.2498069": 772.60761,
+     "valid_all": {
+      "n": 253507,
+      "brier": 0.247877,
+      "bss": 0.007726,
+      "score": 772.618,
+      "base_rate": 0.486105,
+      "pred_mean": 0.493783,
+      "auc": 0.549849,
+      "logloss": 0.688884
+     },
+     "valid_R": {
+      "n": 223497,
+      "brier": 0.247943,
+      "bss": 0.007807,
+      "score": 780.67,
+      "base_rate": 0.489707,
+      "pred_mean": 0.497836,
+      "auc": 0.550272,
+      "logloss": 0.689017
+     },
+     "valid_F": {
+      "n": 30010,
+      "brier": 0.247383,
+      "bss": 0.003862,
+      "score": 386.163,
+      "base_rate": 0.45928,
+      "pred_mean": 0.463599,
+      "auc": 0.535524,
+      "logloss": 0.687893
+     },
+     "stage": 2,
+     "n_features_base": 52,
+     "new_columns": [
+      "d_ball_eb"
+     ],
+     "nan_pct": {
+      "d_ball_eb": 31.5932
+     },
+     "cell_iter_used": {
+      "is_mid_only": 513,
+      "is_rev_only": 897,
+      "is_both": 897,
+      "is_wayoff_true": 833
+     },
+     "stack_iter_used": 359,
+     "stack_policy_round": 359,
+     "stack_fit_rounds": 2154,
+     "stack_argmin_iter": 525,
+     "curve_argmin_is_interior_extended": true,
+     "brier_at_extended_argmin_ORACLE": 0.2478529488,
+     "policy_cost_vs_extended_min_pts": -9.57702,
+     "pred_sha256": "3fc11cb4156d64637405bfc5effab623ab4bef275c6e1d277dbe241dfcdce4c1",
+     "minutes": 18.35,
+     "src": "exp_047/res/res_F2_u2024_seed2024_st2.json"
+    },
+    "42": {
+     "brier_full": 0.2478774531522536,
+     "score_ref0.2498069": 772.37532,
+     "valid_all": {
+      "n": 253507,
+      "brier": 0.247877,
+      "bss": 0.007724,
+      "score": 772.386,
+      "base_rate": 0.486105,
+      "pred_mean": 0.494421,
+      "auc": 0.549924,
+      "logloss": 0.688885
+     },
+     "valid_R": {
+      "n": 223497,
+      "brier": 0.247951,
+      "bss": 0.007774,
+      "score": 777.385,
+      "base_rate": 0.489707,
+      "pred_mean": 0.498615,
+      "auc": 0.550312,
+      "logloss": 0.689034
+     },
+     "valid_F": {
+      "n": 30010,
+      "brier": 0.247327,
+      "bss": 0.004088,
+      "score": 408.807,
+      "base_rate": 0.45928,
+      "pred_mean": 0.46319,
+      "auc": 0.536845,
+      "logloss": 0.687778
+     },
+     "stage": 2,
+     "n_features_base": 52,
+     "new_columns": [
+      "d_ball_eb"
+     ],
+     "nan_pct": {
+      "d_ball_eb": 31.5932
+     },
+     "cell_iter_used": {
+      "is_mid_only": 513,
+      "is_rev_only": 897,
+      "is_both": 897,
+      "is_wayoff_true": 833
+     },
+     "stack_iter_used": 359,
+     "stack_policy_round": 359,
+     "stack_fit_rounds": 2154,
+     "stack_argmin_iter": 475,
+     "curve_argmin_is_interior_extended": true,
+     "brier_at_extended_argmin_ORACLE": 0.2478749039,
+     "policy_cost_vs_extended_min_pts": -1.0205,
+     "pred_sha256": "a2eb828590b2a3297b80bc7db6c768f53021098fbc682f5cf6a091482f46ffba",
+     "minutes": 18.68,
+     "src": "exp_047/res/res_F2_u2024_seed42_st2.json"
+    },
+    "7": {
+     "brier_full": 0.24784300412901675,
+     "score_ref0.2498069": 786.16558,
+     "valid_all": {
+      "n": 253507,
+      "brier": 0.247843,
+      "bss": 0.007862,
+      "score": 786.176,
+      "base_rate": 0.486105,
+      "pred_mean": 0.494453,
+      "auc": 0.550364,
+      "logloss": 0.688816
+     },
+     "valid_R": {
+      "n": 223497,
+      "brier": 0.247911,
+      "bss": 0.007934,
+      "score": 793.423,
+      "base_rate": 0.489707,
+      "pred_mean": 0.49834,
+      "auc": 0.550746,
+      "logloss": 0.688953
+     },
+     "valid_F": {
+      "n": 30010,
+      "brier": 0.247334,
+      "bss": 0.004058,
+      "score": 405.803,
+      "base_rate": 0.45928,
+      "pred_mean": 0.465505,
+      "auc": 0.536939,
+      "logloss": 0.687794
+     },
+     "stage": 2,
+     "n_features_base": 52,
+     "new_columns": [
+      "d_ball_eb"
+     ],
+     "nan_pct": {
+      "d_ball_eb": 31.5932
+     },
+     "cell_iter_used": {
+      "is_mid_only": 513,
+      "is_rev_only": 897,
+      "is_both": 897,
+      "is_wayoff_true": 833
+     },
+     "stack_iter_used": 359,
+     "stack_policy_round": 359,
+     "stack_fit_rounds": 2154,
+     "stack_argmin_iter": 675,
+     "curve_argmin_is_interior_extended": true,
+     "brier_at_extended_argmin_ORACLE": 0.2478156512,
+     "policy_cost_vs_extended_min_pts": -10.9496,
+     "pred_sha256": "128d182eae7a09ef358c7f14d4dc37a73c1f4d7f386347d94a7df2f3452926d8",
+     "minutes": 20.1,
+     "src": "exp_047/res/res_F2_u2024_seed7_st2.json"
+    }
+   }
+  },
+  "F2R": {
+   "description": "F1 + d_rev_eb@k=25 = 52.  EXPLORATORY, not pre-registered: the reverse axis had the largest block gain of all nine (70.02 pts) and 4/4 block-unit sign agreement, and was removed only by the |r|>0.7-vs-incumbent rule, whose config wording ('keep the larger-gain one') points the other way.",
+   "fold_2023": {
+    "42": {
+     "brier_full": 0.24822827503398387,
+     "score_ref0.2498069": 631.9381,
+     "valid_all": {
+      "n": 245525,
+      "brier": 0.248228,
+      "bss": 0.007087,
+      "score": 708.689,
+      "base_rate": 0.499957,
+      "pred_mean": 0.495906,
+      "auc": 0.547887,
+      "logloss": 0.689592
+     },
+     "valid_R": {
+      "n": 219839,
+      "brier": 0.248207,
+      "bss": 0.007134,
+      "score": 713.43,
+      "base_rate": 0.503118,
+      "pred_mean": 0.498501,
+      "auc": 0.548212,
+      "logloss": 0.689548
+     },
+     "valid_F": {
+      "n": 25686,
+      "brier": 0.248412,
+      "bss": 0.003424,
+      "score": 342.386,
+      "base_rate": 0.472904,
+      "pred_mean": 0.473698,
+      "auc": 0.535987,
+      "logloss": 0.689961
+     },
+     "stage": 1,
+     "n_features_base": 52,
+     "new_columns": [
+      "d_rev_eb"
+     ],
+     "nan_pct": {
+      "d_rev_eb": 31.5932
+     },
+     "cell_iter_used": {
+      "is_mid_only": 400,
+      "is_rev_only": 750,
+      "is_both": 375,
+      "is_wayoff_true": 775
+     },
+     "stack_iter_used": 180,
+     "stack_policy_round": 1650,
+     "stack_fit_rounds": 1650,
+     "stack_argmin_iter": 180,
+     "curve_argmin_is_interior_extended": true,
+     "brier_at_extended_argmin_ORACLE": 0.248228275,
+     "policy_cost_vs_extended_min_pts": -0.0,
+     "pred_sha256": "4d087bed069f8846906fae73fa8544d9881cf638813d6d3c7d290199048616d3",
+     "minutes": 17.21,
+     "src": "exp_047/res/res_F2R_u2023_seed42_st1.json"
+    }
+   },
+   "fold_2024": {
+    "2024": {
+     "brier_full": 0.24791447203633765,
+     "score_ref0.2498069": 757.55632,
+     "valid_all": {
+      "n": 253507,
+      "brier": 0.247914,
+      "bss": 0.007576,
+      "score": 757.567,
+      "base_rate": 0.486105,
+      "pred_mean": 0.49476,
+      "auc": 0.549878,
+      "logloss": 0.688961
+     },
+     "valid_R": {
+      "n": 223497,
+      "brier": 0.247975,
+      "bss": 0.007679,
+      "score": 767.942,
+      "base_rate": 0.489707,
+      "pred_mean": 0.498398,
+      "auc": 0.550346,
+      "logloss": 0.689082
+     },
+     "valid_F": {
+      "n": 30010,
+      "brier": 0.247464,
+      "bss": 0.003537,
+      "score": 353.654,
+      "base_rate": 0.45928,
+      "pred_mean": 0.46767,
+      "auc": 0.535298,
+      "logloss": 0.688056
+     },
+     "stage": 2,
+     "n_features_base": 52,
+     "new_columns": [
+      "d_rev_eb"
+     ],
+     "nan_pct": {
+      "d_rev_eb": 31.5932
+     },
+     "cell_iter_used": {
+      "is_mid_only": 513,
+      "is_rev_only": 961,
+      "is_both": 481,
+      "is_wayoff_true": 993
+     },
+     "stack_iter_used": 231,
+     "stack_policy_round": 231,
+     "stack_fit_rounds": 1386,
+     "stack_argmin_iter": 600,
+     "curve_argmin_is_interior_extended": true,
+     "brier_at_extended_argmin_ORACLE": 0.2478324212,
+     "policy_cost_vs_extended_min_pts": -32.8457,
+     "pred_sha256": "f643ff6e1bb9dd20d7a267c4c6fde89343e7981e079c9f56d7af713be2e85fd6",
+     "minutes": 18.17,
+     "src": "exp_047/res/res_F2R_u2024_seed2024_st2.json"
+    },
+    "42": {
+     "brier_full": 0.24792513300951535,
+     "score_ref0.2498069": 753.28864,
+     "valid_all": {
+      "n": 253507,
+      "brier": 0.247925,
+      "bss": 0.007533,
+      "score": 753.299,
+      "base_rate": 0.486105,
+      "pred_mean": 0.494863,
+      "auc": 0.549586,
+      "logloss": 0.688982
+     },
+     "valid_R": {
+      "n": 223497,
+      "brier": 0.247993,
+      "bss": 0.007606,
+      "score": 760.641,
+      "base_rate": 0.489707,
+      "pred_mean": 0.498684,
+      "auc": 0.549952,
+      "logloss": 0.689118
+     },
+     "valid_F": {
+      "n": 30010,
+      "brier": 0.247418,
+      "bss": 0.003721,
+      "score": 372.105,
+      "base_rate": 0.45928,
+      "pred_mean": 0.466399,
+      "auc": 0.536189,
+      "logloss": 0.687964
+     },
+     "stage": 2,
+     "n_features_base": 52,
+     "new_columns": [
+      "d_rev_eb"
+     ],
+     "nan_pct": {
+      "d_rev_eb": 31.5932
+     },
+     "cell_iter_used": {
+      "is_mid_only": 513,
+      "is_rev_only": 961,
+      "is_both": 481,
+      "is_wayoff_true": 993
+     },
+     "stack_iter_used": 231,
+     "stack_policy_round": 231,
+     "stack_fit_rounds": 1386,
+     "stack_argmin_iter": 450,
+     "curve_argmin_is_interior_extended": true,
+     "brier_at_extended_argmin_ORACLE": 0.2478904265,
+     "policy_cost_vs_extended_min_pts": -13.8933,
+     "pred_sha256": "d5cfa85fcaa5ca9580453d1370bd05fc2268628f4e8763ed8234334eb9d9fe79",
+     "minutes": 19.19,
+     "src": "exp_047/res/res_F2R_u2024_seed42_st2.json"
+    },
+    "7": {
+     "brier_full": 0.24794893737877613,
+     "score_ref0.2498069": 743.75953,
+     "valid_all": {
+      "n": 253507,
+      "brier": 0.247949,
+      "bss": 0.007438,
+      "score": 743.77,
+      "base_rate": 0.486105,
+      "pred_mean": 0.495602,
+      "auc": 0.549421,
+      "logloss": 0.68903
+     },
+     "valid_R": {
+      "n": 223497,
+      "brier": 0.248023,
+      "bss": 0.007489,
+      "score": 748.859,
+      "base_rate": 0.489707,
+      "pred_mean": 0.499531,
+      "auc": 0.549756,
+      "logloss": 0.689178
+     },
+     "valid_F": {
+      "n": 30010,
+      "brier": 0.2474,
+      "bss": 0.003794,
+      "score": 379.429,
+      "base_rate": 0.45928,
+      "pred_mean": 0.466346,
+      "auc": 0.5362,
+      "logloss": 0.687927
+     },
+     "stage": 2,
+     "n_features_base": 52,
+     "new_columns": [
+      "d_rev_eb"
+     ],
+     "nan_pct": {
+      "d_rev_eb": 31.5932
+     },
+     "cell_iter_used": {
+      "is_mid_only": 513,
+      "is_rev_only": 961,
+      "is_both": 481,
+      "is_wayoff_true": 993
+     },
+     "stack_iter_used": 231,
+     "stack_policy_round": 231,
+     "stack_fit_rounds": 1386,
+     "stack_argmin_iter": 475,
+     "curve_argmin_is_interior_extended": true,
+     "brier_at_extended_argmin_ORACLE": 0.2478883827,
+     "policy_cost_vs_extended_min_pts": -24.2406,
+     "pred_sha256": "8bca01fab4ad7e8151d596300f530cf99eb53b2589c0ed987513b6561e88e593",
+     "minutes": 19.06,
+     "src": "exp_047/res/res_F2R_u2024_seed7_st2.json"
+    }
+   }
+  },
+  "F3": {
+   "description": "F1 + traj_eb@k=50 + dev_eb@k=25 + has_traj = 54.  Axis B.",
+   "fold_2023": {
+    "42": {
+     "brier_full": 0.24826938124482387,
+     "score_ref0.2498069": 615.4829,
+     "valid_all": {
+      "n": 245525,
+      "brier": 0.248269,
+      "bss": 0.006922,
+      "score": 692.247,
+      "base_rate": 0.499957,
+      "pred_mean": 0.495767,
+      "auc": 0.547382,
+      "logloss": 0.689674
+     },
+     "valid_R": {
+      "n": 219839,
+      "brier": 0.248247,
+      "bss": 0.006972,
+      "score": 697.246,
+      "base_rate": 0.503118,
+      "pred_mean": 0.498401,
+      "auc": 0.547675,
+      "logloss": 0.68963
+     },
+     "valid_F": {
+      "n": 25686,
+      "brier": 0.248459,
+      "bss": 0.003237,
+      "score": 323.671,
+      "base_rate": 0.472904,
+      "pred_mean": 0.473224,
+      "auc": 0.535034,
+      "logloss": 0.690055
+     },
+     "stage": 1,
+     "n_features_base": 54,
+     "new_columns": [
+      "traj_eb",
+      "dev_eb",
+      "has_traj"
+     ],
+     "nan_pct": {
+      "traj_eb": 54.9581,
+      "dev_eb": 55.0208,
+      "has_traj": 0.0
+     },
+     "cell_iter_used": {
+      "is_mid_only": 450,
+      "is_rev_only": 825,
+      "is_both": 400,
+      "is_wayoff_true": 650
+     },
+     "stack_iter_used": 240,
+     "stack_policy_round": 1650,
+     "stack_fit_rounds": 1650,
+     "stack_argmin_iter": 240,
+     "curve_argmin_is_interior_extended": true,
+     "brier_at_extended_argmin_ORACLE": 0.2482693812,
+     "policy_cost_vs_extended_min_pts": -0.0,
+     "pred_sha256": "b7f5f5959e766973e6b92f29b4067a5263dec21189eddbfe58ccc3c2a8dd46bc",
+     "minutes": 15.91,
+     "src": "exp_047/res/res_F3_u2023_seed42_st1.json"
+    }
+   },
+   "fold_2024": {
+    "2024": {
+     "brier_full": 0.24784018890176013,
+     "score_ref0.2498069": 787.29254,
+     "valid_all": {
+      "n": 253507,
+      "brier": 0.24784,
+      "bss": 0.007873,
+      "score": 787.303,
+      "base_rate": 0.486105,
+      "pred_mean": 0.493595,
+      "auc": 0.550395,
+      "logloss": 0.688811
+     },
+     "valid_R": {
+      "n": 223497,
+      "brier": 0.247916,
+      "bss": 0.007917,
+      "score": 791.677,
+      "base_rate": 0.489707,
+      "pred_mean": 0.497674,
+      "auc": 0.550812,
+      "logloss": 0.688963
+     },
+     "valid_F": {
+      "n": 30010,
+      "brier": 0.247278,
+      "bss": 0.004285,
+      "score": 428.464,
+      "base_rate": 0.45928,
+      "pred_mean": 0.46322,
+      "auc": 0.537377,
+      "logloss": 0.687679
+     },
+     "stage": 2,
+     "n_features_base": 54,
+     "new_columns": [
+      "traj_eb",
+      "dev_eb",
+      "has_traj"
+     ],
+     "nan_pct": {
+      "traj_eb": 54.9581,
+      "dev_eb": 55.0208,
+      "has_traj": 0.0
+     },
+     "cell_iter_used": {
+      "is_mid_only": 577,
+      "is_rev_only": 1057,
+      "is_both": 513,
+      "is_wayoff_true": 833
+     },
+     "stack_iter_used": 308,
+     "stack_policy_round": 308,
+     "stack_fit_rounds": 1848,
+     "stack_argmin_iter": 375,
+     "curve_argmin_is_interior_extended": true,
+     "brier_at_extended_argmin_ORACLE": 0.2478264365,
+     "policy_cost_vs_extended_min_pts": -5.50523,
+     "pred_sha256": "0e2de452b0d3059c6076676715c0dea8d69c3a2051fcda7e5994e91c5fa63ca3",
+     "minutes": 16.17,
+     "src": "exp_047/res/res_F3_u2024_seed2024_st2.json"
+    },
+    "42": {
+     "brier_full": 0.24785197893202202,
+     "score_ref0.2498069": 782.57289,
+     "valid_all": {
+      "n": 253507,
+      "brier": 0.247852,
+      "bss": 0.007826,
+      "score": 782.584,
+      "base_rate": 0.486105,
+      "pred_mean": 0.493413,
+      "auc": 0.5501,
+      "logloss": 0.688834
+     },
+     "valid_R": {
+      "n": 223497,
+      "brier": 0.247926,
+      "bss": 0.007877,
+      "score": 787.71,
+      "base_rate": 0.489707,
+      "pred_mean": 0.497535,
+      "auc": 0.550468,
+      "logloss": 0.688982
+     },
+     "valid_F": {
+      "n": 30010,
+      "brier": 0.247304,
+      "bss": 0.004181,
+      "score": 418.084,
+      "base_rate": 0.45928,
+      "pred_mean": 0.462714,
+      "auc": 0.537282,
+      "logloss": 0.687732
+     },
+     "stage": 2,
+     "n_features_base": 54,
+     "new_columns": [
+      "traj_eb",
+      "dev_eb",
+      "has_traj"
+     ],
+     "nan_pct": {
+      "traj_eb": 54.9581,
+      "dev_eb": 55.0208,
+      "has_traj": 0.0
+     },
+     "cell_iter_used": {
+      "is_mid_only": 577,
+      "is_rev_only": 1057,
+      "is_both": 513,
+      "is_wayoff_true": 833
+     },
+     "stack_iter_used": 308,
+     "stack_policy_round": 308,
+     "stack_fit_rounds": 1848,
+     "stack_argmin_iter": 525,
+     "curve_argmin_is_interior_extended": true,
+     "brier_at_extended_argmin_ORACLE": 0.2478113871,
+     "policy_cost_vs_extended_min_pts": -16.2493,
+     "pred_sha256": "982f67c323a64dcdbf4b397bf82bce4a6016586fee799e254f7c360638026657",
+     "minutes": 17.4,
+     "src": "exp_047/res/res_F3_u2024_seed42_st2.json"
+    },
+    "7": {
+     "brier_full": 0.2478862132088701,
+     "score_ref0.2498069": 768.86859,
+     "valid_all": {
+      "n": 253507,
+      "brier": 0.247886,
+      "bss": 0.007689,
+      "score": 768.879,
+      "base_rate": 0.486105,
+      "pred_mean": 0.494079,
+      "auc": 0.549918,
+      "logloss": 0.688904
+     },
+     "valid_R": {
+      "n": 223497,
+      "brier": 0.247954,
+      "bss": 0.007762,
+      "score": 776.179,
+      "base_rate": 0.489707,
+      "pred_mean": 0.498111,
+      "auc": 0.550342,
+      "logloss": 0.68904
+     },
+     "valid_F": {
+      "n": 30010,
+      "brier": 0.247378,
+      "bss": 0.00388,
+      "score": 388.046,
+      "base_rate": 0.45928,
+      "pred_mean": 0.464051,
+      "auc": 0.536021,
+      "logloss": 0.687884
+     },
+     "stage": 2,
+     "n_features_base": 54,
+     "new_columns": [
+      "traj_eb",
+      "dev_eb",
+      "has_traj"
+     ],
+     "nan_pct": {
+      "traj_eb": 54.9581,
+      "dev_eb": 55.0208,
+      "has_traj": 0.0
+     },
+     "cell_iter_used": {
+      "is_mid_only": 577,
+      "is_rev_only": 1057,
+      "is_both": 513,
+      "is_wayoff_true": 833
+     },
+     "stack_iter_used": 308,
+     "stack_policy_round": 308,
+     "stack_fit_rounds": 1848,
+     "stack_argmin_iter": 550,
+     "curve_argmin_is_interior_extended": true,
+     "brier_at_extended_argmin_ORACLE": 0.2478262446,
+     "policy_cost_vs_extended_min_pts": -24.006,
+     "pred_sha256": "1b67e68387d0532a49602b7fe35a296822a41b3171d3d17c2a06707d67cb8ea8",
+     "minutes": 15.6,
+     "src": "exp_047/res/res_F3_u2024_seed7_st2.json"
+    }
+   }
+  }
+ },
+ "identity_anchor": {
+  "what": "b3_cat_x.py with no --axes and no --traj must reproduce exp_046 A1 (unit 2024, seed 42, stage 2) byte for byte. If it does, the only difference in every other arm is the columns named in that arm.",
+  "exp046_A1_pred_sha256": "dc11b6d4ddf9d044bd996ba2c6970c2f1ec597e9eead830cd0568cc6bfd42a2f",
+  "F1anchor": {
+   "pred_sha256": "dc11b6d4ddf9d044bd996ba2c6970c2f1ec597e9eead830cd0568cc6bfd42a2f",
+   "stack_ext": 256,
+   "brier": 0.2478776437875024,
+   "MATCHES_exp046": true
+  },
+  "F1": {
+   "pred_sha256": "dc11b6d4ddf9d044bd996ba2c6970c2f1ec597e9eead830cd0568cc6bfd42a2f",
+   "stack_ext": 1536,
+   "brier": 0.2478776437875024,
+   "MATCHES_exp046": true
+  }
+ },
+ "decisions": {
+  "F2_vs_F1": {
+   "dScore_per_seed": [
+    0.07631,
+    16.65755,
+    3.95304
+   ],
+   "mean_dScore": 6.89563,
+   "paired_std_ddof1": 8.67344,
+   "sign_agreement": 3,
+   "all_same_sign": true,
+   "threshold_3sigma": 25.65339,
+   "threshold_multiple": 0.2688,
+   "ADOPTED": false,
+   "control": "F1 (= exp_046 A1, refit here)",
+   "changed_vs_control": [
+    "input columns: 51 -> 52 (d_ball_eb)",
+    "stacker width follows base_feats (+4 OOF columns in both arms)",
+    "UNAVOIDABLE CO-VARIABLE, registered in config before the run: the cell and stacker iterations are re-derived from THIS arm's own fold_2023 stage-1 argmin, so the effect is 'these columns + the iterations they imply', never the columns alone."
+   ]
+  },
+  "F2R_vs_F1": {
+   "dScore_per_seed": [
+    -19.01037,
+    -25.7485,
+    -11.09826
+   ],
+   "mean_dScore": -18.61904,
+   "paired_std_ddof1": 7.33296,
+   "sign_agreement": 0,
+   "all_same_sign": true,
+   "threshold_3sigma": 25.65339,
+   "threshold_multiple": 0.72579,
+   "ADOPTED": false,
+   "control": "F1 (= exp_046 A1, refit here)",
+   "changed_vs_control": [
+    "input columns: 51 -> 52 (d_rev_eb)",
+    "stacker width follows base_feats (+4 OOF columns in both arms)",
+    "UNAVOIDABLE CO-VARIABLE, registered in config before the run: the cell and stacker iterations are re-derived from THIS arm's own fold_2023 stage-1 argmin, so the effect is 'these columns + the iterations they imply', never the columns alone."
+   ]
+  },
+  "F3_vs_F1": {
+   "dScore_per_seed": [
+    10.27388,
+    -0.63944,
+    18.63797
+   ],
+   "mean_dScore": 9.42414,
+   "paired_std_ddof1": 9.66675,
+   "sign_agreement": 2,
+   "all_same_sign": false,
+   "threshold_3sigma": 25.65339,
+   "threshold_multiple": 0.36736,
+   "ADOPTED": false,
+   "control": "F1 (= exp_046 A1, refit here)",
+   "changed_vs_control": [
+    "input columns: 51 -> 54 (traj_eb, dev_eb, has_traj)",
+    "stacker width follows base_feats (+4 OOF columns in both arms)",
+    "UNAVOIDABLE CO-VARIABLE, registered in config before the run: the cell and stacker iterations are re-derived from THIS arm's own fold_2023 stage-1 argmin, so the effect is 'these columns + the iterations they imply', never the columns alone."
+   ]
+  }
+ },
+ "F4_not_run": {
+  "config_definition": "F2 + F3 combined",
+  "gate_in_config": "run only if F2 AND F3 both pass",
+  "status": "NOT RUN",
+  "reason": "F2 did not clear the pre-registered 3-sigma threshold, so the gate that would have launched F4 never opened.  This is reported as a gate outcome, not a silent omission."
+ },
+ "stacker_curve_censoring": {
+  "why": "exp_046 A1 reported curve_argmin_is_interior=false on all three fold_2024 seeds, so its +45.17 was a lower bound.  exp_047 trains the stage-2 stacker past its policy iteration purely to LOCATE the argmin; iter_used is still the fold_2023-derived policy value, so fold_2024 selects nothing.",
+  "policy_cost_is_a_cost_not_a_result": "policy_cost_vs_extended_min_pts is how many points the arm gives up by honouring the iteration policy.  It is an ORACLE quantity (the minimum is located on fold_2024) and must never be reported as an achievable gain.",
+  "per_arm": {
+   "F1": {
+    "42": {
+     "policy_round": 256,
+     "fit_rounds": 1536,
+     "argmin": 550,
+     "interior_on_extended_grid": true,
+     "policy_cost_vs_extended_min_pts": -10.0504
+    },
+    "7": {
+     "policy_round": 256,
+     "fit_rounds": 256,
+     "argmin": null,
+     "interior_on_extended_grid": null,
+     "policy_cost_vs_extended_min_pts": null
+    },
+    "2024": {
+     "policy_round": 256,
+     "fit_rounds": 256,
+     "argmin": null,
+     "interior_on_extended_grid": null,
+     "policy_cost_vs_extended_min_pts": null
+    }
+   },
+   "F1anchor": {
+    "42": {
+     "policy_round": 256,
+     "fit_rounds": 256,
+     "argmin": 256,
+     "interior_on_extended_grid": false,
+     "policy_cost_vs_extended_min_pts": -0.0
+    }
+   },
+   "F2": {
+    "2024": {
+     "policy_round": 359,
+     "fit_rounds": 2154,
+     "argmin": 525,
+     "interior_on_extended_grid": true,
+     "policy_cost_vs_extended_min_pts": -9.57702
+    },
+    "42": {
+     "policy_round": 359,
+     "fit_rounds": 2154,
+     "argmin": 475,
+     "interior_on_extended_grid": true,
+     "policy_cost_vs_extended_min_pts": -1.0205
+    },
+    "7": {
+     "policy_round": 359,
+     "fit_rounds": 2154,
+     "argmin": 675,
+     "interior_on_extended_grid": true,
+     "policy_cost_vs_extended_min_pts": -10.9496
+    }
+   },
+   "F2R": {
+    "2024": {
+     "policy_round": 231,
+     "fit_rounds": 1386,
+     "argmin": 600,
+     "interior_on_extended_grid": true,
+     "policy_cost_vs_extended_min_pts": -32.8457
+    },
+    "42": {
+     "policy_round": 231,
+     "fit_rounds": 1386,
+     "argmin": 450,
+     "interior_on_extended_grid": true,
+     "policy_cost_vs_extended_min_pts": -13.8933
+    },
+    "7": {
+     "policy_round": 231,
+     "fit_rounds": 1386,
+     "argmin": 475,
+     "interior_on_extended_grid": true,
+     "policy_cost_vs_extended_min_pts": -24.2406
+    }
+   },
+   "F3": {
+    "2024": {
+     "policy_round": 308,
+     "fit_rounds": 1848,
+     "argmin": 375,
+     "interior_on_extended_grid": true,
+     "policy_cost_vs_extended_min_pts": -5.50523
+    },
+    "42": {
+     "policy_round": 308,
+     "fit_rounds": 1848,
+     "argmin": 525,
+     "interior_on_extended_grid": true,
+     "policy_cost_vs_extended_min_pts": -16.2493
+    },
+    "7": {
+     "policy_round": 308,
+     "fit_rounds": 1848,
+     "argmin": 550,
+     "interior_on_extended_grid": true,
+     "policy_cost_vs_extended_min_pts": -24.006
+    }
+   }
+  }
+ },
+ "train_time_min": {
+  "per_arm_units": {
+   "F1": [
+    19.4
+   ],
+   "F1anchor": [
+    16.28
+   ],
+   "F2": [
+    15.05,
+    18.35,
+    18.68,
+    20.1
+   ],
+   "F2R": [
+    17.21,
+    18.17,
+    19.06,
+    19.19
+   ],
+   "F3": [
+    15.6,
+    15.91,
+    16.17,
+    17.4
+   ]
+  },
+  "total_cpu_min": 246.57,
+  "stage1_diagnostic_min": 0.75
+ },
+ "conclusions": {
+  "one_line": "All three arms rejected. The only axis that cleared the pre-registered stage-1 screen (ball, k=200) gave +6.89563 pts on fold_2024 (0.269x the 25.65339 threshold); the trajectory/deviation split disagreed in sign across seeds (+9.42414, 2/3). exp_046's success axis being special is the substantive finding.",
+  "control": "F1 (= exp_046 A1, 51 columns). The F1-R0 gap is exp_046's result and is NOT claimed here.",
+  "selected_axis_and_why_only_one": "Nine axes were diagnosed. All nine passed the incremental-R2 screen (residual >= 77.9%), so the existing 47 columns genuinely do not contain them. Six fell on block gain < 10 pts; `rev` fell on |r|=-0.81195 with the incumbent d_form_eb; `strk` fell on |r|=-0.73522 with `ball`. Only `ball` survived.",
+  "🔴_design_flaw_found": "The pre-registered filter had NO block-unit sign-agreement condition. `ball`'s block gain of +45.27429 is the average of [+116.85115, +110.95661, -22.53837, -24.17223] -- opposite signs across the 2022 and 2023 blocks. Its post-freeze fold_2024 offset read-out is -38.58266. A sign-agreement condition uses BLOCK-ONLY information (no fold_2024 contamination) and would have left only `rev` and `bsuc`. This rule was conceived AFTER seeing the values, so it is post-hoc and was NOT used to change any verdict here; it is proposed for the next pre-registration.",
+  "F2R_is_exploratory_not_pre_registered": "config's correlation rule says 'keep the larger-gain one', and `rev` (70.02150) out-gains the incumbent d_form_eb (53.83133). Since F2 is by construction a superset of F1, the incumbent cannot be dropped, so the implementation resolved the ambiguity by dropping the new axis -- code frozen before any value was read. F2R tests the opposite resolution and came out at -18.61904 (3/3 negative), so neither resolution would have produced an adoption. ⚠️ The decision to add F2R was taken after the fold_2024 offset read-out was visible, so it is post-hoc and is not used as adoption evidence.",
+  "B_axis_barely_qualified": "incremental block gain +10.17839 vs a 10-pt threshold (margin 0.18); corr(traj_eb, dev_eb) = -0.68366 vs a 0.7 ceiling (margin 0.016). config required traj and dev to be orthogonal for the design to hold; -0.684 is not orthogonal. F3's 2/3 sign split is consistent with that weakness.",
+  "pitchmix_denominator_measured": "asof_pitcher_pitchmix_n is elementwise EQUAL to asof_pitcher_n on 100.0% of rows, so the denominator question does not arise in this file. The three pitch-mix rates sum to exactly 1 on all 1,474,300 rows with n>0, so at most two of the three could enter; in practice all three fell on the gain threshold first and that filter never fired.",
+  "batter_column_interpretation_risk": "asof_batter_success_rate is the success rate of the pitches thrown TO that batter. Measured: batter-season deviation correlates +0.24465 with the weighted mean career success rate of the pitchers faced (1,225 batter-seasons), i.e. about 6% of its variance is opponent composition -- partly a schedule proxy, mostly not. bmid shows +0.04160, essentially none. Both axes fell on the gain threshold, so neither entered a model.",
+  "iteration_policy_observation": "Every arm and every seed had its fold_2024 stacker argmin at 1.2-2.6x the policy iteration (F1 550 vs 256; F2 475/675/525 vs 359; F2R 450/475/600 vs 231; F3 525/550/375 vs 308). The inherited rule `stage1 argmin x training-row ratio` is systematically short on fold_2024. This is a pipeline-level issue independent of the column sets and it applies identically to every arm here.",
+  "LOO_requirement": "config required F2's axes to be attributed by leave-one-out rather than by forward stepping. Exactly one axis passed, so LOO is automatic: removing `ball` IS F1, and F2 - F1 is that axis alone. No bundle was adopted from a forward-addition staircase.",
+  "not_run": {
+   "F4": "gate required BOTH F2 and F3 to pass; F2 did not. Gate outcome, not omission.",
+   "fold_2022": "not run for any arm (exp_046 A1 did not run it either).",
+   "independent_leak_audit": "NOT performed. New feature source + new time-series aggregation means this is audit-eligible under CLAUDE.md. No arm was adopted so nothing goes to a submission path, but the code must be audited before reuse.",
+   "inference_time": "not measured -- no arm adopted, so no deployment path was built."
+  },
+  "next_suggestions": [
+   "Add a block-unit sign-agreement condition to the pre-registered axis screen.",
+   "Revisit the stage1->stage2 iteration inheritance rule (see iteration_policy_observation); it is a pipeline-level gain orthogonal to any column choice.",
+   "Ask why the success axis is special: nine axes plus the trajectory split all failed, which points at 'the column counts the same event as the target' rather than at a general 'decompose any diluted rate column' principle. rev's r=-0.81 with d_form_eb says the same thing (reverse is a failure mode of success).",
+   "⚠️ Do NOT record the nine axes as 'no signal'. What was measured is a 1-term linear offset probe for selection plus one column at a time in the tree. Non-linear combinations and interactions were not measured."
+  ]
+ },
+ "score_conversion_reminder": "score digits beyond ~0.2 are a machine transform of a rounded Brier, not measured resolution (Brier 1e-6 = score 0.4003). Brier is the raw quantity; the score column is derived."
+}

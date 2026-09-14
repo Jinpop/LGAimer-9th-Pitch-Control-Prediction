@@ -1,0 +1,27 @@
+# 실험 스펙 템플릿 — 지휘자가 exp_NNN/config.yaml로 복사해 작성
+exp_id: exp_NNN
+date: ""
+hypothesis: ""            # 이 실험으로 확인하려는 것 한 줄
+base_exp: ""              # 어느 실험에서 파생됐나 (diff의 기준)
+
+model:
+  type: lightgbm          # lightgbm | catboost | nn | ...
+  params: {}              # 하이퍼파라미터 (전부 명시)
+  seed: 42
+
+features:
+  include: []             # 피처 그룹/목록
+  exclude: []
+  notes: ""               # 새 피처의 생성 로직 요약
+
+validation:
+  scheme: rolling-origin  # 고정
+  folds:
+    - {train_until: 2021, valid: 2022}
+    - {train_until: 2022, valid: 2023}
+    - {train_until: 2023, valid: 2024}   # 주 판단 fold
+  primary_metric: brier
+
+runtime:
+  where: a5000            # a5000 | local
+  expected_min: 0

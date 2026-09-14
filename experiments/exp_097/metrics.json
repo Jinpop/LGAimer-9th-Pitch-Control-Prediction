@@ -1,0 +1,1471 @@
+{
+ "exp_id": "exp_097",
+ "판본": "097b — 이 세션이 독립적으로 다시 잰 판본. 서버 ~/SungjinPark/exp097 의 앞선 판과 방법이 다르다(전 패키지 AST 계측 + f64 승격 종단 대조 vs 지점별 소스 변형).",
+ "title": "부동소수 정밀도 감사 — 배포 경로 전수(stageA) + 정직면 재판독(stageB)",
+ "date": "2026-08-25",
+ "stageA_결론": "배포 경로에 exp_096 급 float32 누산 결함은 없다. ① 여러 test 행에 걸친 float 누산이 실측 0건 ② 양변이 f32 인 누산은 mate/nn_infer.py:35 GEMM 하나뿐이고 그것도 행 안(은닉·피처 축) 축약이다 ③ 패키지 전체 182 지점의 f32 누산 입력을 f64 로 승격해 종단 재실행해도 245,789행 중 |Δp|>1e-6 인 행이 2개, 점수 이동 상한이 0.101157점 — LB 검출한계 1.4 의 7.2%, 사전등록 문턱 +2.0 의 5.1%. 고침 후보 승격 0건.",
+ "stageB_결론": "고친 면에서 배포점 (OOT 1632스텝, w_deep 0.40) 이 이미 argmax 근처다. 전 격자 최고점 (1632, 0.43) 이 배포점 대비 +0.1184점, 짝지은 투수블록 부트스트랩 t 0.191. 고친 면에서 새로 유도한 전이비 0.34818 로 환산하면 LB +0.0412 — 검출한계 1.4 의 2.9%. 사전 등록 통과 0건. 🔴 다만 방법론 정정이 크다: 결함면은 딥 팔의 혼합 이득을 1632스텝에서 13.71 로 보고했는데 고친 면에서는 26.27 이다(1.92배). exp_089~095 의 딥 관련 크기 판정은 전부 그만큼 낮게 읽혔다.",
+ "prereg_threshold": {
+  "rule": "출하 후보 승격 = 정직면 이득 >= 배포점 + 2.0 AND 짝지은 투수블록 부트스트랩 t >= 2.0",
+  "source": "experiments/exp_097/config.yaml — 발사 전 확정, 결과 보고 안 바꿨다 (S8)"
+ },
+ "parent_package": {
+  "zip": "~/Downloads/submit_CF_3axis.zip",
+  "sha256": "31adc7f513796d9da4763d9e2c9744116e5a0ab85d61dea6b4488bb2cfad035b",
+  "candidate_key": "CH",
+  "LB": 1140.3283619813,
+  "server_copy": "a5000:~/SungjinPark/build_CJKL/pkg/PAR",
+  "server_copy_검증": "script.py/aa_infer.py/mate/q_infer.py/mate/deep_infer.py/blend.json/mate/model/blend.json 6개 파일 sha256 로컬 압축해제본과 일치",
+  "w_deep": 0.4
+ },
+ "measurement_frame": {
+  "path": "a5000:~/SungjinPark/audit_deep/frames/cov",
+  "n_rows": 245789
+ },
+ "stageA": {
+  "A1_enumeration": {
+   "방법": "출하 .py 18개를 AST 로 파싱해 여러 원소에 걸친 축약(reduce·GEMM·groupby·rolling·transform·agg)의 *입력 객체* 를 전부 감쌌다. 기억이 아니라 코드에서 뽑았다(G-LEDGER).",
+   "n_py_files": 18,
+   "n_wrap_sites": 182,
+   "n_unique_sites": 172,
+   "n_astype_float32_sites": 9,
+   "astype_float32_sites": [
+    "inseason.py:83:.astype(float32)",
+    "mate/deep_infer.py:60:.astype(float32)",
+    "mate/deep_infer.py:63:.astype(float32)",
+    "mate/inseason.py:83:.astype(float32)",
+    "mate/nn_infer.py:30:.astype(float32)",
+    "mate/nn_infer.py:32:.astype(float32)",
+    "mate/nn_infer.py:58:.astype(float32)",
+    "v6_nn_infer.py:30:.astype(float32)",
+    "v6_nn_infer.py:32:.astype(float32)"
+   ],
+   "artifact": "out/sA_sites.json"
+  },
+  "A2_runtime_dtype": {
+   "방법": "trace 모드로 실제 실행하며 각 누산 지점의 입력 dtype·원소 수를 찍었다. trace 판의 submission.csv 가 baseline 과 바이트 동일해서 계측이 산술을 안 건드렸음이 증명된다.",
+   "n_tags_observed": 116,
+   "실행된_파일": [
+    "aa_infer.py",
+    "mate/deep_infer.py",
+    "mate/infer_ebm6.py",
+    "mate/nn_infer.py",
+    "mate/pipeline.py",
+    "mate/q_infer.py",
+    "mate/script.py",
+    "mate/v6_infer.py",
+    "script.py"
+   ],
+   "🔴_실행_안_된_출하_py": [
+    "v6_infer.py",
+    "v6_nn_infer.py",
+    "v6_pipeline.py"
+   ],
+   "실행_안_된_근거": "패키지 자신이 쓰는 _module_origins_root.json 에 root v6_infer/v6_nn_infer/v6_pipeline 이 없다. inseason.py 6지점·mate/inseason.py 6지점·mate/splits.py 7지점은 전부 동결표 빌더 안이라 추론 때 안 돈다.",
+   "f32_가_실제로_흐른_지점": {
+    "mate/deep_infer.py:45:@R": {
+     "calls": 20,
+     "max_n": 32768,
+     "dtypes": {
+      "float32": 20
+     }
+    },
+    "mate/deep_infer.py:47:@R": {
+     "calls": 20,
+     "max_n": 8192,
+     "dtypes": {
+      "float32": 20
+     }
+    },
+    "mate/deep_infer.py:48:@R": {
+     "calls": 20,
+     "max_n": 64,
+     "dtypes": {
+      "float32": 20
+     }
+    },
+    "mate/nn_infer.py:35:@L": {
+     "calls": 48,
+     "max_n": 25600000,
+     "dtypes": {
+      "float32": 48
+     }
+    },
+    "mate/nn_infer.py:35:@R": {
+     "calls": 48,
+     "max_n": 40704,
+     "dtypes": {
+      "float32": 48
+     }
+    }
+   },
+   "🔑_진짜_f32_누산": "mate/nn_infer.py:35 뿐이다 — 양변이 f32 인 GEMM. deep_infer.py:45/47/48 은 오른쪽(가중치)만 f32 이고 왼쪽 z 가 f64 라 numpy 가 f64 로 승격해 누산한다.",
+   "🔑_test_행축_float_누산": 0,
+   "행축_지점_전수": {
+    "mate/nn_infer.py:35:@L": {
+     "calls": 48,
+     "max_n": 25600000,
+     "dtypes": [
+      "float32"
+     ]
+    },
+    "mate/deep_infer.py:14:.mean": {
+     "calls": 40,
+     "max_n": 16777216,
+     "dtypes": [
+      "float64"
+     ]
+    },
+    "mate/deep_infer.py:15:.mean": {
+     "calls": 40,
+     "max_n": 16777216,
+     "dtypes": [
+      "float64"
+     ]
+    },
+    "mate/deep_infer.py:45:@L": {
+     "calls": 20,
+     "max_n": 16777216,
+     "dtypes": [
+      "float64"
+     ]
+    },
+    "mate/v6_infer.py:184:.sum": {
+     "calls": 1,
+     "max_n": 15730496,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "mate/deep_infer.py:47:@L": {
+     "calls": 20,
+     "max_n": 8388608,
+     "dtypes": [
+      "float64"
+     ]
+    },
+    "mate/deep_infer.py:41:@L": {
+     "calls": 20,
+     "max_n": 6160384,
+     "dtypes": [
+      "float64"
+     ]
+    },
+    "mate/deep_infer.py:48:@L": {
+     "calls": 20,
+     "max_n": 4194304,
+     "dtypes": [
+      "float64"
+     ]
+    },
+    "mate/pipeline.py:102:np.nanargmax": {
+     "calls": 3,
+     "max_n": 1474734,
+     "dtypes": [
+      "float64"
+     ]
+    },
+    "mate/pipeline.py:114:np.nansum": {
+     "calls": 3,
+     "max_n": 1474734,
+     "dtypes": [
+      "float64"
+     ]
+    },
+    "aa_infer.py:724:.std": {
+     "calls": 2,
+     "max_n": 1474734,
+     "dtypes": [
+      "float64"
+     ]
+    },
+    "aa_infer.py:417:np.nanargmax": {
+     "calls": 1,
+     "max_n": 1474734,
+     "dtypes": [
+      "float64"
+     ]
+    },
+    "aa_infer.py:429:np.nansum": {
+     "calls": 1,
+     "max_n": 1474734,
+     "dtypes": [
+      "float64"
+     ]
+    },
+    "aa_infer.py:491:.sum": {
+     "calls": 1,
+     "max_n": 1474734,
+     "dtypes": [
+      "float64"
+     ]
+    },
+    "mate/deep_infer.py:65:np.mean": {
+     "calls": 1,
+     "max_n": 1228945,
+     "dtypes": [
+      "float64"
+     ]
+    },
+    "mate/v6_infer.py:163:np.mean": {
+     "calls": 1,
+     "max_n": 983156,
+     "dtypes": [
+      "float64"
+     ]
+    },
+    "mate/v6_infer.py:177:np.mean": {
+     "calls": 1,
+     "max_n": 983156,
+     "dtypes": [
+      "float64"
+     ]
+    },
+    "mate/v6_infer.py:149:np.mean": {
+     "calls": 1,
+     "max_n": 737367,
+     "dtypes": [
+      "float64"
+     ]
+    },
+    "mate/v6_infer.py:189:np.mean": {
+     "calls": 1,
+     "max_n": 737367,
+     "dtypes": [
+      "float64"
+     ]
+    },
+    "mate/infer_ebm6.py:33:np.mean": {
+     "calls": 1,
+     "max_n": 737367,
+     "dtypes": [
+      "float64"
+     ]
+    },
+    "aa_infer.py:767:.all": {
+     "calls": 1,
+     "max_n": 491578,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:768:.all": {
+     "calls": 1,
+     "max_n": 491578,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:769:.sum": {
+     "calls": 1,
+     "max_n": 491578,
+     "dtypes": [
+      "float64"
+     ]
+    },
+    "aa_infer.py:805:.sum": {
+     "calls": 1,
+     "max_n": 491578,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "mate/q_infer.py:294:.sum": {
+     "calls": 74,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "mate/q_infer.py:296:.sum": {
+     "calls": 74,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "mate/q_infer.py:273:.sum": {
+     "calls": 3,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "mate/q_infer.py:283:.sum": {
+     "calls": 3,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "mate/q_infer.py:357:.all": {
+     "calls": 3,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "mate/q_infer.py:358:.all": {
+     "calls": 3,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "mate/q_infer.py:603:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "mate/q_infer.py:604:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "mate/q_infer.py:623:.sum": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "mate/q_infer.py:625:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "mate/q_infer.py:637:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "mate/q_infer.py:644:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "mate/q_infer.py:645:.sum": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "mate/q_infer.py:652:.sum": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "mate/q_infer.py:655:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "mate/q_infer.py:656:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "mate/q_infer.py:678:.sum": {
+     "calls": 3,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "mate/q_infer.py:688:.all": {
+     "calls": 2,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "mate/script.py:126:.all": {
+     "calls": 2,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "mate/script.py:159:.all": {
+     "calls": 2,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "mate/script.py:172:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:369:.sum": {
+     "calls": 133,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:371:.sum": {
+     "calls": 133,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:348:.sum": {
+     "calls": 6,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:358:.sum": {
+     "calls": 6,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:596:.sum": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:696:.all": {
+     "calls": 9,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:697:.all": {
+     "calls": 9,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:1025:.all": {
+     "calls": 2,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:1026:.all": {
+     "calls": 2,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:725:.all": {
+     "calls": 2,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:1045:.all": {
+     "calls": 2,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:469:.sum": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:484:.sum": {
+     "calls": 2,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:493:.any": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:769:np.max": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "float64"
+     ]
+    },
+    "aa_infer.py:802:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:804:.sum": {
+     "calls": 2,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:806:.sum": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:807:.sum": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:1200:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:1201:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:1219:.sum": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:1221:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:1232:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:1238:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:1239:.sum": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:1249:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:1259:.sum": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:1262:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:1263:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:1271:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:1274:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "aa_infer.py:1275:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "script.py:266:.all": {
+     "calls": 2,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "script.py:267:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "script.py:268:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "script.py:271:.sum": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "script.py:272:.sum": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "script.py:313:.all": {
+     "calls": 2,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "script.py:376:.sum": {
+     "calls": 2,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "script.py:377:.sum": {
+     "calls": 2,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "script.py:405:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "script.py:406:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "script.py:417:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "script.py:418:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "script.py:456:.sum": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "script.py:458:.sum": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "script.py:470:.sum": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "script.py:471:.sum": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "script.py:484:.sum": {
+     "calls": 2,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "script.py:485:.sum": {
+     "calls": 2,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "script.py:487:.max": {
+     "calls": 2,
+     "max_n": 245789,
+     "dtypes": [
+      "float64"
+     ]
+    },
+    "script.py:489:.max": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "float64"
+     ]
+    },
+    "script.py:523:.sum": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "int8"
+     ]
+    },
+    "script.py:527:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "script.py:528:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    },
+    "script.py:540:.all": {
+     "calls": 1,
+     "max_n": 245789,
+     "dtypes": [
+      "bool"
+     ]
+    }
+   },
+   "행축_중_float": {
+    "mate/nn_infer.py:35:@L": [
+     "float32"
+    ],
+    "mate/deep_infer.py:14:.mean": [
+     "float64"
+    ],
+    "mate/deep_infer.py:15:.mean": [
+     "float64"
+    ],
+    "mate/deep_infer.py:45:@L": [
+     "float64"
+    ],
+    "mate/deep_infer.py:47:@L": [
+     "float64"
+    ],
+    "mate/deep_infer.py:41:@L": [
+     "float64"
+    ],
+    "mate/deep_infer.py:48:@L": [
+     "float64"
+    ],
+    "mate/pipeline.py:102:np.nanargmax": [
+     "float64"
+    ],
+    "mate/pipeline.py:114:np.nansum": [
+     "float64"
+    ],
+    "aa_infer.py:724:.std": [
+     "float64"
+    ],
+    "aa_infer.py:417:np.nanargmax": [
+     "float64"
+    ],
+    "aa_infer.py:429:np.nansum": [
+     "float64"
+    ],
+    "aa_infer.py:491:.sum": [
+     "float64"
+    ],
+    "mate/deep_infer.py:65:np.mean": [
+     "float64"
+    ],
+    "mate/v6_infer.py:163:np.mean": [
+     "float64"
+    ],
+    "mate/v6_infer.py:177:np.mean": [
+     "float64"
+    ],
+    "mate/v6_infer.py:149:np.mean": [
+     "float64"
+    ],
+    "mate/v6_infer.py:189:np.mean": [
+     "float64"
+    ],
+    "mate/infer_ebm6.py:33:np.mean": [
+     "float64"
+    ],
+    "aa_infer.py:769:.sum": [
+     "float64"
+    ],
+    "aa_infer.py:769:np.max": [
+     "float64"
+    ],
+    "script.py:487:.max": [
+     "float64"
+    ],
+    "script.py:489:.max": [
+     "float64"
+    ]
+   },
+   "행축_float_해설": "245,789 이상인 float 지점은 전부 (a) 행 안 축약(GEMM 은 은닉·피처 축, LayerNorm 은 마지막 축, 6구종 L1) (b) 시드 축 평균/표준편차 (c) 정확한 max — 이 셋뿐이다. 여러 test 행을 하나로 합치는 float 누산은 0건."
+  },
+  "A3_end_to_end": {
+   "설계": "같은 프레임·같은 패키지. off(항등)·trace(기록만)·promote(모든 f32 누산 입력을 f64 로) 세 판을 종단 실행하고 submission.csv 를 float_precision='round_trip' 로 읽어 비교(S21).",
+   "identity_gate": "off·trace 의 submission.csv 가 무계측 baseline 과 바이트 동일해야 한다",
+   "baseline_sha256": "93f67d5fae6b13ef1ac429268366d51aa1edff8c9e5b8b3aa049bc6a301a0f13",
+   "K": 400309.19882517256,
+   "variants": {
+    "off": {
+     "path": "runs/off.csv",
+     "byte_identical": true,
+     "n_rows_moved": 0,
+     "max_abs_dp": 0.0,
+     "rms_dp": 0.0,
+     "mean_dp_signed": 0.0,
+     "K_mean_dp2_score_units": 0.0,
+     "max_abs_score_move_bound_pts": 0.0,
+     "rows_over_1e-6": 0,
+     "rows_over_1e-9": 0,
+     "rows_over_1e-12": 0,
+     "q": {
+      "0.5": 0.0,
+      "0.9": 0.0,
+      "0.99": 0.0,
+      "0.999": 0.0,
+      "1.0": 0.0
+     }
+    },
+    "trace": {
+     "path": "runs/trace.csv",
+     "byte_identical": true,
+     "n_rows_moved": 0,
+     "max_abs_dp": 0.0,
+     "rms_dp": 0.0,
+     "mean_dp_signed": 0.0,
+     "K_mean_dp2_score_units": 0.0,
+     "max_abs_score_move_bound_pts": 0.0,
+     "rows_over_1e-6": 0,
+     "rows_over_1e-9": 0,
+     "rows_over_1e-12": 0,
+     "q": {
+      "0.5": 0.0,
+      "0.9": 0.0,
+      "0.99": 0.0,
+      "0.999": 0.0,
+      "1.0": 0.0
+     }
+    },
+    "prom": {
+     "path": "runs/prom.csv",
+     "byte_identical": false,
+     "n_rows_moved": 245788,
+     "max_abs_dp": 8.889305883824639e-05,
+     "rms_dp": 2.527950535092882e-07,
+     "mean_dp_signed": -2.6873846598689847e-11,
+     "K_mean_dp2_score_units": 2.558189508727096e-08,
+     "max_abs_score_move_bound_pts": 0.10115712140274385,
+     "rows_over_1e-6": 2,
+     "rows_over_1e-9": 30143,
+     "rows_over_1e-12": 245470,
+     "q": {
+      "0.5": 4.379095419615453e-10,
+      "0.9": 1.063539234458233e-09,
+      "0.99": 1.6601025620843755e-09,
+      "0.999": 2.2116023781215687e-09,
+      "1.0": 8.889305883824639e-05
+     }
+    }
+   }
+  },
+  "A4_attribution_and_fix_candidates": {
+   "방법": "promote 모드를 PT_ONLY 로 한 파일씩만 켜서 종단 재실행",
+   "variants": {
+    "prom": {
+     "path": "runs/prom.csv",
+     "byte_identical": false,
+     "n_rows_moved": 245788,
+     "max_abs_dp": 8.889305883824639e-05,
+     "rms_dp": 2.527950535092882e-07,
+     "mean_dp_signed": -2.6873846598689847e-11,
+     "K_mean_dp2_score_units": 2.558189508727096e-08,
+     "max_abs_score_move_bound_pts": 0.10115712140274385,
+     "rows_over_1e-6": 2,
+     "rows_over_1e-9": 30143,
+     "rows_over_1e-12": 245470,
+     "q": {
+      "0.5": 4.379095419615453e-10,
+      "0.9": 1.063539234458233e-09,
+      "0.99": 1.6601025620843755e-09,
+      "0.999": 2.2116023781215687e-09,
+      "1.0": 8.889305883824639e-05
+     }
+    },
+    "promNN": {
+     "path": "runs/promNN.csv",
+     "byte_identical": false,
+     "n_rows_moved": 245788,
+     "max_abs_dp": 8.889305883824639e-05,
+     "rms_dp": 2.527950535092882e-07,
+     "mean_dp_signed": -2.6873846598689847e-11,
+     "K_mean_dp2_score_units": 2.558189508727096e-08,
+     "max_abs_score_move_bound_pts": 0.10115712140274385,
+     "rows_over_1e-6": 2,
+     "rows_over_1e-9": 30143,
+     "rows_over_1e-12": 245470,
+     "q": {
+      "0.5": 4.379095419615453e-10,
+      "0.9": 1.063539234458233e-09,
+      "0.99": 1.6601025620843755e-09,
+      "0.999": 2.2116023781215687e-09,
+      "1.0": 8.889305883824639e-05
+     }
+    },
+    "promDP": {
+     "path": "runs/promDP.csv",
+     "byte_identical": true,
+     "n_rows_moved": 0,
+     "max_abs_dp": 0.0,
+     "rms_dp": 0.0,
+     "mean_dp_signed": 0.0,
+     "K_mean_dp2_score_units": 0.0,
+     "max_abs_score_move_bound_pts": 0.0,
+     "rows_over_1e-6": 0,
+     "rows_over_1e-9": 0,
+     "rows_over_1e-12": 0,
+     "q": {
+      "0.5": 0.0,
+      "0.9": 0.0,
+      "0.99": 0.0,
+      "0.999": 0.0,
+      "1.0": 0.0
+     }
+    }
+   },
+   "귀속": "전량이 mate/nn_infer.py:35 다 — promNN 이 전 패키지 promote 와 자리 수까지 같다(max|Δp| 8.889306e-05, 상한 0.101157점, >1e-6 행 2개). mate/deep_infer.py 만 켠 promDP 는 baseline 과 바이트 동일 — 딥 팔의 f32 가중치는 왼쪽 z 가 f64 라 numpy 가 이미 f64 로 누산하고 있었다. 기여 정확히 0.",
+   "max|Δp|>1e-6 인 지점": [
+    "mate/nn_infer.py:35 (해당 행 2개 / 245,789)"
+   ],
+   "고침_후보로_승격된_지점": 0,
+   "① 한 줄 고침 가능한가": "가능하다 — mate/nn_infer.py:35 의 z 를 f64 로 캐스트하면 된다. 가중치 npz·동결표는 안 건드린다.",
+   "② 동결표 재생성 필요한가": "아니다. 이 지점은 표를 안 만든다.",
+   "③ 정직면 이득과 부호": "측정 불가이자 측정 불필요다. cov 프레임에는 라벨이 없고, 코시-슈바르츠 상한 |점수 이동| <= K*(m2 + 2*sqrt(m2*REF)) 가 0.101157점이라 어떤 라벨에서도 부호와 무관하게 문턱 +2.0 에 20배 못 미친다. 정직면 부트스트랩 se 가 0.6~1.4점이라 이 크기는 면의 분해능 아래다.",
+   "🔴 고쳐도 좋다는 뜻이 아니다": "그 f32 는 학습 때도 같은 코드로 돌았고, 하류 상수(d_adj·alpha·블렌드 가중)가 전부 그 출력 위에서 적합됐다. 고치면 그 상수들의 꼭지점이 옮겨간다(S97·S123). 이득 상한 0.101점으로는 그 위험을 살 이유가 없다."
+  },
+  "A5_frozen_constants": {
+   "질문": "배포 딥 팔 표준화 상수(mu/sd)가 exp_096 식 f32 누산 결함을 갖는가?",
+   "방법": "배포가 선언한 학습 프레임(train season<=2024, 1,475,092행)에서 f64 로 다시 계산해 94열 전수 대조. f32 누산 대조군도 함께 계산.",
+   "frame": "/home/<user>/SungjinPark/exp064/cache/frame99_ship.parquet",
+   "n_rows_used": 1475092,
+   "n_cols": 94,
+   "n_cols_sd_off_gt_1pct": 0,
+   "n_cols_mu_off_gt_0.01sd": 0,
+   "recipe_fit": {
+    "max_abs_rel_sd_ship_vs_f64": 5.537052530479869e-05,
+    "max_abs_rel_sd_ship_vs_f32acc": 5.532803856600488e-05,
+    "max_mu_err_ship_in_truesd": 0.00010111593365682935,
+    "max_mu_err_f32acc_in_truesd": 0.00010788115052305093
+   },
+   "season_row": {
+    "j": 0,
+    "col": "season",
+    "mu_ship": 2021.52880859375,
+    "sd_ship": 1.7058265209197998,
+    "mu_f64": 2021.52886870785,
+    "sd_f64": 1.7058264956963078,
+    "mu_f32acc": 2021.529052734375,
+    "sd_f32acc": 1.705828070640564,
+    "sd_ratio_ship_over_f64": 1.0000000147866692,
+    "sd_ratio_f32acc_over_f64": 1.0000009232734162,
+    "mu_err_ship_in_truesd": 3.5240453940211505e-05,
+    "mu_err_f32acc_in_truesd": 0.00010788115052305093,
+    "n_finite": 1475092
+   },
+   "주의": "f32 누산 대조군도 season sd 비가 1.0000009 로 나온다 — numpy nanmean/nanstd 는 pairwise 합이라 '배열이 f32' 만으로는 exp_096 의 13.8배가 안 생긴다. 따라서 이 검사는 레시피를 구별하지 못하고, 출하값이 f64 정답과 5.54e-05 안에서 맞는다는 것만 말한다.",
+   "artifact": "out/sA_musd097b.json"
+  }
+ },
+ "stageB": {
+  "B0_결함_열수": {
+   "방법": "프레임을 다시 만들지 않고 표준화 *출력* 에서 직접 읽었다. 옳게 표준화됐다면 학습행 열 sd 가 1 이어야 한다(nan->0 대체분만큼만 내려간다).",
+   "def_array": "a5000:~/SungjinPark/exp089/work/X_oot23.npy",
+   "fix_array": "a5000:~/SungjinPark/exp096/work/X_f64_oot23.npy",
+   "n_train_rows": 1116277,
+   "n_cols": 94,
+   "n_cols_off_gt_1pct": 2,
+   "cols_off": [
+    {
+     "col": "season",
+     "def_sd": 0.07258277004846579,
+     "fix_sd": 1.0000000108647433,
+     "fix_over_def": 13.777374577975076
+    },
+    {
+     "col": "idea_cnt_te",
+     "def_sd": 0.8903832107204211,
+     "fix_sd": 0.9002317264360475,
+     "fix_over_def": 1.0110609854240826
+    }
+   ],
+   "결론": "결함은 사실상 season 한 열이다. 표준화 뒤 sd 가 0.0726 (있어야 할 1.0 의 1/13.78) 이라 그 열이 사실상 죽어 있었다. idea_cnt_te 가 1.11% 로 두 번째이고 나머지 92열은 0.3% 안이다.",
+   "artifact": "out/sB0_cols.json"
+  },
+  "B1_학습량_argmax_재판독": {
+   "면": "exp_090 s1_curve.py 정의를 그대로 쓰되 코드는 새로 썼다(독립 구현).",
+   "기준점_게이트": {
+    "rc": 928.501461058684,
+    "expected": 928.501461058684,
+    "abs_diff": 0.0,
+    "PASS": true
+   },
+   "결함면_1632_재현": {
+    "argmax_w": 0.36,
+    "argmax_gain": 13.714309769419287,
+    "exp_090_092_기록값": 13.714309769419287
+   },
+   "deployed_point_fix": {
+    "steps": 1632,
+    "w": 0.4,
+    "gain": 26.15139685310237
+   },
+   "best_point_fix": {
+    "steps": 1632,
+    "w": 0.43,
+    "gain": 26.269817382706947,
+    "delta_vs_deployed": 0.1184205296045775,
+    "boot_t_vs_deployed": 0.19143050505446071,
+    "boot_ci95_pts": [
+     -1.1079320785876634,
+     1.3289352312892295
+    ]
+   },
+   "CE_anchor": {
+    "recorded_S111_delta_def": 10.102,
+    "recorded_S111_transfer": 0.4779,
+    "pairs": {
+     "720->1632": {
+      "delta_def_w0.20": 10.10205175540068,
+      "delta_fix_w0.20": 13.866598727862993,
+      "LB_gain": 4.8280402096,
+      "transfer_def": 0.47792669514080355,
+      "transfer_fix": 0.34817768252705894
+     },
+     "544->1632": {
+      "delta_def_w0.20": 13.944722717662557,
+      "delta_fix_w0.20": 19.382589413763412,
+      "LB_gain": 4.8280402096,
+      "transfer_def": 0.34622704999969234,
+      "transfer_fix": 0.24909160001973987
+     }
+    }
+   },
+   "LB_prediction_for_best_move": {
+    "honest_delta_pts": 0.1184205296045775,
+    "transfer_ratio_used": 0.34817768252705894,
+    "predicted_LB_pts": 0.04123138556134877,
+    "LB_detection_limit": 1.4,
+    "ABOVE_DETECTION_LIMIT": false
+   },
+   "PREREG": {
+    "rule": "정직면 이득 >= 배포점 + 2.0 AND 짝지은 투수블록 부트스트랩 t >= 2.0",
+    "n_qualifying": 0,
+    "qualifying": [],
+    "PASS": false
+   },
+   "곡선": {
+    "def": {
+     "544": {
+      "alone_recentred": 812.9058121682409,
+      "rho_vs_z_mate": 0.934985627985493,
+      "z_sd": 0.1963541447866598,
+      "gain_w0.20": -2.894440236889068,
+      "gain_w0.40": -11.205907760392051,
+      "argmax_w": 0.0,
+      "argmax_gain": 0.0
+     },
+     "720": {
+      "alone_recentred": 848.8856011706791,
+      "rho_vs_z_mate": 0.9379446646946592,
+      "z_sd": 0.1829123699701478,
+      "gain_w0.20": 0.9482307253728095,
+      "gain_w0.40": -2.7084832955548563,
+      "argmax_w": 0.14,
+      "argmax_gain": 1.1471170445198595
+     },
+     "816": {
+      "alone_recentred": 889.8553640782513,
+      "rho_vs_z_mate": 0.9337318749278408,
+      "z_sd": 0.1961358583513394,
+      "gain_w0.20": 8.730593474115494,
+      "gain_w0.40": 11.926004067197596,
+      "argmax_w": 0.42,
+      "argmax_gain": 11.941475979826464
+     },
+     "1088": {
+      "alone_recentred": 890.7593323756014,
+      "rho_vs_z_mate": 0.9360995810498497,
+      "z_sd": 0.20889207610081395,
+      "gain_w0.20": 8.985833278929476,
+      "gain_w0.40": 11.697404801802577,
+      "argmax_w": 0.39,
+      "argmax_gain": 11.710562218825203
+     },
+     "1360": {
+      "alone_recentred": 866.7854630308835,
+      "rho_vs_z_mate": 0.9215108343591798,
+      "z_sd": 0.21014800992185204,
+      "gain_w0.20": 9.03151857720718,
+      "gain_w0.40": 10.459254175587716,
+      "argmax_w": 0.34,
+      "argmax_gain": 10.82695181361396
+     },
+     "1632": {
+      "alone_recentred": 862.5652996988365,
+      "rho_vs_z_mate": 0.9141957764385082,
+      "z_sd": 0.21298216018288174,
+      "gain_w0.20": 11.05028248077349,
+      "gain_w0.40": 13.525022613314377,
+      "argmax_w": 0.36,
+      "argmax_gain": 13.714309769419287
+     },
+     "2176": {
+      "alone_recentred": 793.897802758281,
+      "rho_vs_z_mate": 0.8894608630889391,
+      "z_sd": 0.2229870330432216,
+      "gain_w0.20": 9.152034364123779,
+      "gain_w0.40": 6.3041646398809235,
+      "argmax_w": 0.25,
+      "argmax_gain": 9.562187935097086
+     },
+     "2720": {
+      "alone_recentred": 731.8082860196862,
+      "rho_vs_z_mate": 0.8702440075376061,
+      "z_sd": 0.23067980354151565,
+      "gain_w0.20": 7.403203400235839,
+      "gain_w0.40": -0.05320202509653882,
+      "argmax_w": 0.2,
+      "argmax_gain": 7.403203400235839
+     },
+     "3264": {
+      "alone_recentred": 634.8281807722844,
+      "rho_vs_z_mate": 0.8157448758333632,
+      "z_sd": 0.22603967317370693,
+      "gain_w0.20": 5.878024767891361,
+      "gain_w0.40": -7.424727092419971,
+      "argmax_w": 0.16,
+      "argmax_gain": 6.240059766338163
+     },
+     "4080": {
+      "alone_recentred": 423.44665887613655,
+      "rho_vs_z_mate": 0.792890587273693,
+      "z_sd": 0.25879860290750967,
+      "gain_w0.20": -3.75616181179646,
+      "gain_w0.40": -35.87028746512283,
+      "argmax_w": 0.07,
+      "argmax_gain": 1.9296222942722352
+     }
+    },
+    "fix": {
+     "544": {
+      "alone_recentred": 836.8239628638086,
+      "rho_vs_z_mate": 0.9393212869365204,
+      "z_sd": 0.19523458469623273,
+      "gain_w0.20": -0.574664142571919,
+      "gain_w0.40": -6.169901672925562,
+      "argmax_w": 0.08,
+      "argmax_gain": 0.37336156177843804
+     },
+     "720": {
+      "alone_recentred": 879.2603441393098,
+      "rho_vs_z_mate": 0.93940535312411,
+      "z_sd": 0.1858389944287637,
+      "gain_w0.20": 4.9413265433285005,
+      "gain_w0.40": 5.282930754435483,
+      "argmax_w": 0.31,
+      "argmax_gain": 5.69794486889873
+     },
+     "816": {
+      "alone_recentred": 904.7338607281686,
+      "rho_vs_z_mate": 0.9238515983535535,
+      "z_sd": 0.20203966473560298,
+      "gain_w0.20": 13.735487854382768,
+      "gain_w0.40": 20.72168905442595,
+      "argmax_w": 0.51,
+      "argmax_gain": 21.69644791828466
+     },
+     "1088": {
+      "alone_recentred": 908.3982811720848,
+      "rho_vs_z_mate": 0.9217833841183359,
+      "z_sd": 0.21550014812375087,
+      "gain_w0.20": 16.318382724278536,
+      "gain_w0.40": 24.469498303902924,
+      "argmax_w": 0.5,
+      "argmax_gain": 25.495672950470748
+     },
+     "1360": {
+      "alone_recentred": 852.2590924678775,
+      "rho_vs_z_mate": 0.8903529541919573,
+      "z_sd": 0.222422042620117,
+      "gain_w0.20": 17.708484842227108,
+      "gain_w0.40": 23.625961490103577,
+      "argmax_w": 0.4,
+      "argmax_gain": 23.625961490103577
+     },
+     "1632": {
+      "alone_recentred": 864.8370207566702,
+      "rho_vs_z_mate": 0.8930378055187094,
+      "z_sd": 0.22155867348471148,
+      "gain_w0.20": 18.807925271191493,
+      "gain_w0.40": 26.15139685310237,
+      "argmax_w": 0.43,
+      "argmax_gain": 26.269817382706947
+     },
+     "2176": {
+      "alone_recentred": 771.0730161662682,
+      "rho_vs_z_mate": 0.8546224612248439,
+      "z_sd": 0.22680409298759208,
+      "gain_w0.20": 16.34546020589096,
+      "gain_w0.40": 16.93929264175995,
+      "argmax_w": 0.31,
+      "argmax_gain": 18.611003190927022
+     },
+     "2720": {
+      "alone_recentred": 649.4991418290019,
+      "rho_vs_z_mate": 0.8216015895791544,
+      "z_sd": 0.24414654709248249,
+      "gain_w0.20": 14.592533063728638,
+      "gain_w0.40": 7.130948109379574,
+      "argmax_w": 0.23,
+      "argmax_gain": 14.872754657580003
+     },
+     "3264": {
+      "alone_recentred": 572.6626713514427,
+      "rho_vs_z_mate": 0.7750821373396991,
+      "z_sd": 0.24121841508213482,
+      "gain_w0.20": 14.970377573086921,
+      "gain_w0.40": 3.85835489116198,
+      "argmax_w": 0.21,
+      "argmax_gain": 15.032257918112805
+     },
+     "4080": {
+      "alone_recentred": 358.49767055273765,
+      "rho_vs_z_mate": 0.7663383902799179,
+      "z_sd": 0.2743915154942809,
+      "gain_w0.20": 5.496567318552479,
+      "gain_w0.40": -24.49915556559381,
+      "argmax_w": 0.13,
+      "argmax_gain": 7.635294071717226
+     }
+    }
+   },
+   "artifact": "out/sB_indep.json"
+  },
+  "B2_기존_결론_재확인": {
+   "exp_092_무작위16열_마스크": {
+    "질문": "exp_092 의 최고 혼합 지점이 무작위 16열 마스크(D5m16_rand, +14.892)였다 — 그 마스크에 결함 열이 들어 있었는가?",
+    "결함_열_인덱스": {
+     "season": 0,
+     "idea_cnt_te": 41
+    },
+    "답": "아니다. D5m16_rand 에는 season 도 idea_cnt_te 도 없다. season 을 포함하는 마스크는 D5m83_rand 와 D5h2_rand47 둘뿐이고 둘 다 우승 지점이 아니다.",
+    "함의": "그 +14.892 는 결함 제거가 아니었다 — S104(이름 붙인 계열 마스킹이 같은 개수 무작위보다 대개 나쁘다)의 해석이 유지된다."
+   },
+   "exp_090_학습량_argmax": {
+    "결함면_argmax_step": 1632,
+    "고친면_argmax_step": 1632,
+    "해설": "스텝 축의 argmax 는 면을 고쳐도 1632 그대로다. 바뀌는 것은 이득의 크기(13.71 -> 26.27)와 최적 w 다.",
+    "스텝별_최적w": {
+     "def": {
+      "544": 0.0,
+      "720": 0.14,
+      "816": 0.42,
+      "1088": 0.39,
+      "1360": 0.34,
+      "1632": 0.36,
+      "2176": 0.25,
+      "2720": 0.2,
+      "3264": 0.16,
+      "4080": 0.07
+     },
+     "fix": {
+      "544": 0.08,
+      "720": 0.31,
+      "816": 0.51,
+      "1088": 0.5,
+      "1360": 0.4,
+      "1632": 0.43,
+      "2176": 0.31,
+      "2720": 0.23,
+      "3264": 0.21,
+      "4080": 0.13
+     }
+    },
+    "스텝별_argmax이득": {
+     "def": {
+      "544": 0.0,
+      "720": 1.1471170445198595,
+      "816": 11.941475979826464,
+      "1088": 11.710562218825203,
+      "1360": 10.82695181361396,
+      "1632": 13.714309769419287,
+      "2176": 9.562187935097086,
+      "2720": 7.403203400235839,
+      "3264": 6.240059766338163,
+      "4080": 1.9296222942722352
+     },
+     "fix": {
+      "544": 0.37336156177843804,
+      "720": 5.69794486889873,
+      "816": 21.69644791828466,
+      "1088": 25.495672950470748,
+      "1360": 23.625961490103577,
+      "1632": 26.269817382706947,
+      "2176": 18.611003190927022,
+      "2720": 14.872754657580003,
+      "3264": 15.032257918112805,
+      "4080": 7.635294071717226
+     }
+    },
+    "스텝별_rho_vs_z_mate": {
+     "def": {
+      "544": 0.934985627985493,
+      "720": 0.9379446646946592,
+      "816": 0.9337318749278408,
+      "1088": 0.9360995810498497,
+      "1360": 0.9215108343591798,
+      "1632": 0.9141957764385082,
+      "2176": 0.8894608630889391,
+      "2720": 0.8702440075376061,
+      "3264": 0.8157448758333632,
+      "4080": 0.792890587273693
+     },
+     "fix": {
+      "544": 0.9393212869365204,
+      "720": 0.93940535312411,
+      "816": 0.9238515983535535,
+      "1088": 0.9217833841183359,
+      "1360": 0.8903529541919573,
+      "1632": 0.8930378055187094,
+      "2176": 0.8546224612248439,
+      "2720": 0.8216015895791544,
+      "3264": 0.7750821373396991,
+      "4080": 0.7663383902799179
+     }
+    }
+   },
+   "exp_095_바깥_딥_슬롯_v": "내가 재측정하지 않았다. 앞선 서버 판본(a5000:~/SungjinPark/exp097/metrics.json stageB.B2_outer_slot_v)이 두 면 모두 argmax v=0 을 보고한다.",
+   "artifact": "out/sB2_exp092_mask.json"
+  }
+ },
+ "artifacts_server": "a5000:~/SungjinPark/exp097b/",
+ "🔴 발견 (장부 후보)": {
+  "1_행축_누산_0건": "배포 추론 경로에서 여러 test 행을 하나로 합치는 float 누산이 실측 0건이다. 245,789 이상 원소를 받는 지점은 전부 bool 행 카운트(출력용)·int8·정확한 max 이거나, float 이면 행 안 축약(GEMM 은닉축·LayerNorm 마지막축·6구종 L1) 또는 시드 축 평균/표준편차다.",
+  "2_출하_패키지에_사문_파일_3개": "root 의 v6_infer.py · v6_nn_infer.py · v6_pipeline.py 는 한 번도 import 되지 않는다. 패키지 자신이 쓰는 _module_origins_root.json 이 근거다. root 의 NN 은 f32 GEMM 이지만 실행되지 않으므로 점수와 무관하다 — 정적 grep 만 하면 여기서 틀린다.",
+  "3_inseason.py_는_sha_잠금이다": "aa_infer.py:530-551 이 sha256(inseason.py) 를 model/meta.json branches.R.stacker_extra_features.module_sha256 과 assert 로 대조한다. 계측 사본이 실제로 AssertionError 로 죽어서 확인했다(읽어서가 아니라 실행해서). 같은 블록 578-583 이 anchor.npz sha 와 투수/타자 수도 대조한다. aa_infer.py:1118·1119·1141·1142·1148 에 weights_record·beta_record·gamma_record 대조도 있다 — S35 의 행 번호(1079-1080)는 이 판본에서 낡았다.",
+  "4_결함면이_딥_팔을_1.92배_축소해_보고했다": "1632스텝 혼합 이득 결함면 13.7143 vs 고친 면 26.2698. ρ(z_mate) 는 0.9142 -> 0.8930 으로 내려간다. exp_089~095 의 딥 관련 *크기* 판정은 전부 낮게 읽힌 값이다. 🔴 그러나 이것은 측정면 정정이지 점수 기회가 아니다 — 배포 팔은 이미 깨끗한 prep.json 을 쓴다.",
+  "5_S97_은_살아남되_w_곡선이_통째로_올라간다": "스텝별 최적 w: 결함면 816:0.42 1088:0.39 1360:0.34 1632:0.36 2176:0.25 2720:0.20 → 고친 면 0.51 / 0.50 / 0.40 / 0.43 / 0.31 / 0.23. 모양(학습량↑ → 최적 w↓)은 같고 0.07~0.10 위로 옮겨간다. 배포 w=0.40 은 결함면에서는 최적(0.36) *위*로 보였는데 고친 면에서는 최적(0.43) *아래*다.",
+  "6_exp_092_의_우승_무작위_16열_마스크에_결함_열이_없다": "D5m16_rand 마스크 = NUM 인덱스 [1,6,12,17,20,51,52,56,61,62,71,75,78,82,87,89] 인데 season(0)·idea_cnt_te(41) 둘 다 없다. season 을 포함하는 마스크는 D5m83_rand·D5h2_rand47 뿐이다. → 그 +14.892 는 결함 제거가 아니었고 S104 의 해석이 유지된다.",
+  "7_배열이_f32_인_것만으로는_exp_096_의_13.8배가_안_생긴다": "numpy nanmean/nanstd 는 pairwise 합이라 1,475,092행 f32 배열에서도 season sd 비가 1.0000009 다(내 대조군 실측). exp_096 결함의 기전은 '배열이 f32' 보다 특정적이다 — 그 기전을 아직 아무도 특정하지 않았다."
+ },
+ "앞선_판본과의_대조": {
+  "위치": "a5000:~/SungjinPark/exp097/ (metrics.json · runs/V0..V4,VD · out/)",
+  "방법_차이": "그쪽은 지점별 소스 변형 6판(V0/VD/V1/V2/V3/V4), 이쪽은 전 패키지 AST 계측 + 선택적 f64 승격.",
+  "일치": {
+   "V4_max|dp|": 8.982219325959218e-05,
+   "이번_prom_max|dp|": 8.889305883824639e-05,
+   "V4_상한_pts": 0.1034,
+   "이번_상한_pts": 0.101157,
+   "V4_>1e-6행": 24,
+   "이번_>1e-6행": 2,
+   "해설": "결론이 같고 크기도 같은 자릿수다. 차이는 승격 범위다 — 그쪽 V3 는 inseason 의 반환 .astype('float32') 까지 f64 로 바꿨는데(양자화 지점), 이쪽은 *누산 입력*만 승격해 그 양자화는 건드리지 않았다. 그래서 >1e-6 행이 22개 적다."
+  },
+  "재확인한_것": {
+   "기준점_게이트": "928.501461058684 를 abs_diff 0.0 으로 독립 재현",
+   "결함면_1632_argmax": "w=0.36 gain 13.7143 (exp_090/092 기록값과 일치)",
+   "CE_앵커_Δ": "720->1632 w=0.20 에서 10.10205 (S111 기록 10.102 재현)",
+   "f64_입력_sha": "exp096/work/X_f64_oot23.npy == exp097/work/X_f64o.npy = f33de9c4db71cc33fa782c8287f4ba4241eb28b942d9c21cd1e80d43f93ba1ff",
+   "결함_입력_sha": "exp089/work/X_oot23.npy == exp097/work/X_oot23.npy = aaf5cdb2f3833e61536b0fe1d8818c939e66c2653cd73e5fc8b609904e8856fa"
+  },
+  "재측정_안_한_것": "exp_095 의 바깥 딥 슬롯 v 축. 앞선 판본이 두 면 모두 argmax v=0 을 보고한다 — 내가 잰 값이 아니다."
+ }
+}

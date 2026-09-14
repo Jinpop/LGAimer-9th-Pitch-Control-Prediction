@@ -1,0 +1,29 @@
+# 실험 스펙 — 지휘자 작성 2026-08-05 (캠페인 2)
+exp_id: exp_005
+date: "2026-08-05"
+hypothesis: "베이스라인 예측의 +1.7pp 과대(base rate 하강 미반영)를 후처리 보정으로 잡으면 fold_2024 valid-R Brier가 개선된다"
+base_exp: "exp_001"          # 변경 변수 1개: 후처리 보정 추가 (모델·데이터·피처 불변)
+
+task: postprocess            # GPU 학습 없음 — exp_001 모델 재사용
+method:
+  candidates:
+    - "A. 상수 로짓 오프셋: fold_2023 valid에서 적합 → fold_2024에 적용"
+    - "B. isotonic regression: fold_2023 valid에서 적합 → fold_2024에 적용"
+    - "C. base rate 추세 외삽 앵커: R리그 연도별 성공률의 선형 추세로 2024 예상 r을 계산해 예측 평균을 상수 이동 (valid 미참조)"
+  notes: >
+    ⚠️ 평가 무결성: 보정 파라미터를 fold_2024 valid에서 적합하는 것 금지
+    (측정 대상 데이터로 보정하면 낙관 편향). 적합은 fold_2023 valid 또는
+    train 통계만 사용. 예측 재현: 서버 ~/SungjinPark/experiments/exp_001/
+    model_fold_*.txt 로드해 valid 예측 재생성 (재학습 불필요).
+    본번 유의: C안만이 2025 추론에서 그대로 재현 가능. A/B안의 본번 형태는
+    "fold_2024 valid에서 적합 → 2025 적용" — 이 형태의 유효성을 fold_2023 적합
+    → fold_2024 적용 delta로 추정하는 구조임을 report에 명시할 것.
+    규칙 2-4 준수: 어떤 안도 test 예측 분포를 참조하지 않는다.
+
+validation:
+  primary_metric: brier       # fold_2024 valid-R Brier, 후보 A/B/C 각각 vs exp_001 원본
+  report_also: ["예측 평균 vs 실제 base rate (보정 전후)", "calibration curve 데이터 (10분위)"]
+
+runtime:
+  where: a5000               # CPU 수 분
+  expected_min: 10

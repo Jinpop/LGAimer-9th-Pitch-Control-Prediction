@@ -1,0 +1,813 @@
+{
+ "exp_id": "exp_048",
+ "date": "2026-08-14",
+ "title": "teammate ins_* 16 columns into the R-branch stacker (51 -> 67), fold_2024, stacker rounds fixed at 1400",
+ "scope": "stage 0 + stage 1 only.  No deployment package was built.",
+ "score_conversion": {
+  "formula": "100000 * (1 - Brier / 0.2498069)",
+  "ref_brier": 0.2498069,
+  "decimals": 5,
+  "sensitivity": "Brier 1e-06 = 0.4003 points; a 6-decimal Brier converts with +/-0.2002 of rounding uncertainty. The Brier is the raw quantity."
+ },
+ "unit": {
+  "fold": "fold_2024",
+  "train_upto": 2023,
+  "valid_season": 2024,
+  "n_train": 1116277,
+  "n_valid": 253507,
+  "n_valid_R": 223497,
+  "n_valid_F": 30010,
+  "arm_base": "C5_B3",
+  "seeds": [
+   42,
+   7,
+   2024
+  ],
+  "stacker_rounds": 1400
+ },
+ "stage0": {
+  "pack_sha256_all_match": true,
+  "G0a_ast_row_independence": true,
+  "G0a_apply_forbidden_calls": [],
+  "G0b_full_shuffle_identity": {
+   "n_rows": 253507,
+   "bit_identical": true,
+   "max_abs_diff": 0.0,
+   "n_cells_differing": 0,
+   "PASS": true
+  },
+  "G0c_isolated_rows": {
+   "n_isolated": 100,
+   "bit_identical_100": true,
+   "max_abs_diff_100": 0.0,
+   "bit_identical_single_row": true,
+   "max_abs_diff_single_row": 0.0,
+   "PASS": true
+  },
+  "G0d_anchor_lt2024_equals_rebuild": true,
+  "G0d_deploy_anchor_equals_rebuild": true,
+  "G0d_trap_demonstrated": {
+   "why": "deploy_anchor is taken at the END of 2024, so for a 2024 row n - anchor is NEGATIVE and np.maximum(...,0) flattens it.",
+   "ins_p_n_zero_pct_with_lt2024_anchor": 0.032,
+   "ins_p_n_zero_pct_with_deploy_anchor": 100.0,
+   "ins_p_n_mean_with_lt2024_anchor": 687.952,
+   "ins_p_n_mean_with_deploy_anchor": 0.0
+  },
+  "G0e_columns_read_by_apply": [
+   "asof_batter_middle_rate",
+   "asof_batter_n",
+   "asof_batter_success_rate",
+   "asof_pitcher_ball_rate",
+   "asof_pitcher_middle_rate",
+   "asof_pitcher_n",
+   "asof_pitcher_reverse_rate",
+   "asof_pitcher_strike_rate",
+   "asof_pitcher_success_rate",
+   "batter_id",
+   "pitcher_id"
+  ],
+  "G0e_target_read": false,
+  "G0e_PASS": true,
+  "G0e_superseded_criterion": {
+   "what_it_was": "n_tuples_carrying_both_labels > 0",
+   "why_dropped": "16 continuous columns with ~240k distinct values over 253,507 rows are 100% singleton tuples by arithmetic; the test measured float cardinality, not leakage.  Its numbers stay in stage0_gates.json."
+  },
+  "G0e_first_attempt_numbers": {
+   "n_rows": 253507,
+   "n_distinct_16_tuples": 253507,
+   "n_singleton_tuples": 253507,
+   "pct_singleton": 100.0,
+   "n_tuples_carrying_both_labels": 0,
+   "note": "a leak-free feature set must have tuples that carry both labels; complete singletons would mean the tuple is a row identifier"
+  },
+  "G0e_single_column_auc": {
+   "ins_p_n": 0.511144,
+   "ins_p_success": 0.541795,
+   "ins_p_success_dev": 0.528093,
+   "ins_p_reverse": 0.463556,
+   "ins_p_reverse_dev": 0.477182,
+   "ins_p_middle": 0.490772,
+   "ins_p_middle_dev": 0.487892,
+   "ins_p_ball": 0.473273,
+   "ins_p_ball_dev": 0.495055,
+   "ins_p_strike": 0.518912,
+   "ins_p_strike_dev": 0.502828,
+   "ins_b_n": 0.500322,
+   "ins_b_success": 0.511806,
+   "ins_b_success_dev": 0.510901,
+   "ins_b_middle": 0.491923,
+   "ins_b_middle_dev": 0.490709
+  },
+  "G0f_missing_handling": {
+   "unknown_pitcher_pct_2024": 19.8606,
+   "unknown_batter_pct_2024": 9.3047,
+   "unknown_pitcher_pct_2024_R": 19.7018,
+   "unknown_pitcher_pct_2024_F": 21.043,
+   "coverage_ins_p_n_gt0_pct": 99.968,
+   "coverage_ins_p_n_gt0_pct_R": 99.9834,
+   "coverage_ins_p_n_gt0_pct_F": 99.8534,
+   "ins_p_n_describe": {
+    "count": 253507.0,
+    "mean": 687.95166015625,
+    "std": 627.4343872070312,
+    "min": 0.0,
+    "25%": 208.0,
+    "50%": 506.0,
+    "75%": 965.0,
+    "max": 3124.0
+   },
+   "dev_exact_zero_pct": {
+    "ins_p_success_dev": 0.0406,
+    "ins_p_reverse_dev": 0.0414,
+    "ins_p_middle_dev": 0.0465,
+    "ins_p_ball_dev": 0.0394,
+    "ins_p_strike_dev": 0.0422,
+    "ins_b_success_dev": 0.0501,
+    "ins_b_middle_dev": 0.0513
+   },
+   "verdict_on_zero_dev": "for an UNKNOWN pitcher the module sets anchor=0 and prior=league, so k = round(n*rate) and ins rate = (k + 50*lg)/(n + 50); the deviation is then a REAL shrunk number, not a constant.  A dev of exactly 0.0 arises only when n==0 (no career at all), which IS a sentinel-shaped value; its share is reported above.",
+   "PASS": true
+  },
+  "asof_origin_probe_2019": {
+   "what": "if asof_pitcher_n starts at 0 for every pitcher in 2019 then the dataset's asof counters begin with the file, so in 2019 career == in-season and an EMPTY anchor is arithmetically right -- except that the league prior does not exist yet.",
+   "n_pitchers_2019": 355,
+   "pct_first_row_n_is_zero": 100.0,
+   "max_first_n": 0
+  },
+  "unknown_pitcher_cross_check": {
+   "why": "a dtype mismatch between the frozen id array and the frame would silently mark EVERY row unknown; this checks the share against the raw set difference.",
+   "pct_2024_rows_pitcher_not_in_anchor": 19.8606,
+   "pct_2024_rows_pitcher_not_in_train_lt2024": 19.8606,
+   "anchor_id_dtype": "int64",
+   "frame_id_dtype": "int64",
+   "n_ids_in_anchor": 711,
+   "n_ids_in_train_lt2024": 711,
+   "consistent": true
+  },
+  "ALL_PASS": true
+ },
+ "A0_reproduction_gate_vs_AH": {
+  "42": {
+   "bit_identical": true,
+   "abs_diff_brier": 0.0,
+   "observed_pred_sha256": "164cdb2d112d9b39851429c59a9ae35e8439073194c4fdc8a18c5bd3212e7328",
+   "ah_pred_sha256": "164cdb2d112d9b39851429c59a9ae35e8439073194c4fdc8a18c5bd3212e7328",
+   "PASS": true
+  },
+  "7": {
+   "bit_identical": true,
+   "abs_diff_brier": 0.0,
+   "observed_pred_sha256": "81ce5d222dae1f2398e77e8bae8576ccecf070b2dbf135752fbbef6ed2175789",
+   "ah_pred_sha256": "81ce5d222dae1f2398e77e8bae8576ccecf070b2dbf135752fbbef6ed2175789",
+   "PASS": true
+  },
+  "2024": {
+   "bit_identical": true,
+   "abs_diff_brier": 0.0,
+   "observed_pred_sha256": "26369cb3ad58e08b502b3fa9defb8b562a8feb5fa6d34df93bcb08ddfeb28879",
+   "ah_pred_sha256": "26369cb3ad58e08b502b3fa9defb8b562a8feb5fa6d34df93bcb08ddfeb28879",
+   "PASS": true
+  },
+  "ALL_BIT_IDENTICAL": true
+ },
+ "fold_2024": {
+  "655": {
+   "A0_51col": {
+    "per_seed_brier": {
+     "42": 0.2480637295865145,
+     "7": 0.24799806962401352,
+     "2024": 0.24796401012013045
+    },
+    "mean_brier": 0.24800860311021947,
+    "mean_score": 719.87479,
+    "per_seed_score": {
+     "42": 697.80715,
+     "7": 724.09144,
+     "2024": 737.72577
+    }
+   },
+   "A1_67col": {
+    "per_seed_brier": {
+     "42": 0.2477587947684843,
+     "7": 0.24775087363356843,
+     "2024": 0.2477728396545526
+    },
+    "mean_brier": 0.24776083601886845,
+    "mean_score": 819.05823,
+    "per_seed_score": {
+     "42": 819.87536,
+     "7": 823.04627,
+     "2024": 814.25307
+    }
+   },
+   "delta_A1_minus_A0": {
+    "per_seed_score": {
+     "42": 122.06821,
+     "7": 98.95483,
+     "2024": 76.5273
+    },
+    "mean_delta_score": 99.18345,
+    "mean_delta_brier": -0.00024776709135101993,
+    "min_delta_score": 76.5273,
+    "max_delta_score": 122.06821,
+    "sd_delta_score_ddof1": 22.77132,
+    "all_same_sign": true
+   },
+   "delta_by_segment": {
+    "valid_R_mean_delta_score": 97.80888,
+    "valid_F_mean_delta_score": 110.75221,
+    "note": "segment splits are auxiliary only -- clue S7: an F-side change is not judged by valid_F."
+   }
+  },
+  "1000": {
+   "A0_51col": {
+    "per_seed_brier": {
+     "42": 0.2481296007492637,
+     "7": 0.24802931346269216,
+     "2024": 0.24804436629920645
+    },
+    "mean_brier": 0.24806776017038745,
+    "mean_score": 696.19367,
+    "per_seed_score": {
+     "42": 671.43832,
+     "7": 711.58424,
+     "2024": 705.55845
+    }
+   },
+   "A1_67col": {
+    "per_seed_brier": {
+     "42": 0.24781110957376087,
+     "7": 0.2477918939757002,
+     "2024": 0.24782502688934077
+    },
+    "mean_brier": 0.24780934347960062,
+    "mean_score": 799.64025,
+    "per_seed_score": {
+     "42": 798.93327,
+     "7": 806.62545,
+     "2024": 793.36204
+    }
+   },
+   "delta_A1_minus_A0": {
+    "per_seed_score": {
+     "42": 127.49495,
+     "7": 95.0412,
+     "2024": 87.80358
+    },
+    "mean_delta_score": 103.44658,
+    "mean_delta_brier": -0.00025841669078682794,
+    "min_delta_score": 87.80358,
+    "max_delta_score": 127.49495,
+    "sd_delta_score_ddof1": 21.13857,
+    "all_same_sign": true
+   },
+   "delta_by_segment": {
+    "valid_R_mean_delta_score": 101.14479,
+    "valid_F_mean_delta_score": 121.16025,
+    "note": "segment splits are auxiliary only -- clue S7: an F-side change is not judged by valid_F."
+   }
+  },
+  "1400": {
+   "A0_51col": {
+    "per_seed_brier": {
+     "42": 0.24817360550355283,
+     "7": 0.2480770998691209,
+     "2024": 0.2481462403269026
+    },
+    "mean_brier": 0.24813231523319212,
+    "mean_score": 670.35169,
+    "per_seed_score": {
+     "42": 653.82281,
+     "7": 692.4549,
+     "2024": 664.77734
+    }
+   },
+   "A1_67col": {
+    "per_seed_brier": {
+     "42": 0.2478610966346746,
+     "7": 0.24785240967443745,
+     "2024": 0.2479125638504795
+    },
+    "mean_brier": 0.24787535671986385,
+    "mean_score": 773.21454,
+    "per_seed_score": {
+     "42": 778.92299,
+     "7": 782.40046,
+     "2024": 758.32019
+    }
+   },
+   "delta_A1_minus_A0": {
+    "per_seed_score": {
+     "42": 125.10017,
+     "7": 89.94555,
+     "2024": 93.54284
+    },
+    "mean_delta_score": 102.86285,
+    "mean_delta_brier": -0.00025695851332827035,
+    "min_delta_score": 89.94555,
+    "max_delta_score": 125.10017,
+    "sd_delta_score_ddof1": 19.34189,
+    "all_same_sign": true
+   },
+   "delta_by_segment": {
+    "valid_R_mean_delta_score": 98.07575,
+    "valid_F_mean_delta_score": 138.77386,
+    "note": "segment splits are auxiliary only -- clue S7: an F-side change is not judged by valid_F."
+   }
+  }
+ },
+ "headline_fold_2024_at_1400": {
+  "brier_A0": 0.24813231523319212,
+  "score_A0": 670.35169,
+  "brier_A1": 0.24787535671986385,
+  "score_A1": 773.21454,
+  "delta_brier": -0.00025695851332827035,
+  "delta_score": 102.86285
+ },
+ "control_matches_local_reference_AH": {
+  "AH_recorded_mean_brier": 0.248132315233192,
+  "AH_recorded_mean_score": 670.35169,
+  "observed_mean_brier": 0.24813231523319212,
+  "observed_mean_score": 670.35169,
+  "abs_diff_brier": 1.1102230246251565e-16
+ },
+ "pre_registered_decision": {
+  "rule": "all 3 seeds same sign AND |mean delta| >= 25.65339 points (3 sigma, sigma = 8.55113).  Registered before the run; not revised after seeing the numbers (clue S8).",
+  "sigma_score": 8.55113,
+  "threshold_3sigma": 25.65339,
+  "control": "A0 (51 columns @1400)",
+  "per_seed_delta_score": {
+   "42": 125.10017,
+   "7": 89.94555,
+   "2024": 93.54284
+  },
+  "all_same_sign": true,
+  "mean_delta_score": 102.86285,
+  "abs_mean_delta_score": 102.86285,
+  "threshold_met": true,
+  "margin_over_threshold_in_sigma": 12.02915,
+  "VERDICT": "ADOPT"
+ },
+ "importance_A1_67col": {
+  "type": "CatBoost PredictionValuesChange, averaged over 3 seeds",
+  "top_20_overall": [
+   {
+    "feature": "asof_pitcher_success_rate",
+    "mean_rank": 1.0,
+    "mean_gain": 5.29536
+   },
+   {
+    "feature": "ins_p_success",
+    "mean_rank": 2.33333,
+    "mean_gain": 3.62473
+   },
+   {
+    "feature": "batter_team_id",
+    "mean_rank": 3.33333,
+    "mean_gain": 3.2811
+   },
+   {
+    "feature": "ins_p_reverse",
+    "mean_rank": 3.66667,
+    "mean_gain": 3.34522
+   },
+   {
+    "feature": "asof_pitcher_reverse_rate",
+    "mean_rank": 5.0,
+    "mean_gain": 3.12067
+   },
+   {
+    "feature": "asof_pitcher_prev5_game_success_rate",
+    "mean_rank": 5.66667,
+    "mean_gain": 3.05429
+   },
+   {
+    "feature": "pitcher_team_id",
+    "mean_rank": 7.33333,
+    "mean_gain": 2.75116
+   },
+   {
+    "feature": "p_is_rev_only",
+    "mean_rank": 7.66667,
+    "mean_gain": 2.74087
+   },
+   {
+    "feature": "batter_hand",
+    "mean_rank": 10.0,
+    "mean_gain": 2.34481
+   },
+   {
+    "feature": "ins_p_n",
+    "mean_rank": 10.33333,
+    "mean_gain": 2.42089
+   },
+   {
+    "feature": "pitcher_id",
+    "mean_rank": 11.66667,
+    "mean_gain": 2.24238
+   },
+   {
+    "feature": "asof_batter_success_rate",
+    "mean_rank": 12.0,
+    "mean_gain": 2.23051
+   },
+   {
+    "feature": "asof_pitcher_ball_rate",
+    "mean_rank": 12.0,
+    "mean_gain": 2.26279
+   },
+   {
+    "feature": "asof_pitcher_prev1_game_success_rate",
+    "mean_rank": 13.0,
+    "mean_gain": 2.18856
+   },
+   {
+    "feature": "asof_pitcher_prev3_game_success_rate",
+    "mean_rank": 16.33333,
+    "mean_gain": 1.83824
+   },
+   {
+    "feature": "asof_pitcher_fastball_rate",
+    "mean_rank": 17.33333,
+    "mean_gain": 1.81188
+   },
+   {
+    "feature": "asof_pitcher_prev3_game_middle_rate",
+    "mean_rank": 17.33333,
+    "mean_gain": 1.79897
+   },
+   {
+    "feature": "ins_p_ball",
+    "mean_rank": 18.0,
+    "mean_gain": 1.77924
+   },
+   {
+    "feature": "asof_pitcher_prev1_game_middle_rate",
+    "mean_rank": 19.0,
+    "mean_gain": 1.76176
+   },
+   {
+    "feature": "ins_p_reverse_dev",
+    "mean_rank": 19.66667,
+    "mean_gain": 1.77957
+   }
+  ],
+  "the_16_ins_columns": [
+   {
+    "feature": "ins_p_success",
+    "mean_rank": 2.33333,
+    "mean_gain": 3.62473,
+    "rank_per_seed": [
+     3,
+     2,
+     2
+    ]
+   },
+   {
+    "feature": "ins_p_reverse",
+    "mean_rank": 3.66667,
+    "mean_gain": 3.34522,
+    "rank_per_seed": [
+     2,
+     5,
+     4
+    ]
+   },
+   {
+    "feature": "ins_p_n",
+    "mean_rank": 10.33333,
+    "mean_gain": 2.42089,
+    "rank_per_seed": [
+     11,
+     11,
+     9
+    ]
+   },
+   {
+    "feature": "ins_p_ball",
+    "mean_rank": 18.0,
+    "mean_gain": 1.77924,
+    "rank_per_seed": [
+     18,
+     19,
+     17
+    ]
+   },
+   {
+    "feature": "ins_p_reverse_dev",
+    "mean_rank": 19.66667,
+    "mean_gain": 1.77957,
+    "rank_per_seed": [
+     20,
+     15,
+     24
+    ]
+   },
+   {
+    "feature": "ins_p_success_dev",
+    "mean_rank": 24.66667,
+    "mean_gain": 1.59856,
+    "rank_per_seed": [
+     19,
+     26,
+     29
+    ]
+   },
+   {
+    "feature": "ins_b_success",
+    "mean_rank": 26.33333,
+    "mean_gain": 1.55614,
+    "rank_per_seed": [
+     22,
+     32,
+     25
+    ]
+   },
+   {
+    "feature": "ins_p_middle_dev",
+    "mean_rank": 34.33333,
+    "mean_gain": 1.39966,
+    "rank_per_seed": [
+     36,
+     33,
+     34
+    ]
+   },
+   {
+    "feature": "ins_b_middle",
+    "mean_rank": 36.0,
+    "mean_gain": 1.36107,
+    "rank_per_seed": [
+     40,
+     36,
+     32
+    ]
+   },
+   {
+    "feature": "ins_b_n",
+    "mean_rank": 39.0,
+    "mean_gain": 1.29438,
+    "rank_per_seed": [
+     42,
+     37,
+     38
+    ]
+   },
+   {
+    "feature": "ins_b_success_dev",
+    "mean_rank": 40.33333,
+    "mean_gain": 1.27644,
+    "rank_per_seed": [
+     44,
+     40,
+     37
+    ]
+   },
+   {
+    "feature": "ins_p_middle",
+    "mean_rank": 40.66667,
+    "mean_gain": 1.27557,
+    "rank_per_seed": [
+     35,
+     42,
+     45
+    ]
+   },
+   {
+    "feature": "ins_p_strike_dev",
+    "mean_rank": 42.66667,
+    "mean_gain": 1.25159,
+    "rank_per_seed": [
+     41,
+     43,
+     44
+    ]
+   },
+   {
+    "feature": "ins_p_ball_dev",
+    "mean_rank": 47.33333,
+    "mean_gain": 1.07873,
+    "rank_per_seed": [
+     48,
+     47,
+     47
+    ]
+   },
+   {
+    "feature": "ins_b_middle_dev",
+    "mean_rank": 48.0,
+    "mean_gain": 1.0552,
+    "rank_per_seed": [
+     47,
+     48,
+     49
+    ]
+   },
+   {
+    "feature": "ins_p_strike",
+    "mean_rank": 50.33333,
+    "mean_gain": 0.94279,
+    "rank_per_seed": [
+     50,
+     50,
+     51
+    ]
+   }
+  ],
+  "best_ins_column": "ins_p_success",
+  "best_ins_column_mean_rank": 2.33333,
+  "teammate_claim_checked": "the pack's README says ins_p_success was gain rank 1 on THEIR base; the rank it takes on OUR 67-column stacker is above.",
+  "ins_p_success_mean_rank": 2.33333,
+  "n_features": 67
+ },
+ "overlap_with_exp046_d_form_eb": {
+  "what": "exp_046 built the same signal in our own code as `d_form_eb`. Pearson r on the fold_2024 valid rows where both are defined.",
+  "per_k": {
+   "100": {
+    "pearson_r_vs_ins_p_success_dev": 0.99253,
+    "r_squared": 0.98511,
+    "n_rows_both_defined": 202849,
+    "d_form_eb_defined_pct": 80.01712,
+    "coverage": {
+     "d_form_eb_defined_pct": 80.01712,
+     "ins_p_n_gt0_pct": 99.96805,
+     "d_defined_but_ins_zero_pct": 0.0,
+     "ins_positive_but_d_undefined_pct": 19.95093
+    },
+    "single_column_auc": {
+     "d_form_eb": 0.52209,
+     "ins_p_success_dev": 0.52233
+    },
+    "corr_with_each_ins_col": {
+     "ins_p_n": 0.07014,
+     "ins_p_success": 0.44751,
+     "ins_p_success_dev": 0.99253,
+     "ins_p_reverse": -0.35145,
+     "ins_p_reverse_dev": -0.82353,
+     "ins_p_middle": -0.1448,
+     "ins_p_middle_dev": -0.46409,
+     "ins_p_ball": -0.13587,
+     "ins_p_ball_dev": 0.14209,
+     "ins_p_strike": 0.20309,
+     "ins_p_strike_dev": -0.08093,
+     "ins_b_n": 0.04439,
+     "ins_b_success": 0.00105,
+     "ins_b_success_dev": 0.09417,
+     "ins_b_middle": 0.03784,
+     "ins_b_middle_dev": 0.0072
+    }
+   },
+   "400": {
+    "pearson_r_vs_ins_p_success_dev": 0.94363,
+    "r_squared": 0.89044,
+    "n_rows_both_defined": 202849,
+    "d_form_eb_defined_pct": 80.01712,
+    "coverage": {
+     "d_form_eb_defined_pct": 80.01712,
+     "ins_p_n_gt0_pct": 99.96805,
+     "d_defined_but_ins_zero_pct": 0.0,
+     "ins_positive_but_d_undefined_pct": 19.95093
+    },
+    "single_column_auc": {
+     "d_form_eb": 0.52098,
+     "ins_p_success_dev": 0.52233
+    },
+    "corr_with_each_ins_col": {
+     "ins_p_n": -0.00682,
+     "ins_p_success": 0.43619,
+     "ins_p_success_dev": 0.94363,
+     "ins_p_reverse": -0.34409,
+     "ins_p_reverse_dev": -0.78005,
+     "ins_p_middle": -0.15746,
+     "ins_p_middle_dev": -0.46012,
+     "ins_p_ball": -0.10897,
+     "ins_p_ball_dev": 0.13741,
+     "ins_p_strike": 0.16086,
+     "ins_p_strike_dev": -0.08811,
+     "ins_b_n": 0.00744,
+     "ins_b_success": 0.00515,
+     "ins_b_success_dev": 0.09563,
+     "ins_b_middle": 0.01894,
+     "ins_b_middle_dev": -0.01017
+    }
+   }
+  },
+  "form_decomp_sha256": "1a3b321206a0939fecf0a3f0889acd8c2f6e33acfe4bc09b2ee99c2ddb4bb4a6"
+ },
+ "coverage_valid_2024": {
+  "ins_p_n_gt0_pct_all": 99.968,
+  "ins_p_n_gt0_pct_R": 99.9834,
+  "ins_p_n_gt0_pct_F": 99.8534,
+  "ins_b_n_gt0_pct_all": 99.9653,
+  "ins_b_n_gt0_pct_R": 99.9915,
+  "ins_b_n_gt0_pct_F": 99.7701,
+  "ins_p_n_mean_R": 738.375,
+  "ins_p_n_mean_F": 312.428
+ },
+ "ins_column_build": {
+  "season_policy": {
+   "2019": {
+    "anchor": "NONE -- earliest season, all 16 columns NaN",
+    "n_rows": 237413
+   },
+   "2020": {
+    "anchor": "build_anchor(train[season < 2020])",
+    "n_rows": 244087,
+    "n_anchor_pitchers": 355,
+    "ins_p_n_mean": 744.776,
+    "ins_p_n_zero_pct": 0.0451
+   },
+   "2021": {
+    "anchor": "build_anchor(train[season < 2021])",
+    "n_rows": 247088,
+    "n_anchor_pitchers": 465,
+    "ins_p_n_mean": 712.817,
+    "ins_p_n_zero_pct": 0.0384
+   },
+   "2022": {
+    "anchor": "build_anchor(train[season < 2022])",
+    "n_rows": 247472,
+    "n_anchor_pitchers": 560,
+    "ins_p_n_mean": 734.927,
+    "ins_p_n_zero_pct": 0.0356
+   },
+   "2023": {
+    "anchor": "build_anchor(train[season < 2023])",
+    "n_rows": 245525,
+    "n_anchor_pitchers": 648,
+    "ins_p_n_mean": 703.477,
+    "ins_p_n_zero_pct": 0.0257
+   },
+   "2024": {
+    "anchor": "anchor_lt2024.npz (frozen, verified)",
+    "n_rows": 253507,
+    "n_anchor_pitchers": 711,
+    "ins_p_n_mean": 687.952,
+    "ins_p_n_zero_pct": 0.032
+   }
+  },
+  "frozen_anchor_equals_rebuild": true,
+  "nan_pct_in_train_rows": 18.9583,
+  "nan_pct_in_valid_rows": 0.0,
+  "cols": [
+   "ins_p_n",
+   "ins_p_success",
+   "ins_p_success_dev",
+   "ins_p_reverse",
+   "ins_p_reverse_dev",
+   "ins_p_middle",
+   "ins_p_middle_dev",
+   "ins_p_ball",
+   "ins_p_ball_dev",
+   "ins_p_strike",
+   "ins_p_strike_dev",
+   "ins_b_n",
+   "ins_b_success",
+   "ins_b_success_dev",
+   "ins_b_middle",
+   "ins_b_middle_dev"
+  ]
+ },
+ "changed_vs_control": {
+  "the_one": "stacker input columns 51 -> 67 (the 16 ins_* columns)",
+  "carried_along_by_definition": [
+   "stacker fit time per seed: A0 2.59, 2.46, 2.11 min -> A1 2.78, 2.63, 2.39 min",
+   "stacker model size (more columns, more candidate splits)",
+   "season 2019 (211,627 rows, 18.96% of the fold's training set) carries NaN in all 16 columns -- it has no prior-season anchor.  This is a DESIGN CHOICE of this experiment, not part of the teammate pack; see ins_feats.py.  The 2024 validation rows carry no NaN."
+  ],
+  "held_fixed": [
+   "the four cell models and their OOF columns -- INHERITED byte-for-byte from candidate AH, not refitted (sha gate)",
+   "stacker rounds = 1400, not re-chosen locally",
+   "masks, fold definition, seeds, CatBoost params, library versions"
+  ],
+  "NOT_measured_here": [
+   "the blend-level offset beta_f = 0.19 lives outside this branch; its interaction with the 16 columns is untouched and undecided",
+   "deployment scale (this fold trains on 1,116,277 rows; a deployed package trains on 1,369,784) -- clue S1"
+  ]
+ },
+ "runtime_min": {
+  "42": 8.56,
+  "7": 5.43,
+  "2024": 4.83
+ },
+ "train_time_min": 8.56,
+ "inference_time_sec": null,
+ "note_on_inference_time": "not measured: no deployment package was built (out of scope).",
+ "season_2019_treatment": {
+  "what": "season 2019 is the earliest in train.csv (211,627 rows = 18.96% of this fold's training set) and has no prior-season anchor.  ins_feats.py gives its 16 columns NaN.",
+  "was_it_a_free_choice": "NO -- measured, not assumed",
+  "counterfactual_attempted": {
+   "arm": "A1e -- season 2019 built with build_anchor() of an empty frame, i.e. the module's own unknown-player fallback applied to everyone",
+   "outcome": "IndexError, all 3 seeds, identical",
+   "where": "ins/inseason.py line 61: A['p_n'][safe] with safe = zeros into a size-0 array",
+   "meaning": "the teammate module has NO empty-anchor code path.  The earliest season is not a choice between two module behaviours; it is undefined for the module and MUST be handled by the caller.  NaN is the encoding CLAUDE.md requires for undefined (sentinel fills are forbidden).",
+   "logs": [
+    "logs/s1_A1e_seed42.log",
+    "logs/s1_A1e_seed7.log",
+    "logs/s1_A1e_seed2024.log"
+   ]
+  },
+  "consequence_for_any_deployment_build": "a package trained on seasons <=2024 contains 2019 rows too, so it hits the same wall.  Whoever builds it must carry an explicit earliest-season policy; calling inseason.build_anchor on an empty frame CRASHES.",
+  "measured_effect_on_the_verdict": "not measurable as a counterfactual arm, for the reason above.  The 2024 validation rows carry no NaN (0.0%), and the training rows carry 18.96%."
+ }
+}

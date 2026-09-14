@@ -1,0 +1,858 @@
+{
+ "exp_id": "exp_037",
+ "title": "team-mate exp_032's 22 columns transplanted into our C5_B3 base — ladder + LOO on fold_2023, promotion on fold_2024",
+ "conversion": {
+  "formula": "100000 * (1 - brier / 0.2498069)",
+  "reference_brier": 0.2498069,
+  "sensitivity": "Brier 1e-6 = 0.4003 points; a 6-digit Brier therefore carries +/-0.2 of conversion slack, so the last decimals of a converted value are a machine transform of a rounded input, not a measurement",
+  "fold_2023_levels_not_converted": "the reference is the 2025 test base rate; converting a 2023 validation level would produce a number with no referent. Only DELTAS are converted on fold_2023."
+ },
+ "leak_gates": {
+  "verify_asof": {
+   "PASS": true,
+   "file": "featdir/verify_asof.json",
+   "per_season": {
+    "2019": {
+     "all_nan": true,
+     "PASS": true
+    },
+    "2020": {
+     "hist_season_max_RELOOKED_UP": 2019,
+     "hist_violations_gt_s_minus_1": 0,
+     "hist_set_equals_seasons_le_s_minus_1": true,
+     "tm_season_max_RELOOKED_UP": 2019,
+     "tm_violations_gt_s_minus_1": 0,
+     "PASS": true
+    },
+    "2021": {
+     "hist_season_max_RELOOKED_UP": 2020,
+     "hist_violations_gt_s_minus_1": 0,
+     "hist_set_equals_seasons_le_s_minus_1": true,
+     "tm_season_max_RELOOKED_UP": 2020,
+     "tm_violations_gt_s_minus_1": 0,
+     "PASS": true
+    },
+    "2022": {
+     "hist_season_max_RELOOKED_UP": 2021,
+     "hist_violations_gt_s_minus_1": 0,
+     "hist_set_equals_seasons_le_s_minus_1": true,
+     "tm_season_max_RELOOKED_UP": 2021,
+     "tm_violations_gt_s_minus_1": 0,
+     "PASS": true
+    },
+    "2023": {
+     "hist_season_max_RELOOKED_UP": 2022,
+     "hist_violations_gt_s_minus_1": 0,
+     "hist_set_equals_seasons_le_s_minus_1": true,
+     "tm_season_max_RELOOKED_UP": 2022,
+     "tm_violations_gt_s_minus_1": 0,
+     "PASS": true
+    },
+    "2024": {
+     "hist_season_max_RELOOKED_UP": 2023,
+     "hist_violations_gt_s_minus_1": 0,
+     "hist_set_equals_seasons_le_s_minus_1": true,
+     "tm_season_max_RELOOKED_UP": 2023,
+     "tm_violations_gt_s_minus_1": 0,
+     "PASS": true
+    }
+   }
+  },
+  "verify_groupconst": {
+   "PASS": true,
+   "file": "featdir/verify_groupconst.json"
+  },
+  "gate_2024": {
+   "PASS": true,
+   "file": "featdir/gate_2024.json",
+   "max_abs_diff_over_22_cols": 0.0,
+   "table_sha256_identical": true
+  }
+ },
+ "stage_A": {
+  "pitcher_map_asof": {
+   "2019": {
+    "n_pitchers_mapped": 294,
+    "max_season_present": 2019
+   },
+   "2020": {
+    "n_pitchers_mapped": 401,
+    "max_season_present": 2020
+   },
+   "2021": {
+    "n_pitchers_mapped": 481,
+    "max_season_present": 2021
+   },
+   "2022": {
+    "n_pitchers_mapped": 547,
+    "max_season_present": 2022
+   },
+   "2023": {
+    "n_pitchers_mapped": 614,
+    "max_season_present": 2023
+   }
+  },
+  "pitch_label_recipe": {
+   "source_column": "tagged_pitch_type",
+   "map": {
+    "Fastball": "fastball",
+    "Four-Seam": "fastball",
+    "Sinker": "sinker",
+    "SInker": "sinker",
+    "Cutter": "cutter",
+    "Slider": "slider",
+    "Sweeper": "slider",
+    "Slurve": "slider",
+    "Curveball": "curve",
+    "Knuckleball": "curve",
+    "ChangeUp": "offspeed",
+    "Changeup": "offspeed",
+    "Splitter": "offspeed"
+   },
+   "dropped_values": [
+    "Other",
+    "Undefind",
+    "Undefined",
+    "Undefined#"
+   ],
+   "n_kept": 1782874,
+   "n_dropped": 10204,
+   "counts": {
+    "fastball": 835928,
+    "slider": 359708,
+    "offspeed": 273010,
+    "curve": 174549,
+    "sinker": 101772,
+    "cutter": 37907
+   }
+  },
+  "mapgen_minutes": 0.49,
+  "featgen_minutes": 6.55,
+  "feat_sha256": "312d0ccb0d293d0193256d2067404c4b11a93505a6d28d72d8a09b532475acd4",
+  "per_season": {
+   "2019": {
+    "n_rows": 237413,
+    "hist_n": 0,
+    "tm_n": 0,
+    "base_rate_used": null,
+    "mean_na": 1.0
+   },
+   "2020": {
+    "n_rows": 244087,
+    "hist_n": 237413,
+    "tm_n": 240629,
+    "base_rate_used": 0.5646700054335694,
+    "mean_na": 0.061935
+   },
+   "2021": {
+    "n_rows": 247088,
+    "hist_n": 481500,
+    "tm_n": 505196,
+    "base_rate_used": 0.5484693665628245,
+    "mean_na": 0.056544
+   },
+   "2022": {
+    "n_rows": 247472,
+    "hist_n": 728588,
+    "tm_n": 797910,
+    "base_rate_used": 0.5431423520563061,
+    "mean_na": 0.04331
+   },
+   "2023": {
+    "n_rows": 245525,
+    "hist_n": 976060,
+    "tm_n": 1087452,
+    "base_rate_used": 0.5395365039034485,
+    "mean_na": 0.037776
+   },
+   "2024": {
+    "n_rows": 253507,
+    "hist_n": 1221585,
+    "tm_n": 1398128,
+    "base_rate_used": 0.5315815109059132,
+    "mean_na": 0.054277
+   }
+  }
+ },
+ "stage_B_ladder": {
+  "fold": "fold_2023 (train<=2022 -> valid 2023), seed 42, cells and stacker self-stopping under a cap",
+  "order_note": "the rung order is the team-mate's, so that our step deltas sit on the same ordinal axis as theirs. A step delta is ORDER DEPENDENT: it is the value of that block ON TOP OF the blocks before it, not its standalone value.",
+  "comparability_warning": "the team-mate measured on fold_2024 inside a flat LGBM/CatBoost blend; we measure on fold_2023 inside C5_B3. Only deltas may be compared, never levels.",
+  "rungs": [
+   {
+    "arm": "R0",
+    "adds": "— (control)",
+    "n_feats": 47,
+    "brier_fold2023": 0.24867962923638576,
+    "score_fold2023": null,
+    "step_delta_brier": null,
+    "step_delta_score": null,
+    "cum_delta_brier": 0.0,
+    "cum_delta_score": -0.0,
+    "mate_step_delta_score_fold2024": null,
+    "stack_argmin": 375,
+    "cell_argmin": {
+     "is_mid_only": 450,
+     "is_rev_only": 1050,
+     "is_both": 350,
+     "is_wayoff_true": 700
+    },
+    "argmin_at_cap": false,
+    "cap": 1650,
+    "minutes": 21.41
+   },
+   {
+    "arm": "R1",
+    "adds": "p6",
+    "n_feats": 53,
+    "brier_fold2023": 0.24865932977212998,
+    "score_fold2023": null,
+    "step_delta_brier": -2.0299464255774113e-05,
+    "step_delta_score": 8.12606,
+    "cum_delta_brier": -2.0299464255774113e-05,
+    "cum_delta_score": 8.12606,
+    "mate_step_delta_score_fold2024": 53.6,
+    "stack_argmin": 350,
+    "cell_argmin": {
+     "is_mid_only": 400,
+     "is_rev_only": 975,
+     "is_both": 450,
+     "is_wayoff_true": 700
+    },
+    "argmin_at_cap": false,
+    "cap": 1650,
+    "minutes": 22.44
+   },
+   {
+    "arm": "R2",
+    "adds": "sit",
+    "n_feats": 59,
+    "brier_fold2023": 0.2486412591718346,
+    "score_fold2023": null,
+    "step_delta_brier": -1.807060029537788e-05,
+    "step_delta_score": 7.23383,
+    "cum_delta_brier": -3.8370064551151994e-05,
+    "cum_delta_score": 15.35989,
+    "mate_step_delta_score_fold2024": 17.7,
+    "stack_argmin": 190,
+    "cell_argmin": {
+     "is_mid_only": 450,
+     "is_rev_only": 875,
+     "is_both": 525,
+     "is_wayoff_true": 800
+    },
+    "argmin_at_cap": false,
+    "cap": 1650,
+    "minutes": 23.71
+   },
+   {
+    "arm": "R3",
+    "adds": "idea",
+    "n_feats": 61,
+    "brier_fold2023": 0.24859746450280518,
+    "score_fold2023": null,
+    "step_delta_brier": -4.3794669029428857e-05,
+    "step_delta_score": 17.53141,
+    "cum_delta_brier": -8.216473358058085e-05,
+    "cum_delta_score": 32.8913,
+    "mate_step_delta_score_fold2024": 43.5,
+    "stack_argmin": 350,
+    "cell_argmin": {
+     "is_mid_only": 400,
+     "is_rev_only": 700,
+     "is_both": 725,
+     "is_wayoff_true": 675
+    },
+    "argmin_at_cap": false,
+    "cap": 1650,
+    "minutes": 19.25
+   },
+   {
+    "arm": "R4",
+    "adds": "i3",
+    "n_feats": 69,
+    "brier_fold2023": 0.24860590639777988,
+    "score_fold2023": null,
+    "step_delta_brier": 8.441894974703379e-06,
+    "step_delta_score": -3.37937,
+    "cum_delta_brier": -7.372283860587747e-05,
+    "cum_delta_score": 29.51193,
+    "mate_step_delta_score_fold2024": 22.2,
+    "stack_argmin": 220,
+    "cell_argmin": {
+     "is_mid_only": 450,
+     "is_rev_only": 725,
+     "is_both": 750,
+     "is_wayoff_true": 775
+    },
+    "argmin_at_cap": false,
+    "cap": 1650,
+    "minutes": 20.01
+   }
+  ],
+  "exp030_reproduction_gate": {
+   "what": "arm R0 adds zero columns, so this run is exp_030's stage-1 fold_2023 unit recomputed by a different file; it must land on the same number",
+   "expected_brier": 0.24867962923638576,
+   "observed_brier": 0.24867962923638576,
+   "abs_diff": 0.0,
+   "tol": 5e-06,
+   "PASS": true,
+   "expected_cell_argmin": {
+    "is_mid_only": 450,
+    "is_rev_only": 1050,
+    "is_both": 350,
+    "is_wayoff_true": 700
+   },
+   "observed_cell_argmin": {
+    "is_mid_only": 450,
+    "is_rev_only": 1050,
+    "is_both": 350,
+    "is_wayoff_true": 700
+   },
+   "expected_stack_argmin": 375,
+   "observed_stack_argmin": 375,
+   "argmins_identical": true
+  }
+ },
+ "stage_C_loo": {
+  "fold": "fold_2023, seed 42",
+  "reference": "R4 (all 69 columns)",
+  "derivation_chain_note": "idea_matchup_pitch and every i3_anom_* column are functions of the SAME P vector the p6_* columns are. L_no_p6 therefore does NOT remove the pitch-type signal — seven P-derived columns survive it — so it measures only what the raw probabilities add on top of their own derivatives. L_no_p6ALL is the arm that removes every P-derived column and is the one to read as 'without the pitch model'.",
+  "alias_note": "L_no_i3 has the same column set as R3 by construction (R4 minus i3 == R3); it is aliased, not refitted, and its row here repeats R3's fit.",
+  "arms": [
+   {
+    "arm": "L_no_p6",
+    "drops": "p6 (raw probabilities only; 7 P-derived cols remain)",
+    "alias_of": null,
+    "n_feats": 63,
+    "brier_fold2023": 0.2486157894353618,
+    "delta_vs_R4_brier": 9.88303758192588e-06,
+    "delta_vs_R4_score": -3.95627,
+    "value_of_removed_block_score": 3.95627,
+    "reading": "delta_vs_R4_score is THIS ARM's score minus R4's: negative means removing the block cost that much. value_of_removed_block_score is its negation, i.e. what the block was worth on top of everything else; negative there means the block was HARMFUL and removing it helped.",
+    "delta_vs_R0_brier": -6.383980102395159e-05,
+    "delta_vs_R0_score": 25.55566,
+    "stack_argmin": 220,
+    "minutes": 24.89
+   },
+   {
+    "arm": "L_no_sit",
+    "drops": "sit",
+    "alias_of": null,
+    "n_feats": 63,
+    "brier_fold2023": 0.24859086818034828,
+    "delta_vs_R4_brier": -1.5038217431595502e-05,
+    "delta_vs_R4_score": 6.01994,
+    "value_of_removed_block_score": -6.01994,
+    "reading": "delta_vs_R4_score is THIS ARM's score minus R4's: negative means removing the block cost that much. value_of_removed_block_score is its negation, i.e. what the block was worth on top of everything else; negative there means the block was HARMFUL and removing it helped.",
+    "delta_vs_R0_brier": -8.876105603747297e-05,
+    "delta_vs_R0_score": 35.53187,
+    "stack_argmin": 220,
+    "minutes": 24.93
+   },
+   {
+    "arm": "L_no_idea",
+    "drops": "idea",
+    "alias_of": null,
+    "n_feats": 67,
+    "brier_fold2023": 0.24863660194350243,
+    "delta_vs_R4_brier": 3.0695545722547735e-05,
+    "delta_vs_R4_score": -12.28771,
+    "value_of_removed_block_score": 12.28771,
+    "reading": "delta_vs_R4_score is THIS ARM's score minus R4's: negative means removing the block cost that much. value_of_removed_block_score is its negation, i.e. what the block was worth on top of everything else; negative there means the block was HARMFUL and removing it helped.",
+    "delta_vs_R0_brier": -4.302729288332974e-05,
+    "delta_vs_R0_score": 17.22422,
+    "stack_argmin": 250,
+    "minutes": 25.82
+   },
+   {
+    "arm": "L_no_i3",
+    "drops": "i3",
+    "alias_of": "R3",
+    "n_feats": 61,
+    "brier_fold2023": 0.24859746450280518,
+    "delta_vs_R4_brier": -8.441894974703379e-06,
+    "delta_vs_R4_score": 3.37937,
+    "value_of_removed_block_score": -3.37937,
+    "reading": "delta_vs_R4_score is THIS ARM's score minus R4's: negative means removing the block cost that much. value_of_removed_block_score is its negation, i.e. what the block was worth on top of everything else; negative there means the block was HARMFUL and removing it helped.",
+    "delta_vs_R0_brier": -8.216473358058085e-05,
+    "delta_vs_R0_score": 32.8913,
+    "stack_argmin": 350,
+    "minutes": 19.25
+   },
+   {
+    "arm": "L_no_p6ALL",
+    "drops": "every column computed from P (p6_*, idea_matchup_pitch, i3_anom_*) — the honest 'without the pitch model' arm",
+    "alias_of": null,
+    "n_feats": 55,
+    "brier_fold2023": 0.24861450546382402,
+    "delta_vs_R4_brier": 8.599066044140402e-06,
+    "delta_vs_R4_score": -3.44229,
+    "value_of_removed_block_score": 3.44229,
+    "reading": "delta_vs_R4_score is THIS ARM's score minus R4's: negative means removing the block cost that much. value_of_removed_block_score is its negation, i.e. what the block was worth on top of everything else; negative there means the block was HARMFUL and removing it helped.",
+    "delta_vs_R0_brier": -6.512377256173707e-05,
+    "delta_vs_R0_score": 26.06965,
+    "stack_argmin": 210,
+    "minutes": 14.4
+   }
+  ]
+ },
+ "stage_D_promotion": {
+  "arms": {
+   "R0": {
+    "seeds": {
+     "42": {
+      "brier_fold2024": 0.2480393607892575,
+      "score_fold2024": 707.56221,
+      "stack_round": 481,
+      "cell_round": {
+       "is_mid_only": 577,
+       "is_rev_only": 1346,
+       "is_both": 449,
+       "is_wayoff_true": 897
+      },
+      "valid_R": {
+       "n": 223497,
+       "brier": 0.248105,
+       "bss": 0.007159,
+       "score": 715.871,
+       "base_rate": 0.489707,
+       "pred_mean": 0.49805,
+       "auc": 0.548432,
+       "logloss": 0.689344
+      },
+      "valid_F": {
+       "n": 30010,
+       "brier": 0.24755,
+       "bss": 0.003191,
+       "score": 319.061,
+       "base_rate": 0.45928,
+       "pred_mean": 0.460098,
+       "auc": 0.532618,
+       "logloss": 0.688229
+      },
+      "minutes": 23.65,
+      "iter_source": "stage 1 (arm R0 unit 2023 seed 42) argmin x training-row ratio; cell scale 1.281728, stacker scale 1.281969 — this unit's own valid curve was NOT consulted"
+     },
+     "7": {
+      "brier_fold2024": 0.2479833583326968,
+      "score_fold2024": 729.9805,
+      "stack_round": 481,
+      "cell_round": {
+       "is_mid_only": 577,
+       "is_rev_only": 1346,
+       "is_both": 449,
+       "is_wayoff_true": 897
+      },
+      "valid_R": {
+       "n": 223497,
+       "brier": 0.248049,
+       "bss": 0.007385,
+       "score": 738.453,
+       "base_rate": 0.489707,
+       "pred_mean": 0.49749,
+       "auc": 0.549187,
+       "logloss": 0.689231
+      },
+      "valid_F": {
+       "n": 30010,
+       "brier": 0.247497,
+       "bss": 0.003403,
+       "score": 340.327,
+       "base_rate": 0.45928,
+       "pred_mean": 0.460665,
+       "auc": 0.534007,
+       "logloss": 0.688122
+      },
+      "minutes": 23.68,
+      "iter_source": "stage 1 (arm R0 unit 2023 seed 42) argmin x training-row ratio; cell scale 1.281728, stacker scale 1.281969 — this unit's own valid curve was NOT consulted"
+     },
+     "2024": {
+      "brier_fold2024": 0.2479648004372976,
+      "score_fold2024": 737.4094,
+      "stack_round": 481,
+      "cell_round": {
+       "is_mid_only": 577,
+       "is_rev_only": 1346,
+       "is_both": 449,
+       "is_wayoff_true": 897
+      },
+      "valid_R": {
+       "n": 223497,
+       "brier": 0.248038,
+       "bss": 0.007427,
+       "score": 742.676,
+       "base_rate": 0.489707,
+       "pred_mean": 0.497838,
+       "auc": 0.549324,
+       "logloss": 0.689209
+      },
+      "valid_F": {
+       "n": 30010,
+       "brier": 0.247419,
+       "bss": 0.003718,
+       "score": 371.801,
+       "base_rate": 0.45928,
+       "pred_mean": 0.461288,
+       "auc": 0.535892,
+       "logloss": 0.687965
+      },
+      "minutes": 23.66,
+      "iter_source": "stage 1 (arm R0 unit 2023 seed 42) argmin x training-row ratio; cell scale 1.281728, stacker scale 1.281969 — this unit's own valid curve was NOT consulted"
+     }
+    },
+    "mean_brier": 0.24799583985308396,
+    "std_brier_ddof1": 3.881562551959927e-05,
+    "n_seeds": 3,
+    "n_feats": 47,
+    "mean_score": 724.98404
+   },
+   "L_no_sit": {
+    "seeds": {
+     "42": {
+      "brier_fold2024": 0.24790902263670747,
+      "score_fold2024": 759.73777,
+      "stack_round": 282,
+      "cell_round": {
+       "is_mid_only": 481,
+       "is_rev_only": 1250,
+       "is_both": 737,
+       "is_wayoff_true": 833
+      },
+      "valid_R": {
+       "n": 223497,
+       "brier": 0.248006,
+       "bss": 0.007557,
+       "score": 755.655,
+       "base_rate": 0.489707,
+       "pred_mean": 0.495894,
+       "auc": 0.549599,
+       "logloss": 0.689144
+      },
+      "valid_F": {
+       "n": 30010,
+       "brier": 0.247189,
+       "bss": 0.004643,
+       "score": 464.269,
+       "base_rate": 0.45928,
+       "pred_mean": 0.459605,
+       "auc": 0.539951,
+       "logloss": 0.687498
+      },
+      "minutes": 20.25,
+      "iter_source": "stage 1 (arm L_no_sit unit 2023 seed 42) argmin x training-row ratio; cell scale 1.281728, stacker scale 1.281969 — this unit's own valid curve was NOT consulted"
+     },
+     "7": {
+      "brier_fold2024": 0.24791863620797533,
+      "score_fold2024": 755.88937,
+      "stack_round": 282,
+      "cell_round": {
+       "is_mid_only": 481,
+       "is_rev_only": 1250,
+       "is_both": 737,
+       "is_wayoff_true": 833
+      },
+      "valid_R": {
+       "n": 223497,
+       "brier": 0.248006,
+       "bss": 0.007557,
+       "score": 755.678,
+       "base_rate": 0.489707,
+       "pred_mean": 0.49448,
+       "auc": 0.54921,
+       "logloss": 0.689144
+      },
+      "valid_F": {
+       "n": 30010,
+       "brier": 0.247271,
+       "bss": 0.004314,
+       "score": 431.397,
+       "base_rate": 0.45928,
+       "pred_mean": 0.4583,
+       "auc": 0.53851,
+       "logloss": 0.687663
+      },
+      "minutes": 17.85,
+      "iter_source": "stage 1 (arm L_no_sit unit 2023 seed 42) argmin x training-row ratio; cell scale 1.281728, stacker scale 1.281969 — this unit's own valid curve was NOT consulted"
+     },
+     "2024": {
+      "brier_fold2024": 0.24792782339536937,
+      "score_fold2024": 752.21165,
+      "stack_round": 282,
+      "cell_round": {
+       "is_mid_only": 481,
+       "is_rev_only": 1250,
+       "is_both": 737,
+       "is_wayoff_true": 833
+      },
+      "valid_R": {
+       "n": 223497,
+       "brier": 0.248016,
+       "bss": 0.007514,
+       "score": 751.437,
+       "base_rate": 0.489707,
+       "pred_mean": 0.495343,
+       "auc": 0.549325,
+       "logloss": 0.689166
+      },
+      "valid_F": {
+       "n": 30010,
+       "brier": 0.247269,
+       "bss": 0.004319,
+       "score": 431.927,
+       "base_rate": 0.45928,
+       "pred_mean": 0.459133,
+       "auc": 0.538472,
+       "logloss": 0.687662
+      },
+      "minutes": 21.02,
+      "iter_source": "stage 1 (arm L_no_sit unit 2023 seed 42) argmin x training-row ratio; cell scale 1.281728, stacker scale 1.281969 — this unit's own valid curve was NOT consulted"
+     }
+    },
+    "mean_brier": 0.2479184940800174,
+    "std_brier_ddof1": 9.401185129176044e-06,
+    "n_seeds": 3,
+    "n_feats": 63,
+    "mean_score": 755.94626
+   }
+  },
+  "selection": {
+   "selected_on": "fold_2023 (train<=2022 -> valid 2023), seed 42, valid_all Brier",
+   "fold_2024_consulted": false,
+   "control": {
+    "arm": "R0",
+    "brier_fold2023": 0.24867962923638576
+   },
+   "table": [
+    {
+     "arm": "L_no_sit",
+     "n_feats": 63,
+     "brier_fold2023": 0.24859086818034828,
+     "delta_vs_R0_brier": -8.876105603747297e-05,
+     "delta_vs_R0_score": 35.53187,
+     "stack_argmin": 220,
+     "cell_argmin": {
+      "is_mid_only": 375,
+      "is_rev_only": 975,
+      "is_both": 575,
+      "is_wayoff_true": 650
+     },
+     "minutes": 24.93,
+     "invalid": null,
+     "alias_of": null,
+     "stage": "C"
+    },
+    {
+     "arm": "R3",
+     "n_feats": 61,
+     "brier_fold2023": 0.24859746450280518,
+     "delta_vs_R0_brier": -8.216473358058085e-05,
+     "delta_vs_R0_score": 32.8913,
+     "stack_argmin": 350,
+     "cell_argmin": {
+      "is_mid_only": 400,
+      "is_rev_only": 700,
+      "is_both": 725,
+      "is_wayoff_true": 675
+     },
+     "minutes": 19.25,
+     "invalid": null,
+     "alias_of": null,
+     "stage": "B"
+    },
+    {
+     "arm": "L_no_i3",
+     "n_feats": 61,
+     "brier_fold2023": 0.24859746450280518,
+     "delta_vs_R0_brier": -8.216473358058085e-05,
+     "delta_vs_R0_score": 32.8913,
+     "stack_argmin": 350,
+     "cell_argmin": {
+      "is_mid_only": 400,
+      "is_rev_only": 700,
+      "is_both": 725,
+      "is_wayoff_true": 675
+     },
+     "minutes": 19.25,
+     "invalid": null,
+     "alias_of": "R3",
+     "stage": "C"
+    },
+    {
+     "arm": "R4",
+     "n_feats": 69,
+     "brier_fold2023": 0.24860590639777988,
+     "delta_vs_R0_brier": -7.372283860587747e-05,
+     "delta_vs_R0_score": 29.51193,
+     "stack_argmin": 220,
+     "cell_argmin": {
+      "is_mid_only": 450,
+      "is_rev_only": 725,
+      "is_both": 750,
+      "is_wayoff_true": 775
+     },
+     "minutes": 20.01,
+     "invalid": null,
+     "alias_of": null,
+     "stage": "B"
+    },
+    {
+     "arm": "L_no_p6ALL",
+     "n_feats": 55,
+     "brier_fold2023": 0.24861450546382402,
+     "delta_vs_R0_brier": -6.512377256173707e-05,
+     "delta_vs_R0_score": 26.06965,
+     "stack_argmin": 210,
+     "cell_argmin": {
+      "is_mid_only": 110,
+      "is_rev_only": 900,
+      "is_both": 525,
+      "is_wayoff_true": 650
+     },
+     "minutes": 14.4,
+     "invalid": null,
+     "alias_of": null,
+     "stage": "C"
+    },
+    {
+     "arm": "L_no_p6",
+     "n_feats": 63,
+     "brier_fold2023": 0.2486157894353618,
+     "delta_vs_R0_brier": -6.383980102395159e-05,
+     "delta_vs_R0_score": 25.55566,
+     "stack_argmin": 220,
+     "cell_argmin": {
+      "is_mid_only": 475,
+      "is_rev_only": 700,
+      "is_both": 750,
+      "is_wayoff_true": 625
+     },
+     "minutes": 24.89,
+     "invalid": null,
+     "alias_of": null,
+     "stage": "C"
+    },
+    {
+     "arm": "L_no_idea",
+     "n_feats": 67,
+     "brier_fold2023": 0.24863660194350243,
+     "delta_vs_R0_brier": -4.302729288332974e-05,
+     "delta_vs_R0_score": 17.22422,
+     "stack_argmin": 250,
+     "cell_argmin": {
+      "is_mid_only": 450,
+      "is_rev_only": 1000,
+      "is_both": 500,
+      "is_wayoff_true": 800
+     },
+     "minutes": 25.82,
+     "invalid": null,
+     "alias_of": null,
+     "stage": "C"
+    },
+    {
+     "arm": "R2",
+     "n_feats": 59,
+     "brier_fold2023": 0.2486412591718346,
+     "delta_vs_R0_brier": -3.8370064551151994e-05,
+     "delta_vs_R0_score": 15.35989,
+     "stack_argmin": 190,
+     "cell_argmin": {
+      "is_mid_only": 450,
+      "is_rev_only": 875,
+      "is_both": 525,
+      "is_wayoff_true": 800
+     },
+     "minutes": 23.71,
+     "invalid": null,
+     "alias_of": null,
+     "stage": "B"
+    },
+    {
+     "arm": "R1",
+     "n_feats": 53,
+     "brier_fold2023": 0.24865932977212998,
+     "delta_vs_R0_brier": -2.0299464255774113e-05,
+     "delta_vs_R0_score": 8.12606,
+     "stack_argmin": 350,
+     "cell_argmin": {
+      "is_mid_only": 400,
+      "is_rev_only": 975,
+      "is_both": 450,
+      "is_wayoff_true": 700
+     },
+     "minutes": 22.44,
+     "invalid": null,
+     "alias_of": null,
+     "stage": "B"
+    },
+    {
+     "arm": "R0",
+     "n_feats": 47,
+     "brier_fold2023": 0.24867962923638576,
+     "delta_vs_R0_brier": 0.0,
+     "delta_vs_R0_score": -0.0,
+     "stack_argmin": 375,
+     "cell_argmin": {
+      "is_mid_only": 450,
+      "is_rev_only": 1050,
+      "is_both": 350,
+      "is_wayoff_true": 700
+     },
+     "minutes": 21.41,
+     "invalid": null,
+     "alias_of": null,
+     "stage": "B"
+    }
+   ],
+   "best_arm": "L_no_sit",
+   "best_brier_fold2023": 0.24859086818034828,
+   "best_delta_vs_R0_brier": -8.876105603747297e-05,
+   "best_delta_vs_R0_score": 35.53187,
+   "n_arms_completed": 10,
+   "promote_arms": [
+    "R0",
+    "L_no_sit"
+   ],
+   "note": "if best_arm is an alias (L_no_i3 == R3) the promotion runs the source arm's name, since the column set is identical"
+  },
+  "iteration_policy": "stage 2 — fold_2023 argmin x training-row ratio (stacker x1.281957 on unit 2024). The fold_2024 validation curve selected nothing.",
+  "adoption": {
+   "arm": "L_no_sit",
+   "per_seed_delta_brier": {
+    "42": -0.00013033815255003578,
+    "7": -6.472212472147243e-05,
+    "2024": -3.697704192823226e-05
+   },
+   "per_seed_delta_score": {
+    "42": 52.17556,
+    "7": 25.90886,
+    "2024": 14.80225
+   },
+   "mean_delta_brier": -7.734577306658015e-05,
+   "mean_delta_score": 30.96222,
+   "R0_seed_sigma_brier_ddof1": 3.881562551959927e-05,
+   "R0_seed_sigma_score_equiv": 15.53825,
+   "adoption_bar_score_equiv": 46.61476,
+   "ddof": 1,
+   "ddof_note": "pre-registered 2026-08-08, forward only. exp_036 used ddof=0; its sigma-unit numbers are on a different scale and must not be compared with these.",
+   "adoption_threshold_sigma_multiplier": 3,
+   "observed_delta_in_R0_sigma_units": 1.9926,
+   "naming_warning": "adoption_threshold_sigma_multiplier is the RULE (a constant, 3). observed_delta_in_R0_sigma_units is the DATUM. They are different quantities that happen to share a unit; do not read one as the other and do not compare either across experiments with a different ddof.",
+   "signs_agree": true,
+   "ADOPTED": false,
+   "verdict_note": "ADOPTED requires sign agreement AND |mean delta| >= 3 sigma AND the mean delta pointing the improving way (Brier down)."
+  },
+  "honest_selection_cost": {
+   "what": "the arm was picked as the best of 9 on fold_2023 and then read once on fold_2024. The gap between the two is the price of that selection plus whatever differs between the two seasons; this experiment cannot separate the two causes.",
+   "fold2023_selected_delta_score": 35.53187,
+   "fold2024_mean_delta_score": 30.96222,
+   "transfer_ratio": 0.8714,
+   "shrinkage_score": 4.56965
+  }
+ },
+ "failures": [],
+ "train_time_min_sum_of_units": 326.97,
+ "n_units_completed": 15,
+ "n_progress_events": 56
+}

@@ -1,0 +1,160 @@
+{
+ "exp_id": "exp_115",
+ "type": "measurement",
+ "lb_slots_used": 0,
+ "retraining": 0,
+ "frame": "cal frame = train season==2024, 253,507 rows (calCG convention)",
+ "base": "CS3 (LB 1151.6566018102)",
+ "step_convention": "u = -0.007 = half of sibling sp_pit_split -0.014",
+ "cells": {
+  "sp_bat_phand": {
+   "q_own_curvature": 1.416190799327684,
+   "cross_sum": 1.5821774537633793,
+   "cost": 2.9983682530910634,
+   "rho_vs_sp_pit_split": 0.2666562662912485,
+   "year_transfer": 0.414,
+   "f24_t": 2.47,
+   "real5_table_miss_pct": 40.0,
+   "keep110_table_miss_pct": 0.0,
+   "amplitude_ratio_vs_sibling": 0.2495992978818122
+  },
+  "sp_pit_ball3": {
+   "q_own_curvature": 1.4337700906060928,
+   "cross_sum": 0.2701283689989791,
+   "cost": 1.703898459605072,
+   "rho_vs_sp_pit_split": 0.13497376220396487,
+   "year_transfer": 0.254,
+   "f24_t": 0.22,
+   "real5_table_miss_pct": 60.0,
+   "keep110_table_miss_pct": 100.0,
+   "amplitude_ratio_vs_sibling": 0.25269759421478777,
+   "cross_breakdown": {
+    "sp_pit_split": 0.7699342396778096,
+    "beta_ins_off": 0.1982556809019494,
+    "ctrl_asof_psr": -0.5959712063548359,
+    "count_offsets_CS3": -0.1020903452259441
+   }
+  }
+ },
+ "ceiling_table": {
+  "0.5724  bat f24 t비": {
+   "lambda": 0.5724217844727694,
+   "A": 3.527768033537692,
+   "bat_gain_half_step": {
+    "favourable": 0.5293997804466288,
+    "opposite": -6.526136286628756
+   },
+   "pb3_gain_half_step": {
+    "favourable": 1.8238695739326203,
+    "opposite": -5.2316664931427646
+   },
+   "bat_ceiling": {
+    "favourable": 0.6682225844680628,
+    "opposite": 4.60946768182378
+   },
+   "pb3_ceiling": {
+    "favourable": 1.850404094335974,
+    "opposite": 2.5150505612625054
+   }
+  },
+  "0.8039  bat 연도전이비": {
+   "lambda": 0.803883495145631,
+   "A": 4.954239293103313,
+   "bat_gain_half_step": {
+    "favourable": 1.9558710400122492,
+    "opposite": -7.9526075461943755
+   },
+   "pb3_gain_half_step": {
+    "favourable": 3.2503408334982407,
+    "opposite": -6.6581377527083845
+   },
+   "bat_ceiling": {
+    "favourable": 2.0072862099038375,
+    "opposite": 7.542194157207189
+   },
+   "pb3_ceiling": {
+    "favourable": 3.8257345604200994,
+    "opposite": 4.759134265606395
+   }
+  },
+  "1.0000  두 칸 L 동일 가정": {
+   "lambda": 1.0,
+   "A": 6.162882212435281,
+   "bat_gain_half_step": {
+    "favourable": 3.1645139593442173,
+    "opposite": -9.161250465526344
+   },
+   "pb3_gain_half_step": {
+    "favourable": 4.458983752830209,
+    "opposite": -7.866780672040353
+   },
+   "bat_ceiling": {
+    "favourable": 3.7041011875096044,
+    "opposite": 10.589312764469087
+   },
+   "pb3_ceiling": {
+    "favourable": 6.054762211676195,
+    "opposite": 7.215875371509389
+   }
+  },
+  "0.4932  pb3 연도전이비": {
+   "lambda": 0.4932038834951456,
+   "A": 3.0395574406962353,
+   "bat_gain_half_step": {
+    "favourable": 0.041189187605171984,
+    "opposite": -6.037925693787299
+   },
+   "pb3_gain_half_step": {
+    "favourable": 1.3356589810911634,
+    "opposite": -4.743455900301307
+   },
+   "bat_ceiling": {
+    "favourable": 0.37494178526663374,
+    "opposite": 3.7707548737087864
+   },
+   "pb3_ceiling": {
+    "favourable": 1.3373373864842801,
+    "opposite": 1.91000290609133
+   }
+  },
+  "0.0510  pb3 f24 t비": {
+   "lambda": 0.05098493626882966,
+   "A": 0.3142141568333167,
+   "bat_gain_half_step": {
+    "favourable": -2.6841540962577466,
+    "opposite": -3.31258240992438
+   },
+   "pb3_gain_half_step": {
+    "favourable": -1.3896843027717551,
+    "opposite": -2.0181126164383887
+   },
+   "bat_ceiling": {
+    "favourable": 0.28381255603499905,
+    "opposite": 0.6348546294836865
+   },
+   "pb3_ceiling": {
+    "favourable": 0.0003388891813457762,
+    "opposite": 0.05953816963634049
+   }
+  }
+ },
+ "amplitude_convention_check": {
+  "bat_phand": {
+   "ratio": 0.2495992978818122,
+   "pct_dev_from_0.25": -0.16
+  },
+  "pit_ball3": {
+   "ratio": 0.25269759421478777,
+   "pct_dev_from_0.25": 1.079037685915111
+  }
+ },
+ "determinism": {
+  "aim_this_session": "0.48591045093955804",
+  "aim_recorded_in_CZ_solve": "0.48591045093955804",
+  "identical": true,
+  "note": "부모 캘 실행을 이번 세션에 다시 돌려 CZ 측정과 같은 값이 나오는지 확인한다. 같으면 ZI/ZP/ZS 벡터(그 세션 산출물)를 그대로 써도 된다."
+ },
+ "verdict": "자기 λ 눈금(연도전이 0.4932 / f24 t 0.0510)으로 보면 pit_ball3 의 천장이 bat_phand 보다 ★낮다★ (1.337 / 0.000 vs 2.007 / 0.668).  겹침이 43% 싼 것이 신호가 0.61배(전이)·0.089배(t) 약한 것을 못 덮는다.  ⚠️ λ 가 같다면 pit_ball3 이 1.6~2.8배 높다 — 판정은 λ 눈금을 믿느냐에 전적으로 달려 있다.",
+ "caveat": "pit_ball3 의 낮은 비용은 ★상쇄★ 다: sp_pit_split +0.7699 · beta_ins_off +0.1983 · ctrl_asof_psr −0.5960 · count −0.1021 = +0.2701.  bat_phand 는 상쇄 없이 한 항(+1.5117)이 지배한다.  기반의 `ctrl_asof_psr` u 가 움직이면 이 싸기는 사라진다.",
+ "s61_hazard": "keep110 과 mixB/mixC 의 KEEP 110행은 ★투수표를 110/110 미적중★ 한다. pit_ball3 을 실제로 실으려면 S61 내용분리 게이트용 프레임을 새로 지어야 한다 (bat_phand 는 0/110 미적중이라 기존 프레임으로 성립했다)."
+}

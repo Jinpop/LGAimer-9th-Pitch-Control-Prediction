@@ -1,0 +1,26 @@
+{
+  "task": "data_asset",
+  "primary_metric": "coverage",
+  "coverage": {
+    "games": {"matched": 2418, "total_train_blocks": 4868, "pct": 49.67},
+    "pitch_rows_in_matched_games_pct": 49.27,
+    "pitchers": {"mapped": 685, "total": 792, "pct": 86.49},
+    "train_rows_with_pitcher_profile_pct": 99.37,
+    "train_rows_2024_with_pitcher_profile_pct": 99.36,
+    "train_rows_R_with_pitcher_profile_pct": 99.85,
+    "batters": {"mapped": 714, "total": 830, "pct": 86.02},
+    "train_rows_with_mapped_batter_pct": 99.6
+  },
+  "validation": {
+    "sample30_full_sequence_reverify": "30/30 pass",
+    "pitcher_hand_agreement": 1.0,
+    "discards": {
+      "within_game_verification": 116,
+      "global_id_conflict": 144,
+      "pitcher_hand_mismatch": 2,
+      "batter_hand_mismatch": 1
+    }
+  },
+  "train_time_min": 1.0,
+  "inference_time_sec": null
+}

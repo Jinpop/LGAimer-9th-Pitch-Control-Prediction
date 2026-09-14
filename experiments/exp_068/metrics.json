@@ -1,0 +1,1783 @@
+{
+ "exp_id": "exp_068",
+ "date": "2026-08-21",
+ "type": "에폭 규칙 정정(25완주 -> k=8) + 배포 가중치 재생성",
+ "prereg": {
+  "k": 8,
+  "k_robust_recorded": [
+   4,
+   6,
+   8,
+   10,
+   12
+  ],
+  "k_유도": "exp_064 fold_2024 시드별 best epoch 5·8·9·12 -> 중앙값 8.5 내림 = 8. exp_067 이 잰 고정 k 곡선의 평탄 구간(4~12) 한가운데.",
+  "🔴 사전성": "이 값은 exp_068 의 어떤 결과도 보기 전에 config.yaml 에 못박혔다(S8).",
+  "🔴 stage3_용도제한": "k=4,6,8,10,12 는 k=8 이 예민한 선택이 아님을 보이는 문서다. 다른 k 가 좋게 나와도 배포는 k=8 을 쓴다. 여기서 다시 고르면 그것이 fold_2024 위 적합이 된다.",
+  "config": {
+   "widths": [
+    256,
+    128,
+    64
+   ],
+   "dropout": 0.3,
+   "max_lr": 0.003,
+   "epochs": 25,
+   "seeds": [
+    42,
+    777,
+    2024,
+    101
+   ],
+   "batch": 4096,
+   "wd": 0.0001,
+   "pct_start": 0.3,
+   "edim": 6,
+   "layers": 4
+  },
+  "🔴 스케줄_불변": "OneCycle total_steps = 25 * steps_per_epoch 그대로. k=8 은 '스케줄을 8로 자른다'가 아니라 '25 스케줄 위 8에폭 시점 상태를 꺼낸다'는 뜻이다.",
+  "대조군": "exp_067 (<=2024, 25에폭 완주 last)",
+  "의도한_변인": [
+   "에폭 선택 25(완주) -> 8(고정)"
+  ],
+  "고정": [
+   "마스크 1,369,784행",
+   "구성 256-128-64/do0.30/lr3e-3/OneCycle 25에폭",
+   "시드 4개",
+   "프레임 frame99_ship.parquet",
+   "층수 4",
+   "전처리 산술",
+   "결정론 설정"
+  ],
+  "repro_tol": 5e-06,
+  "control": {
+   "exp064_best_epoch_ens": 896.3836931443536,
+   "exp067_last_epoch_ens": 657.7732235325428,
+   "exp064_best_epochs": [
+    5,
+    9,
+    8,
+    12
+   ]
+  },
+  "정지점": "k=8 앙상블이 last-epoch(657.7732235325428) 보다 나쁘면 중단·보고."
+ },
+ "env": {
+  "torch": "2.7.1+cu128",
+  "gpu": "NVIDIA RTX A5000",
+  "cuda_visible_devices": "0",
+  "threads_env": {
+   "OMP_NUM_THREADS": "6",
+   "OPENBLAS_NUM_THREADS": "6",
+   "MKL_NUM_THREADS": "6",
+   "NUMEXPR_NUM_THREADS": "6",
+   "VECLIB_MAXIMUM_THREADS": "6"
+  }
+ },
+ "fold_2022": null,
+ "fold_2023": null,
+ "fold_2024": {
+  "🔴 무엇을_잰_것인가": "이 실험의 **배포본(stage 2)은 fold_2024 로 평가할 수 없다**(2024 가 학습 안에 있다, S1). 아래 fold_2024 숫자는 배포본이 아니라 **에폭 규칙을 재기 위해 같은 코드로 돌린 <=2023 학습 판**이다.",
+  "brier": 0.2477339399122003,
+  "bss": 0.008298249919436507,
+  "score": 829.8249919436506,
+  "auc": 0.5529476062115208,
+  "arm": "k=8 고정 4시드 로짓평균 앙상블 (이 실험의 주지표)",
+  "per_seed_score": [
+   745.8402038211243,
+   787.913455373257,
+   836.5097511547459,
+   724.3092832145859
+  ],
+  "seg": {
+   "n": 253507,
+   "brier": 0.2477339399122003,
+   "valid_R": {
+    "n": 223497,
+    "brier": 0.247838187519506
+   },
+   "valid_F": {
+    "n": 30010,
+    "brier": 0.24695756445435305
+   }
+  },
+  "controls": {
+   "best_epoch_ens_상한_exp064": {
+    "brier": 0.24756767168405058,
+    "score": 896.3836931443536,
+    "exp064_recorded_brier": 0.24756767168405058,
+    "exp064_recorded_score": 896.3836931443536,
+    "sel_epochs": [
+     5,
+     9,
+     8,
+     12
+    ],
+    "note": "시드마다 다른 에폭을 골랐다 — 상한이지 배포 가능한 규칙이 아니다."
+   },
+   "last_epoch_ens_반증된규칙_exp067": {
+    "brier": 0.24816373710126327,
+    "score": 657.7732235325428,
+    "exp067_recorded_brier": 0.24816373710126327,
+    "exp067_recorded_score": 657.7732235325428
+   }
+  },
+  "vs_controls": {
+   "k8_minus_last": 172.0517684111078,
+   "k8_minus_best": -66.55870120070301,
+   "회수율_(k8-last)/(best-last)": 0.7210570797292104
+  },
+  "n_train": 1116277,
+  "n_valid": 253507
+ },
+ "masks": {
+  "🔴 둘은_다른_마스크다": "stage1 품질측정과 stage2 배포는 학습 범위가 다르다.",
+  "stage1_fold2024_train": {
+   "expr": "(season <= 2023) & ~((season <= 2022) & (game_type == 'F'))",
+   "n_asserted": 1116277,
+   "n_measured": 1116277
+  },
+  "stage1_fold2024_valid": {
+   "expr": "season == 2024",
+   "n_asserted": 253507,
+   "n_measured": 253507
+  },
+  "stage2_deploy_train": {
+   "expr": "~((season <= 2022) & (game_type == 'F'))  # 전 시즌 <=2024",
+   "n_asserted": 1369784,
+   "n_measured": 1369784,
+   "출처": "exp_067 stage1 이 build_AY/logs/fit_42_T70.log 의 n_full 로 확정"
+  },
+  "total_rows": 1475092,
+  "frame_sha256": "6c8a40c643563070b5d008d603d96eb172b3d51f0e51c7329f0f8a6a18ab21d6",
+  "frame_provenance": {
+   "train_csv_sha256": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+   "features_sp_sha256": "783c650c6dd78cdcd641d0f18e35469ced247544b5d1ebf8d138171e04498924",
+   "pipeline_py_sha256": "a3181a10a1c621524460f14bc06b3c7f188fe23955814bb5e5b890e0df3016c9",
+   "inseason_py_sha256": "8186e5a048d71f79e9b9509c14bb71c95a4f25e7c6edbd09ac1ed113acb1dffa",
+   "splits_py_sha256": "5e8884ed7c8d918e6c4fc332d1743c5437d21f72b8e2021a6f37fc4a8dd2ceb4",
+   "n_rows": 1475092,
+   "nan_share_by_block": {
+    "v6_table_cols_2019_expected": "전부 NaN(선행 시즌 없음)",
+    "sp_2019_rows": 237413,
+    "ins_nan_total": 0
+   }
+  },
+  "wall_s": 2.5
+ },
+ "repro_gate": {
+  "desc": "fit_snap 이 exp_064·exp_067 과 같은 학습 궤적을 그리는가의 기계 증명. 루프 안 예측 보관·state 복사는 난수를 소비하지 않으므로 궤적이 같아야 한다.",
+  "tol": 5e-06,
+  "gate_seed": 42,
+  "best_vs_exp064_A99ship": {
+   "seed_42": 0.0,
+   "seed_777": 0.0,
+   "seed_2024": 0.0,
+   "seed_101": 0.0
+  },
+  "last_vs_exp067_A_last": {
+   "seed_42": 0.0,
+   "seed_777": 0.0,
+   "seed_2024": 0.0,
+   "seed_101": 0.0
+  },
+  "pass": true,
+  "all_seeds_pass": true
+ },
+ "stage1_fold2024_full": {
+  "🔴 무엇을_잰_것인가": "고정 에폭 k 에서 꺼낸 4시드 상태의 **로짓평균 앙상블**을 2024(out-of-time)에서 잰 값. exp_067 의 epoch_rule_analysis 는 시드별 점수의 평균이었고 이것은 예측을 먼저 합친 앙상블이라 서로 다른 양이다.",
+  "n_train": 1116277,
+  "n_valid": 253507,
+  "unknown_valid_cells": 584,
+  "steps_per_epoch": 272,
+  "headline_k8_ensemble": {
+   "k": 8,
+   "brier": 0.2477339399122003,
+   "bss": 0.008298249919436507,
+   "score": 829.8249919436506,
+   "per_seed_score": [
+    745.8402038211243,
+    787.913455373257,
+    836.5097511547459,
+    724.3092832145859
+   ],
+   "seg": {
+    "n": 253507,
+    "brier": 0.2477339399122003,
+    "valid_R": {
+     "n": 223497,
+     "brier": 0.247838187519506
+    },
+    "valid_F": {
+     "n": 30010,
+     "brier": 0.24695756445435305
+    }
+   }
+  },
+  "control_best_epoch_ensemble": {
+   "brier": 0.24756767168405058,
+   "score": 896.3836931443536,
+   "exp064_recorded_brier": 0.24756767168405058,
+   "exp064_recorded_score": 896.3836931443536,
+   "sel_epochs": [
+    5,
+    9,
+    8,
+    12
+   ],
+   "note": "시드마다 다른 에폭을 골랐다 — 상한이지 배포 가능한 규칙이 아니다."
+  },
+  "control_last_epoch_ensemble": {
+   "brier": 0.24816373710126327,
+   "score": 657.7732235325428,
+   "exp067_recorded_brier": 0.24816373710126327,
+   "exp067_recorded_score": 657.7732235325428
+  },
+  "vs_controls": {
+   "k8_minus_last": 172.0517684111078,
+   "k8_minus_best": -66.55870120070301,
+   "회수율_(k8-last)/(best-last)": 0.7210570797292104
+  },
+  "fits": [
+   {
+    "best": {
+     "tag": "A_s42_best",
+     "split": "A99ship_068",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 42,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "best",
+     "n_params": 74535,
+     "sel_epoch": 5,
+     "best_epoch": 5,
+     "best_brier": 0.24775345007780714,
+     "valid_brier": 0.24775345007780714,
+     "valid_score": 822.0148931806337,
+     "n_train": 1116277,
+     "n_valid": 253507,
+     "fit_wall_min": 1.5654483000437418
+    },
+    "last": {
+     "tag": "A_s42_last",
+     "split": "A99ship_068",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 42,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "last",
+     "n_params": 74535,
+     "sel_epoch": 25,
+     "best_epoch": 5,
+     "best_brier": 0.24775345007780714,
+     "valid_brier": 0.24854864770480983,
+     "valid_score": 503.6899682075102,
+     "n_train": 1116277,
+     "n_valid": 253507,
+     "fit_wall_min": 1.5654483000437418
+    },
+    "snaps": {
+     "k4": {
+      "tag": "A_s42_epoch4",
+      "split": "A99ship_068",
+      "widths": [
+       256,
+       128,
+       64
+      ],
+      "dropout": 0.3,
+      "max_lr": 0.003,
+      "seed": 42,
+      "epochs_run": 25,
+      "sched_epochs": 25,
+      "take": "epoch4",
+      "n_params": 74535,
+      "sel_epoch": 4,
+      "best_epoch": 5,
+      "best_brier": 0.24775345007780714,
+      "valid_brier": 0.24777005385692397,
+      "valid_score": 815.3682476649049,
+      "n_train": 1116277,
+      "n_valid": 253507,
+      "fit_wall_min": 1.5654483000437418
+     },
+     "k6": {
+      "tag": "A_s42_epoch6",
+      "split": "A99ship_068",
+      "widths": [
+       256,
+       128,
+       64
+      ],
+      "dropout": 0.3,
+      "max_lr": 0.003,
+      "seed": 42,
+      "epochs_run": 25,
+      "sched_epochs": 25,
+      "take": "epoch6",
+      "n_params": 74535,
+      "sel_epoch": 6,
+      "best_epoch": 5,
+      "best_brier": 0.24775345007780714,
+      "valid_brier": 0.2478155340928462,
+      "valid_score": 797.1620908604926,
+      "n_train": 1116277,
+      "n_valid": 253507,
+      "fit_wall_min": 1.5654483000437418
+     },
+     "k8": {
+      "tag": "A_s42_epoch8",
+      "split": "A99ship_068",
+      "widths": [
+       256,
+       128,
+       64
+      ],
+      "dropout": 0.3,
+      "max_lr": 0.003,
+      "seed": 42,
+      "epochs_run": 25,
+      "sched_epochs": 25,
+      "take": "epoch8",
+      "n_params": 74535,
+      "sel_epoch": 8,
+      "best_epoch": 5,
+      "best_brier": 0.24775345007780714,
+      "valid_brier": 0.24794373970788078,
+      "valid_score": 745.8402038211243,
+      "n_train": 1116277,
+      "n_valid": 253507,
+      "fit_wall_min": 1.5654483000437418
+     },
+     "k10": {
+      "tag": "A_s42_epoch10",
+      "split": "A99ship_068",
+      "widths": [
+       256,
+       128,
+       64
+      ],
+      "dropout": 0.3,
+      "max_lr": 0.003,
+      "seed": 42,
+      "epochs_run": 25,
+      "sched_epochs": 25,
+      "take": "epoch10",
+      "n_params": 74535,
+      "sel_epoch": 10,
+      "best_epoch": 5,
+      "best_brier": 0.24775345007780714,
+      "valid_brier": 0.24776366952672838,
+      "valid_score": 817.9239537705384,
+      "n_train": 1116277,
+      "n_valid": 253507,
+      "fit_wall_min": 1.5654483000437418
+     },
+     "k12": {
+      "tag": "A_s42_epoch12",
+      "split": "A99ship_068",
+      "widths": [
+       256,
+       128,
+       64
+      ],
+      "dropout": 0.3,
+      "max_lr": 0.003,
+      "seed": 42,
+      "epochs_run": 25,
+      "sched_epochs": 25,
+      "take": "epoch12",
+      "n_params": 74535,
+      "sel_epoch": 12,
+      "best_epoch": 5,
+      "best_brier": 0.24775345007780714,
+      "valid_brier": 0.24785962101370415,
+      "valid_score": 779.5136908931854,
+      "n_train": 1116277,
+      "n_valid": 253507,
+      "fit_wall_min": 1.5654483000437418
+     }
+    }
+   },
+   {
+    "best": {
+     "tag": "A_s777_best",
+     "split": "A99ship_068",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 777,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "best",
+     "n_params": 74535,
+     "sel_epoch": 9,
+     "best_epoch": 9,
+     "best_brier": 0.24769397658807424,
+     "valid_brier": 0.24769397658807424,
+     "valid_score": 845.8226782069534,
+     "n_train": 1116277,
+     "n_valid": 253507,
+     "fit_wall_min": 1.4393726547559103
+    },
+    "last": {
+     "tag": "A_s777_last",
+     "split": "A99ship_068",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 777,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "last",
+     "n_params": 74535,
+     "sel_epoch": 25,
+     "best_epoch": 9,
+     "best_brier": 0.24769397658807424,
+     "valid_brier": 0.24838346688140633,
+     "valid_score": 569.8133712854436,
+     "n_train": 1116277,
+     "n_valid": 253507,
+     "fit_wall_min": 1.4393726547559103
+    },
+    "snaps": {
+     "k4": {
+      "tag": "A_s777_epoch4",
+      "split": "A99ship_068",
+      "widths": [
+       256,
+       128,
+       64
+      ],
+      "dropout": 0.3,
+      "max_lr": 0.003,
+      "seed": 777,
+      "epochs_run": 25,
+      "sched_epochs": 25,
+      "take": "epoch4",
+      "n_params": 74535,
+      "sel_epoch": 4,
+      "best_epoch": 9,
+      "best_brier": 0.24769397658807424,
+      "valid_brier": 0.2477790249551678,
+      "valid_score": 811.7770345143382,
+      "n_train": 1116277,
+      "n_valid": 253507,
+      "fit_wall_min": 1.4393726547559103
+     },
+     "k6": {
+      "tag": "A_s777_epoch6",
+      "split": "A99ship_068",
+      "widths": [
+       256,
+       128,
+       64
+      ],
+      "dropout": 0.3,
+      "max_lr": 0.003,
+      "seed": 777,
+      "epochs_run": 25,
+      "sched_epochs": 25,
+      "take": "epoch6",
+      "n_params": 74535,
+      "sel_epoch": 6,
+      "best_epoch": 9,
+      "best_brier": 0.24769397658807424,
+      "valid_brier": 0.24783787160797247,
+      "valid_score": 788.2201780765596,
+      "n_train": 1116277,
+      "n_valid": 253507,
+      "fit_wall_min": 1.4393726547559103
+     },
+     "k8": {
+      "tag": "A_s777_epoch8",
+      "split": "A99ship_068",
+      "widths": [
+       256,
+       128,
+       64
+      ],
+      "dropout": 0.3,
+      "max_lr": 0.003,
+      "seed": 777,
+      "epochs_run": 25,
+      "sched_epochs": 25,
+      "take": "epoch8",
+      "n_params": 74535,
+      "sel_epoch": 8,
+      "best_epoch": 9,
+      "best_brier": 0.24769397658807424,
+      "valid_brier": 0.2478386378224492,
+      "valid_score": 787.913455373257,
+      "n_train": 1116277,
+      "n_valid": 253507,
+      "fit_wall_min": 1.4393726547559103
+     },
+     "k10": {
+      "tag": "A_s777_epoch10",
+      "split": "A99ship_068",
+      "widths": [
+       256,
+       128,
+       64
+      ],
+      "dropout": 0.3,
+      "max_lr": 0.003,
+      "seed": 777,
+      "epochs_run": 25,
+      "sched_epochs": 25,
+      "take": "epoch10",
+      "n_params": 74535,
+      "sel_epoch": 10,
+      "best_epoch": 9,
+      "best_brier": 0.24769397658807424,
+      "valid_brier": 0.24778537440405235,
+      "valid_score": 809.2352917183798,
+      "n_train": 1116277,
+      "n_valid": 253507,
+      "fit_wall_min": 1.4393726547559103
+     },
+     "k12": {
+      "tag": "A_s777_epoch12",
+      "split": "A99ship_068",
+      "widths": [
+       256,
+       128,
+       64
+      ],
+      "dropout": 0.3,
+      "max_lr": 0.003,
+      "seed": 777,
+      "epochs_run": 25,
+      "sched_epochs": 25,
+      "take": "epoch12",
+      "n_params": 74535,
+      "sel_epoch": 12,
+      "best_epoch": 9,
+      "best_brier": 0.24769397658807424,
+      "valid_brier": 0.24799381487333816,
+      "valid_score": 725.7946544558358,
+      "n_train": 1116277,
+      "n_valid": 253507,
+      "fit_wall_min": 1.4393726547559103
+     }
+    }
+   },
+   {
+    "best": {
+     "tag": "A_s2024_best",
+     "split": "A99ship_068",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 2024,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "best",
+     "n_params": 74535,
+     "sel_epoch": 8,
+     "best_epoch": 8,
+     "best_brier": 0.2477172409224426,
+     "valid_brier": 0.2477172409224426,
+     "valid_score": 836.5097511547459,
+     "n_train": 1116277,
+     "n_valid": 253507,
+     "fit_wall_min": 1.4622440775235495
+    },
+    "last": {
+     "tag": "A_s2024_last",
+     "split": "A99ship_068",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 2024,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "last",
+     "n_params": 74535,
+     "sel_epoch": 25,
+     "best_epoch": 8,
+     "best_brier": 0.2477172409224426,
+     "valid_brier": 0.2485639905829561,
+     "valid_score": 497.5480729491055,
+     "n_train": 1116277,
+     "n_valid": 253507,
+     "fit_wall_min": 1.4622440775235495
+    },
+    "snaps": {
+     "k4": {
+      "tag": "A_s2024_epoch4",
+      "split": "A99ship_068",
+      "widths": [
+       256,
+       128,
+       64
+      ],
+      "dropout": 0.3,
+      "max_lr": 0.003,
+      "seed": 2024,
+      "epochs_run": 25,
+      "sched_epochs": 25,
+      "take": "epoch4",
+      "n_params": 74535,
+      "sel_epoch": 4,
+      "best_epoch": 8,
+      "best_brier": 0.2477172409224426,
+      "valid_brier": 0.24781472797334833,
+      "valid_score": 797.4847879108515,
+      "n_train": 1116277,
+      "n_valid": 253507,
+      "fit_wall_min": 1.4622440775235495
+     },
+     "k6": {
+      "tag": "A_s2024_epoch6",
+      "split": "A99ship_068",
+      "widths": [
+       256,
+       128,
+       64
+      ],
+      "dropout": 0.3,
+      "max_lr": 0.003,
+      "seed": 2024,
+      "epochs_run": 25,
+      "sched_epochs": 25,
+      "take": "epoch6",
+      "n_params": 74535,
+      "sel_epoch": 6,
+      "best_epoch": 8,
+      "best_brier": 0.2477172409224426,
+      "valid_brier": 0.24777658167849406,
+      "valid_score": 812.7551006421152,
+      "n_train": 1116277,
+      "n_valid": 253507,
+      "fit_wall_min": 1.4622440775235495
+     },
+     "k8": {
+      "tag": "A_s2024_epoch8",
+      "split": "A99ship_068",
+      "widths": [
+       256,
+       128,
+       64
+      ],
+      "dropout": 0.3,
+      "max_lr": 0.003,
+      "seed": 2024,
+      "epochs_run": 25,
+      "sched_epochs": 25,
+      "take": "epoch8",
+      "n_params": 74535,
+      "sel_epoch": 8,
+      "best_epoch": 8,
+      "best_brier": 0.2477172409224426,
+      "valid_brier": 0.2477172409224426,
+      "valid_score": 836.5097511547459,
+      "n_train": 1116277,
+      "n_valid": 253507,
+      "fit_wall_min": 1.4622440775235495
+     },
+     "k10": {
+      "tag": "A_s2024_epoch10",
+      "split": "A99ship_068",
+      "widths": [
+       256,
+       128,
+       64
+      ],
+      "dropout": 0.3,
+      "max_lr": 0.003,
+      "seed": 2024,
+      "epochs_run": 25,
+      "sched_epochs": 25,
+      "take": "epoch10",
+      "n_params": 74535,
+      "sel_epoch": 10,
+      "best_epoch": 8,
+      "best_brier": 0.2477172409224426,
+      "valid_brier": 0.2479236930624262,
+      "valid_score": 753.8650604021701,
+      "n_train": 1116277,
+      "n_valid": 253507,
+      "fit_wall_min": 1.4622440775235495
+     },
+     "k12": {
+      "tag": "A_s2024_epoch12",
+      "split": "A99ship_068",
+      "widths": [
+       256,
+       128,
+       64
+      ],
+      "dropout": 0.3,
+      "max_lr": 0.003,
+      "seed": 2024,
+      "epochs_run": 25,
+      "sched_epochs": 25,
+      "take": "epoch12",
+      "n_params": 74535,
+      "sel_epoch": 12,
+      "best_epoch": 8,
+      "best_brier": 0.2477172409224426,
+      "valid_brier": 0.2478064401526028,
+      "valid_score": 800.8024787934942,
+      "n_train": 1116277,
+      "n_valid": 253507,
+      "fit_wall_min": 1.4622440775235495
+     }
+    }
+   },
+   {
+    "best": {
+     "tag": "A_s101_best",
+     "split": "A99ship_068",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 101,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "best",
+     "n_params": 74535,
+     "sel_epoch": 12,
+     "best_epoch": 12,
+     "best_brier": 0.24768013991451893,
+     "valid_brier": 0.24768013991451893,
+     "valid_score": 851.3616259122836,
+     "n_train": 1116277,
+     "n_valid": 253507,
+     "fit_wall_min": 1.2568811575571697
+    },
+    "last": {
+     "tag": "A_s101_last",
+     "split": "A99ship_068",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 101,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "last",
+     "n_params": 74535,
+     "sel_epoch": 25,
+     "best_epoch": 12,
+     "best_brier": 0.24768013991451893,
+     "valid_brier": 0.24841468779200682,
+     "valid_score": 557.3153535763709,
+     "n_train": 1116277,
+     "n_valid": 253507,
+     "fit_wall_min": 1.2568811575571697
+    },
+    "snaps": {
+     "k4": {
+      "tag": "A_s101_epoch4",
+      "split": "A99ship_068",
+      "widths": [
+       256,
+       128,
+       64
+      ],
+      "dropout": 0.3,
+      "max_lr": 0.003,
+      "seed": 101,
+      "epochs_run": 25,
+      "sched_epochs": 25,
+      "take": "epoch4",
+      "n_params": 74535,
+      "sel_epoch": 4,
+      "best_epoch": 12,
+      "best_brier": 0.24768013991451893,
+      "valid_brier": 0.2478482083388149,
+      "valid_score": 784.0822896345468,
+      "n_train": 1116277,
+      "n_valid": 253507,
+      "fit_wall_min": 1.2568811575571697
+     },
+     "k6": {
+      "tag": "A_s101_epoch6",
+      "split": "A99ship_068",
+      "widths": [
+       256,
+       128,
+       64
+      ],
+      "dropout": 0.3,
+      "max_lr": 0.003,
+      "seed": 101,
+      "epochs_run": 25,
+      "sched_epochs": 25,
+      "take": "epoch6",
+      "n_params": 74535,
+      "sel_epoch": 6,
+      "best_epoch": 12,
+      "best_brier": 0.24768013991451893,
+      "valid_brier": 0.2480439306253689,
+      "valid_score": 705.7328579118894,
+      "n_train": 1116277,
+      "n_valid": 253507,
+      "fit_wall_min": 1.2568811575571697
+     },
+     "k8": {
+      "tag": "A_s101_epoch8",
+      "split": "A99ship_068",
+      "widths": [
+       256,
+       128,
+       64
+      ],
+      "dropout": 0.3,
+      "max_lr": 0.003,
+      "seed": 101,
+      "epochs_run": 25,
+      "sched_epochs": 25,
+      "take": "epoch8",
+      "n_params": 74535,
+      "sel_epoch": 8,
+      "best_epoch": 12,
+      "best_brier": 0.24768013991451893,
+      "valid_brier": 0.24799752543318943,
+      "valid_score": 724.3092832145859,
+      "n_train": 1116277,
+      "n_valid": 253507,
+      "fit_wall_min": 1.2568811575571697
+     },
+     "k10": {
+      "tag": "A_s101_epoch10",
+      "split": "A99ship_068",
+      "widths": [
+       256,
+       128,
+       64
+      ],
+      "dropout": 0.3,
+      "max_lr": 0.003,
+      "seed": 101,
+      "epochs_run": 25,
+      "sched_epochs": 25,
+      "take": "epoch10",
+      "n_params": 74535,
+      "sel_epoch": 10,
+      "best_epoch": 12,
+      "best_brier": 0.24768013991451893,
+      "valid_brier": 0.24810804657575933,
+      "valid_score": 680.0666531791788,
+      "n_train": 1116277,
+      "n_valid": 253507,
+      "fit_wall_min": 1.2568811575571697
+     },
+     "k12": {
+      "tag": "A_s101_epoch12",
+      "split": "A99ship_068",
+      "widths": [
+       256,
+       128,
+       64
+      ],
+      "dropout": 0.3,
+      "max_lr": 0.003,
+      "seed": 101,
+      "epochs_run": 25,
+      "sched_epochs": 25,
+      "take": "epoch12",
+      "n_params": 74535,
+      "sel_epoch": 12,
+      "best_epoch": 12,
+      "best_brier": 0.24768013991451893,
+      "valid_brier": 0.24768013991451893,
+      "valid_score": 851.3616259122836,
+      "n_train": 1116277,
+      "n_valid": 253507,
+      "fit_wall_min": 1.2568811575571697
+     }
+    }
+   }
+  ],
+  "wall_min": 5.870479973157247
+ },
+ "stage2_deploy": {
+  "🔴 S1": "아래 2024 수치는 전부 **표본내**다(2024 가 학습 안에 있다). 적합 상태 점검용이지 성능이 아니다. 비교·판정에 쓰지 마라.",
+  "n_train": 1369784,
+  "n_monitor_insample": 253507,
+  "unknown_monitor_cells": 0,
+  "steps_per_epoch": 334,
+  "k": 8,
+  "insample_per_seed_score_k8": [
+   1125.9656041354483,
+   1067.8855887689797,
+   1110.7252059950667,
+   1071.0745944181754
+  ],
+  "insample_ens_brier_k8": 0.24694632154931537,
+  "insample_ens_score_k8": 1145.115867770119,
+  "insample_seg_k8": {
+   "n": 253507,
+   "brier": 0.24694632154931537,
+   "valid_R": {
+    "n": 223497,
+    "brier": 0.24704595270049381
+   },
+   "valid_F": {
+    "n": 30010,
+    "brier": 0.24620432676774426
+   }
+  },
+  "deploy_trajectory_gate_vs_exp067": {
+   "desc": "배포 분할 last 에폭 예측이 exp_067 D_last 와 같은가 — 같은 학습을 돌렸다는 증거(성능 비교가 아니다).",
+   "tol": 5e-06,
+   "max_abs_diff": {
+    "seed_42": 0.0,
+    "seed_777": 0.0,
+    "seed_2024": 0.0,
+    "seed_101": 0.0
+   },
+   "pass": true
+  },
+  "fits": [
+   {
+    "k8": {
+     "tag": "D_s42_epoch8",
+     "split": "DEPLOY99_068",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 42,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "epoch8",
+     "n_params": 74547,
+     "sel_epoch": 8,
+     "best_epoch": 24,
+     "best_brier": 0.24516774520225573,
+     "valid_brier": 0.24699416022924298,
+     "valid_score": 1125.9656041354483,
+     "n_train": 1369784,
+     "n_valid": 253507,
+     "fit_wall_min": 1.8081957181294759
+    },
+    "last": {
+     "tag": "D_s42_last",
+     "split": "DEPLOY99_068",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 42,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "last",
+     "n_params": 74547,
+     "sel_epoch": 25,
+     "best_epoch": 24,
+     "best_brier": 0.24516774520225573,
+     "valid_brier": 0.24517412163143784,
+     "valid_score": 1854.5437970537093,
+     "n_train": 1369784,
+     "n_valid": 253507,
+     "fit_wall_min": 1.8081957181294759
+    }
+   },
+   {
+    "k8": {
+     "tag": "D_s777_epoch8",
+     "split": "DEPLOY99_068",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 777,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "epoch8",
+     "n_params": 74547,
+     "sel_epoch": 8,
+     "best_epoch": 25,
+     "best_brier": 0.2452081173444759,
+     "valid_brier": 0.24713924811514945,
+     "valid_score": 1067.8855887689797,
+     "n_train": 1369784,
+     "n_valid": 253507,
+     "fit_wall_min": 1.6973079363505046
+    },
+    "last": {
+     "tag": "D_s777_last",
+     "split": "DEPLOY99_068",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 777,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "last",
+     "n_params": 74547,
+     "sel_epoch": 25,
+     "best_epoch": 25,
+     "best_brier": 0.2452081173444759,
+     "valid_brier": 0.2452081173444759,
+     "valid_score": 1840.9350004039538,
+     "n_train": 1369784,
+     "n_valid": 253507,
+     "fit_wall_min": 1.6973079363505046
+    }
+   },
+   {
+    "k8": {
+     "tag": "D_s2024_epoch8",
+     "split": "DEPLOY99_068",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 2024,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "epoch8",
+     "n_params": 74547,
+     "sel_epoch": 8,
+     "best_epoch": 25,
+     "best_brier": 0.24507185855229202,
+     "valid_brier": 0.2470322317953851,
+     "valid_score": 1110.7252059950667,
+     "n_train": 1369784,
+     "n_valid": 253507,
+     "fit_wall_min": 1.8502342422803244
+    },
+    "last": {
+     "tag": "D_s2024_last",
+     "split": "DEPLOY99_068",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 2024,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "last",
+     "n_params": 74547,
+     "sel_epoch": 25,
+     "best_epoch": 25,
+     "best_brier": 0.24507185855229202,
+     "valid_brier": 0.24507185855229202,
+     "valid_score": 1895.4806483359675,
+     "n_train": 1369784,
+     "n_valid": 253507,
+     "fit_wall_min": 1.8502342422803244
+    }
+   },
+   {
+    "k8": {
+     "tag": "D_s101_epoch8",
+     "split": "DEPLOY99_068",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 101,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "epoch8",
+     "n_params": 74547,
+     "sel_epoch": 8,
+     "best_epoch": 25,
+     "best_brier": 0.24511233416213157,
+     "valid_brier": 0.24713128175899637,
+     "valid_score": 1071.0745944181754,
+     "n_train": 1369784,
+     "n_valid": 253507,
+     "fit_wall_min": 1.8867831110954285
+    },
+    "last": {
+     "tag": "D_s101_last",
+     "split": "DEPLOY99_068",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 101,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "last",
+     "n_params": 74547,
+     "sel_epoch": 25,
+     "best_epoch": 25,
+     "best_brier": 0.24511233416213157,
+     "valid_brier": 0.24511233416213157,
+     "valid_score": 1879.2778893891305,
+     "n_train": 1369784,
+     "n_valid": 253507,
+     "fit_wall_min": 1.8867831110954285
+    }
+   }
+  ],
+  "wall_min": 7.386084028085073
+ },
+ "stage3_robustness": {
+  "🔴 용도": "k=8 이 예민한 선택이 아님을 보이는 **문서**다. 다른 k 가 더 좋아도 배포는 k=8 을 쓴다(config 명시). 여기서 다시 고르면 fold_2024 위 적합이 된다.",
+  "ensemble_by_k": {
+   "k4": {
+    "brier": 0.247679840464964,
+    "score": 851.4814983237029,
+    "per_seed_score": [
+     815.3682476649049,
+     811.7770345143382,
+     797.4847879108515,
+     784.0822896345468
+    ]
+   },
+   "k6": {
+    "brier": 0.24771044859281785,
+    "score": 839.2287831849865,
+    "per_seed_score": [
+     797.1620908604926,
+     788.2201780765596,
+     812.7551006421152,
+     705.7328579118894
+    ]
+   },
+   "k8": {
+    "brier": 0.2477339399122003,
+    "score": 829.8249919436506,
+    "per_seed_score": [
+     745.8402038211243,
+     787.913455373257,
+     836.5097511547459,
+     724.3092832145859
+    ]
+   },
+   "k10": {
+    "brier": 0.2477411396697346,
+    "score": 826.9428627733611,
+    "per_seed_score": [
+     817.9239537705384,
+     809.2352917183798,
+     753.8650604021701,
+     680.0666531791788
+    ]
+   },
+   "k12": {
+    "brier": 0.24769241628577413,
+    "score": 846.4472815706392,
+    "per_seed_score": [
+     779.5136908931854,
+     725.7946544558358,
+     800.8024787934942,
+     851.3616259122836
+    ]
+   }
+  },
+  "spread_points_over_4_to_12": 24.538635550341837,
+  "ensemble_by_epoch_full_curve": [
+   {
+    "epoch": 1,
+    "ens_brier": 0.247875475454485,
+    "ens_score": 773.1670124063838
+   },
+   {
+    "epoch": 2,
+    "ens_brier": 0.24772406775512665,
+    "ens_score": 833.7769072324863
+   },
+   {
+    "epoch": 3,
+    "ens_brier": 0.24770566855127626,
+    "ens_score": 841.1422777848566
+   },
+   {
+    "epoch": 4,
+    "ens_brier": 0.247679840464964,
+    "ens_score": 851.4814983237029
+   },
+   {
+    "epoch": 5,
+    "ens_brier": 0.24771904083470248,
+    "ens_score": 835.7892297200409
+   },
+   {
+    "epoch": 6,
+    "ens_brier": 0.24771044859281785,
+    "ens_score": 839.2287831849865
+   },
+   {
+    "epoch": 7,
+    "ens_brier": 0.24779340599834354,
+    "ens_score": 806.0201706423853
+   },
+   {
+    "epoch": 8,
+    "ens_brier": 0.2477339399122003,
+    "ens_score": 829.8249919436506
+   },
+   {
+    "epoch": 9,
+    "ens_brier": 0.24766476278169725,
+    "ens_score": 857.5172336323544
+   },
+   {
+    "epoch": 10,
+    "ens_brier": 0.2477411396697346,
+    "ens_score": 826.9428627733611
+   },
+   {
+    "epoch": 11,
+    "ens_brier": 0.24768105166360269,
+    "ens_score": 850.9966443670303
+   },
+   {
+    "epoch": 12,
+    "ens_brier": 0.24769241628577413,
+    "ens_score": 846.4472815706392
+   },
+   {
+    "epoch": 13,
+    "ens_brier": 0.24778395079184204,
+    "ens_score": 809.8051767817304
+   },
+   {
+    "epoch": 14,
+    "ens_brier": 0.24781506456254868,
+    "ens_score": 797.35004815773
+   },
+   {
+    "epoch": 15,
+    "ens_brier": 0.24789044468129878,
+    "ens_score": 767.1746932135237
+   },
+   {
+    "epoch": 16,
+    "ens_brier": 0.24785001254002567,
+    "ens_score": 783.3600512933469
+   },
+   {
+    "epoch": 17,
+    "ens_brier": 0.2478601542058824,
+    "ens_score": 779.300249159498
+   },
+   {
+    "epoch": 18,
+    "ens_brier": 0.24793578875564126,
+    "ens_score": 749.0230431420164
+   },
+   {
+    "epoch": 19,
+    "ens_brier": 0.2480084425262227,
+    "ens_score": 719.9390704489383
+   },
+   {
+    "epoch": 20,
+    "ens_brier": 0.24805308485655553,
+    "ens_score": 702.0683349597157
+   },
+   {
+    "epoch": 21,
+    "ens_brier": 0.24804256995007554,
+    "ens_score": 706.2775487484352
+   },
+   {
+    "epoch": 22,
+    "ens_brier": 0.24813652078297627,
+    "ens_score": 668.6681661009941
+   },
+   {
+    "epoch": 23,
+    "ens_brier": 0.248147459109562,
+    "ens_score": 664.2894533489651
+   },
+   {
+    "epoch": 24,
+    "ens_brier": 0.24816618216828792,
+    "ens_score": 656.7944407108395
+   },
+   {
+    "epoch": 25,
+    "ens_brier": 0.24816373710126327,
+    "ens_score": 657.7732235325428
+   }
+  ],
+  "note": "ensemble_by_epoch_full_curve 는 같은 학습에서 공짜로 나온 부산물이다 (에폭마다 이미 valid 예측을 계산하므로 추가 계산 0).",
+  "표": {
+   "k=4": "851.48150점 (brier 0.2476798405)",
+   "k=6": "839.22878점 (brier 0.2477104486)",
+   "k=8": "829.82499점 (brier 0.2477339399)",
+   "k=10": "826.94286점 (brier 0.2477411397)",
+   "k=12": "846.44728점 (brier 0.2476924163)"
+  }
+ },
+ "deploy_contrast_2024rows": {
+  "🔴": "세 벡터 모두 2024 행. exp_068/exp_067 배포본은 표본내다. 상관·분포는 서술이지 성능 비교가 아니다(S1).",
+  "moments": {
+   "exp064_le2023_bestepoch": {
+    "mean": 0.4902411251758215,
+    "sd": 0.04763856193576665,
+    "logit_sd": 0.19229496378475902
+   },
+   "exp067_le2024_last25_DEPLOY": {
+    "mean": 0.48730579035024324,
+    "sd": 0.05637198783586094,
+    "logit_sd": 0.22857603156287026
+   },
+   "exp068_le2024_k8_DEPLOY": {
+    "mean": 0.4910898219444558,
+    "sd": 0.04557759352322401,
+    "logit_sd": 0.1837707151250808
+   }
+  },
+  "exp068_k8_vs_exp067_last25": {
+   "pearson_prob": 0.9352040735598447,
+   "pearson_logit": 0.9346844527666466,
+   "mean_abs_prob_diff": 0.016742264052407304,
+   "max_abs_prob_diff": 0.1258111477842644
+  },
+  "exp068_k8_vs_exp064_le2023_best": {
+   "pearson_prob": 0.9702043144381006,
+   "pearson_logit": 0.9700470553897093,
+   "mean_abs_prob_diff": 0.009225804368873733,
+   "max_abs_prob_diff": 0.05781019770577073
+  }
+ },
+ "ship_files": {
+  "n": 8,
+  "total_bytes": 1253292,
+  "files": [
+   {
+    "name": "nn_sp42.npz",
+    "bytes": 307182,
+    "sha256": "bc1796f9b15302cf495fa21f2a3a71234dc5e9fe7ae4485e2e9acfce30b48ab5"
+   },
+   {
+    "name": "nn_sp42_meta.json",
+    "bytes": 6141,
+    "sha256": "53b3f0a72b5019d932534090649d10a523f5e7eb472e8eb7ee9db7ff1b145c02"
+   },
+   {
+    "name": "nn_sp777.npz",
+    "bytes": 307182,
+    "sha256": "b47edc8ef97545f2a63dd167e4ec70eb8777e362b1a59996fc720a06af21f94a"
+   },
+   {
+    "name": "nn_sp777_meta.json",
+    "bytes": 6141,
+    "sha256": "53b3f0a72b5019d932534090649d10a523f5e7eb472e8eb7ee9db7ff1b145c02"
+   },
+   {
+    "name": "nn_sp2024.npz",
+    "bytes": 307182,
+    "sha256": "8d780b622cdcb43003051d418ee159749d8b935bd8ec7dcc0043c641fa3655d0"
+   },
+   {
+    "name": "nn_sp2024_meta.json",
+    "bytes": 6141,
+    "sha256": "53b3f0a72b5019d932534090649d10a523f5e7eb472e8eb7ee9db7ff1b145c02"
+   },
+   {
+    "name": "nn_sp101.npz",
+    "bytes": 307182,
+    "sha256": "8dd3080f5c9de685fac6cef6528a29831a1d978639c77737a781d53a865a4a3e"
+   },
+   {
+    "name": "nn_sp101_meta.json",
+    "bytes": 6141,
+    "sha256": "53b3f0a72b5019d932534090649d10a523f5e7eb472e8eb7ee9db7ff1b145c02"
+   }
+  ],
+  "meta_sha_==_exp067": {
+   "seed_42": true,
+   "seed_777": true,
+   "seed_2024": true,
+   "seed_101": true
+  },
+  "meta_동일해야_하는_이유": "배포 마스크·프레임이 같으므로 levels·mu·sd·DENSE 가 같다. 다르면 분할이 달라진 것이다.",
+  "npz_sha_!=_exp067": {
+   "seed_42": true,
+   "seed_777": true,
+   "seed_2024": true,
+   "seed_101": true
+  },
+  "npz_달라야_하는_이유": "같은 궤적의 8에폭 시점 vs 25에폭 시점 가중치다."
+ },
+ "ship_format_gates": {
+  "S1_npz_roundtrip": {
+   "desc": "출하 mate/nn_infer.predict_nn(k=8 배포 npz) vs 학습 torch 예측, 2024행",
+   "tol": 1e-06,
+   "per_seed": {
+    "seed_42": {
+     "max_abs_diff_numpy_vs_torch": 1.1920928955078125e-07,
+     "mean_abs_diff": 1.0638488728721887e-08,
+     "n": 253507
+    },
+    "seed_777": {
+     "max_abs_diff_numpy_vs_torch": 1.1920928955078125e-07,
+     "mean_abs_diff": 1.0422060482102477e-08,
+     "n": 253507
+    },
+    "seed_2024": {
+     "max_abs_diff_numpy_vs_torch": 1.1920928955078125e-07,
+     "mean_abs_diff": 1.035164194884608e-08,
+     "n": 253507
+    },
+    "seed_101": {
+     "max_abs_diff_numpy_vs_torch": 1.1920928955078125e-07,
+     "mean_abs_diff": 1.049294925598162e-08,
+     "n": 253507
+    }
+   },
+   "exp067_reference": 1.1920928955078125e-07,
+   "pass": true
+  },
+  "S1_ens_max_abs_diff": 7.499233445340536e-08,
+  "S2_cat_vocab": {
+   "base_state": {
+    "n_levels_train": 8,
+    "dtype_band": "object",
+    "dtype_real": "object",
+    "band_unmapped_rows": 0,
+    "real_unmapped_rows": 0
+   },
+   "game_type": {
+    "n_levels_train": 2,
+    "dtype_band": "object",
+    "dtype_real": "object",
+    "band_unmapped_rows": 0,
+    "real_unmapped_rows": 0
+   },
+   "pitcher_team_id": {
+    "n_levels_train": 12,
+    "dtype_band": "int64",
+    "dtype_real": "int64",
+    "band_unmapped_rows": 0,
+    "real_unmapped_rows": 0
+   },
+   "batter_team_id": {
+    "n_levels_train": 12,
+    "dtype_band": "int64",
+    "dtype_real": "int64",
+    "band_unmapped_rows": 0,
+    "real_unmapped_rows": 0
+   },
+   "cnt_state": {
+    "n_levels_train": 12,
+    "dtype_band": "int64",
+    "dtype_real": "int64",
+    "band_unmapped_rows": 0,
+    "real_unmapped_rows": 0
+   }
+  },
+  "S2_pass": true,
+  "S3_real5": {
+   "n": 5,
+   "row_ids": [
+    "TEST_000001",
+    "TEST_000017",
+    "TEST_000213",
+    "TEST_005332",
+    "TEST_035185"
+   ],
+   "preds": {
+    "seed_42": [
+     0.41990330815315247,
+     0.35352107882499695,
+     0.4330689013004303,
+     0.5440222024917603,
+     0.5344036817550659
+    ],
+    "seed_777": [
+     0.4500412046909332,
+     0.4026144742965698,
+     0.4538153111934662,
+     0.5302627086639404,
+     0.5148051977157593
+    ],
+    "seed_2024": [
+     0.4368840157985687,
+     0.39188745617866516,
+     0.45615482330322266,
+     0.5198202133178711,
+     0.4895753860473633
+    ],
+    "seed_101": [
+     0.44524717330932617,
+     0.3714373707771301,
+     0.47504717111587524,
+     0.5444057583808899,
+     0.5181893706321716
+    ]
+   },
+   "ins_p_n": [
+    381.0,
+    86.0,
+    400.0,
+    0.0,
+    9.0
+   ],
+   "all_finite": true,
+   "🔴 대역_단독_판정_금지": "실제 표본 5행에서 ins_p_n 이 0 이 아닌 행이 있어야 시즌-내 폼 계열이 살아 있음이 확인된다."
+  },
+  "meta_shape": {
+   "n_CATS": 5,
+   "n_DENSE": 95,
+   "n_mu": 95,
+   "n_sd": 95,
+   "levels_sizes": {
+    "base_state": 8,
+    "game_type": 2,
+    "pitcher_team_id": 12,
+    "batter_team_id": 12,
+    "cnt_state": 12
+   }
+  },
+  "meta_CATS_matches": true,
+  "band_contrast_vs_exp067": {
+   "🔴": "이건 두 후보의 **예측 차이**이지 점수 차가 아니다(S9).",
+   "mean_abs_prob_diff": 0.017498920786915614,
+   "max_abs_prob_diff": 0.6761537240314741,
+   "pearson_prob": 0.8795495008135797,
+   "mean_exp067": 0.48493612287783694,
+   "mean_exp068_k8": 0.49335312889649974,
+   "sd_exp067": 0.047525074964430196,
+   "sd_exp068_k8": 0.04189267442476695
+  },
+  "source_sha": {
+   "mate/nn_infer.py": "0bfe34a43d2c533eea5f223f4f7756466bd7b47f2b95e21de5b3ed6fa4df98d8",
+   "mate/pipeline.py": "a3181a10a1c621524460f14bc06b3c7f188fe23955814bb5e5b890e0df3016c9",
+   "mate/splits.py": "5e8884ed7c8d918e6c4fc332d1743c5437d21f72b8e2021a6f37fc4a8dd2ceb4",
+   "mate/inseason.py": "8186e5a048d71f79e9b9509c14bb71c95a4f25e7c6edbd09ac1ed113acb1dffa",
+   "mate/model/features_sp.txt": "783c650c6dd78cdcd641d0f18e35469ced247544b5d1ebf8d138171e04498924"
+  }
+ },
+ "inference_time_sec": 8.69,
+ "inference_detail": {
+  "n_rows": 245789,
+  "n_seeds": 4,
+  "nn_forward_total_s": 8.69,
+  "nn_forward_per_seed_s": 2.17,
+  "exp067_reference_s": 8.6,
+  "note": "프레임은 v6 팔이 이미 만든 것을 재사용하므로 피처 생성 추가비용 0.",
+  "pred_mean": 0.49335312889649974,
+  "pred_sd": 0.04189267442476695
+ },
+ "train_time_min": 13.304228484630585,
+ "handoff_C단": {
+  "🔴 exp_067_대비_바뀐_것": "배포 npz 4벌의 내용이 '25에폭 완주 가중치' 에서 '25에폭 OneCycle 스케줄 위 8에폭 시점 가중치' 로 바뀌었다. 파일 이름·레이아웃·meta 는 그대로다 (meta sha 는 exp_067 과 동일 — 마스크·프레임·전처리가 같기 때문).",
+  "🔴 왜_바꿨나": "exp_067 이 잰 결과 25에폭 완주 규칙의 대가가 fold_2024 에서 -238.61047점이었다. config exp_067 이 '둘 다 만들어 차이를 재고 기록하라' 고 명시했으므로 재는 것이 계획이었고, 반증된 구성을 그대로 출하하는 것이 오히려 규율 위반이다.",
+  "k_유도_소명용": "exp_064 fold_2024 시드별 best epoch 5·8·9·12 -> 중앙값 8.5 내림 = 8. exp_067 이 잰 고정 k 곡선의 평탄 구간(4~12) 한가운데.",
+  "리크가_아닌_이유": "2024 는 배포 모델의 학습 범위 안이다(배포는 <=2024 전량 적합). '검증으로 하이퍼파라미터를 고르고 전체 데이터로 재적합' 은 표준 절차이며 test(2025) 는 이 경로 어디에도 들어오지 않는다. 고른 것은 에폭 하나(스칼라)다.",
+  "넣을_것": "새 디렉터리 `model_nn_sp/` 에 npz 4 + meta 1~4 (총 1.25 MB). 🔴 `mate/` 안의 파일은 한 바이트도 바뀌지 않는다.",
+  "서버_경로": "/home/<user>/SungjinPark/exp068/out/ship/nn_sp{42,777,2024,101}.npz (+ _meta.json)",
+  "고칠_것": [
+   "🔴 top-level `script.py` 의 `assert abs((c_aa+c_s2+c_s1+c_t70)-(1.0-w_v6))<1e-12` — 5항 합만 검사한다. `c_nn` 을 더하면서 이 assert 를 같이 고치지 않으면 채점 서버에서 터진다.",
+   "`blend.json` 에 `c_nn` 과 그 유래 기록.",
+   "BOOT 문자열에 `nn_infer.predict_nn` 래퍼 추가 (초안: exp_067/src/nn_arm_draft.py).",
+   "🔴 NN 가중치 출처를 exp_067 이 아니라 **exp_068(k=8)** 로 적을 것."
+  ],
+  "안_고쳐도_되는_것": "`model/meta.json` 의 부스터 트리 수 대조 — NN 팔은 부스터를 건드리지 않는다. 그래도 빌드 때 확인은 할 것.",
+  "추론_시간": "NN 팔 추가비용 = **8.69초** (4시드 x 245,789행, numpy, 스레드 6, 단독 실행). exp_067 실측 8.6초와 같은 자리 — 가중치 값만 바뀌었고 연산량은 동일하다.",
+  "게이트_설계": [
+   "항등 앵커: `c_nn = 0.0` 으로 빌드해 출력 CSV sha 가 부모와 같은지.",
+   "규칙 2-4 는 내용/위치 분리 실험으로. 우리 NN 도 팀원 v6 NN 과 같은 numpy 축약이라 SIMD 블록 경계 잡음(~1e-9)이 나올 수 있다.",
+   "🔴 커버리지 게이트를 대역 프레임 단독으로 돌리지 말 것 — 대역 프레임은 배포 앵커보다 앞이라 시즌-내 폼 계열이 축퇴한다. 실제 대회 표본 5행 병행."
+  ],
+  "판정하지_않은_것": "`c_nn` 값. 이 팔을 실제로 쓸지. 전부 사용자·빌드 계획서 소관이다."
+ },
+ "artifacts": {
+  "서버_배포_가중치": "/home/<user>/SungjinPark/exp068/out/ship/nn_sp{42,777,2024,101}.npz + _meta.json",
+  "예측_벡터": "/home/<user>/SungjinPark/exp068/out/preds/ — A_k8_s*.npy·A_k8_ens.npy (2024 out-of-time), D_k8_s*.npy·D_k8_ens.npy (🔴 표본내), BAND_k8_ens.npy (대역 프레임 245,789행)",
+  "게이트_원자료": "/home/<user>/SungjinPark/exp068/out/run068.json · /home/<user>/SungjinPark/exp068/out/ship068.json · stage1_partial.json",
+  "에폭_곡선": "/home/<user>/SungjinPark/exp068/out/curves/curve_{A,D}_s{seed}.json",
+  "로컬": "experiments/exp_068/ (metrics.json + src/)",
+  "🔴 exp_067_산출물": "그대로 보존했다. 삭제·수정 없음."
+ },
+ "wall_clock_measured": {
+  "단위": "분 (서버 UTC mtime 기준)",
+  "프레임_sha대조·마스크_assert": 0.04,
+  "stage1_fold2024_4fit": 5.87,
+  "stage2_배포_4fit": 7.39,
+  "run068_총": 13.3,
+  "ship068_출하검증": "<= 0.70 (상한 — run068.json mtime 1787244067 -> ship068.json 1787244109 = 42초 안에 끝났다)",
+  "finalize068_취합": "<= 0.34 (상한 — ship068.json -> metrics_core.json 20초)",
+  "계산_합": 14.34,
+  "ETA_대비": "ETA 20~25분. 계산 14.3분 + 코드 작성·업로드·회수. 범위 안.",
+  "fit당_평균": {
+   "stage1_1116277행": 1.47,
+   "stage2_1369784행": 1.85,
+   "exp067_실측_대조": 1.62
+  }
+ },
+ "report": {
+  "한_줄": "k=8 고정 4시드 로짓평균 앙상블 = **829.82499점** (Brier 0.2477339399). 반증된 25에폭 완주 규칙 657.77322 대비 +172.05177점, 도달 불가 상한인 시드별 best-epoch 896.38369 대비 -66.55870점. 둘 사이 격차의 72.1% 를 회수했다.",
+  "가설": "exp_067 이 사전 등록 에폭 규칙(OneCycle 25에폭 완주)을 fold_2024 에서 −238.61047점으로 반증했다. exp_064 의 시드별 best epoch 5·8·9·12 의 중앙값을 내린 k=8 로 고정하면 그 손실의 상당 부분이 회수될 것이다.",
+  "이_실험이_답한_것_하나": "**k=8 의 4시드 로짓평균 앙상블 점수.** exp_067 은 시드별 점수의 평균(에폭별 곡선)만 냈고 예측을 먼저 합친 앙상블 값은 없었다. 그 값이 829.82499 다.",
+  "변경_변인_전량": {
+   "의도한_변인": "에폭 선택 25(완주) → 8(고정). 이 하나뿐이다.",
+   "🔴 스케줄_불변_확인": "OneCycle total_steps 는 25 × steps_per_epoch 그대로다. k=8 은 '스케줄을 8로 자른다'가 아니라 '25에폭 스케줄 위 8에폭 시점 상태를 꺼낸다'는 뜻이다. 스케줄을 잘랐다면 학습률 곡선이 달라져 별개 변인이 됐을 것이고, 재현 게이트가 0.0 이 나오지 않았을 것이다.",
+   "딸려_바뀐_것": "없다. 학습 궤적이 exp_064·exp_067 과 비트 동일함이 게이트로 증명됐다.",
+   "고정": [
+    "마스크 1,369,784행",
+    "구성 256-128-64/do0.30/lr3e-3/OneCycle 25에폭",
+    "시드 4개",
+    "프레임 frame99_ship.parquet",
+    "층수 4",
+    "전처리 산술",
+    "결정론 설정"
+   ]
+  },
+  "결과_표": {
+   "🔴 주지표_fold_2024_out_of_time": {
+    "k=8 앙상블 (exp_068, 이번 답)": "829.82499점 · Brier 0.2477339399 · BSS 0.00829825 · AUC 0.55295",
+    "best-epoch 앙상블 (exp_064, 상한)": "896.38369점 · Brier 0.24756767 — 시드마다 다른 에폭(5·9·8·12)을 골랐다. 배포 가능한 규칙이 아니다.",
+    "last-epoch 앙상블 (exp_067, 반증된 규칙)": "657.77322점 · Brier 0.24816374",
+    "k=8 − last": "+172.05177점",
+    "k=8 − best": "-66.55870점",
+    "회수율": "72.11%"
+   },
+   "세그먼트_k8": {
+    "n": 253507,
+    "brier": 0.2477339399122003,
+    "valid_R": {
+     "n": 223497,
+     "brier": 0.247838187519506
+    },
+    "valid_F": {
+     "n": 30010,
+     "brier": 0.24695756445435305
+    }
+   },
+   "시드별_k8_점수": {
+    "42": 745.8402,
+    "777": 787.91346,
+    "2024": 836.50975,
+    "101": 724.30928
+   },
+   "🔴 앙상블이_시드평균보다_높다": "시드별 k=8 점수 평균은 773.64점인데 로짓평균 앙상블은 829.82점이다. 차이 +56.18점이 앙상블 이득이다. exp_067 의 epoch_rule_analysis 표(시드평균)와 이 실험의 앙상블 표를 같은 눈금으로 비교하면 안 된다 — 서로 다른 양이다."
+  },
+  "stage3_강건성_🔴선택면_아님": {
+   "표": {
+    "k=4": "851.48150점 (brier 0.2476798405)",
+    "k=6": "839.22878점 (brier 0.2477104486)",
+    "k=8": "829.82499점 (brier 0.2477339399)",
+    "k=10": "826.94286점 (brier 0.2477411397)",
+    "k=12": "846.44728점 (brier 0.2476924163)"
+   },
+   "폭_4에서_12": "24.53864점",
+   "🔴 용도_제한": "이 표는 k=8 이 예민한 선택이 아님을 보이는 문서다. k=4 가 851.48 로 k=8 보다 21.66점 높지만 **배포는 k=8 을 쓴다**(config 명시). 여기서 다시 고르면 그것이 fold_2024 위 적합이 되고, 지금 고치고 있는 문제를 다시 만드는 것이다.",
+   "전_에폭_앙상블_곡선_최댓값": "epoch 9 = 857.51723점. 🔴 이것도 선택면이 아니다. 4시드 앙상블 곡선은 에폭 2~12 구간에서 806~858점 사이를 오르내린다(폭 51점) — 이 폭이 4시드 표본의 잡음 규모이고, k=8 은 그 안에 있다.",
+   "곡선_전량": [
+    773.17,
+    833.78,
+    841.14,
+    851.48,
+    835.79,
+    839.23,
+    806.02,
+    829.82,
+    857.52,
+    826.94,
+    851.0,
+    846.45,
+    809.81,
+    797.35,
+    767.17,
+    783.36,
+    779.3,
+    749.02,
+    719.94,
+    702.07,
+    706.28,
+    668.67,
+    664.29,
+    656.79,
+    657.77
+   ]
+  },
+  "게이트": {
+   "재현_vs_exp064_best": "4시드 전부 max|diff| = 0.0 (비트 동일). fit_snap 의 학습 루프가 exp_064 와 같은 궤적임의 기계 증명.",
+   "재현_vs_exp067_last": "4시드 전부 max|diff| = 0.0. 배포 분할에서도 0.0.",
+   "🔴 이_게이트가_증명하는_것": "루프 안 예측 보관·state 복사가 난수를 소비하지 않으므로, k=8 상태는 exp_064/exp_067 이 '같은 학습을 하면서 버렸던 바로 그 8에폭 시점 가중치'다. 새 학습이 아니다.",
+   "출하_왕복_S1": "4시드 전부 max|diff| = 1.1920928955078125e-07 (exp_067 실측과 같은 자리). 앙상블 7.499233e-08.",
+   "범주_어휘_S2": "대역 프레임·실제 대회 표본 5행 모두 unmapped 0행.",
+   "실제_표본_S3": "5행 중 4행의 ins_p_n 이 0 이 아니다(381·86·400·0·9) — 시즌-내 폼 계열이 살아 있다. 대역 프레임 단독 판정이 아니다.",
+   "추론_시간_S4": "8.69초 (4시드 × 245,789행, numpy, 스레드 6, 단독 실행). exp_067 실측 8.6초와 같은 자리 — 가중치 값만 바뀌었고 연산량은 동일하다.",
+   "마스크_행수": "stage1 1,116,277 / valid 253,507 / stage2 배포 1,369,784 — 셋 다 assert 통과."
+  },
+  "배포_가중치": {
+   "🔴 S1": "배포본(≤2024 전량 적합)은 fold_2024 로 평가할 수 없다. metrics.json 의 stage2_deploy 안 2024 수치는 전부 표본내이고 성능이 아니다.",
+   "파일": "nn_sp{42,777,2024,101}.npz + _meta.json, 총 1.25 MB",
+   "meta_sha == exp_067": "4시드 전부 True — 마스크·프레임·전처리가 같으므로 levels·mu·sd·DENSE 가 같다.",
+   "npz_sha != exp_067": "4시드 전부 True — 같은 궤적의 8에폭 시점 vs 25에폭 시점 가중치다.",
+   "예측_분포_(2024행, 서술)": "exp_068 k=8 의 로짓 표준편차 0.18377 로 exp_067 25완주(0.22858)보다 좁다. exp_064 ≤2023 best-epoch(0.19229)에 가깝다 — 어닐링 구간이 만들던 과신이 줄었다.",
+   "exp_067_배포본과의_예측_차이": "2024행 pearson(prob) 0.935204, 평균 |Δp| 0.016742, 최대 0.125811. 🔴 이건 후보 간 예측 차이이지 점수로 환산되는 양이 아니다(S9)."
+  },
+  "결론": "에폭 규칙 정정은 성공했다 — 정지점(657.77322 이하)에 걸리지 않았고 반증된 규칙 대비 +172.05점, 상한 대비 −66.56점이다. 배포 npz 4벌을 k=8 로 다시 만들었고 출하 왕복·어휘·실제 표본·시간 게이트를 전부 통과했다. 🔴 **채택·제출은 판정하지 않았다** — config 7번 지시대로 산출은 k=8 앙상블 점수 + 배포 npz + C단 인수인계 갱신까지다.",
+  "다음_제안_(지휘자_판단_사항)": [
+   "C단 빌드에서 NN 팔의 가중치 출처를 exp_067 이 아니라 exp_068 로 적을 것. top-level script.py 의 5항 합 assert 를 c_nn 포함으로 고치지 않으면 채점 서버에서 터진다.",
+   "🔴 fold_2024 앙상블 곡선의 에폭 2~12 구간 폭이 51점이다 — 4시드로는 이 축의 잡음이 크다. k 를 더 정밀하게 고르는 것보다 시드를 늘리는 쪽이 같은 비용에서 더 확실하다. (시드 8개 = fit 8회 = 약 13분. 다만 이것은 별건 실험이고 이번 턴의 판정 사항이 아니다.)",
+   "이 팔의 blend 계수 c_nn 은 로컬로 정할 수 없다 — S2(전이비는 축마다 다르고 부호까지 갈린다)에 걸린다. LB 로 사서 읽어야 하는 축이다."
+  ],
+  "특이사항·의심_지점": [
+   "🔴 재현 게이트가 4시드 전부 정확히 0.0 이다 — 톨러런스 안이 아니라 비트 동일. GPU 학습에서 이게 나온 것은 같은 프로세스 구조·같은 결정론 설정·같은 GPU(A5000 0번)이기 때문이다. 다른 GPU 나 다른 스레드 수에서 같은 값을 기대하지 마라.",
+   "k=4 (851.48) 와 k=12 (846.45) 가 k=8 (829.82) 보다 높게 나왔다. 배포는 k=8 을 유지했다 — 사전 등록값이고 이 표는 문서용이다(S8). 이 사실을 '더 좋은 k 를 놓쳤다'로 읽지 마라: 곡선 폭 51점이 4시드 잡음 규모이므로 21점 차이는 구분되는 신호가 아니다.",
+   "stage2 배포본의 표본내 2024 점수(1145.12)는 exp_067 배포본의 표본내 값보다 낮다. 🔴 이는 8에폭이 25에폭보다 학습 데이터에 덜 맞춰졌다는 뜻일 뿐 성능 비교가 아니다(S1).",
+   "대역 프레임 위 exp_067 대비 max|Δp| 가 0.676 으로 크다. 대역 프레임은 시즌 경계 피처가 축퇴한 행을 포함하므로 이 최댓값은 축퇴 행에서 나왔을 가능성이 있다 — 성능 함의로 읽지 말 것.",
+   "경고·에러 없음. 삭제한 파일 없음. exp_067 이하 기존 디렉터리는 읽기만 했다."
+  ]
+ }
+}

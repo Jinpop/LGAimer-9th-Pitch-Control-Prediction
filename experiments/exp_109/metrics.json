@@ -1,0 +1,160 @@
+{
+ "exp_id": "exp_109",
+ "type": "read-only 측정 (재학습 0 · 슬롯 0 · zip 0 · GPU 0 · CPU 2스레드)",
+ "date": "2026-08-26",
+ "question": "팀원 후보 CT 의 sp_pit_split 축에 얼마가 남았는가",
+
+ "🔴_ANSWER_residual_pts": 0.04203,
+ "🔴_ANSWER_bracket_pts": [0.042, 0.260],
+ "🔴_ANSWER_verdict": "축이 닫혔다. 잔여의 최댓값(+0.26)이 팀 원장 검출한계 +1.4(제76)의 19% 이고 config 행동 문턱 +1.0 의 26% 다. 출하 걸음 −0.014 는 프레임 해 꼭지점의 92.1%, 가장 관대한 해에서도 80.6% 에 있다.",
+
+ "stage1_diff": {
+  "zips": {
+   "CT": {"path": "~/Downloads/submit_CT_spflip_onCR.zip",
+          "sha256": "5475d7f790a109c1a2eb00349fc5ec3a68d6f6867d45549710dab50241e17dea",
+          "server_copy_sha_identical": true},
+   "CR": {"path": "submissions/submit_CR_q12land.zip",
+          "sha256": "e63649c682eb486c520f0834dd2ea19ccd37cd09a97a2bbc8b2435635cdc2712",
+          "matches_CT_blend_declared_base_sha": true}
+  },
+  "files_total": {"CT": 178, "CR": 176},
+  "sha_differs": ["blend.json", "script.py"],
+  "added_in_CT": ["splits.py", "model/deploy_splits.npz"],
+  "removed_in_CT": [],
+  "blend_json_changed_values": {"candidate": "CR -> CT"},
+  "blend_json_added_keys": 55,
+  "blend_json_removed_keys": 0,
+  "🔴_SINGLE_AXIS_CONFIRMED": true,
+  "🔴_evidence": "axis_offsets[0] beta_ins_off(u=-0.006534)·[1] ctrl_asof_psr(u=+0.006544) 의 u/center/scale 이 전부 불변. d_adj 0.03723794884482911 불변. alpha 1.07911 · beta_skew -0.059151 · w_v6 0.7 · beta_f 0.0 불변. 부스터·표·mate/ 0바이트. script.py 변경은 2 hunk 이고 둘 다 새 축 배선(assert 축 수 2->3, 세 번째 축 raw 계산).",
+  "the_axis": {
+   "name": "sp_pit_split",
+   "u_full_precision": -0.014,
+   "center": -0.12989747735282217,
+   "scale": 1.4450786086160488,
+   "sd1": 0.08766134165019425,
+   "sd2": 0.05495482212319005,
+   "raw": "splits.apply 의 sp_pit_bhand/sd1 + sp_pit_strk2/sd2 (로짓공간, k=75 EB 수축)",
+   "shift_form": "logit_mix += u * (raw - center) / scale  — alpha/beta_skew 앞",
+   "table": "model/deploy_splits.npz · sum_n = 1,475,092 = train 전량(season<=2024) · 792 투수 x 2셀 x 2축(+bat_phand 830·pit_ball3 792 미사용)"
+  },
+  "🔴_conductor_assumption_verdict": "「같은 크기 걸음의 부호 반전」은 패키지 사실로서 참이다 — 같은 축·같은 표 바이트·|u|=0.014·부호만 반대. 무너지는 것은 그 다음 단계다(stage4)."
+ },
+
+ "stage2_frame_curvature": {
+  "frame": "build_AC/work/tr2024 (train season==2024, 253,507행) · ins 앵커 anchor_lt2024 스왑 · lookup_d/lookup_n 을 <=2023 키 1,202 로 제한 (build_CR/src/02_cal.py 관례 그대로)",
+  "runs": {"cal_CR_wall_sec": 300.0, "cal_CT_wall_sec": 272.8, "threads": 2,
+           "cal_CR_mean": 0.4858927926181513, "cal_CT_mean": 0.4859104509395594},
+  "harness_positive_control": {
+   "vs_build_CR/work/calp_CRv.npy": {"max_abs": 1.4782924884215731e-09, "n_moved": 3145},
+   "vs_build_CS/work/calp_PAR.npy": {"max_abs": 1.4782924884215731e-09, "n_moved": 3145},
+   "🔴": "참조는 6스레드, 내 실행은 2스레드다(S13·S152 스레드 잡음). 1.48e-09 는 내 델타 rms 3.765e-03 의 3.9e-07 배. CR·CT 를 같은 스레드 수로 돌렸으므로 델타는 깨끗하다."
+  },
+  "delta": {"rms": 0.003765214750079662, "min": -0.01706225045566917,
+            "max": 0.022612697838097662, "n_moved": 253507,
+            "mean": 1.765832140796859e-05, "max_abs_logit_step": 0.08278920684679311},
+  "K": 400309.19882517256,
+  "K_times_mean_delta2_at_shipped_step_pts": 5.675120308613353,
+  "K_G_unit": 28954.695452108943,
+  "🔴_d_adj_unchanged_claim_verified": "델타 평균 +1.766e-05 (rms 의 0.47%). 균일 평균이동 비용 K*m^2 = 1.25e-04점 — 팀원의 '평균 중립' 주장이 성립한다."
+ },
+
+ "stage2b_curvature_law_check": {
+  "🔴_S57_literal_form_INAPPLICABLE": true,
+  "🔴_why": "S57 의 A = K*G_jj/(f(1-f)) 는 d_adj 평균 못박힘이 delta = s*(1_S - f) 를 강제하는 ★셀 지시자★ 방향의 유도다. sp 축은 연속 표준화 방향이고 발동 비중 f = 1.0000 (253,507/253,507행 전부 이동) 이라 f(1-f) = 0 — 법칙이 0 으로 나눈다. 억지로 대입하지 않았다.",
+  "f_measured": {"f_nonzero_shift": 1.0, "f_unknown_pitcher_raw_zero": 0.0,
+                 "f_strikes_ge2": 0.2878224269941264, "f_bhand_eq2": 0.5275830647674423},
+  "🔴_generalized_law_used_instead": "연속 방향의 대응식은 K_G = K * mean(c^2) * Var(w), c = 행별 할선 기울기 dp/d(로짓이동), w = (raw-center)/scale.",
+  "Var_w": 0.9999999999999996,
+  "🔴_why_Var_w_is_exactly_1": "center 가 이 프레임의 raw 평균과 정확히 일치(차 0.0)하고 scale 이 그 sd 와 일치한다 — 축의 center/scale 이 바로 이 train-2024 프레임에서 동결됐다(frozen_from 과 일치).",
+  "K_times_mean_c2": 28920.30698468467,
+  "K_G_measured": 28954.695452108943,
+  "ratio_measured_over_law": 1.0011891,
+  "pct_deviation": 0.1189,
+  "c_mean": 0.26870501915988315,
+  "c_sd": 0.006521888316361284,
+  "🔴_VERDICT": "0.12% 일치 — 전파 배율 오류 없음. S75 가 CA 빌더의 7.15배·지휘자의 4.93배를 잡았을 검산의 연속 방향판이고, 통과했다."
+ },
+
+ "stage2c_S32_out_of_time_table_check": {
+  "🔴_why": "출하 표는 season<=2024 전량(1,475,092행)이라 캘프레임의 2024 행을 ★봤다★. G ∝ Var(w) 이므로 이 자기적합이 G 를 부풀린다.",
+  "le2024_shipped_table_on_2024_rows": {"raw_sd": 1.4450786086160485, "w_var": 0.9999999999999996, "frac_raw_zero": 0.0},
+  "le2023_rebuilt_table_on_2024_rows": {"raw_sd": 1.3737496627955657, "w_var": 0.9037165862986553, "frac_raw_zero": 0.1986059556540845, "n_hist_rows": 1221585},
+  "var_ratio": 0.9037165862986557,
+  "rho_w_le2023_vs_le2024": 0.6595262160707358,
+  "🔴_meaning": "out-of-time 관계에서 Var(w) 가 10.6% 낮다 → 캘프레임 G 는 배포 대비 ★과대★ 로 보인다. S43 상 과대는 과소보다 2.78배 싸다(짧게 서는 쪽). 보정 G 26,166.84 를 브래킷에 포함시켰다.",
+  "🔴_side_note": "방향 자체의 연도 안정성 rho = 0.660 뿐이고, <=2023 표로는 19.86% 행이 미지 투수로 발동 0 이다. 배포(<=2024 표 -> 2025 행)의 미지율은 이보다 낮겠으나 0 은 아니다."
+ },
+
+ "stage3_solve": {
+  "model": "gain(u) = 2*K_L*u - K_G*u^2",
+  "🔴_S166_form_used": "K_L = (gain + K_G*u^2) / (2u)  — 걸음으로 나누지 않았다",
+  "LB_point": {"base": "CR 1144.218031984", "candidate": "CT 1150.869939105",
+               "gain_pts": 6.6519071210, "u": -0.014},
+  "variants": [
+   {"name": "frame_G_as_shipped", "K_G": 28954.695452108943, "K_L": -440.2510,
+    "u_star": -0.0152048, "max_gain_pts": 6.69394, "residual_pts": 0.04203,
+    "shipped_pct_of_vertex": 92.08,
+    "🔴": "S147 기준 1순위 — 프레임 곡률이 LB 두 점 해를 0.63% 안에서 재현한 실적"},
+   {"name": "frame_G_x_OOT_correction", "K_G": 26166.84, "K_L": -420.7360,
+    "u_star": -0.0160787, "max_gain_pts": 6.76500, "residual_pts": 0.11310,
+    "shipped_pct_of_vertex": 87.07},
+   {"name": "teammate_OOF_core_face", "K_G": 26159.0, "K_L": -420.6811,
+    "u_star": -0.0160817, "max_gain_pts": 6.76527, "residual_pts": 0.11336,
+    "shipped_pct_of_vertex": 87.06,
+    "🔴": "팀원이 blend.json 에 실은 값. 우연히 OOT 보정 프레임 해와 0.03% 안에서 같다."},
+   {"name": "two_point_cross_base", "K_G": 22915.2974247449, "K_L": -397.9752,
+    "u_star": -0.0173672, "max_gain_pts": 6.91173, "residual_pts": 0.25982,
+    "shipped_pct_of_vertex": 80.61,
+    "🔴": "지휘자 가정이 낸 값. stage4 참조 — 두 점의 기반이 다르다."}
+  ],
+  "🔴_teammate_model_was_beaten_by_its_own_candidate": "팀원 blend.json 의 max_gain_pts = 5.383 인데 CT 실측이 +6.6519 다. 그들의 K_L=-375.3 은 K_G=26159 를 ★CH 기반의 LB 점★ 에서 풀어 얻은 값이라 기반 차이를 흡수하지 못했다."
+ },
+
+ "stage4_conductor_assumption_verdict": {
+  "🔴_assumption": "「같은 크기 걸음의 부호 반전」 -> K*G*u^2 = 4.49 · K*L*u = 5.57 · 최대이득 6.91 · 잔여 +0.26",
+  "arithmetic_is_internally_exact": true,
+  "reproduced": {"K_G_u2": 4.49140, "K_L_u": 5.57165, "max_gain": 6.91173, "residual": 0.25982},
+  "🔴_WHAT_ACTUALLY_FAILS": "가정한 것은 '걸음 크기'가 아니라 ★두 LB 점이 같은 면에 있다★ 는 것이다. CN-sp 는 CH(1140.3283619813) 위, CT 는 CR(1144.218031984) 위다.",
+  "measured_consequence": {
+   "K_L_implied_by_CT_on_CR": -440.2510,
+   "K_L_implied_by_CN_sp_on_CH": -355.6994,
+   "gap": -84.5516, "ratio": 1.23771,
+   "🔴": "프레임 G 를 고정하면 같은 축의 선형항이 기반에 따라 23.8% 다르다. 두 점을 한 포물선에 억지로 맞추면 그 기반 차가 전부 ★G 로 흡수돼★ G 를 22,915 로 21% 낮게 만든다(프레임 실측 28,955 대비)."
+  },
+  "🔴_the_package_itself_documents_this_failure_mode": "CT 가 승계한 blend.json 키 `🔴_axis_flipped_sign_across_bases` 원문 — 후보 AE 의 ★동일한 이동★ 이 기반 AC 에서 −21.5096371199, 기반 AR 에서 +5.2054509871. 'E = ybar - pbar is a property OF THE BASE ... it must be re-solved for any other base.' S64·S69 의 교차면 경고와 같은 것이고, 이 zip 안에 이미 적혀 있다.",
+  "🔴_VERDICT": "지휘자 가정은 ★사실로는 맞고 산술로는 편향돼 있다★. 방향은 옳았고(잔여가 작다) 크기는 6.2배 과대(+0.26 vs 프레임 +0.042). 어느 쪽이든 결론은 같다 — 살 것이 없다."
+ },
+
+ "stage5_cross_axis": {
+  "against": "후보 CS 카운트 축 (build_CS/work/calp_CS0.npy - calp_PAR.npy, 같은 캘프레임)",
+  "K_times_mean_delta_CS2_pts": 2.259874330349952,
+  "rho_all_rows": -0.013255101699188459,
+  "rho_seg_R": -0.007637134203002762,
+  "rho_seg_F": -0.03983939181487381,
+  "n_seg_R": 223497, "n_seg_F": 30010,
+  "cross_term_K_pts_at_shipped_steps": -0.045948543735607514,
+  "🔴_S71_check": "세그먼트로 갈라도 부호가 안 뒤집힌다(둘 다 작은 음수). S71 함정 없음 — 두 축 다 beta_by_segment 를 타지 않고 루트 로짓의 순수 가산 오프셋이다.",
+  "🔴_VERDICT": "실질 직교. naive 합산 과대분이 −0.046점(S109 의 6방향 13.6% 와 비교해 무시 가능). 두 축을 함께 실어도 교차항 위험 없음."
+ },
+
+ "stage6_step": {
+  "🔴_NOT_ISSUED": true,
+  "reason": "config 문턱 = 잔여 >= +1.0점. 브래킷 최댓값이 +0.26 으로 문턱의 26% · 팀 원장 검출한계 +1.4 의 19% 다. 최악최대화 걸음을 계산할 자리가 아니다.",
+  "if_someone_insists": "프레임 해에서 u* = -0.0152048 이고 G 불확실 +-11.15%(S69) 최악최대화는 u = K_L/(1.1115*K_G) = -0.013679 — ★출하값 -0.014 보다 짧다★. 즉 현 출하 걸음이 이미 최악최대화 걸음을 지나 있다."
+ },
+
+ "what_is_missing": [
+  "CN-sp(submit_CN_spoffset.zip, sha 4b9d7ae9c909cea97e5ca6514bdc9ba0cdf4212ccbe61c57d483c45636b7900d) 의 zip 이 이 방에 없다. 있으면 CH 기반 캘 실행으로 기반별 L 을 ★직접★ 확인할 수 있다 — 지금은 프레임 G 를 고정한 역산 귀속이다.",
+  "배포(2025) 프레임의 Var(w). <=2023 표 -> 2024 행 대리로만 쟀다(0.9037). real5 5행으로는 이 축의 발동 분포를 못 잰다.",
+  "K_L 의 독립 검증. 이 축·이 기반의 LB 점이 하나뿐이라 모수 1개를 점 1개로 맞춘 것이고 그 자체로는 아무것도 증명하지 않는다(S153 은 이 조건에서 오차 2.0% 였다 — CJ->CN)."
+ ],
+
+ "resources": {"gpu": "미사용", "cpu_threads": 2, "retrain": 0, "zip_built": 0,
+               "submissions_used": 0, "files_deleted": "자기 작업 디렉터리 exp109/work/cal_* 재생성만",
+               "wall_min": 42},
+ "artifacts": {
+  "server": "a5000:~/SungjinPark/exp109/work/{cal109.json, dir109.json, solve109.json, oot109.json, all109.json, calp_CR.npy, calp_CT.npy, w_unit.npy}",
+  "server_src": "a5000:~/SungjinPark/{e109_cal.py, e109_dir.py, e109_solve.py, e109_oot.py}",
+  "local": "experiments/exp_109/out/{all109.json, cal109.json}"
+ }
+}

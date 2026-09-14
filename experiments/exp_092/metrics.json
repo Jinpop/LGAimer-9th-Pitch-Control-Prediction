@@ -1,0 +1,2395 @@
+{
+ "exp_id": "exp_092",
+ "title": "딥 팔의 rho 를 명시적으로 벌린다 — 피처 부분집합·손실·잔차 타깃",
+ "verdict": "FAIL (사전 등록 기각) — 전 지점 P1 t < 2.0",
+ "surface": {
+  "name": "exp_089 정직면 (모든 팔 out-of-time), exp_090/091 과 동일",
+  "baseline_w0_rc_pts": 928.501461058684,
+  "baseline_w0_rc_expected": 928.501461058684,
+  "baseline_w0_rc_abs_diff": 0.0,
+  "baseline_w0_abd_pts": 932.5807811936593,
+  "z_mate_alone_recentred_pts": 932.8479386726873,
+  "K_pts_per_brier": 400309.19882517256,
+  "ref_brier": 0.2498069,
+  "n_rows_valid_2024": 253507,
+  "y_mean": 0.4861049201797189,
+  "primary_convention": "abd (배포 산술: p = expit(alpha*z + beta_skew*z^2 + d))",
+  "BO_constants": {
+   "alpha": 1.07911,
+   "beta_skew": -0.059151,
+   "c_aa": 0.25244,
+   "c_T70": 0.04756,
+   "w_out": 0.7,
+   "w_v6_inner": 0.6668397489,
+   "w_ebm": -0.1,
+   "beta_ins": 0.03
+  },
+  "fixed_total_steps": 1632
+ },
+ "gates": {
+  "baseline_point_reproduction": {
+   "PASS": true,
+   "abs_diff_pts": 0.0
+  },
+  "reference_point_reproduction": {
+   "what": "exp_090/091 의 1632스텝·5시드·현행구조 abd argmax 이득/argmax w 재현",
+   "gain_at_argmax": 13.714309769419287,
+   "expected": 13.714309769419287,
+   "abs_diff": 0.0,
+   "argmax_w": 0.36,
+   "argmax_w_expected": 0.36,
+   "gain_at_w0.20": 11.05028248077349,
+   "rho_vs_z_mate_oot": 0.9141957764385082,
+   "PASS": true
+  },
+  "code_path_reproduction_vs_exp090": {
+   "what": "exp_090 K1632_oot23_s42 를 train092.py 로 재적합 — ① MASK/LOSS 추가 직후 ② ROWS/OFF 추가 후 최종 소스",
+   "exp090_z_sha256": "8e6acc55dca59a727a155e71aec61c2e84a451381302fd366a9b3b7f67924c11",
+   "exp090_z_file_sha256": "8e6acc55dca59a727a155e71aec61c2e84a451381302fd366a9b3b7f67924c11",
+   "ours": {
+    "GATE_D0_s42": {
+     "note": "MASK092/LOSS092 추가본 (기본값 = 비활성)",
+     "z_sha256": "8e6acc55dca59a727a155e71aec61c2e84a451381302fd366a9b3b7f67924c11",
+     "z_file_sha256": "8e6acc55dca59a727a155e71aec61c2e84a451381302fd366a9b3b7f67924c11",
+     "MATCH_exp090": true,
+     "valid_score_raw": 824.2820444829047,
+     "torch_threads": 1
+    },
+    "GATE2_D0_s42": {
+     "note": "ROWS092/OFF092 까지 추가한 최종본 (기본값 = 비활성)",
+     "z_sha256": "8e6acc55dca59a727a155e71aec61c2e84a451381302fd366a9b3b7f67924c11",
+     "z_file_sha256": "8e6acc55dca59a727a155e71aec61c2e84a451381302fd366a9b3b7f67924c11",
+     "MATCH_exp090": true,
+     "valid_score_raw": 824.2820444829047,
+     "torch_threads": 1
+    }
+   },
+   "PASS": true,
+   "note": "두 판 모두 exp_090 과 바이트 동일 — 피처 마스킹·손실 팩토리·행 제한·오프셋 코드가 **기본값에서는 z 에 한 비트도 안 닿는다.** 따라서 이 실험의 모든 지점은 exp_090/091 의 기준선과 같은 코드 경로 위에 있다."
+  },
+  "n_preds_sha_checked": 90,
+  "preds_sha_all_match": true
+ },
+ "t_sign_convention": "양수면 후보가 기준선보다 낫다",
+ "🔑rho_gain_scatter": {
+  "n_points_total": 41,
+  "n_points_exp092": 19,
+  "pearson_rho_vs_gain": 0.4733168870541503,
+  "spearman_rho_vs_gain": 0.2504032436225652,
+  "pearson_rho_vs_gain_exp092_only": 0.41036204573774276,
+  "spearman_rho_vs_gain_exp092_only": 0.4071961778572156,
+  "pearson_alone_vs_gain": 0.6971272852569378,
+  "spearman_alone_vs_gain": 0.7522559839747539,
+  "ols_gain_on_rho": {
+   "slope_pts_per_unit_rho": 19.574384701690086,
+   "intercept": -6.948149505829497
+  },
+  "rho_range": [
+   0.37013640314089985,
+   0.9277005473750983
+  ],
+  "gain_range": [
+   0.0,
+   15.002444250999929
+  ],
+  "points": [
+   {
+    "exp": "exp_092",
+    "point": "D4_sit_cat_only",
+    "axis": "D",
+    "rho": 0.37013640314089985,
+    "gain_at_argmax": 0.0,
+    "argmax_w": 0.0,
+    "alone_rc": 33.52915772734111
+   },
+   {
+    "exp": "exp_092",
+    "point": "F1_resid_off",
+    "axis": "F",
+    "rho": 0.4657598651613324,
+    "gain_at_argmax": 5.779832488406214,
+    "argmax_w": 0.12,
+    "alone_rc": 237.49373482176983
+   },
+   {
+    "exp": "exp_092",
+    "point": "D5m83_rand",
+    "axis": "D5_null",
+    "rho": 0.8116473106477163,
+    "gain_at_argmax": 0.0,
+    "argmax_w": 0.0,
+    "alone_rc": 575.9353951521163
+   },
+   {
+    "exp": "exp_092",
+    "point": "F1_resid_plus_off",
+    "axis": "F",
+    "rho": 0.8468879690501134,
+    "gain_at_argmax": 4.988758938062574,
+    "argmax_w": 0.13,
+    "alone_rc": 567.2520846972451
+   },
+   {
+    "exp": "exp_092",
+    "point": "D2_no_ins",
+    "axis": "D",
+    "rho": 0.8701241010961721,
+    "gain_at_argmax": 4.001259479691271,
+    "argmax_w": 0.18,
+    "alone_rc": 758.7529334229237
+   },
+   {
+    "exp": "exp_092",
+    "point": "D5h3_rand47",
+    "axis": "D5_null",
+    "rho": 0.8726981674196949,
+    "gain_at_argmax": 7.126718622607655,
+    "argmax_w": 0.23,
+    "alone_rc": 779.0461130296245
+   },
+   {
+    "exp": "exp_092",
+    "point": "D5h2_rand47",
+    "axis": "D5_null",
+    "rho": 0.8809942011247032,
+    "gain_at_argmax": 3.2104111904129695,
+    "argmax_w": 0.16,
+    "alone_rc": 775.600129661913
+   },
+   {
+    "exp": "exp_092",
+    "point": "F0_rows_only",
+    "axis": "F",
+    "rho": 0.8819036738037064,
+    "gain_at_argmax": 13.779124395185704,
+    "argmax_w": 0.32,
+    "alone_rc": 823.0057787492417
+   },
+   {
+    "exp": "exp_092",
+    "point": "D5h1_rand47",
+    "axis": "D5_null",
+    "rho": 0.8972550590019857,
+    "gain_at_argmax": 8.933169332647822,
+    "argmax_w": 0.28,
+    "alone_rc": 819.351600403917
+   },
+   {
+    "exp": "exp_092",
+    "point": "D5m13_rand",
+    "axis": "D5_null",
+    "rho": 0.9001752551618926,
+    "gain_at_argmax": 8.453799709162695,
+    "argmax_w": 0.26,
+    "alone_rc": 824.1926952261225
+   },
+   {
+    "exp": "exp_091",
+    "point": "B_w05_dp1",
+    "axis": "B",
+    "rho": 0.9030405723186435,
+    "gain_at_argmax": 12.465089365454332,
+    "argmax_w": 0.34,
+    "alone_rc": 850.7567174789621
+   },
+   {
+    "exp": "exp_091",
+    "point": "B_w1_dm1",
+    "axis": "B",
+    "rho": 0.9032524261657744,
+    "gain_at_argmax": 14.60402787439864,
+    "argmax_w": 0.36,
+    "alone_rc": 857.365244636954
+   },
+   {
+    "exp": "exp_092",
+    "point": "D1_no_sp",
+    "axis": "D",
+    "rho": 0.9066577045298791,
+    "gain_at_argmax": 6.707224749513671,
+    "argmax_w": 0.24,
+    "alone_rc": 824.0936057181125
+   },
+   {
+    "exp": "exp_091",
+    "point": "B_w05_dm1",
+    "axis": "B",
+    "rho": 0.9068605328529935,
+    "gain_at_argmax": 13.113931162089784,
+    "argmax_w": 0.36,
+    "alone_rc": 859.8835343969769
+   },
+   {
+    "exp": "exp_091",
+    "point": "B_w2_dm1",
+    "axis": "B",
+    "rho": 0.9069759754417659,
+    "gain_at_argmax": 14.672181774055844,
+    "argmax_w": 0.38,
+    "alone_rc": 863.1762081707906
+   },
+   {
+    "exp": "exp_091",
+    "point": "B_w2_d0",
+    "axis": "B",
+    "rho": 0.9087763169062824,
+    "gain_at_argmax": 13.323532301778869,
+    "argmax_w": 0.33,
+    "alone_rc": 846.3761537274128
+   },
+   {
+    "exp": "exp_092",
+    "point": "D5m16_rand",
+    "axis": "D5_null",
+    "rho": 0.9088246259761424,
+    "gain_at_argmax": 14.891798100835672,
+    "argmax_w": 0.38,
+    "alone_rc": 865.303797516459
+   },
+   {
+    "exp": "exp_091",
+    "point": "B_w2_dp1",
+    "axis": "B",
+    "rho": 0.9092729578156613,
+    "gain_at_argmax": 11.988332700740898,
+    "argmax_w": 0.33,
+    "alone_rc": 849.971714799358
+   },
+   {
+    "exp": "exp_091",
+    "point": "B_w1_dp1",
+    "axis": "B",
+    "rho": 0.9096618079880778,
+    "gain_at_argmax": 12.800162270854003,
+    "argmax_w": 0.34,
+    "alone_rc": 852.2682087920397
+   },
+   {
+    "exp": "exp_091",
+    "point": "B_w05_d0",
+    "axis": "B",
+    "rho": 0.9114309853747039,
+    "gain_at_argmax": 13.11087944186886,
+    "argmax_w": 0.37,
+    "alone_rc": 866.8629908473501
+   },
+   {
+    "exp": "exp_092",
+    "point": "D3_no_i3anom_p6",
+    "axis": "D",
+    "rho": 0.913301018093324,
+    "gain_at_argmax": 13.095969895560188,
+    "argmax_w": 0.34,
+    "alone_rc": 856.8445060121887
+   },
+   {
+    "exp": "exp_091",
+    "point": "C_dr0_wd0",
+    "axis": "C",
+    "rho": 0.9140565339543495,
+    "gain_at_argmax": 13.709582293486278,
+    "argmax_w": 0.36,
+    "alone_rc": 862.1304549138121
+   },
+   {
+    "exp": "exp_092",
+    "point": "D0_all99_bce",
+    "axis": "D",
+    "rho": 0.9141957764385082,
+    "gain_at_argmax": 13.714309769419287,
+    "argmax_w": 0.36,
+    "alone_rc": 862.5652996988365
+   },
+   {
+    "exp": "exp_091",
+    "point": "A_n05_seeds5",
+    "axis": "A_seedcount",
+    "rho": 0.9141957764385082,
+    "gain_at_argmax": 13.714309769419287,
+    "argmax_w": 0.36,
+    "alone_rc": 862.5652996988365
+   },
+   {
+    "exp": "exp_091",
+    "point": "B_w1_d0",
+    "axis": "B",
+    "rho": 0.9141957764385082,
+    "gain_at_argmax": 13.714309769419287,
+    "argmax_w": 0.36,
+    "alone_rc": 862.5652996988365
+   },
+   {
+    "exp": "exp_091",
+    "point": "C_dr0_wd001",
+    "axis": "C",
+    "rho": 0.9141957764385082,
+    "gain_at_argmax": 13.714309769419287,
+    "argmax_w": 0.36,
+    "alone_rc": 862.5652996988365
+   },
+   {
+    "exp": "exp_092",
+    "point": "E_ls005",
+    "axis": "E",
+    "rho": 0.9143244592329839,
+    "gain_at_argmax": 13.911339511252208,
+    "argmax_w": 0.38,
+    "alone_rc": 871.1565474904037
+   },
+   {
+    "exp": "exp_092",
+    "point": "E_ls002",
+    "axis": "E",
+    "rho": 0.9143883460756858,
+    "gain_at_argmax": 13.877784329507904,
+    "argmax_w": 0.37,
+    "alone_rc": 867.3226762166753
+   },
+   {
+    "exp": "exp_091",
+    "point": "C_dr0_wd01",
+    "axis": "C",
+    "rho": 0.9153099272259625,
+    "gain_at_argmax": 13.434936275669202,
+    "argmax_w": 0.36,
+    "alone_rc": 864.5538221877969
+   },
+   {
+    "exp": "exp_091",
+    "point": "A_n10_seeds10",
+    "axis": "A_seedcount",
+    "rho": 0.9159649792342994,
+    "gain_at_argmax": 14.349152474002494,
+    "argmax_w": 0.39,
+    "alone_rc": 876.6729539721684
+   },
+   {
+    "exp": "exp_092",
+    "point": "D5m06_rand",
+    "axis": "D5_null",
+    "rho": 0.9167772088816893,
+    "gain_at_argmax": 10.27865988370013,
+    "argmax_w": 0.32,
+    "alone_rc": 853.9794106658172
+   },
+   {
+    "exp": "exp_091",
+    "point": "A_n15_seeds15",
+    "axis": "A_seedcount",
+    "rho": 0.917042192308107,
+    "gain_at_argmax": 15.002444250999929,
+    "argmax_w": 0.4,
+    "alone_rc": 879.9095167029814
+   },
+   {
+    "exp": "exp_091",
+    "point": "A_n20_seeds20",
+    "axis": "A_seedcount",
+    "rho": 0.9187000299740278,
+    "gain_at_argmax": 14.678405825807545,
+    "argmax_w": 0.4,
+    "alone_rc": 881.5113403126574
+   },
+   {
+    "exp": "exp_091",
+    "point": "C_dr01_wd0",
+    "axis": "C",
+    "rho": 0.9190258375612306,
+    "gain_at_argmax": 9.670173832299042,
+    "argmax_w": 0.32,
+    "alone_rc": 859.4879618837648
+   },
+   {
+    "exp": "exp_091",
+    "point": "C_dr01_wd001",
+    "axis": "C",
+    "rho": 0.9191365111532874,
+    "gain_at_argmax": 9.564120922533903,
+    "argmax_w": 0.32,
+    "alone_rc": 859.3707217113722
+   },
+   {
+    "exp": "exp_091",
+    "point": "C_dr01_wd01",
+    "axis": "C",
+    "rho": 0.9199846580983463,
+    "gain_at_argmax": 8.740939848217408,
+    "argmax_w": 0.31,
+    "alone_rc": 858.1747555751584
+   },
+   {
+    "exp": "exp_092",
+    "point": "E_focal_g1",
+    "axis": "E",
+    "rho": 0.9233516108188051,
+    "gain_at_argmax": 2.00884656926803,
+    "argmax_w": 0.14,
+    "alone_rc": 740.4529937091953
+   },
+   {
+    "exp": "exp_092",
+    "point": "E_focal_g2",
+    "axis": "E",
+    "rho": 0.9242889497036477,
+    "gain_at_argmax": 0.5318613832239407,
+    "argmax_w": 0.05,
+    "alone_rc": 561.0912230585408
+   },
+   {
+    "exp": "exp_091",
+    "point": "C_dr02_wd0",
+    "axis": "C",
+    "rho": 0.926717737828942,
+    "gain_at_argmax": 10.46924505538891,
+    "argmax_w": 0.36,
+    "alone_rc": 876.8218257015681
+   },
+   {
+    "exp": "exp_091",
+    "point": "C_dr02_wd001",
+    "axis": "C",
+    "rho": 0.9267898231991485,
+    "gain_at_argmax": 10.459739770762894,
+    "argmax_w": 0.36,
+    "alone_rc": 876.8753407579877
+   },
+   {
+    "exp": "exp_091",
+    "point": "C_dr02_wd01",
+    "axis": "C",
+    "rho": 0.9277005473750983,
+    "gain_at_argmax": 10.266244960210884,
+    "argmax_w": 0.36,
+    "alone_rc": 877.4453877640975
+   }
+  ]
+ },
+ "🔑rho_vs_arm_quality": {
+  "exp_id": "exp_092",
+  "stage": "s2_rho_quality",
+  "n_scatter_rows": 41,
+  "n_unique_points": 38,
+  "deduplicated": {
+   "D0_all99_bce": [
+    "A_n05_seeds5",
+    "B_w1_d0",
+    "C_dr0_wd001"
+   ]
+  },
+  "🔴 왜 중복 제거": "기준선(1632·5시드·현행구조·BCE·전체 99열)은 exp_091 의 A/B/C 축 기준선과 **같은 z 5벌**이라 산점에 4번 들어간다. 회귀에서 그 점만 4배 가중되는 것을 막는다.",
+  "fits": {
+   "all": {
+    "n": 38,
+    "corr_rho_alone": 0.9281778033244003,
+    "univariate_gain_on_rho": {
+     "slope": 18.962455674699967,
+     "t": 3.17527318370484,
+     "R2": 0.21879000634620183
+    },
+    "univariate_gain_on_alone": {
+     "slope": 0.01785832154434075,
+     "t": 5.768235518612115,
+     "R2": 0.48031356319170193
+    },
+    "joint_gain_on_rho_and_alone": {
+     "slope_rho": -51.38104760903689,
+     "t_rho": -5.118168481383132,
+     "slope_alone": 0.04817150222440555,
+     "t_alone": 7.549260961784384,
+     "R2": 0.702772571199497
+    },
+    "🔑exchange_rate_alone_pts_per_0.01_rho": 10.666274713559849,
+    "🔑읽는_법": "rho 를 0.01 내리면서 팔 단독 점수를 이 값보다 **적게** 잃는 손잡이라야 혼합 이득이 는다. 그보다 비싸면 손해다."
+   },
+   "alone_ge_820": {
+    "n": 28,
+    "corr_rho_alone": 0.7602588996438022,
+    "univariate_gain_on_rho": {
+     "slope": -54.75330706701126,
+     "t": -1.1648357105604912,
+     "R2": 0.04959791123042501
+    },
+    "univariate_gain_on_alone": {
+     "slope": 0.058108913371871476,
+     "t": 2.255557800114177,
+     "R2": 0.1636520878686707
+    },
+    "joint_gain_on_rho_and_alone": {
+     "slope_rho": -308.92205770147535,
+     "t_rho": -9.8967827889893,
+     "slope_alone": 0.19532775501296165,
+     "t_alone": 10.710401736527189,
+     "R2": 0.8299363529010385
+    },
+    "🔑exchange_rate_alone_pts_per_0.01_rho": 15.815574068364004,
+    "🔑읽는_법": "rho 를 0.01 내리면서 팔 단독 점수를 이 값보다 **적게** 잃는 손잡이라야 혼합 이득이 는다. 그보다 비싸면 손해다."
+   },
+   "alone_ge_850": {
+    "n": 23,
+    "corr_rho_alone": 0.6012030869017242,
+    "univariate_gain_on_rho": {
+     "slope": -174.72905526806352,
+     "t": -3.416244403339493,
+     "R2": 0.35722272858112525
+    },
+    "univariate_gain_on_alone": {
+     "slope": 0.04042722379755357,
+     "t": 0.877656149186772,
+     "R2": 0.03538219559051736
+    },
+    "joint_gain_on_rho_and_alone": {
+     "slope_rho": -325.4059343799955,
+     "t_rho": -9.550642219879574,
+     "slope_alone": 0.18425163766798605,
+     "t_alone": 7.355844194015316,
+     "R2": 0.826530625014084
+    },
+    "🔑exchange_rate_alone_pts_per_0.01_rho": 17.660952081542078,
+    "🔑읽는_법": "rho 를 0.01 내리면서 팔 단독 점수를 이 값보다 **적게** 잃는 손잡이라야 혼합 이득이 는다. 그보다 비싸면 손해다."
+   }
+  },
+  "levers_vs_exchange_rate": {
+   "baseline": {
+    "point": "D0_all99_bce",
+    "rho": 0.9141957764385082,
+    "alone_rc": 862.5652996988365,
+    "gain": 13.714309769419287
+   },
+   "exchange_rate_used": 15.815574068364004,
+   "levers_that_lower_rho_cheaply": [
+    {
+     "point": "D4_sit_cat_only",
+     "exp": "exp_092",
+     "axis": "D",
+     "d_rho": -0.5440593732976085,
+     "d_alone_pts": -829.0361419714953,
+     "d_gain_pts": -13.714309769419287,
+     "alone_pts_paid_per_0.01_rho": 15.237971858597138,
+     "cheaper_than_exchange_rate": true
+    },
+    {
+     "point": "F1_resid_off",
+     "exp": "exp_092",
+     "axis": "F",
+     "d_rho": -0.44843591127717586,
+     "d_alone_pts": -625.0715648770666,
+     "d_gain_pts": -7.9344772810130735,
+     "alone_pts_paid_per_0.01_rho": 13.938927484572332,
+     "cheaper_than_exchange_rate": true
+    },
+    {
+     "point": "F0_rows_only",
+     "exp": "exp_092",
+     "axis": "F",
+     "d_rho": -0.03229210263480187,
+     "d_alone_pts": -39.5595209495948,
+     "d_gain_pts": 0.06481462576641661,
+     "alone_pts_paid_per_0.01_rho": 12.25052496487506,
+     "cheaper_than_exchange_rate": true
+    },
+    {
+     "point": "B_w05_dp1",
+     "exp": "exp_091",
+     "axis": "B",
+     "d_rho": -0.011155204119864703,
+     "d_alone_pts": -11.808582219874438,
+     "d_gain_pts": -1.249220403964955,
+     "alone_pts_paid_per_0.01_rho": 10.58571595193514,
+     "cheaper_than_exchange_rate": true
+    },
+    {
+     "point": "B_w1_dm1",
+     "exp": "exp_091",
+     "axis": "B",
+     "d_rho": -0.010943350272733854,
+     "d_alone_pts": -5.2000550618824946,
+     "d_gain_pts": 0.8897181049793517,
+     "alone_pts_paid_per_0.01_rho": 4.7517944069091955,
+     "cheaper_than_exchange_rate": true
+    },
+    {
+     "point": "B_w05_dm1",
+     "exp": "exp_091",
+     "axis": "B",
+     "d_rho": -0.007335243585514739,
+     "d_alone_pts": -2.6817653018596275,
+     "d_gain_pts": -0.6003786073295032,
+     "alone_pts_paid_per_0.01_rho": 3.656000336724249,
+     "cheaper_than_exchange_rate": true
+    },
+    {
+     "point": "B_w2_dm1",
+     "exp": "exp_091",
+     "axis": "B",
+     "d_rho": -0.007219800996742354,
+     "d_alone_pts": 0.610908471954076,
+     "d_gain_pts": 0.9578720046365561,
+     "alone_pts_paid_per_0.01_rho": -0.8461569401008754,
+     "cheaper_than_exchange_rate": true
+    },
+    {
+     "point": "D5m16_rand",
+     "exp": "exp_092",
+     "axis": "D5_null",
+     "d_rho": -0.0053711504623658035,
+     "d_alone_pts": 2.7384978176224877,
+     "d_gain_pts": 1.1774883314163844,
+     "alone_pts_paid_per_0.01_rho": -5.098531193289781,
+     "cheaper_than_exchange_rate": true
+    },
+    {
+     "point": "B_w05_d0",
+     "exp": "exp_091",
+     "axis": "B",
+     "d_rho": -0.0027647910638043394,
+     "d_alone_pts": 4.29769114851365,
+     "d_gain_pts": -0.6034303275504271,
+     "alone_pts_paid_per_0.01_rho": -15.544361397783335,
+     "cheaper_than_exchange_rate": true
+    }
+   ],
+   "all": [
+    {
+     "point": "D4_sit_cat_only",
+     "exp": "exp_092",
+     "axis": "D",
+     "d_rho": -0.5440593732976085,
+     "d_alone_pts": -829.0361419714953,
+     "d_gain_pts": -13.714309769419287,
+     "alone_pts_paid_per_0.01_rho": 15.237971858597138,
+     "cheaper_than_exchange_rate": true
+    },
+    {
+     "point": "F1_resid_off",
+     "exp": "exp_092",
+     "axis": "F",
+     "d_rho": -0.44843591127717586,
+     "d_alone_pts": -625.0715648770666,
+     "d_gain_pts": -7.9344772810130735,
+     "alone_pts_paid_per_0.01_rho": 13.938927484572332,
+     "cheaper_than_exchange_rate": true
+    },
+    {
+     "point": "D5m83_rand",
+     "exp": "exp_092",
+     "axis": "D5_null",
+     "d_rho": -0.10254846579079191,
+     "d_alone_pts": -286.62990454672024,
+     "d_gain_pts": -13.714309769419287,
+     "alone_pts_paid_per_0.01_rho": 27.950677012708415,
+     "cheaper_than_exchange_rate": false
+    },
+    {
+     "point": "F1_resid_plus_off",
+     "exp": "exp_092",
+     "axis": "F",
+     "d_rho": -0.06730780738839481,
+     "d_alone_pts": -295.3132150015914,
+     "d_gain_pts": -8.725550831356713,
+     "alone_pts_paid_per_0.01_rho": 43.875031212576566,
+     "cheaper_than_exchange_rate": false
+    },
+    {
+     "point": "D2_no_ins",
+     "exp": "exp_092",
+     "axis": "D",
+     "d_rho": -0.044071675342336136,
+     "d_alone_pts": -103.81236627591284,
+     "d_gain_pts": -9.713050289728017,
+     "alone_pts_paid_per_0.01_rho": 23.555348297864366,
+     "cheaper_than_exchange_rate": false
+    },
+    {
+     "point": "D5h3_rand47",
+     "exp": "exp_092",
+     "axis": "D5_null",
+     "d_rho": -0.041497609018813386,
+     "d_alone_pts": -83.51918666921199,
+     "d_gain_pts": -6.587591146811633,
+     "alone_pts_paid_per_0.01_rho": 20.126264776206185,
+     "cheaper_than_exchange_rate": false
+    },
+    {
+     "point": "D5h2_rand47",
+     "exp": "exp_092",
+     "axis": "D5_null",
+     "d_rho": -0.033201575313805076,
+     "d_alone_pts": -86.9651700369235,
+     "d_gain_pts": -10.503898579006318,
+     "alone_pts_paid_per_0.01_rho": 26.193085483134816,
+     "cheaper_than_exchange_rate": false
+    },
+    {
+     "point": "F0_rows_only",
+     "exp": "exp_092",
+     "axis": "F",
+     "d_rho": -0.03229210263480187,
+     "d_alone_pts": -39.5595209495948,
+     "d_gain_pts": 0.06481462576641661,
+     "alone_pts_paid_per_0.01_rho": 12.25052496487506,
+     "cheaper_than_exchange_rate": true
+    },
+    {
+     "point": "D5h1_rand47",
+     "exp": "exp_092",
+     "axis": "D5_null",
+     "d_rho": -0.01694071743652259,
+     "d_alone_pts": -43.21369929491948,
+     "d_gain_pts": -4.781140436771466,
+     "alone_pts_paid_per_0.01_rho": 25.508777569097997,
+     "cheaper_than_exchange_rate": false
+    },
+    {
+     "point": "D5m13_rand",
+     "exp": "exp_092",
+     "axis": "D5_null",
+     "d_rho": -0.014020521276615683,
+     "d_alone_pts": -38.37260447271399,
+     "d_gain_pts": -5.260510060256593,
+     "alone_pts_paid_per_0.01_rho": 27.36888573231172,
+     "cheaper_than_exchange_rate": false
+    },
+    {
+     "point": "B_w05_dp1",
+     "exp": "exp_091",
+     "axis": "B",
+     "d_rho": -0.011155204119864703,
+     "d_alone_pts": -11.808582219874438,
+     "d_gain_pts": -1.249220403964955,
+     "alone_pts_paid_per_0.01_rho": 10.58571595193514,
+     "cheaper_than_exchange_rate": true
+    },
+    {
+     "point": "B_w1_dm1",
+     "exp": "exp_091",
+     "axis": "B",
+     "d_rho": -0.010943350272733854,
+     "d_alone_pts": -5.2000550618824946,
+     "d_gain_pts": 0.8897181049793517,
+     "alone_pts_paid_per_0.01_rho": 4.7517944069091955,
+     "cheaper_than_exchange_rate": true
+    },
+    {
+     "point": "D1_no_sp",
+     "exp": "exp_092",
+     "axis": "D",
+     "d_rho": -0.007538071908629096,
+     "d_alone_pts": -38.47169398072401,
+     "d_gain_pts": -7.007085019905617,
+     "alone_pts_paid_per_0.01_rho": 51.03651762287397,
+     "cheaper_than_exchange_rate": false
+    },
+    {
+     "point": "B_w05_dm1",
+     "exp": "exp_091",
+     "axis": "B",
+     "d_rho": -0.007335243585514739,
+     "d_alone_pts": -2.6817653018596275,
+     "d_gain_pts": -0.6003786073295032,
+     "alone_pts_paid_per_0.01_rho": 3.656000336724249,
+     "cheaper_than_exchange_rate": true
+    },
+    {
+     "point": "B_w2_dm1",
+     "exp": "exp_091",
+     "axis": "B",
+     "d_rho": -0.007219800996742354,
+     "d_alone_pts": 0.610908471954076,
+     "d_gain_pts": 0.9578720046365561,
+     "alone_pts_paid_per_0.01_rho": -0.8461569401008754,
+     "cheaper_than_exchange_rate": true
+    },
+    {
+     "point": "B_w2_d0",
+     "exp": "exp_091",
+     "axis": "B",
+     "d_rho": -0.00541945953222589,
+     "d_alone_pts": -16.189145971423727,
+     "d_gain_pts": -0.39077746764041876,
+     "alone_pts_paid_per_0.01_rho": 29.87225179034503,
+     "cheaper_than_exchange_rate": false
+    },
+    {
+     "point": "D5m16_rand",
+     "exp": "exp_092",
+     "axis": "D5_null",
+     "d_rho": -0.0053711504623658035,
+     "d_alone_pts": 2.7384978176224877,
+     "d_gain_pts": 1.1774883314163844,
+     "alone_pts_paid_per_0.01_rho": -5.098531193289781,
+     "cheaper_than_exchange_rate": true
+    },
+    {
+     "point": "B_w2_dp1",
+     "exp": "exp_091",
+     "axis": "B",
+     "d_rho": -0.004922818622846936,
+     "d_alone_pts": -12.593584899478515,
+     "d_gain_pts": -1.7259770686783895,
+     "alone_pts_paid_per_0.01_rho": 25.582061547080656,
+     "cheaper_than_exchange_rate": false
+    },
+    {
+     "point": "B_w1_dp1",
+     "exp": "exp_091",
+     "axis": "B",
+     "d_rho": -0.0045339684504304145,
+     "d_alone_pts": -10.297090906796825,
+     "d_gain_pts": -0.9141474985652849,
+     "alone_pts_paid_per_0.01_rho": 22.710989322873015,
+     "cheaper_than_exchange_rate": false
+    },
+    {
+     "point": "B_w05_d0",
+     "exp": "exp_091",
+     "axis": "B",
+     "d_rho": -0.0027647910638043394,
+     "d_alone_pts": 4.29769114851365,
+     "d_gain_pts": -0.6034303275504271,
+     "alone_pts_paid_per_0.01_rho": -15.544361397783335,
+     "cheaper_than_exchange_rate": true
+    },
+    {
+     "point": "D3_no_i3anom_p6",
+     "exp": "exp_092",
+     "axis": "D",
+     "d_rho": -0.0008947583451842656,
+     "d_alone_pts": -5.720793686647767,
+     "d_gain_pts": -0.6183398738590995,
+     "alone_pts_paid_per_0.01_rho": 63.93674579776769,
+     "cheaper_than_exchange_rate": false
+    },
+    {
+     "point": "C_dr0_wd0",
+     "exp": "exp_091",
+     "axis": "C",
+     "d_rho": -0.0001392424841587525,
+     "d_alone_pts": -0.43484478502443835,
+     "d_gain_pts": -0.004727475933009373,
+     "alone_pts_paid_per_0.01_rho": 31.229318239443725,
+     "cheaper_than_exchange_rate": false
+    },
+    {
+     "point": "E_ls005",
+     "exp": "exp_092",
+     "axis": "E",
+     "d_rho": 0.00012868279447564301,
+     "d_alone_pts": 8.591247791567184,
+     "d_gain_pts": 0.197029741832921
+    },
+    {
+     "point": "E_ls002",
+     "exp": "exp_092",
+     "axis": "E",
+     "d_rho": 0.00019256963717750875,
+     "d_alone_pts": 4.757376517838793,
+     "d_gain_pts": 0.16347456008861627
+    },
+    {
+     "point": "C_dr0_wd01",
+     "exp": "exp_091",
+     "axis": "C",
+     "d_rho": 0.001114150787454249,
+     "d_alone_pts": 1.9885224889603705,
+     "d_gain_pts": -0.2793734937500858
+    },
+    {
+     "point": "A_n10_seeds10",
+     "exp": "exp_091",
+     "axis": "A_seedcount",
+     "d_rho": 0.0017692027957911804,
+     "d_alone_pts": 14.107654273331946,
+     "d_gain_pts": 0.6348427045832068
+    },
+    {
+     "point": "D5m06_rand",
+     "exp": "exp_092",
+     "axis": "D5_null",
+     "d_rho": 0.0025814324431810975,
+     "d_alone_pts": -8.58588903301927,
+     "d_gain_pts": -3.435649885719158
+    },
+    {
+     "point": "A_n15_seeds15",
+     "exp": "exp_091",
+     "axis": "A_seedcount",
+     "d_rho": 0.002846415869598773,
+     "d_alone_pts": 17.344217004144866,
+     "d_gain_pts": 1.2881344815806415
+    },
+    {
+     "point": "A_n20_seeds20",
+     "exp": "exp_091",
+     "axis": "A_seedcount",
+     "d_rho": 0.004504253535519531,
+     "d_alone_pts": 18.946040613820855,
+     "d_gain_pts": 0.9640960563882572
+    },
+    {
+     "point": "C_dr01_wd0",
+     "exp": "exp_091",
+     "axis": "C",
+     "d_rho": 0.004830061122722329,
+     "d_alone_pts": -3.077337815071701,
+     "d_gain_pts": -4.044135937120245
+    },
+    {
+     "point": "C_dr01_wd001",
+     "exp": "exp_091",
+     "axis": "C",
+     "d_rho": 0.0049407347147791825,
+     "d_alone_pts": -3.1945779874642994,
+     "d_gain_pts": -4.150188846885385
+    },
+    {
+     "point": "C_dr01_wd01",
+     "exp": "exp_091",
+     "axis": "C",
+     "d_rho": 0.005788881659838041,
+     "d_alone_pts": -4.390544123678069,
+     "d_gain_pts": -4.973369921201879
+    },
+    {
+     "point": "E_focal_g1",
+     "exp": "exp_092",
+     "axis": "E",
+     "d_rho": 0.009155834380296879,
+     "d_alone_pts": -122.11230598964119,
+     "d_gain_pts": -11.705463200151257
+    },
+    {
+     "point": "E_focal_g2",
+     "exp": "exp_092",
+     "axis": "E",
+     "d_rho": 0.010093173265139477,
+     "d_alone_pts": -301.4740766402957,
+     "d_gain_pts": -13.182448386195347
+    },
+    {
+     "point": "C_dr02_wd0",
+     "exp": "exp_091",
+     "axis": "C",
+     "d_rho": 0.012521961390433711,
+     "d_alone_pts": 14.256526002731562,
+     "d_gain_pts": -3.245064714030377
+    },
+    {
+     "point": "C_dr02_wd001",
+     "exp": "exp_091",
+     "axis": "C",
+     "d_rho": 0.012594046760640243,
+     "d_alone_pts": 14.310041059151217,
+     "d_gain_pts": -3.254569998656393
+    },
+    {
+     "point": "C_dr02_wd01",
+     "exp": "exp_091",
+     "axis": "C",
+     "d_rho": 0.013504770936590083,
+     "d_alone_pts": 14.88008806526102,
+     "d_gain_pts": -3.448064809208404
+    }
+   ]
+  },
+  "pairwise_nonparametric": {
+   "rule": "단독 점수 차 <= 6점 · 둘 다 alone >= 820 인 모든 짝에서 rho 낮은 쪽이 이겼는가",
+   "wins_for_lower_rho": 77,
+   "n_pairs": 101,
+   "one_sided_binomial_p": 5.903401747219827e-08,
+   "⚠️": "짝들이 서로 독립이 아니다(같은 지점이 여러 짝에 들어간다). p 는 참고값이다"
+  },
+  "🔑결론": "① 단순 산점은 **양의 기울기**를 낸다 — rho 와 팔 품질이 corr +0.93 으로 얽혀 있어서다. ② **품질을 통제하면 rho 의 몫은 크게 음수**이고(t 약 −10, R2 0.83) S100 의 방향이 맞다. ③ 그러나 우리가 가진 손잡이는 전부 rho 를 내리면서 품질을 **교환율보다 비싸게** 잃는다. ④ 그래서 남은 표적은 '더 벌리기'가 아니라 **'같은 품질에서 벌리기'** 다."
+ },
+ "D5_null_comparison": {
+  "D1_no_sp": {
+   "null_point": "D5m06_rand",
+   "n_masked": 6,
+   "family_rho": 0.9066577045298791,
+   "null_rho": 0.9167772088816893,
+   "d_rho_family_minus_null": -0.010119504351810193,
+   "family_gain": 6.707224749513671,
+   "null_gain": 10.27865988370013,
+   "d_gain_family_minus_null": -3.5714351341864585,
+   "paired_t_family_vs_null": -1.0554784171271168,
+   "🔑": "계열 마스킹이 같은 개수 무작위 마스킹보다 rho 를 더 내리고 이득을 더 올리면 '그 계열이 겹침의 원인'이다. 아니면 '그냥 정보를 줄인 것'이다"
+  },
+  "D2_no_ins": {
+   "null_point": "D5m16_rand",
+   "n_masked": 16,
+   "family_rho": 0.8701241010961721,
+   "null_rho": 0.9088246259761424,
+   "d_rho_family_minus_null": -0.03870052487997033,
+   "family_gain": 4.001259479691271,
+   "null_gain": 14.891798100835672,
+   "d_gain_family_minus_null": -10.890538621144401,
+   "paired_t_family_vs_null": -2.058314158026266,
+   "🔑": "계열 마스킹이 같은 개수 무작위 마스킹보다 rho 를 더 내리고 이득을 더 올리면 '그 계열이 겹침의 원인'이다. 아니면 '그냥 정보를 줄인 것'이다"
+  },
+  "D3_no_i3anom_p6": {
+   "null_point": "D5m13_rand",
+   "n_masked": 13,
+   "family_rho": 0.913301018093324,
+   "null_rho": 0.9001752551618926,
+   "d_rho_family_minus_null": 0.013125762931431417,
+   "family_gain": 13.095969895560188,
+   "null_gain": 8.453799709162695,
+   "d_gain_family_minus_null": 4.642170186397493,
+   "paired_t_family_vs_null": 1.2659059913646618,
+   "🔑": "계열 마스킹이 같은 개수 무작위 마스킹보다 rho 를 더 내리고 이득을 더 올리면 '그 계열이 겹침의 원인'이다. 아니면 '그냥 정보를 줄인 것'이다"
+  },
+  "D4_sit_cat_only": {
+   "null_point": "D5m83_rand",
+   "n_masked": 83,
+   "family_rho": 0.37013640314089985,
+   "null_rho": 0.8116473106477163,
+   "d_rho_family_minus_null": -0.4415109075068165,
+   "family_gain": 0.0,
+   "null_gain": 0.0,
+   "d_gain_family_minus_null": 0.0,
+   "paired_t_family_vs_null": null,
+   "🔑": "계열 마스킹이 같은 개수 무작위 마스킹보다 rho 를 더 내리고 이득을 더 올리면 '그 계열이 겹침의 원인'이다. 아니면 '그냥 정보를 줄인 것'이다"
+  }
+ },
+ "axis_curves": [
+  {
+   "point": "D0_all99_bce",
+   "axis": "D",
+   "desc": "전체 99열 · BCE (= 기준선, exp_090 재사용)",
+   "n_masked_num_cols": 0,
+   "loss": "bce",
+   "rows_restrict": false,
+   "offset_used": false,
+   "variant": null,
+   "IS_BASELINE": true,
+   "n_seeds": 5,
+   "🔑rho_vs_z_mate_oot": 0.9141957764385082,
+   "abd_gain_at_argmax": 13.714309769419287,
+   "abd_argmax_w": 0.36,
+   "abd_gain_at_w0.20": 11.05028248077349,
+   "abd_gain_at_w0.36": 13.714309769419287,
+   "abd_gain_at_w0.20_sd_matched": 11.139122023196023,
+   "abd_gain_at_w0.20_alpha_free": 11.138663253484879,
+   "alone_recentred_pts": 862.5652996988365,
+   "alone_raw_pts": 839.3264085570396,
+   "z_sd": 0.21298216018288174,
+   "within_seed_rho": 0.9275621625352051,
+   "rc_argmax_w": 0.42,
+   "rc_gain_at_argmax": 16.377190198735207,
+   "paired_t_P1_own_argmax": 0.0,
+   "paired_t_P2_w0.20": 0.0,
+   "paired_t_P3_w0.36": 0.0,
+   "boot_t_vs_w0_at_argmax": 2.1229928673153875,
+   "single_seed_gain_mean": 9.292554747004624,
+   "single_seed_gain_sd": 3.11244291175065,
+   "jackknife_se_of_mean": 1.3818103024888004
+  },
+  {
+   "point": "D1_no_sp",
+   "axis": "D",
+   "desc": "sp_* 6열 마스킹",
+   "n_masked_num_cols": 6,
+   "loss": "bce",
+   "rows_restrict": false,
+   "offset_used": false,
+   "variant": null,
+   "IS_BASELINE": false,
+   "n_seeds": 5,
+   "🔑rho_vs_z_mate_oot": 0.9066577045298791,
+   "abd_gain_at_argmax": 6.707224749513671,
+   "abd_argmax_w": 0.24,
+   "abd_gain_at_w0.20": 6.536012845959021,
+   "abd_gain_at_w0.36": 4.955586935806423,
+   "abd_gain_at_w0.20_sd_matched": 6.705097027537249,
+   "abd_gain_at_w0.20_alpha_free": 6.696908735714942,
+   "alone_recentred_pts": 824.0936057181125,
+   "alone_raw_pts": 794.9110648500457,
+   "z_sd": 0.21502816768333843,
+   "within_seed_rho": 0.9226537191750339,
+   "rc_argmax_w": 0.29,
+   "rc_gain_at_argmax": 8.731860220989574,
+   "paired_t_P1_own_argmax": -1.882360737908627,
+   "paired_t_P2_w0.20": -2.130446310339805,
+   "paired_t_P3_w0.36": -2.3187006915645325,
+   "boot_t_vs_w0_at_argmax": 1.5223721513864354,
+   "single_seed_gain_mean": 4.644122534167559,
+   "single_seed_gain_sd": 5.276965825713261,
+   "jackknife_se_of_mean": 2.4211785560055668
+  },
+  {
+   "point": "D2_no_ins",
+   "axis": "D",
+   "desc": "ins_* 16열 마스킹",
+   "n_masked_num_cols": 16,
+   "loss": "bce",
+   "rows_restrict": false,
+   "offset_used": false,
+   "variant": null,
+   "IS_BASELINE": false,
+   "n_seeds": 5,
+   "🔑rho_vs_z_mate_oot": 0.8701241010961721,
+   "abd_gain_at_argmax": 4.001259479691271,
+   "abd_argmax_w": 0.18,
+   "abd_gain_at_w0.20": 3.9308427565498505,
+   "abd_gain_at_w0.36": -0.3439726845355153,
+   "abd_gain_at_w0.20_sd_matched": 3.9683931633893508,
+   "abd_gain_at_w0.20_alpha_free": 3.96128441405574,
+   "alone_recentred_pts": 758.7529334229237,
+   "alone_raw_pts": 755.6773135174999,
+   "z_sd": 0.1922590518416358,
+   "within_seed_rho": 0.9114565439625482,
+   "rc_argmax_w": 0.16,
+   "rc_gain_at_argmax": 2.823074185254086,
+   "paired_t_P1_own_argmax": -2.203364692880849,
+   "paired_t_P2_w0.20": -2.7020102748247017,
+   "paired_t_P3_w0.36": -2.953081572154368,
+   "boot_t_vs_w0_at_argmax": 1.127789161389639,
+   "single_seed_gain_mean": 2.1216791681832774,
+   "single_seed_gain_sd": 2.111838699688983,
+   "jackknife_se_of_mean": 1.0954348701602905
+  },
+  {
+   "point": "D3_no_i3anom_p6",
+   "axis": "D",
+   "desc": "i3_anom_* + p6_* 13열 마스킹",
+   "n_masked_num_cols": 13,
+   "loss": "bce",
+   "rows_restrict": false,
+   "offset_used": false,
+   "variant": null,
+   "IS_BASELINE": false,
+   "n_seeds": 5,
+   "🔑rho_vs_z_mate_oot": 0.913301018093324,
+   "abd_gain_at_argmax": 13.095969895560188,
+   "abd_argmax_w": 0.34,
+   "abd_gain_at_w0.20": 10.848038227939696,
+   "abd_gain_at_w0.36": 13.05877319264232,
+   "abd_gain_at_w0.20_sd_matched": 10.983657807672785,
+   "abd_gain_at_w0.20_alpha_free": 10.982549501170638,
+   "alone_recentred_pts": 856.8445060121887,
+   "alone_raw_pts": 830.2807343810504,
+   "z_sd": 0.2159875684214254,
+   "within_seed_rho": 0.9318894886091641,
+   "rc_argmax_w": 0.41,
+   "rc_gain_at_argmax": 16.230371637149233,
+   "paired_t_P1_own_argmax": -0.335750701641034,
+   "paired_t_P2_w0.20": -0.19212137608510693,
+   "paired_t_P3_w0.36": -0.3496527912528288,
+   "boot_t_vs_w0_at_argmax": 2.1181035209535506,
+   "single_seed_gain_mean": 9.16180162931821,
+   "single_seed_gain_sd": 2.6911364233502093,
+   "jackknife_se_of_mean": 1.2872000941775315
+  },
+  {
+   "point": "D4_sit_cat_only",
+   "axis": "D",
+   "desc": "범주 5열 + 상황 11열만 남기고 83열 마스킹",
+   "n_masked_num_cols": 83,
+   "loss": "bce",
+   "rows_restrict": false,
+   "offset_used": false,
+   "variant": null,
+   "IS_BASELINE": false,
+   "n_seeds": 5,
+   "🔑rho_vs_z_mate_oot": 0.37013640314089985,
+   "abd_gain_at_argmax": 0.0,
+   "abd_argmax_w": 0.0,
+   "abd_gain_at_w0.20": -21.360305473994117,
+   "abd_gain_at_w0.36": -63.88484595817317,
+   "abd_gain_at_w0.20_sd_matched": -14.48626179689768,
+   "abd_gain_at_w0.20_alpha_free": -14.374034609798628,
+   "alone_recentred_pts": 33.52915772734111,
+   "alone_raw_pts": -68.73356638050777,
+   "z_sd": 0.12638869738363204,
+   "within_seed_rho": 0.8896709784979773,
+   "rc_argmax_w": 0.0,
+   "rc_gain_at_argmax": 0.0,
+   "paired_t_P1_own_argmax": -2.1229928673153875,
+   "paired_t_P2_w0.20": -4.226642302766678,
+   "paired_t_P3_w0.36": -5.463959095650046,
+   "boot_t_vs_w0_at_argmax": 0.0,
+   "single_seed_gain_mean": -22.267408053398004,
+   "single_seed_gain_sd": 3.3790792172327198,
+   "jackknife_se_of_mean": 1.5487677721023254
+  },
+  {
+   "point": "D5h1_rand47",
+   "axis": "D5_null",
+   "desc": "무작위 절반 47열 마스킹 (rng 9201)",
+   "n_masked_num_cols": 47,
+   "loss": "bce",
+   "rows_restrict": false,
+   "offset_used": false,
+   "variant": null,
+   "IS_BASELINE": false,
+   "n_seeds": 5,
+   "🔑rho_vs_z_mate_oot": 0.8972550590019857,
+   "abd_gain_at_argmax": 8.933169332647822,
+   "abd_argmax_w": 0.28,
+   "abd_gain_at_w0.20": 8.215801783251209,
+   "abd_gain_at_w0.36": 8.184075226358459,
+   "abd_gain_at_w0.20_sd_matched": 8.22296813696164,
+   "abd_gain_at_w0.20_alpha_free": 8.216173082298269,
+   "alone_recentred_pts": 819.351600403917,
+   "alone_raw_pts": 802.6767819780289,
+   "z_sd": 0.20434857681131421,
+   "within_seed_rho": 0.9352961225070928,
+   "rc_argmax_w": 0.31,
+   "rc_gain_at_argmax": 9.328691375931612,
+   "paired_t_P1_own_argmax": -1.236566480888978,
+   "paired_t_P2_w0.20": -1.2028179526188796,
+   "paired_t_P3_w0.36": -1.3006820760297089,
+   "boot_t_vs_w0_at_argmax": 1.651409180249832,
+   "single_seed_gain_mean": 6.811292462816096,
+   "single_seed_gain_sd": 3.69580375141851,
+   "jackknife_se_of_mean": 1.7797722014101274
+  },
+  {
+   "point": "D5h2_rand47",
+   "axis": "D5_null",
+   "desc": "무작위 절반 47열 마스킹 (rng 9202)",
+   "n_masked_num_cols": 47,
+   "loss": "bce",
+   "rows_restrict": false,
+   "offset_used": false,
+   "variant": null,
+   "IS_BASELINE": false,
+   "n_seeds": 5,
+   "🔑rho_vs_z_mate_oot": 0.8809942011247032,
+   "abd_gain_at_argmax": 3.2104111904129695,
+   "abd_argmax_w": 0.16,
+   "abd_gain_at_w0.20": 3.055805384477594,
+   "abd_gain_at_w0.36": -1.387693760568368,
+   "abd_gain_at_w0.20_sd_matched": 3.0641087768068473,
+   "abd_gain_at_w0.20_alpha_free": 3.056821298363957,
+   "alone_recentred_pts": 775.600129661913,
+   "alone_raw_pts": 755.5551210636779,
+   "z_sd": 0.19436836048200787,
+   "within_seed_rho": 0.9287018769535493,
+   "rc_argmax_w": 0.15,
+   "rc_gain_at_argmax": 2.3437604027675434,
+   "paired_t_P1_own_argmax": -2.0690856247321627,
+   "paired_t_P2_w0.20": -2.7198212088832374,
+   "paired_t_P3_w0.36": -2.8654103894608114,
+   "boot_t_vs_w0_at_argmax": 1.1568116141822797,
+   "single_seed_gain_mean": 1.6924191262690784,
+   "single_seed_gain_sd": 3.250411695518759,
+   "jackknife_se_of_mean": 1.4174558645766155
+  },
+  {
+   "point": "D5h3_rand47",
+   "axis": "D5_null",
+   "desc": "무작위 절반 47열 마스킹 (rng 9203)",
+   "n_masked_num_cols": 47,
+   "loss": "bce",
+   "rows_restrict": false,
+   "offset_used": false,
+   "variant": null,
+   "IS_BASELINE": false,
+   "n_seeds": 5,
+   "🔑rho_vs_z_mate_oot": 0.8726981674196949,
+   "abd_gain_at_argmax": 7.126718622607655,
+   "abd_argmax_w": 0.23,
+   "abd_gain_at_w0.20": 7.024739579175616,
+   "abd_gain_at_w0.36": 4.701795757000582,
+   "abd_gain_at_w0.20_sd_matched": 7.023604404610182,
+   "abd_gain_at_w0.20_alpha_free": 7.016616623356526,
+   "alone_recentred_pts": 779.0461130296245,
+   "alone_raw_pts": 776.0815625688866,
+   "z_sd": 0.20268414159153073,
+   "within_seed_rho": 0.9224264247060809,
+   "rc_argmax_w": 0.24,
+   "rc_gain_at_argmax": 6.5657047570443865,
+   "paired_t_P1_own_argmax": -1.4890594813052906,
+   "paired_t_P2_w0.20": -1.4234355040061633,
+   "paired_t_P3_w0.36": -1.7654035840740439,
+   "boot_t_vs_w0_at_argmax": 1.541267302658986,
+   "single_seed_gain_mean": 5.370275106015856,
+   "single_seed_gain_sd": 1.916459420526537,
+   "jackknife_se_of_mean": 1.008546004424737
+  },
+  {
+   "point": "D5m06_rand",
+   "axis": "D5_null",
+   "desc": "무작위 6열 마스킹 — D1 개수 맞춤 대조 (rng 9211)",
+   "n_masked_num_cols": 6,
+   "loss": "bce",
+   "rows_restrict": false,
+   "offset_used": false,
+   "variant": null,
+   "IS_BASELINE": false,
+   "n_seeds": 5,
+   "🔑rho_vs_z_mate_oot": 0.9167772088816893,
+   "abd_gain_at_argmax": 10.27865988370013,
+   "abd_argmax_w": 0.32,
+   "abd_gain_at_w0.20": 8.865062436802532,
+   "abd_gain_at_w0.36": 10.100469041840483,
+   "abd_gain_at_w0.20_sd_matched": 8.957344918625267,
+   "abd_gain_at_w0.20_alpha_free": 8.951756891895116,
+   "alone_recentred_pts": 853.9794106658172,
+   "alone_raw_pts": 834.7518158115963,
+   "z_sd": 0.21080712639966426,
+   "within_seed_rho": 0.9278792930578919,
+   "rc_argmax_w": 0.38,
+   "rc_gain_at_argmax": 12.432318377986121,
+   "paired_t_P1_own_argmax": -1.9260379213567123,
+   "paired_t_P2_w0.20": -2.4049444617252655,
+   "paired_t_P3_w0.36": -2.2259902331227504,
+   "boot_t_vs_w0_at_argmax": 1.8736801876866234,
+   "single_seed_gain_mean": 7.097174787236122,
+   "single_seed_gain_sd": 3.7736609906229224,
+   "jackknife_se_of_mean": 1.652525519452762
+  },
+  {
+   "point": "D5m16_rand",
+   "axis": "D5_null",
+   "desc": "무작위 16열 마스킹 — D2 개수 맞춤 대조 (rng 9212)",
+   "n_masked_num_cols": 16,
+   "loss": "bce",
+   "rows_restrict": false,
+   "offset_used": false,
+   "variant": null,
+   "IS_BASELINE": false,
+   "n_seeds": 5,
+   "🔑rho_vs_z_mate_oot": 0.9088246259761424,
+   "abd_gain_at_argmax": 14.891798100835672,
+   "abd_argmax_w": 0.38,
+   "abd_gain_at_w0.20": 11.62917923004386,
+   "abd_gain_at_w0.36": 14.865687840004398,
+   "abd_gain_at_w0.20_sd_matched": 11.642639202680243,
+   "abd_gain_at_w0.20_alpha_free": 11.643684838724766,
+   "alone_recentred_pts": 865.303797516459,
+   "alone_raw_pts": 849.7493246316434,
+   "z_sd": 0.20680775086990233,
+   "within_seed_rho": 0.9289253717402334,
+   "rc_argmax_w": 0.43,
+   "rc_gain_at_argmax": 16.371940892112548,
+   "paired_t_P1_own_argmax": 0.44468386797706316,
+   "paired_t_P2_w0.20": 0.4185275087168831,
+   "paired_t_P3_w0.36": 0.46014746189249256,
+   "boot_t_vs_w0_at_argmax": 2.066308831467858,
+   "single_seed_gain_mean": 10.01769220270403,
+   "single_seed_gain_sd": 4.867165211793954,
+   "jackknife_se_of_mean": 2.3186406086521494
+  },
+  {
+   "point": "D5m13_rand",
+   "axis": "D5_null",
+   "desc": "무작위 13열 마스킹 — D3 개수 맞춤 대조 (rng 9213)",
+   "n_masked_num_cols": 13,
+   "loss": "bce",
+   "rows_restrict": false,
+   "offset_used": false,
+   "variant": null,
+   "IS_BASELINE": false,
+   "n_seeds": 5,
+   "🔑rho_vs_z_mate_oot": 0.9001752551618926,
+   "abd_gain_at_argmax": 8.453799709162695,
+   "abd_argmax_w": 0.26,
+   "abd_gain_at_w0.20": 7.978322454094155,
+   "abd_gain_at_w0.36": 7.284722680211985,
+   "abd_gain_at_w0.20_sd_matched": 8.079422595841379,
+   "abd_gain_at_w0.20_alpha_free": 8.072649786938769,
+   "alone_recentred_pts": 824.1926952261225,
+   "alone_raw_pts": 792.2135302241951,
+   "z_sd": 0.21330969673977612,
+   "within_seed_rho": 0.9245687088257197,
+   "rc_argmax_w": 0.31,
+   "rc_gain_at_argmax": 10.14192203354628,
+   "paired_t_P1_own_argmax": -1.5113765355880708,
+   "paired_t_P2_w0.20": -1.4634373239956078,
+   "paired_t_P3_w0.36": -1.728567397523536,
+   "boot_t_vs_w0_at_argmax": 1.6958538215957275,
+   "single_seed_gain_mean": 6.236903520606665,
+   "single_seed_gain_sd": 4.239123900883232,
+   "jackknife_se_of_mean": 1.919057085849087
+  },
+  {
+   "point": "D5m83_rand",
+   "axis": "D5_null",
+   "desc": "무작위 83열 마스킹 — D4 개수 맞춤 대조 (rng 9214)",
+   "n_masked_num_cols": 83,
+   "loss": "bce",
+   "rows_restrict": false,
+   "offset_used": false,
+   "variant": null,
+   "IS_BASELINE": false,
+   "n_seeds": 5,
+   "🔑rho_vs_z_mate_oot": 0.8116473106477163,
+   "abd_gain_at_argmax": 0.0,
+   "abd_argmax_w": 0.0,
+   "abd_gain_at_w0.20": -12.881022445043754,
+   "abd_gain_at_w0.36": -32.502569735826114,
+   "abd_gain_at_w0.20_sd_matched": -12.5819409208749,
+   "abd_gain_at_w0.20_alpha_free": -12.487551472917175,
+   "alone_recentred_pts": 575.9353951521163,
+   "alone_raw_pts": 525.9935119822923,
+   "z_sd": 0.1678047565542377,
+   "within_seed_rho": 0.9402321986911119,
+   "rc_argmax_w": 0.0,
+   "rc_gain_at_argmax": 0.0,
+   "paired_t_P1_own_argmax": -2.1229928673153875,
+   "paired_t_P2_w0.20": -5.029862160486798,
+   "paired_t_P3_w0.36": -5.4398110044481935,
+   "boot_t_vs_w0_at_argmax": 0.0,
+   "single_seed_gain_mean": -13.721081180617626,
+   "single_seed_gain_sd": 3.645455322313389,
+   "jackknife_se_of_mean": 1.6058186780289685
+  },
+  {
+   "point": "E_focal_g1",
+   "axis": "E",
+   "desc": "focal loss gamma=1 (alpha 없음)",
+   "n_masked_num_cols": 0,
+   "loss": "focal1",
+   "rows_restrict": false,
+   "offset_used": false,
+   "variant": null,
+   "IS_BASELINE": false,
+   "n_seeds": 5,
+   "🔑rho_vs_z_mate_oot": 0.9233516108188051,
+   "abd_gain_at_argmax": 2.00884656926803,
+   "abd_argmax_w": 0.14,
+   "abd_gain_at_w0.20": 1.6338139921745096,
+   "abd_gain_at_w0.36": -3.0094635592225814,
+   "abd_gain_at_w0.20_sd_matched": 4.472937477240066,
+   "abd_gain_at_w0.20_alpha_free": 4.464893233713269,
+   "alone_recentred_pts": 740.4529937091953,
+   "alone_raw_pts": 693.7118473741677,
+   "z_sd": 0.11535348082349295,
+   "within_seed_rho": 0.9329332091608371,
+   "rc_argmax_w": 0.0,
+   "rc_gain_at_argmax": 0.0,
+   "paired_t_P1_own_argmax": -2.0216724315527768,
+   "paired_t_P2_w0.20": -2.4978352239110833,
+   "paired_t_P3_w0.36": -2.4299116417893583,
+   "boot_t_vs_w0_at_argmax": 0.8282559868652217,
+   "single_seed_gain_mean": 1.1440454752476399,
+   "single_seed_gain_sd": 2.0622445909434663,
+   "jackknife_se_of_mean": 0.9452678002943311
+  },
+  {
+   "point": "E_focal_g2",
+   "axis": "E",
+   "desc": "focal loss gamma=2 (alpha 없음)",
+   "n_masked_num_cols": 0,
+   "loss": "focal2",
+   "rows_restrict": false,
+   "offset_used": false,
+   "variant": null,
+   "IS_BASELINE": false,
+   "n_seeds": 5,
+   "🔑rho_vs_z_mate_oot": 0.9242889497036477,
+   "abd_gain_at_argmax": 0.5318613832239407,
+   "abd_argmax_w": 0.05,
+   "abd_gain_at_w0.20": -3.3039029741943295,
+   "abd_gain_at_w0.36": -16.439750032293205,
+   "abd_gain_at_w0.20_sd_matched": 3.1579381138180906,
+   "abd_gain_at_w0.20_alpha_free": 3.150942066676521,
+   "alone_recentred_pts": 561.0912230585408,
+   "alone_raw_pts": 507.7756021829471,
+   "z_sd": 0.07508762195103623,
+   "within_seed_rho": 0.9329418433056021,
+   "rc_argmax_w": 0.0,
+   "rc_gain_at_argmax": 0.0,
+   "paired_t_P1_own_argmax": -2.077566440554628,
+   "paired_t_P2_w0.20": -2.758901038818597,
+   "paired_t_P3_w0.36": -3.147077887951937,
+   "boot_t_vs_w0_at_argmax": 0.49262909216750916,
+   "single_seed_gain_mean": -3.509718405136914,
+   "single_seed_gain_sd": 2.035089001753723,
+   "jackknife_se_of_mean": 0.9339235274969772
+  },
+  {
+   "point": "E_ls002",
+   "axis": "E",
+   "desc": "label smoothing eps=0.02",
+   "n_masked_num_cols": 0,
+   "loss": "ls0.02",
+   "rows_restrict": false,
+   "offset_used": false,
+   "variant": null,
+   "IS_BASELINE": false,
+   "n_seeds": 5,
+   "🔑rho_vs_z_mate_oot": 0.9143883460756858,
+   "abd_gain_at_argmax": 13.877784329507904,
+   "abd_argmax_w": 0.37,
+   "abd_gain_at_w0.20": 10.942579463102447,
+   "abd_gain_at_w0.36": 13.866692488262402,
+   "abd_gain_at_w0.20_sd_matched": 10.980439736074686,
+   "abd_gain_at_w0.20_alpha_free": 10.979603735816795,
+   "alone_recentred_pts": 867.3226762166753,
+   "alone_raw_pts": 841.883864387094,
+   "z_sd": 0.2083880038306382,
+   "within_seed_rho": 0.9282004188407008,
+   "rc_argmax_w": 0.43,
+   "rc_gain_at_argmax": 15.73112360697678,
+   "paired_t_P1_own_argmax": 0.3763149787103635,
+   "paired_t_P2_w0.20": -0.45967933306462766,
+   "paired_t_P3_w0.36": 0.36169045045627946,
+   "boot_t_vs_w0_at_argmax": 2.1138386309256414,
+   "single_seed_gain_mean": 9.261614990521139,
+   "single_seed_gain_sd": 2.9125245533786366,
+   "jackknife_se_of_mean": 1.3113445057639757
+  },
+  {
+   "point": "E_ls005",
+   "axis": "E",
+   "desc": "label smoothing eps=0.05",
+   "n_masked_num_cols": 0,
+   "loss": "ls0.05",
+   "rows_restrict": false,
+   "offset_used": false,
+   "variant": null,
+   "IS_BASELINE": false,
+   "n_seeds": 5,
+   "🔑rho_vs_z_mate_oot": 0.9143244592329839,
+   "abd_gain_at_argmax": 13.911339511252208,
+   "abd_argmax_w": 0.38,
+   "abd_gain_at_w0.20": 10.739705737472491,
+   "abd_gain_at_w0.36": 13.862193908298309,
+   "abd_gain_at_w0.20_sd_matched": 10.741469981634395,
+   "abd_gain_at_w0.20_alpha_free": 10.740020853983197,
+   "alone_recentred_pts": 871.1565474904037,
+   "alone_raw_pts": 843.4620571549978,
+   "z_sd": 0.20275800859688128,
+   "within_seed_rho": 0.9289120082911125,
+   "rc_argmax_w": 0.43,
+   "rc_gain_at_argmax": 14.732650622795177,
+   "paired_t_P1_own_argmax": 0.21179911963735917,
+   "paired_t_P2_w0.20": -0.6094157707805589,
+   "paired_t_P3_w0.36": 0.16032317537212518,
+   "boot_t_vs_w0_at_argmax": 2.112769966139783,
+   "single_seed_gain_mean": 9.163561230092204,
+   "single_seed_gain_sd": 3.0042544964384748,
+   "jackknife_se_of_mean": 1.3716469516097933
+  },
+  {
+   "point": "F0_rows_only",
+   "axis": "F",
+   "desc": "OOF 커버 904,650행만 학습 · 오프셋 없음 (행 제한 대조)",
+   "n_masked_num_cols": 0,
+   "loss": "bce",
+   "rows_restrict": true,
+   "offset_used": false,
+   "variant": null,
+   "IS_BASELINE": false,
+   "n_seeds": 5,
+   "🔑rho_vs_z_mate_oot": 0.8819036738037064,
+   "abd_gain_at_argmax": 13.779124395185704,
+   "abd_argmax_w": 0.32,
+   "abd_gain_at_w0.20": 11.878930763053972,
+   "abd_gain_at_w0.36": 13.54409564008347,
+   "abd_gain_at_w0.20_sd_matched": 11.873456613553685,
+   "abd_gain_at_w0.20_alpha_free": 11.876006925370916,
+   "alone_recentred_pts": 823.0057787492417,
+   "alone_raw_pts": 741.1937825943404,
+   "z_sd": 0.20880796459205947,
+   "within_seed_rho": 0.8738115514854723,
+   "rc_argmax_w": 0.35,
+   "rc_gain_at_argmax": 14.210471280229285,
+   "paired_t_P1_own_argmax": 0.01871887768705278,
+   "paired_t_P2_w0.20": 0.3863360081533014,
+   "paired_t_P3_w0.36": -0.04393809201886083,
+   "boot_t_vs_w0_at_argmax": 1.9820722609209078,
+   "single_seed_gain_mean": 8.98630880187045,
+   "single_seed_gain_sd": 1.6268669153953317,
+   "jackknife_se_of_mean": 0.6242152527962007
+  },
+  {
+   "point": "F1_resid_off",
+   "axis": "F",
+   "desc": "같은 행 + 학습 시 out-of-time 로짓 오프셋 (잔차 학습)",
+   "n_masked_num_cols": 0,
+   "loss": "bce",
+   "rows_restrict": true,
+   "offset_used": true,
+   "variant": null,
+   "IS_BASELINE": false,
+   "n_seeds": 5,
+   "🔑rho_vs_z_mate_oot": 0.4657598651613324,
+   "abd_gain_at_argmax": 5.779832488406214,
+   "abd_argmax_w": 0.12,
+   "abd_gain_at_w0.20": 2.6586594413790863,
+   "abd_gain_at_w0.36": -20.357784254565445,
+   "abd_gain_at_w0.20_sd_matched": 8.247299130503848,
+   "abd_gain_at_w0.20_alpha_free": 8.243983787048478,
+   "alone_recentred_pts": 237.49373482176983,
+   "alone_raw_pts": -29.943806211396584,
+   "z_sd": 0.1579222742244794,
+   "within_seed_rho": 0.7918382922774979,
+   "rc_argmax_w": 0.05,
+   "rc_gain_at_argmax": 1.0535963804958328,
+   "paired_t_P1_own_argmax": -1.3004088889450158,
+   "paired_t_P2_w0.20": -1.199471265043648,
+   "paired_t_P3_w0.36": -2.512632003705218,
+   "boot_t_vs_w0_at_argmax": 1.2924241219765293,
+   "single_seed_gain_mean": -0.2706249391382016,
+   "single_seed_gain_sd": 4.262934155714939,
+   "jackknife_se_of_mean": 1.6569657326388154
+  },
+  {
+   "point": "F1_resid_plus_off",
+   "axis": "F",
+   "desc": "같은 행 + 학습 시 out-of-time 로짓 오프셋 (잔차 학습) — **평가 시 오프셋을 더한 읽기**",
+   "n_masked_num_cols": 0,
+   "loss": "bce",
+   "rows_restrict": true,
+   "offset_used": true,
+   "variant": "z = model(x) + offset_valid",
+   "IS_BASELINE": false,
+   "n_seeds": 5,
+   "🔑rho_vs_z_mate_oot": 0.8468879690501134,
+   "abd_gain_at_argmax": 4.988758938062574,
+   "abd_argmax_w": 0.13,
+   "abd_gain_at_w0.20": 3.3905830249980227,
+   "abd_gain_at_w0.36": -11.400174423270528,
+   "abd_gain_at_w0.20_sd_matched": 4.9930711290779755,
+   "abd_gain_at_w0.20_alpha_free": 4.983889573928536,
+   "alone_recentred_pts": 567.2520846972451,
+   "alone_raw_pts": 355.7633139940619,
+   "z_sd": 0.26739603183108435,
+   "within_seed_rho": 0.9178300181409489,
+   "rc_argmax_w": 0.18,
+   "rc_gain_at_argmax": 8.46712409275915,
+   "paired_t_P1_own_argmax": -1.5741853323087136,
+   "paired_t_P2_w0.20": -1.5792928556819819,
+   "paired_t_P3_w0.36": -2.864386242595634,
+   "boot_t_vs_w0_at_argmax": 1.3732703933888486,
+   "single_seed_gain_mean": 0.480929615767036,
+   "single_seed_gain_sd": 5.535052358455807,
+   "jackknife_se_of_mean": 2.258282371356855
+  }
+ ],
+ "PREREGISTERED_VERDICT": {
+  "rule": "주 기준 P1 — 각 지점을 자기 argmax w 에서, 기준선(D0 = 1632·5시드·현행구조·BCE·전체 99열)을 argmax w 0.36 에서 놓고 짝지은 투수 블록 부트스트랩 t >= 2.0",
+  "reference_point": "D0_all99_bce",
+  "reference_gain_at_argmax": 13.714309769419287,
+  "reference_argmax_w": 0.36,
+  "reference_rho": 0.9141957764385082,
+  "qualifying_points": [],
+  "PASS": false,
+  "S99_best_mix_point": "D5m16_rand",
+  "S99_best_mix_gain_at_argmax": 14.891798100835672,
+  "S99_best_alone_point": "E_ls005",
+  "S99_best_alone_recentred_score": 871.1565474904037,
+  "S99_same_point": false
+ },
+ "F_axis": {
+  "config_named_source_missing": {
+   "exp_id": "exp_092",
+   "stage": "s0_gateF",
+   "question": "학습 행(oot23 1,116,277행)에 대한 out-of-time 팔 예측이 있는가 — 있으면 축 F(잔차 타깃)를 돌리고, 없으면 미착수로 적는다",
+   "n_all_rows": 1475092,
+   "n_oot23_train_rows": 1116277,
+   "n_valid_2024": 253507,
+   "scanned_roots": [
+    "/home/<user>/SungjinPark/experiments/exp_049/pred",
+    "/home/<user>/SungjinPark/experiments/exp_055/pred",
+    "/home/<user>/SungjinPark/exp069/oot",
+    "/home/<user>/SungjinPark/exp070/oot3",
+    "/home/<user>/SungjinPark/exp071/out",
+    "/home/<user>/SungjinPark/oof_new",
+    "/home/<user>/SungjinPark/experiments/exp_051/oof",
+    "/home/<user>/SungjinPark/build_AH/localref/oof",
+    "/home/<user>/SungjinPark/arms"
+   ],
+   "by_root": {
+    "/home/<user>/SungjinPark/experiments/exp_049/pred": {
+     "n_files_scanned": 45,
+     "length_histogram": {
+      "253507": 45
+     },
+     "sample": {
+      "pred_A0_u2024_seed2024_at1000.npy": 253507,
+      "pred_A0_u2024_seed2024_at1400.npy": 253507,
+      "pred_A0_u2024_seed2024_at655.npy": 253507,
+      "pred_A0_u2024_seed42_at1000.npy": 253507,
+      "pred_A0_u2024_seed42_at1400.npy": 253507,
+      "pred_A0_u2024_seed42_at655.npy": 253507
+     }
+    },
+    "/home/<user>/SungjinPark/experiments/exp_055/pred": {
+     "n_files_scanned": 6,
+     "length_histogram": {
+      "253507": 6
+     },
+     "sample": {
+      "pred_T70_u2024_seed2024_at1400.npy": 253507,
+      "pred_T70_u2024_seed42_at1400.npy": 253507,
+      "pred_T70_u2024_seed7_at1400.npy": 253507,
+      "pred_T85_u2024_seed2024_at1400.npy": 253507,
+      "pred_T85_u2024_seed42_at1400.npy": 253507,
+      "pred_T85_u2024_seed7_at1400.npy": 253507
+     }
+    },
+    "/home/<user>/SungjinPark/exp069/oot": {
+     "n_files_scanned": 8,
+     "length_histogram": {
+      "253507": 7,
+      "ERR ValueError": 1
+     },
+     "sample": {
+      "off_oot2024.npy": 253507,
+      "p_cat_oot2024.npy": 253507,
+      "p_leaf_oot2024.npy": 253507,
+      "p_lgb_oot2024.npy": 253507,
+      "p_q_oot2024.npy": 253507,
+      "p_v6_3arm_rawW_oot2024.npy": 253507
+     }
+    },
+    "/home/<user>/SungjinPark/exp070/oot3": {
+     "n_files_scanned": 1,
+     "length_histogram": {
+      "253507": 1
+     },
+     "sample": {
+      "p_ebm_oot2024.npy": 253507
+     }
+    },
+    "/home/<user>/SungjinPark/exp071/out": {
+     "n_files_scanned": 5,
+     "length_histogram": {
+      "253507": 4,
+      "ERR ValueError": 1
+     },
+     "sample": {
+      "p_nn_oot2024.npy": 253507,
+      "p_nn_oot2024_bestepoch.npy": 253507,
+      "p_nn_oot2024_last25.npy": 253507,
+      "p_v6_4arm_oot2024.npy": 253507,
+      "row_id_oot2024_ours.npy": "ERR ValueError"
+     }
+    },
+    "/home/<user>/SungjinPark/oof_new": {
+     "n_files_scanned": 64,
+     "length_histogram": {
+      "0": 24,
+      "4": 12,
+      "1475092": 28
+     },
+     "sample": {
+      "stack_fold2024_seed1.npz::seed": 0,
+      "stack_fold2024_seed1.npz::unit": 0,
+      "stack_fold2024_seed1.npz::train_upto": 0,
+      "stack_fold2024_seed1.npz::cell_round": 4,
+      "stack_fold2024_seed1.npz::fail_cells": 4,
+      "stack_fold2024_seed1.npz::tr_full": 1475092
+     }
+    },
+    "/home/<user>/SungjinPark/experiments/exp_051/oof": {
+     "n_files_scanned": 39,
+     "length_histogram": {
+      "0": 15,
+      "4": 3,
+      "1475092": 21
+     },
+     "sample": {
+      "stack_fold2024_seed2024.npz::seed": 0,
+      "stack_fold2024_seed2024.npz::unit": 0,
+      "stack_fold2024_seed2024.npz::train_upto": 0,
+      "stack_fold2024_seed2024.npz::cell_round": 4,
+      "stack_fold2024_seed2024.npz::tr_full": 1475092,
+      "stack_fold2024_seed2024.npz::va": 1475092
+     }
+    },
+    "/home/<user>/SungjinPark/build_AH/localref/oof": {
+     "n_files_scanned": 36,
+     "length_histogram": {
+      "0": 12,
+      "4": 3,
+      "1475092": 21
+     },
+     "sample": {
+      "stack_fold2024_seed2024.npz::seed": 0,
+      "stack_fold2024_seed2024.npz::unit": 0,
+      "stack_fold2024_seed2024.npz::train_upto": 0,
+      "stack_fold2024_seed2024.npz::cell_round": 4,
+      "stack_fold2024_seed2024.npz::tr_full": 1475092,
+      "stack_fold2024_seed2024.npz::va": 1475092
+     }
+    },
+    "/home/<user>/SungjinPark/arms": {
+     "n_files_scanned": 8,
+     "length_histogram": {
+      "5": 3,
+      "253507": 5
+     },
+     "sample": {
+      "X_arms.npy": 5,
+      "coef_now.npy": 5,
+      "coef_opt.npy": 5,
+      "ids.npy": 253507,
+      "lg_p_q.npy": 253507,
+      "lg_p_v6.npy": 253507
+     }
+    }
+   },
+   "candidate_train_row_vectors": [
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed1.npz",
+     "key": "tr_full",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed1.npz",
+     "key": "va",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed1.npz",
+     "key": "season",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed1.npz",
+     "key": "p_is_mid_only",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed1.npz",
+     "key": "p_is_rev_only",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed1.npz",
+     "key": "p_is_both",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed1.npz",
+     "key": "p_is_wayoff_true",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed101.npz",
+     "key": "tr_full",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed101.npz",
+     "key": "va",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed101.npz",
+     "key": "season",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed101.npz",
+     "key": "p_is_mid_only",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed101.npz",
+     "key": "p_is_rev_only",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed101.npz",
+     "key": "p_is_both",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed101.npz",
+     "key": "p_is_wayoff_true",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed13.npz",
+     "key": "tr_full",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed13.npz",
+     "key": "va",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed13.npz",
+     "key": "season",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed13.npz",
+     "key": "p_is_mid_only",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed13.npz",
+     "key": "p_is_rev_only",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed13.npz",
+     "key": "p_is_both",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed13.npz",
+     "key": "p_is_wayoff_true",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed42.npz",
+     "key": "tr_full",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed42.npz",
+     "key": "va",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed42.npz",
+     "key": "season",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed42.npz",
+     "key": "p_is_mid_only",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed42.npz",
+     "key": "p_is_rev_only",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed42.npz",
+     "key": "p_is_both",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/oof_new/stack_fold2024_seed42.npz",
+     "key": "p_is_wayoff_true",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/experiments/exp_051/oof/stack_fold2024_seed2024.npz",
+     "key": "tr_full",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/experiments/exp_051/oof/stack_fold2024_seed2024.npz",
+     "key": "va",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/experiments/exp_051/oof/stack_fold2024_seed2024.npz",
+     "key": "season",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/experiments/exp_051/oof/stack_fold2024_seed2024.npz",
+     "key": "p_is_mid_only",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/experiments/exp_051/oof/stack_fold2024_seed2024.npz",
+     "key": "p_is_rev_only",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/experiments/exp_051/oof/stack_fold2024_seed2024.npz",
+     "key": "p_is_both",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/experiments/exp_051/oof/stack_fold2024_seed2024.npz",
+     "key": "p_is_wayoff_true",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/experiments/exp_051/oof/stack_fold2024_seed42.npz",
+     "key": "tr_full",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/experiments/exp_051/oof/stack_fold2024_seed42.npz",
+     "key": "va",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/experiments/exp_051/oof/stack_fold2024_seed42.npz",
+     "key": "season",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/experiments/exp_051/oof/stack_fold2024_seed42.npz",
+     "key": "p_is_mid_only",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/experiments/exp_051/oof/stack_fold2024_seed42.npz",
+     "key": "p_is_rev_only",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/experiments/exp_051/oof/stack_fold2024_seed42.npz",
+     "key": "p_is_both",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/experiments/exp_051/oof/stack_fold2024_seed42.npz",
+     "key": "p_is_wayoff_true",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/experiments/exp_051/oof/stack_fold2024_seed7.npz",
+     "key": "tr_full",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/experiments/exp_051/oof/stack_fold2024_seed7.npz",
+     "key": "va",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/experiments/exp_051/oof/stack_fold2024_seed7.npz",
+     "key": "season",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/experiments/exp_051/oof/stack_fold2024_seed7.npz",
+     "key": "p_is_mid_only",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/experiments/exp_051/oof/stack_fold2024_seed7.npz",
+     "key": "p_is_rev_only",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/experiments/exp_051/oof/stack_fold2024_seed7.npz",
+     "key": "p_is_both",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/experiments/exp_051/oof/stack_fold2024_seed7.npz",
+     "key": "p_is_wayoff_true",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/build_AH/localref/oof/stack_fold2024_seed2024.npz",
+     "key": "tr_full",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/build_AH/localref/oof/stack_fold2024_seed2024.npz",
+     "key": "va",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/build_AH/localref/oof/stack_fold2024_seed2024.npz",
+     "key": "season",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/build_AH/localref/oof/stack_fold2024_seed2024.npz",
+     "key": "p_is_mid_only",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/build_AH/localref/oof/stack_fold2024_seed2024.npz",
+     "key": "p_is_rev_only",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/build_AH/localref/oof/stack_fold2024_seed2024.npz",
+     "key": "p_is_both",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/build_AH/localref/oof/stack_fold2024_seed2024.npz",
+     "key": "p_is_wayoff_true",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/build_AH/localref/oof/stack_fold2024_seed42.npz",
+     "key": "tr_full",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/build_AH/localref/oof/stack_fold2024_seed42.npz",
+     "key": "va",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/build_AH/localref/oof/stack_fold2024_seed42.npz",
+     "key": "season",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/build_AH/localref/oof/stack_fold2024_seed42.npz",
+     "key": "p_is_mid_only",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/build_AH/localref/oof/stack_fold2024_seed42.npz",
+     "key": "p_is_rev_only",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/build_AH/localref/oof/stack_fold2024_seed42.npz",
+     "key": "p_is_both",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/build_AH/localref/oof/stack_fold2024_seed42.npz",
+     "key": "p_is_wayoff_true",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/build_AH/localref/oof/stack_fold2024_seed7.npz",
+     "key": "tr_full",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/build_AH/localref/oof/stack_fold2024_seed7.npz",
+     "key": "va",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/build_AH/localref/oof/stack_fold2024_seed7.npz",
+     "key": "season",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/build_AH/localref/oof/stack_fold2024_seed7.npz",
+     "key": "p_is_mid_only",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/build_AH/localref/oof/stack_fold2024_seed7.npz",
+     "key": "p_is_rev_only",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/build_AH/localref/oof/stack_fold2024_seed7.npz",
+     "key": "p_is_both",
+     "n": 1475092
+    },
+    {
+     "path": "/home/<user>/SungjinPark/build_AH/localref/oof/stack_fold2024_seed7.npz",
+     "key": "p_is_wayoff_true",
+     "n": 1475092
+    }
+   ],
+   "FEASIBLE": true,
+   "verdict": "가능 — 위 벡터로 오프셋을 만든다"
+  },
+  "substitute_built": {
+   "exp_id": "exp_092",
+   "stage": "s0_offF",
+   "source": "oof_new/stack_fold2024_seed{1,13,42,101}.npz — 시즌 전진 연쇄 OOF 4시드 평균",
+   "construction": "p_succ = 1 - sum(4 fail cells);  offset = logit(clip(p_succ, 1e-6, 1-1e-6))",
+   "npz_meta": {
+    "seed1": {
+     "row_id_sha256": "90ff0adca6d1974f509dafc3b674f1003f744e15a2fe8a6ea978e871ed9c609f",
+     "train_csv_sha256": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+     "train_upto": 2023,
+     "unit": 2024
+    },
+    "seed13": {
+     "row_id_sha256": "90ff0adca6d1974f509dafc3b674f1003f744e15a2fe8a6ea978e871ed9c609f",
+     "train_csv_sha256": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+     "train_upto": 2023,
+     "unit": 2024
+    },
+    "seed42": {
+     "row_id_sha256": "90ff0adca6d1974f509dafc3b674f1003f744e15a2fe8a6ea978e871ed9c609f",
+     "train_csv_sha256": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+     "train_upto": 2023,
+     "unit": 2024
+    },
+    "seed101": {
+     "row_id_sha256": "90ff0adca6d1974f509dafc3b674f1003f744e15a2fe8a6ea978e871ed9c609f",
+     "train_csv_sha256": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+     "train_upto": 2023,
+     "unit": 2024
+    }
+   },
+   "gates": {
+    "tr_full_equals_oot23_mask": true,
+    "valid_fully_covered": true,
+    "seed_nan_patterns_identical": true,
+    "fit_rows_close_season_boundary": "mk_oof.py fit_rows = (season<s) & ~f_excl & ok & (succ_season<s) — 복원 라벨의 후속 행까지 예측 시즌 앞이라 시즌 경계가 닫힌다",
+    "pred_rows_use_no_label": "mk_oof.py pred_rows = (season==s) & tr_full — 라벨 미사용"
+   },
+   "coverage": {
+    "n_oot23_train_rows": 1116277,
+    "n_covered_train_rows": 904650,
+    "covered_share": 0.8104171276484242,
+    "per_season": {
+     "2019": {
+      "n": 211627,
+      "covered_share": 0.0
+     },
+     "2020": {
+      "n": 220874,
+      "covered_share": 1.0
+     },
+     "2021": {
+      "n": 221227,
+      "covered_share": 1.0
+     },
+     "2022": {
+      "n": 217024,
+      "covered_share": 1.0
+     },
+     "2023": {
+      "n": 245525,
+      "covered_share": 1.0
+     }
+    },
+    "n_valid": 253507,
+    "valid_covered_share": 1.0
+   },
+   "offset_arm_quality_on_valid_2024": {
+    "recentred_brier": 0.2480804168679533,
+    "recentred_pts": 691.1270793747871,
+    "p_succ_mean": 0.49734372982454716,
+    "y_mean": 0.4861049201797189,
+    "logit_sd": 0.17671623526233654
+   },
+   "artifacts": {
+    "offF_all.npy": "/home/<user>/SungjinPark/exp092/work/offF_all.npy",
+    "rowsF_all.npy": "/home/<user>/SungjinPark/exp092/work/rowsF_all.npy",
+    "off_sha256": "fc034ac8afe24951a2b301777e499031fc7c912a107e144cbd7e24ede9c3a61b"
+   },
+   "🔴 남은 한계": "① mate 가 아니라 실패셀 CatBoost 대리값이다 ② 2019 행(19.0%)이 커버 밖이라 F 는 학습 행이 81.0% 로 줄어든다 — 그래서 **같은 행 제한 · 오프셋 없음** 대조(F0)를 함께 돌린다"
+  },
+  "offset_arm_on_surface": {
+   "rho_vs_z_mate_oot": 0.8652324725780852,
+   "alone_recentred_pts": 691.1270793747871,
+   "sd": 0.17671623526233654
+  }
+ },
+ "rule_2_4_permutation": {
+  "mask_ins": {
+   "exp_id": "exp_092",
+   "stage": "s3_rule24",
+   "variant": "mask_ins",
+   "n_masked_num_cols": 16,
+   "offset_in_training": false,
+   "n_rows": 253507,
+   "target": "train092.py 가 저장하는 valid 로짓 z (이 실험의 유일한 측정 산출물)",
+   "method": "CLAUDE.md §규칙 2-4 — 위치(전 행 순열 왕복)와 내용(S28 축퇴 프레임)을 가른다",
+   "position_permutation": {
+    "max_abs_delta": 0.0,
+    "n_moving": 0,
+    "PASS_position_independent": true
+   },
+   "content_separation": {
+    "n_keep": 110,
+    "max_abs_delta_on_KEEP": 0.0,
+    "n_moving": 0,
+    "PASS_content_independent": true
+   },
+   "no_test_frame_statistics": "이 실험은 test(2025) 프레임을 한 번도 읽지 않는다. mu/sd·어휘는 exp_089 work/ 의 학습 구간 산출물이고, 면의 모든 팔은 out-of-time 납품 벡터다.",
+   "PASS": true
+  },
+  "offsetF": {
+   "exp_id": "exp_092",
+   "stage": "s3_rule24",
+   "variant": "offsetF",
+   "n_masked_num_cols": 0,
+   "offset_in_training": true,
+   "n_rows": 253507,
+   "target": "train092.py 가 저장하는 valid 로짓 z (이 실험의 유일한 측정 산출물)",
+   "method": "CLAUDE.md §규칙 2-4 — 위치(전 행 순열 왕복)와 내용(S28 축퇴 프레임)을 가른다",
+   "position_permutation": {
+    "max_abs_delta": 0.0,
+    "n_moving": 0,
+    "PASS_position_independent": true
+   },
+   "content_separation": {
+    "n_keep": 110,
+    "max_abs_delta_on_KEEP": 0.0,
+    "n_moving": 0,
+    "PASS_content_independent": true
+   },
+   "no_test_frame_statistics": "이 실험은 test(2025) 프레임을 한 번도 읽지 않는다. mu/sd·어휘는 exp_089 work/ 의 학습 구간 산출물이고, 면의 모든 팔은 out-of-time 납품 벡터다.",
+   "PASS": true
+  }
+ },
+ "fold_2024": {
+  "note": "이 실험은 단일 모델의 fold Brier 를 내는 실험이 아니다. 비교 기준은 exp_089 정직면(모든 팔 out-of-time, valid = season 2024 전체 253,507행)의 **혼합 이득(점수 단위)** 이다. fold_2022/2023 은 이 면에 존재하지 않는다.",
+  "baseline_pts_abd": 932.5807811936593,
+  "baseline_brier_abd": 0.24747724886050435,
+  "reference_point": "D0_all99_bce",
+  "reference_gain_at_argmax_pts": 13.714309769419287,
+  "best_mix_point": "D5m16_rand",
+  "best_mix_gain_at_argmax_pts": 14.891798100835672,
+  "best_alone_point": "E_ls005",
+  "best_alone_recentred_pts": 871.1565474904037,
+  "S99_best_mix_and_best_alone_same_point": false
+ },
+ "seeds": {
+  "S5": [
+   42,
+   777,
+   2024,
+   101,
+   7
+  ]
+ },
+ "families_masked": {
+  "sp_": [
+   72,
+   73,
+   74,
+   75,
+   76,
+   77
+  ],
+  "ins_": [
+   78,
+   79,
+   80,
+   81,
+   82,
+   83,
+   84,
+   85,
+   86,
+   87,
+   88,
+   89,
+   90,
+   91,
+   92,
+   93
+  ],
+  "i3_anom_+p6_": [
+   29,
+   30,
+   31,
+   32,
+   33,
+   34,
+   42,
+   43,
+   44,
+   45,
+   46,
+   47,
+   48
+  ],
+  "kept_situational": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ]
+ },
+ "wall_sec_stage1": 67.2
+}

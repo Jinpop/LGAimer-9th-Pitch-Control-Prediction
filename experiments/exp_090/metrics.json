@@ -1,0 +1,663 @@
+{
+ "exp_id": "exp_090",
+ "title": "딥 팔 학습량 훑기 — OOT 정직면에서 고원을 찾고 그 자리로 배포 팔 재학습",
+ "verdict": "PASS (사전 등록 통과) — stage 2 수행",
+ "surface": {
+  "name": "exp_089 정직면 (모든 팔 out-of-time)",
+  "baseline_w0_rc_pts": 928.501461058684,
+  "baseline_w0_rc_expected_exp078_080": 928.501461058684,
+  "baseline_w0_rc_abs_diff": 0.0,
+  "baseline_w0_abd_pts": 932.5807811936593,
+  "z_mate_alone_recentred_pts": 932.8479386726873,
+  "K_pts_per_brier": 400309.19882517256,
+  "ref_brier": 0.2498069,
+  "n_rows_valid_2024": 253507,
+  "y_mean": 0.4861049201797189,
+  "primary_convention": "abd (배포 산술: p = expit(alpha*z + beta_skew*z^2 + d))",
+  "BO_constants": {
+   "alpha": 1.07911,
+   "beta_skew": -0.059151,
+   "c_aa": 0.25244,
+   "c_T70": 0.04756,
+   "w_out": 0.7,
+   "w_v6_inner": 0.6668397489,
+   "w_ebm": -0.1,
+   "beta_ins": 0.03
+  }
+ },
+ "gates": {
+  "baseline_reproduction": {
+   "PASS": true,
+   "abs_diff_pts": 0.0
+  },
+  "code_path_reproduction_vs_exp089": {
+   "what": "exp_089 S720_oot23_s42 를 train090.py 로 재적합",
+   "z_sha256": "90002c1450b839d596b94e4c0873671270e230a3ab276e7b669136e064184a3b",
+   "max_abs_diff": 0.0,
+   "PASS": true
+  },
+  "reused_pred_sha_all_match": true,
+  "n_preds_sha_checked": 60
+ },
+ "stage1_step_curve": [
+  {
+   "total_steps": 544,
+   "epochs_oot23": 2.0,
+   "source": "reused_exp089",
+   "alone_recentred_pts": 812.9058121682409,
+   "alone_raw_pts": 743.4516162133752,
+   "z_sd": 0.1963541447866598,
+   "rho_vs_z_mate_oot": 0.934985627985493,
+   "within_seed_rho": 0.9723052391306732,
+   "abd_argmax_w": 0.0,
+   "abd_gain_at_argmax": 0.0,
+   "abd_t_at_argmax": 0.0,
+   "abd_gain_at_w0.20": -2.894440236889068,
+   "abd_t_at_w0.20": -1.1099988854847904,
+   "abd_gain_at_w0.20_sd_matched": -2.8573855766267116,
+   "abd_gain_at_w0.20_alpha_free": -2.8430017863012154,
+   "abd_B_K_mean_delta2": 2.7141545282390633,
+   "abd_ci95_at_w0.20": [
+    -7.699199616283204,
+    2.264798477429224
+   ],
+   "rc_argmax_w": 0.0,
+   "rc_gain_at_argmax": 0.0,
+   "rc_gain_at_w0.20": -2.2487595890407874,
+   "rc_t_at_w0.20": -0.9325438191802704,
+   "single_seed_gain_mean": -3.418078894907853,
+   "single_seed_gain_sd": 1.7314552259911025,
+   "jackknife_se_of_5seed_mean": 0.8316473689889589,
+   "paired_t_vs_peak_1632": 3.928410639010655
+  },
+  {
+   "total_steps": 720,
+   "epochs_oot23": 2.6470588235294117,
+   "source": "reused_exp089",
+   "alone_recentred_pts": 848.8856011706791,
+   "alone_raw_pts": 805.0993132578843,
+   "z_sd": 0.1829123699701478,
+   "rho_vs_z_mate_oot": 0.9379446646946592,
+   "within_seed_rho": 0.9513085764789782,
+   "abd_argmax_w": 0.14,
+   "abd_gain_at_argmax": 1.1471170445198595,
+   "abd_t_at_argmax": 0.6893979872564332,
+   "abd_gain_at_w0.20": 0.9482307253728095,
+   "abd_t_at_w0.20": 0.3992872335475118,
+   "abd_gain_at_w0.20_sd_matched": 0.9516316723967293,
+   "abd_gain_at_w0.20_alpha_free": 0.9497204546571538,
+   "abd_B_K_mean_delta2": 2.299851030354906,
+   "abd_ci95_at_w0.20": [
+    -3.664038642907357,
+    5.812598343755826
+   ],
+   "rc_argmax_w": 0.1,
+   "rc_gain_at_argmax": 0.5420369897035471,
+   "rc_gain_at_w0.20": 0.09691847407952991,
+   "rc_t_at_w0.20": 0.0427133603283167,
+   "single_seed_gain_mean": -0.1806194849329586,
+   "single_seed_gain_sd": 2.2025652882639895,
+   "jackknife_se_of_5seed_mean": 0.7028761445462685,
+   "paired_t_vs_peak_1632": 3.593827171801517
+  },
+  {
+   "total_steps": 816,
+   "epochs_oot23": 3.0,
+   "source": "reused_exp089",
+   "alone_recentred_pts": 889.8553640782513,
+   "alone_raw_pts": 865.9976133704173,
+   "z_sd": 0.1961358583513394,
+   "rho_vs_z_mate_oot": 0.9337318749278408,
+   "within_seed_rho": 0.9460425425887513,
+   "abd_argmax_w": 0.42,
+   "abd_gain_at_argmax": 11.941475979826464,
+   "abd_t_at_argmax": 2.1645907822932062,
+   "abd_gain_at_w0.20": 8.730593474115494,
+   "abd_t_at_w0.20": 3.2507135598161923,
+   "abd_gain_at_w0.20_sd_matched": 8.72927569268711,
+   "abd_gain_at_w0.20_alpha_free": 8.724162699902422,
+   "abd_B_K_mean_delta2": 2.7664888219960297,
+   "abd_ci95_at_w0.20": [
+    3.6285842120767495,
+    14.181474300092935
+   ],
+   "rc_argmax_w": 0.45,
+   "rc_gain_at_argmax": 12.165668293073736,
+   "rc_gain_at_w0.20": 8.36644797306269,
+   "rc_t_at_w0.20": 3.3104567864241297,
+   "single_seed_gain_mean": 7.3721268899573715,
+   "single_seed_gain_sd": 3.6219215024485862,
+   "jackknife_se_of_5seed_mean": 2.129666304551006,
+   "paired_t_vs_peak_1632": 1.0489152899615934
+  },
+  {
+   "total_steps": 1088,
+   "epochs_oot23": 4.0,
+   "source": "reused_exp089",
+   "alone_recentred_pts": 890.7593323756014,
+   "alone_raw_pts": 885.0323028092299,
+   "z_sd": 0.20889207610081395,
+   "rho_vs_z_mate_oot": 0.9360995810498497,
+   "within_seed_rho": 0.9464807861501834,
+   "abd_argmax_w": 0.39,
+   "abd_gain_at_argmax": 11.710562218825203,
+   "abd_t_at_argmax": 2.105445963189063,
+   "abd_gain_at_w0.20": 8.985833278929476,
+   "abd_t_at_w0.20": 3.0969242826365955,
+   "abd_gain_at_w0.20_sd_matched": 9.098735168711073,
+   "abd_gain_at_w0.20_alpha_free": 9.094951321242434,
+   "abd_B_K_mean_delta2": 3.1387965546596366,
+   "abd_ci95_at_w0.20": [
+    3.3596799713364116,
+    14.576795431087668
+   ],
+   "rc_argmax_w": 0.47,
+   "rc_gain_at_argmax": 14.535675938609415,
+   "rc_gain_at_w0.20": 9.815366785159654,
+   "rc_t_at_w0.20": 3.6145572949981286,
+   "single_seed_gain_mean": 7.761513897672762,
+   "single_seed_gain_sd": 4.477080154325785,
+   "jackknife_se_of_5seed_mean": 2.0452595847196564,
+   "paired_t_vs_peak_1632": 1.1411069684320807
+  },
+  {
+   "total_steps": 1360,
+   "epochs_oot23": 5.0,
+   "source": "new_exp090",
+   "alone_recentred_pts": 866.7854630308835,
+   "alone_raw_pts": 823.6969095722691,
+   "z_sd": 0.21014800992185204,
+   "rho_vs_z_mate_oot": 0.9215108343591798,
+   "within_seed_rho": 0.9336456701160097,
+   "abd_argmax_w": 0.34,
+   "abd_gain_at_argmax": 10.82695181361396,
+   "abd_t_at_argmax": 1.9113341034310154,
+   "abd_gain_at_w0.20": 9.03151857720718,
+   "abd_t_at_w0.20": 2.6906923848407547,
+   "abd_gain_at_w0.20_sd_matched": 9.121120397770369,
+   "abd_gain_at_w0.20_alpha_free": 9.116608687476173,
+   "abd_B_K_mean_delta2": 3.805689925567904,
+   "abd_ci95_at_w0.20": [
+    2.1627668051000786,
+    15.268537829114058
+   ],
+   "rc_argmax_w": 0.4,
+   "rc_gain_at_argmax": 12.91078278106147,
+   "rc_gain_at_w0.20": 9.726384412744778,
+   "rc_t_at_w0.20": 3.097401624585144,
+   "single_seed_gain_mean": 7.497820185093929,
+   "single_seed_gain_sd": 2.550087903441934,
+   "jackknife_se_of_5seed_mean": 0.9734002333033208,
+   "paired_t_vs_peak_1632": 1.5717934116763126
+  },
+  {
+   "total_steps": 1632,
+   "epochs_oot23": 6.0,
+   "source": "new_exp090",
+   "alone_recentred_pts": 862.5652996988365,
+   "alone_raw_pts": 839.3264085570396,
+   "z_sd": 0.21298216018288174,
+   "rho_vs_z_mate_oot": 0.9141957764385082,
+   "within_seed_rho": 0.9275621625352051,
+   "abd_argmax_w": 0.36,
+   "abd_gain_at_argmax": 13.714309769419287,
+   "abd_t_at_argmax": 2.1229928673153875,
+   "abd_gain_at_w0.20": 11.05028248077349,
+   "abd_t_at_w0.20": 3.0241586457078147,
+   "abd_gain_at_w0.20_sd_matched": 11.139122023196023,
+   "abd_gain_at_w0.20_alpha_free": 11.138663253484879,
+   "abd_B_K_mean_delta2": 4.286655659102538,
+   "abd_ci95_at_w0.20": [
+    3.988469658696832,
+    18.292434422868055
+   ],
+   "rc_argmax_w": 0.42,
+   "rc_gain_at_argmax": 16.377190198735207,
+   "rc_gain_at_w0.20": 11.832087780316783,
+   "rc_t_at_w0.20": 3.431811715096677,
+   "single_seed_gain_mean": 9.292554747004624,
+   "single_seed_gain_sd": 3.11244291175065,
+   "jackknife_se_of_5seed_mean": 1.3818103024888004,
+   "paired_t_vs_peak_1632": null
+  },
+  {
+   "total_steps": 2176,
+   "epochs_oot23": 8.0,
+   "source": "new_exp090",
+   "alone_recentred_pts": 793.897802758281,
+   "alone_raw_pts": 726.703225861991,
+   "z_sd": 0.2229870330432216,
+   "rho_vs_z_mate_oot": 0.8894608630889391,
+   "within_seed_rho": 0.8956181636654195,
+   "abd_argmax_w": 0.25,
+   "abd_gain_at_argmax": 9.562187935097086,
+   "abd_t_at_argmax": 1.7945432645412205,
+   "abd_gain_at_w0.20": 9.152034364123779,
+   "abd_t_at_w0.20": 2.138949802734878,
+   "abd_gain_at_w0.20_sd_matched": 9.35898456162488,
+   "abd_gain_at_w0.20_alpha_free": 9.353018673163888,
+   "abd_B_K_mean_delta2": 6.009615360177387,
+   "abd_ci95_at_w0.20": [
+    0.7437791400242519,
+    17.34299475006478
+   ],
+   "rc_argmax_w": 0.31,
+   "rc_gain_at_argmax": 12.071068984786848,
+   "rc_gain_at_w0.20": 10.617775953947103,
+   "rc_t_at_w0.20": 2.6626765207467873,
+   "single_seed_gain_mean": 6.333960632620688,
+   "single_seed_gain_sd": 3.3415070042243795,
+   "jackknife_se_of_5seed_mean": 1.5286876400747929,
+   "paired_t_vs_peak_1632": 1.1130092382826038
+  },
+  {
+   "total_steps": 2720,
+   "epochs_oot23": 10.0,
+   "source": "new_exp090",
+   "alone_recentred_pts": 731.8082860196862,
+   "alone_raw_pts": 681.29870074497,
+   "z_sd": 0.23067980354151565,
+   "rho_vs_z_mate_oot": 0.8702440075376061,
+   "within_seed_rho": 0.857403202098763,
+   "abd_argmax_w": 0.2,
+   "abd_gain_at_argmax": 7.403203400235839,
+   "abd_t_at_argmax": 1.6034742509521311,
+   "abd_gain_at_w0.20": 7.403203400235839,
+   "abd_t_at_w0.20": 1.6034742509521311,
+   "abd_gain_at_w0.20_sd_matched": 7.7153549560727015,
+   "abd_gain_at_w0.20_alpha_free": 7.708090555613808,
+   "abd_B_K_mean_delta2": 7.4510565390023284,
+   "abd_ci95_at_w0.20": [
+    -1.7599243910394426,
+    16.54697919087044
+   ],
+   "rc_argmax_w": 0.24,
+   "rc_gain_at_argmax": 9.568237612955727,
+   "rc_gain_at_w0.20": 9.255482930636731,
+   "rc_t_at_w0.20": 2.1703662513118163,
+   "single_seed_gain_mean": 3.5247847765984717,
+   "single_seed_gain_sd": 4.407123372930695,
+   "jackknife_se_of_5seed_mean": 2.0548674926647004,
+   "paired_t_vs_peak_1632": 1.613506319647417
+  },
+  {
+   "total_steps": 3264,
+   "epochs_oot23": 12.0,
+   "source": "new_exp090",
+   "alone_recentred_pts": 634.8281807722844,
+   "alone_raw_pts": 609.7013366149317,
+   "z_sd": 0.22603967317370693,
+   "rho_vs_z_mate_oot": 0.8157448758333632,
+   "within_seed_rho": 0.789678786006273,
+   "abd_argmax_w": 0.16,
+   "abd_gain_at_argmax": 6.240059766338163,
+   "abd_t_at_argmax": 1.4144283542351657,
+   "abd_gain_at_w0.20": 5.878024767891361,
+   "abd_t_at_w0.20": 1.0682287905415748,
+   "abd_gain_at_w0.20_sd_matched": 5.944699407833809,
+   "abd_gain_at_w0.20_alpha_free": 5.936423053654039,
+   "abd_B_K_mean_delta2": 9.609689341752755,
+   "abd_ci95_at_w0.20": [
+    -5.277965618597924,
+    16.38767125775294
+   ],
+   "rc_argmax_w": 0.18,
+   "rc_gain_at_argmax": 6.601794858307471,
+   "rc_gain_at_w0.20": 6.5118389423690815,
+   "rc_t_at_w0.20": 1.2692386749558302,
+   "single_seed_gain_mean": -0.03738159131796692,
+   "single_seed_gain_sd": 4.675709737388662,
+   "jackknife_se_of_5seed_mean": 1.8457034153154583,
+   "paired_t_vs_peak_1632": 1.5106223759367483
+  },
+  {
+   "total_steps": 4080,
+   "epochs_oot23": 15.0,
+   "source": "new_exp090",
+   "alone_recentred_pts": 423.44665887613655,
+   "alone_raw_pts": 364.7641142247693,
+   "z_sd": 0.25879860290750967,
+   "rho_vs_z_mate_oot": 0.792890587273693,
+   "within_seed_rho": 0.7165725268323204,
+   "abd_argmax_w": 0.07,
+   "abd_gain_at_argmax": 1.9296222942722352,
+   "abd_t_at_argmax": 0.8821868885163722,
+   "abd_gain_at_w0.20": -3.75616181179646,
+   "abd_t_at_w0.20": -0.6025116988161396,
+   "abd_gain_at_w0.20_sd_matched": -2.862191360064571,
+   "abd_gain_at_w0.20_alpha_free": -2.850910044127545,
+   "abd_B_K_mean_delta2": 14.268808679289778,
+   "abd_ci95_at_w0.20": [
+    -16.073605065605328,
+    8.075126650611365
+   ],
+   "rc_argmax_w": 0.1,
+   "rc_gain_at_argmax": 3.0154233247925504,
+   "rc_gain_at_w0.20": -0.08957424180175622,
+   "rc_t_at_w0.20": -0.01548072724727945,
+   "single_seed_gain_mean": -15.216219782485656,
+   "single_seed_gain_sd": 9.52523348769255,
+   "jackknife_se_of_5seed_mean": 3.0424340277951796,
+   "paired_t_vs_peak_1632": 3.36829870038601
+  },
+  {
+   "total_steps": 5440,
+   "epochs_oot23": 20.0,
+   "source": "new_exp090",
+   "alone_recentred_pts": 37.9189396002344,
+   "alone_raw_pts": -28.84092582298159,
+   "z_sd": 0.2774525802392857,
+   "rho_vs_z_mate_oot": 0.6920569512294212,
+   "within_seed_rho": 0.5184499033405419,
+   "abd_argmax_w": 0.03,
+   "abd_gain_at_argmax": 0.36170655042246835,
+   "abd_t_at_argmax": 0.305515083953436,
+   "abd_gain_at_w0.20": -16.817024704118808,
+   "abd_t_at_w0.20": -2.135792969587674,
+   "abd_gain_at_w0.20_sd_matched": -15.936170792618668,
+   "abd_gain_at_w0.20_alpha_free": -15.822032167311932,
+   "abd_B_K_mean_delta2": 22.61678885408861,
+   "abd_ci95_at_w0.20": [
+    -32.645225545020224,
+    -1.0724518566141747
+   ],
+   "rc_argmax_w": 0.03,
+   "rc_gain_at_argmax": 0.5346888326540693,
+   "rc_gain_at_w0.20": -12.902164719219627,
+   "rc_t_at_w0.20": -1.756257439160433,
+   "single_seed_gain_mean": -44.37152203117912,
+   "single_seed_gain_sd": 11.923879270872032,
+   "jackknife_se_of_5seed_mean": 4.295884699631305,
+   "paired_t_vs_peak_1632": 4.375455239322863
+  },
+  {
+   "total_steps": 8160,
+   "epochs_oot23": 30.0,
+   "source": "new_exp090",
+   "alone_recentred_pts": -999.8253211696228,
+   "alone_raw_pts": -1051.61748111684,
+   "z_sd": 0.3391880615562415,
+   "rho_vs_z_mate_oot": 0.5212041602472784,
+   "within_seed_rho": 0.26165362164631645,
+   "abd_argmax_w": 0.0,
+   "abd_gain_at_argmax": 0.0,
+   "abd_t_at_argmax": 0.0,
+   "abd_gain_at_w0.20": -47.202657844913574,
+   "abd_t_at_w0.20": -4.380955349778823,
+   "abd_gain_at_w0.20_sd_matched": -45.514503027932506,
+   "abd_gain_at_w0.20_alpha_free": -44.816983999684794,
+   "abd_B_K_mean_delta2": 47.186757151400855,
+   "abd_ci95_at_w0.20": [
+    -68.23027369125693,
+    -26.968874848453375
+   ],
+   "rc_argmax_w": 0.0,
+   "rc_gain_at_argmax": 0.0,
+   "rc_gain_at_w0.20": -40.66123422101782,
+   "rc_t_at_w0.20": -4.054005188623236,
+   "single_seed_gain_mean": -140.70081483511964,
+   "single_seed_gain_sd": 26.02540326693668,
+   "jackknife_se_of_5seed_mean": 8.951620512579453,
+   "paired_t_vs_peak_1632": 6.043352917083625
+  }
+ ],
+ "stage1_plateau": {
+  "peak_steps": 1632,
+  "plateau_members_steps": [
+   816,
+   1088,
+   1360,
+   1632,
+   2176,
+   2720,
+   3264
+  ],
+  "significantly_below_peak": [
+   544,
+   720,
+   4080,
+   5440,
+   8160
+  ],
+  "definition": "최고점과 짝지은 t < 2.0 이고 이득이 양수인 지점",
+  "deployed_arm_720_paired_t_vs_peak": 3.593827171801517,
+  "deployed_recipe_544_paired_t_vs_peak": 3.928410639010655
+ },
+ "PREREGISTERED_VERDICT": {
+  "rule": "abd 면 w=0.20 에서 t >= 2.0 이고 이득이 720스텝 지점의 3배 이상인 지점이 있으면 stage2",
+  "ref_720_gain_at_w0.20": 0.9482307253728095,
+  "threshold_gain": 2.8446921761184285,
+  "qualifying_points": [
+   {
+    "steps": 816,
+    "gain_at_w0.20": 8.730593474115494,
+    "t": 3.2507135598161923,
+    "ratio_vs_720": 9.207245916528327
+   },
+   {
+    "steps": 1088,
+    "gain_at_w0.20": 8.985833278929476,
+    "t": 3.0969242826365955,
+    "ratio_vs_720": 9.476420704883378
+   },
+   {
+    "steps": 1360,
+    "gain_at_w0.20": 9.03151857720718,
+    "t": 2.6906923848407547,
+    "ratio_vs_720": 9.524600221803949
+   },
+   {
+    "steps": 1632,
+    "gain_at_w0.20": 11.05028248077349,
+    "t": 3.0241586457078147,
+    "ratio_vs_720": 11.65357985676843
+   },
+   {
+    "steps": 2176,
+    "gain_at_w0.20": 9.152034364123779,
+    "t": 2.138949802734878,
+    "ratio_vs_720": 9.651695646674531
+   }
+  ],
+  "PASS": true,
+  "argmax_point_steps": 1632,
+  "argmax_point_gain_at_w0.20": 11.05028248077349,
+  "monotone_to_end": false
+ },
+ "stage2_deploy": {
+  "conversion": {
+   "s_star_oot_steps": 1632,
+   "interpretation_A_same_steps": 1632,
+   "interpretation_B_same_epochs_rowratio": 2156.5885026745154,
+   "interpretation_B_same_epochs_integer_spe": 2160.0,
+   "row_ratio": 1.3214390335015413,
+   "spe_ratio": 1.3235294117647058,
+   "deployed_arm_steps": 720
+  },
+  "vintages": {
+   "D1632": {
+    "interpretation": "스텝 맞춤 — OOT 최적 s*=1632 스텝을 그대로",
+    "total_steps": 1632,
+    "epochs_le2024": 4.533333333333333,
+    "server_path": "~/SungjinPark/exp090/out/deploy_D1632/"
+   },
+   "D2160": {
+    "interpretation": "에폭 맞춤 — s*=6 에폭을 배포 구간의 6 에폭으로",
+    "total_steps": 2160,
+    "epochs_le2024": 6.0,
+    "row_ratio_alternative_steps": 2156.5885026745154,
+    "server_path": "~/SungjinPark/exp090/out/deploy_D2160/"
+   },
+   "D1440": {
+    "interpretation": "보수 대안 — 단독 최고점 s*=1088(4 에폭) 에폭 맞춤",
+    "total_steps": 1440,
+    "epochs_le2024": 4.0,
+    "server_path": "~/SungjinPark/exp090/out/deploy_D1440/"
+   }
+  },
+  "shipped_arm_for_reference": {
+   "total_steps": 720,
+   "epochs_le2024": 2.0
+  },
+  "format_gate": {
+   "D1632": {
+    "ALL_PASS": true,
+    "G1_keys_shapes_dtypes": true,
+    "G2_prep_input_transform": true,
+    "G2_changed_fields": [
+     "epoch",
+     "lr_schedule",
+     "provenance",
+     "total_steps"
+    ],
+    "G3_end_to_end_rc": 0,
+    "G3_p_min": 0.31022362422808586,
+    "G3_p_max": 0.6680398963656126,
+    "G3_n_nan": 0,
+    "G4_max_abs_logit_diff_vs_torch": 1.5026626638547924e-06,
+    "G5_permutation_roundtrip_max_abs": 2.220446049250313e-16,
+    "npz_sha256": {
+     "deepf_s42.npz": "8942ee589a6a80cd34c4abd1833573048ead5ecfae0cfc602a63e8355bad3dc2",
+     "deepf_s777.npz": "28a36f7eba7d79191b923552b0fdbaf33e84663873bf395805eac40831b339da",
+     "deepf_s2024.npz": "1c07b054c6223e5f8a40598780949697a35b3e0723a17be09314c8b527d18a39",
+     "deepf_s101.npz": "e91f60d7667d28fcfca02bb861fbecdc1d1f52acbfc260f4a8a554f63f550edc",
+     "deepf_s7.npz": "fd1e3eadeceafcd587003d74ba466c161a69221dd2ae551222d4ee7497cca1c8"
+    }
+   },
+   "D2160": {
+    "ALL_PASS": true,
+    "G1_keys_shapes_dtypes": true,
+    "G2_prep_input_transform": true,
+    "G2_changed_fields": [
+     "epoch",
+     "lr_schedule",
+     "provenance",
+     "total_steps"
+    ],
+    "G3_end_to_end_rc": 0,
+    "G3_p_min": 0.29598711633048896,
+    "G3_p_max": 0.6747163815615063,
+    "G3_n_nan": 0,
+    "G4_max_abs_logit_diff_vs_torch": 1.3629909993984057e-06,
+    "G5_permutation_roundtrip_max_abs": 1.6653345369377348e-16,
+    "npz_sha256": {
+     "deepf_s42.npz": "81e715054ba4b3e65ccc5d34246bcc36c660b2ee0b5795a354fc513ee7f90239",
+     "deepf_s777.npz": "5078e307f72256cd7208bbfcc736cc48610ca6f26b9e4e9fd689726239a8f383",
+     "deepf_s2024.npz": "daa98713f9f4eff7a580a649cf904279d09b6d857b9a7169f75edaa25a75016e",
+     "deepf_s101.npz": "71173e3d5a70a5aa708cb69f4abfed8309c8e555b57e35ddcd4b00a03aacb6b9",
+     "deepf_s7.npz": "405e9726aef93af6457850364bdbcca658cb78bb8327e53a2cd52d3df3ed9334"
+    }
+   },
+   "D1440": {
+    "ALL_PASS": true,
+    "G1_keys_shapes_dtypes": true,
+    "G2_prep_input_transform": true,
+    "G2_changed_fields": [
+     "epoch",
+     "lr_schedule",
+     "provenance",
+     "total_steps"
+    ],
+    "G3_end_to_end_rc": 0,
+    "G3_p_min": 0.31296840553617455,
+    "G3_p_max": 0.6748861211423954,
+    "G3_n_nan": 0,
+    "G4_max_abs_logit_diff_vs_torch": 1.271172096632689e-06,
+    "G5_permutation_roundtrip_max_abs": 2.220446049250313e-16,
+    "npz_sha256": {
+     "deepf_s42.npz": "56643f7f91317d0841b2d49cfbfb534a82461d1a6e3c8a92617e2f00dcf3a433",
+     "deepf_s777.npz": "de7f2d6866765fd46b182591c2afadf09092dfa9860ded434b6b2b99288647c2",
+     "deepf_s2024.npz": "371a28853cea0ac7c15995a322e567c1cdc64f834c07cc81d62cdf25b0e1a816",
+     "deepf_s101.npz": "7ece7ab5628db35d4042e8e7ce127ae75c133c18f3085960506f4c55e2b1dba2",
+     "deepf_s7.npz": "a37b4aeebf27423b01e3f453191693161fa69fffc69476304285381bc8e16d85"
+    }
+   }
+  },
+  "rule_2_4_content_separation": {
+   "D1632": {
+    "max_abs_delta_on_KEEP110": 0.0,
+    "n_moving": 0,
+    "PASS": true
+   },
+   "D2160": {
+    "max_abs_delta_on_KEEP110": 0.0,
+    "n_moving": 0,
+    "PASS": true
+   },
+   "D1440": {
+    "max_abs_delta_on_KEEP110": 0.0,
+    "n_moving": 0,
+    "PASS": true
+   }
+  },
+  "drift_vs_shipped_deep_arm": {
+   "D1632": {
+    "rho_logit": 0.9759717496260403,
+    "sd_logit_ours": 0.20891222459144027,
+    "sd_logit_shipped": 0.18338077930432234,
+    "max_abs_prob_diff": 0.1219116097264098,
+    "mean_abs_prob_diff": 0.010032895376611225
+   },
+   "D2160": {
+    "rho_logit": 0.9655115031830005,
+    "sd_logit_ours": 0.1985701514278123,
+    "sd_logit_shipped": 0.18338077930432234,
+    "max_abs_prob_diff": 0.12512605913643848,
+    "mean_abs_prob_diff": 0.01095446618213764
+   },
+   "D1440": {
+    "rho_logit": 0.9813099301991235,
+    "sd_logit_ours": 0.21443090272032392,
+    "sd_logit_shipped": 0.18338077930432234,
+    "max_abs_prob_diff": 0.11172796559867187,
+    "mean_abs_prob_diff": 0.009831680223627437
+   }
+  },
+  "inference_time_sec": {
+   "D1632": 37.52,
+   "D2160": 37.56,
+   "D1440": 37.45
+  }
+ },
+ "fold_2024": {
+  "note": "이 실험은 단일 모델의 fold Brier 를 내는 실험이 아니다. 비교 기준은 exp_089 정직면(모든 팔 out-of-time, valid = season 2024 전체 253,507행)의 **혼합 이득(점수 단위)** 이다. fold_2022/2023 은 이 면에 존재하지 않는다 (OOT 납품 벡터가 2024 만 있다).",
+  "baseline_pts_abd": 932.5807811936593,
+  "baseline_brier_abd": 0.24747724886050435,
+  "best_point_steps": 1632,
+  "best_point_gain_at_w0.20_pts": 11.05028248077349,
+  "deployed_720_gain_at_w0.20_pts": 0.9482307253728095,
+  "prereg_recipe_544_gain_at_w0.20_pts": -2.894440236889068
+ },
+ "limits_carried": [
+  "① 정직면 크기는 5.4배 어긋난다 (exp_089 전이비 +0.1866 이 유일하게 변인 통제된 점). 🔴 이 실험의 이득을 LB 점수로 환산하지 마라 — 위치와 부호만 쓴다.",
+  "② 꼭지점 위치는 대체로 맞는다 (exp_089: 정직면 스텝맞춤 0.14 vs LB 유도 0.1757).",
+  "③ 우리 frame99 와 팀원 프레임이 94열 중 8열 다르다 (i3_anom_*·p6_*, 최대 0.616 sd). 이 실험의 모든 측정에 실려 있다.",
+  "④ 복제 게이트의 천장은 0.988034 (팀원 시드 간 rho 0.944428). exp_089 가 0.985651 을 얻었다.",
+  "⑤ 이 축의 전이비는 exp_089 에서 -0.57 ~ +1.77 로 하나로 안 나온다 (S93)."
+ ],
+ "changed_variables_vs_exp089": [
+  "학습량(총 옵티마이저 스텝)만 축으로 움직였다. 544/720/816/1088 은 exp_089 산출물을 sha 대조 후 재사용.",
+  "LR 스케줄러는 없다 (lr 1e-3 상수, 팀원 prep.json 이 lr 을 단일값으로 기록). 따라서 스텝을 바꿔도 LR 궤적이 안 바뀐다 — '학습량'과 '스케줄 모양'이 안 섞인다.",
+  "train090.py 는 train089.py 대비 ① work 를 exp089/work 에서 읽고 ② out 이 exp090 이고 ③ SAVE_NPZ 분기가 추가됐고 ④ 환경변수 이름이 STEPS089→STEPS090 이다. z 에 안 닿는다는 것은 재현 게이트(sha 동일)로 증명했다.",
+  "stage 2 배포 학습의 mu/sd/levels/D/batch 는 팀원 prep.json 그대로 — 배포 팔 대비 변인은 학습량 하나.",
+  "부트스트랩 rng 시드·추출 순서를 exp_089 와 같게 유지 → 공유 지점의 t 가 그대로 재현된다."
+ ],
+ "server_paths": {
+  "root": "~/SungjinPark/exp090/",
+  "preds": "~/SungjinPark/exp090/out/preds/",
+  "deploy_weights": [
+   "~/SungjinPark/exp090/out/deploy_D1632/",
+   "~/SungjinPark/exp090/out/deploy_D2160/",
+   "~/SungjinPark/exp090/out/deploy_D1440/"
+  ],
+  "reused_from": "~/SungjinPark/exp089/ (읽기만), ~/SungjinPark/audit_deep/pkg/DEEP/mate (읽기만)"
+ },
+ "train_time_min": 32.9,
+ "n_fits": 56,
+ "n_fits_breakdown": {
+  "repro_gate": 1,
+  "stage1_new_oot_points": 40,
+  "stage2_deploy": 15,
+  "reused_from_exp089": 20
+ }
+}

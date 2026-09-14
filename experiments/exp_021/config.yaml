@@ -1,0 +1,224 @@
+exp_id: exp_021
+date: "2026-08-07"
+title: "도메인 위계 기반 피처 계단 (뉴 모델 N 계획 1단계)"
+hypothesis: >
+  현행 47열은 "주최측이 준 것 전부"이지 "기전이 있는 것"이 아니다. 배포 F 모델의
+  분기 예산을 뜯어보니 팀 ID 2열이 mid_only 셀 gain의 16.9%를 먹고 있는데, 상대 팀
+  소속이 투수의 팔 동작을 바꿀 인과 경로는 없다. 13개 팀 ID 중 3개가 퓨처스 전용이라
+  이 열은 리그·시대 레짐의 대리변수로 동작하고 있을 가능성이 크다. 레짐 대리변수는
+  분포가 이동하는 2025에서 가장 먼저 배신한다.
+  → 기전이 있는 열만 남긴 축소 세트가 fold_2024에서 최소한 동등하고, 2025 일반화에서
+  유리할 것이다.
+base_exp: exp_010 D (47열 강규제 LightGBM) — arm D가 대조군이자 재현 게이트
+
+# ---------------------------------------------------------------------------
+# 이 실험이 답하지 않는 것 (사전 명시)
+# ---------------------------------------------------------------------------
+scope_limits:
+  - >
+    주 동기(레짐 대리변수 제거 → 2025 일반화)는 LB 제출 전에는 검증 불가다.
+    fold_2024는 2024를 재는 눈금이지 분포 이동을 재는 눈금이 아니다.
+  - >
+    로컬 Δ가 0 근처여도 기각이 아니다. "동등한데 열이 11개 적다"는 그 자체로
+    이후 실험의 base를 줄이는 값이 있다. 단 그 판단은 사용자 몫으로 남긴다.
+  - >
+    티어 배정은 야구 도메인 상식으로 사전 등록한 것이며 gain을 보고 정하지 않았다.
+    gain은 학습 데이터의 회계 귀속이라 열의 가치를 판정하지 못한다(2026-08-07 확인).
+
+# ---------------------------------------------------------------------------
+# 피처 티어 — 도메인 기전 기준으로 사전 등록 (2026-08-07 사용자 확정)
+# ---------------------------------------------------------------------------
+feature_tiers:
+  principle: >
+    "투수가 와인드업에 들어가는 순간, 이 정보가 공이 목표 지점에 갈 확률을 바꾸는
+    물리적·심리적 경로가 있는가"를 유일 기준으로 배정.
+
+  T3_core:            # 8열 — 제구를 직접 결정
+    - balls_before                          # 카운트가 목표 자체를 바꾼다(0-2 유인구 vs 3-0 존)
+    - strikes_before
+    - asof_pitcher_n                        # 성공률 추정의 신뢰도
+    - asof_pitcher_success_rate             # 제구는 개인 기술, 개인차가 크고 안정적
+    - asof_pitcher_reverse_rate             # 실패의 '방식'은 투수의 지문
+    - asof_pitcher_middle_rate
+    - asof_pitcher_ball_rate
+    - asof_pitcher_strike_rate
+
+  T2_useful:          # +16 = 24열 — 뚜렷한 기전
+    - asof_pitcher_prev1_game_success_rate  # 제구는 컨디션을 타는 기술(일 단위 릴리스 흔들림)
+    - asof_pitcher_prev3_game_success_rate
+    - asof_pitcher_prev5_game_success_rate
+    - asof_pitcher_prev1_game_middle_rate   # 실투 증가 = 메커니즘 붕괴의 선행 신호
+    - asof_pitcher_prev3_game_middle_rate
+    - asof_pitcher_prev5_game_middle_rate
+    - asof_pitcher_fastball_rate            # 직구는 제구가 쉽고 변화구는 어렵다
+    - asof_pitcher_breaking_rate
+    - asof_pitcher_offspeed_rate
+    - asof_pitcher_pitchmix_n
+    - pitcher_hand                          # 매치업이 목표 코스를 바꾼다
+    - batter_hand
+    - game_type                             # 퓨처스는 제구가 덜 완성된 모집단
+    - season                                # 2024 ABS 도입 등 판정 레짐 변화
+    - base_state                            # 주자 → 세트포지션 전환(메커니즘 변경)
+    - num_runners_on                        # 코드 구간 분할로 표현 불가한 재그룹화
+
+  T1_weak:            # +12 = 36열 — 기전은 있으나 미미하거나 간접적
+    - inning                                # 피로·역할 대리변수(투구수 없어 흐릿)
+    - li                                    # 압박 효과는 방향이 투수마다 갈려 상쇄
+    - score_diff_pitcher_team               # 리드 시 존 승부 vs 접전 시 코너워크
+    - run_total_before                      # 당일 난조의 흐릿한 흔적(경기 내 정보 부재의 대용)
+    - outs_before
+    - top_bottom                            # 홈 마운드 익숙함
+    - game_month                            # 4월 추위(그립)·8월 피로
+    - asof_batter_success_rate              # 타자는 실행에 개입 못 함. 배터리 코스 요구를 통한 2차 효과만
+    - asof_batter_middle_rate
+    - asof_batter_n
+    - batter_id
+    - pitcher_id                            # asof_* 이상의 증분이 불명확 + 최대 과적합 표면
+
+  excluded:           # 11열 — 기전을 대기 어렵거나 무손실 중복
+    - name: pitcher_team_id
+      reason: "제구는 개인 기술이고 개인은 pitcher_id로 식별된다. 팀의 추가 경로는 포수진·코치 정도로 극히 간접적"
+    - name: batter_team_id
+      reason: "상대 팀 소속이 투수의 팔 동작을 바꿀 경로가 없다. 타자 개인 정보는 별도 열이 담당"
+    - name: game_dayofweek
+      reason: "요일이 제구에 닿는 경로 없음. 로테이션 흔적은 pitcher_id가 더 잘 안다"
+    - name: runner_on_1b
+      reason: "base_state의 정확한 함수(1,475,092행 검증). 코드가 (1b,2b,3b) 비트 내림차순이라 임계 분기 1회로 복원"
+    - name: runner_on_2b
+      reason: "동일 — base_state로 무손실 복원"
+    - name: runner_on_3b
+      reason: "동일 — base_state로 무손실 복원"
+    - name: run_top_before
+      reason: "run_total_before + score_diff_home의 정확한 함수(전수 검증). 절대 점수 자체의 기전 없음"
+    - name: run_bot_before
+      reason: "동일"
+    - name: score_diff_home
+      reason: "score_diff_pitcher_team + top_bottom의 정확한 함수(전수 검증). 투수팀 기준이 인과적으로 옳은 축"
+    - name: home_win_expectancy
+      reason: >
+        inning+top_bottom+outs_before+base_state+score_diff_home의 정확한 함수(1,475,092행 검증).
+        이닝·점수·주자의 요약 재탕이라 새 정보 없음. 2026-08-07 사용자 지시로 T1에서도 제외
+    - name: away_win_expectancy
+      reason: "home_win_expectancy와 합이 100±0.1(고유값 5개). 완전 중복"
+
+  counts: {T3: 8, T2_cumulative: 24, T1_cumulative: 36, excluded: 11, total: 47}
+
+# ---------------------------------------------------------------------------
+model:
+  type: lightgbm
+  params:                                   # exp_010 D 그대로 — 전 arm 동일, 변경 없음
+    objective: binary
+    metric: binary_logloss
+    learning_rate: 0.01
+    num_leaves: 15
+    min_data_in_leaf: 5000
+    feature_fraction: 0.7
+    bagging_fraction: 0.8
+    bagging_freq: 1
+    deterministic: true
+    force_row_wise: true
+    num_threads: 6                          # 규약 #2: 병렬해도 fit당 6 고정(수치 비교성 유지)
+    verbose: -1
+  num_boost_round_cap: 3000
+  seed: 42
+  seed_repeats: [7, 2024]
+
+  encoding_unchanged: >
+    범주형 처리는 배포 F와 동일하게 유지한다 — top_bottom·game_type·base_state는
+    학습 구간 어휘로 정수 코드화한 뒤 **수치로** 투입하고 categorical_feature 선언은
+    하지 않는다. base_state 코드 순서(123,12_,1_3,1__,_23,_2_,__3,___)도 그대로 쓴다.
+    이 실험의 변인은 '열 집합' 하나뿐이며 인코딩은 변인이 아니다.
+  per_arm_categorical:
+    A: []                                   # T3에 범주형 열 없음
+    B: [game_type, base_state]              # top_bottom은 T1이라 미포함
+    C: [top_bottom, game_type, base_state]
+    D: [top_bottom, game_type, base_state]
+
+# ---------------------------------------------------------------------------
+arms:
+  - id: A
+    desc: "T3만 — 핵심 8열"
+    n_features: 8
+    question: "기전이 가장 확실한 열만으로 어디까지 가나 (신호 하한선)"
+  - id: B
+    desc: "T3 + T2 — 24열"
+    n_features: 24
+    question: "유용 계층의 한계 기여"
+  - id: C
+    desc: "T3 + T2 + T1 — 36열 (본명 후보, '도메인 정제 47열')"
+    n_features: 36
+    question: "excluded 11열을 뺀 것의 값. C − D가 이 실험의 주 지표"
+  - id: D
+    desc: "현행 47열 (대조군 = exp_010 D 재현)"
+    n_features: 47
+    gate: "fold_2024 valid_all Brier가 P4 정책에서 0.248261과 abs_diff < 5e-6 (규약 #4: seed 42 단독으로 판정)"
+
+  arm_diff_note: >
+    A→B→C는 열만 누적되고 하이퍼파라미터·시드·학습행·마스크·iter 정책·인코딩은 전부 동일하다.
+    C→D의 차이는 excluded 11열의 유무 하나뿐이므로 그 묶음의 기여를 귀속시킬 수 있다.
+    단 11열을 한 묶음으로 뺐으므로 **개별 열에는 귀속 불가** — "이 묶음의 효과"로만 서술한다.
+
+# ---------------------------------------------------------------------------
+validation:
+  scheme: rolling-origin
+  folds:
+    - {train_until: 2021, valid: 2022}
+    - {train_until: 2022, valid: 2023}
+    - {train_until: 2023, valid: 2024}      # 주 판단 fold
+  primary_metric: "fold_2024 valid_all Brier"
+  secondary: [valid_R, valid_F, AUC]
+  mask: "exp_004 마스크 유지 (season <= 2022 & game_type == 'F' 학습 제외)"
+
+  iter_policy:
+    name: P10
+    rule: "각 arm이 자기 fold_2023 valid_all argmin을 재측정 → × 2.75를 fold_2024에 승계"
+    source: "exp_017 채택 (c* = 2.75, 홀드아웃으로 선택)"
+    fold_2022: "선행 fold 없음 → 자기 argmin(오라클). 실험 간 비교 불가로 플래그"
+    p4_shadow: "arm D는 P4(무스케일 승계)도 산출 — 재현 게이트가 P4 기준"
+    never: "valid 2024를 보고 iter를 고르는 경로 없음"
+    cap_rule: "규약 #3 — argmin이 cap 3000에 닿으면 그 fit은 무효 처리하고 cap 올려 재실행"
+
+  stages:
+    - stage: 1
+      what: "4 arm × 3 fold × seed 42 = 12 fit"
+      decide: "arm D 재현 게이트 통과 확인 + fold_2024 valid_all에서 최선 arm 식별"
+    - stage: 2
+      what: "arm D + 최선 arm × 3 fold × seed {7, 2024} = 12 fit"
+      decide: >
+        paired delta의 부호가 3시드 전부 같고 |평균Δ|가 D 시드 std의 3배 이상이면 '측정됨'.
+        아니면 '시드 산포 아래'로 서술하고 채택하지 않는다(exp_014·exp_018 선례).
+    - stage: 3
+      status: "이 실험에 포함하지 않음 — 별도 승인 대상"
+      what: "N3(새 base 위 B3 셀 스태킹 재구축)"
+
+# ---------------------------------------------------------------------------
+runtime:
+  where: a5000
+  parallel: 3                               # 규약 #2 (2026-08-07 전면 승인), fit당 num_threads 6 고정
+  expected_min: 20                          # 15~25
+  eta_basis: >
+    실측표 'LightGBM 47~51열 강규제 cap3000: 0.90~1.01 / 1.17~1.26 / 1.48~1.57분
+    (65만/87만/112만 학습행)'. arm 1개 = 3 fold 합 약 3.6분.
+    stage 1 = 4 arm × 3.6 = 14.4분, stage 2 = 2 arm × 2 seed × 3.6 = 14.4분,
+    순차 합 28.8분 + 곡선·집계 약 5분 = 약 34분 (exp_018 실측 33.4분과 정합 — 동일 24 fit).
+    규약 #2로 동시 3개 병렬, 경합 계수 1.35 적용 → 28.8/3 × 1.35 = 13.0분 + 5분 = 약 18분.
+    arm A(8열)·B(24열)는 47열보다 빠르므로 하한 쪽으로 기운다. 범위 15~25분.
+    ※ 룩업표 구축이 없어(exp_018과 달리 열 부분집합만) 그만큼 더 짧다.
+
+deliverables:
+  - metrics.json      # arm별 fold별 Brier/BSS/AUC + iter 곡선 + seed_summary
+  - report.md
+  - src/train.py
+  - "pred_*.npy (전 arm, 이후 N2/N3 재사용 대비 — 규약 #5 sha 기록 포함)"
+
+audit:
+  required: false
+  why: >
+    CLAUDE.md 감사 생략 조건에 해당 — 새 피처 소스 없음, 새 조인 없음, 타깃 파생 없음,
+    새 시계열 집계 없음. 이미 감사된 47열 경로의 **부분집합**이며 변경은 열 선택뿐이다.
+  note: "이 계보가 실제 LB 제출로 갈 때는 예외 없이 감사(N4 단계)"
+
+risks:
+  - "예상 효과가 1e-5급이라 3시드 std(3e-6~7e-6)의 3배 기준을 못 넘길 수 있다. 그 경우 '측정 안 됨'으로 기록하고 채택하지 않는다"
+  - "arm A·B는 열이 적어 P10 승계 iter가 크게 달라질 수 있다. argmin이 cap에 닿는지 반드시 확인(규약 #3)"
+  - "base가 바뀌면 결론이 뒤집힌 전례(exp_003·exp_005). 여기서의 결론은 단일 LGBM base 위의 것이며 B3 스태킹으로의 전이는 N3에서 별도 측정"

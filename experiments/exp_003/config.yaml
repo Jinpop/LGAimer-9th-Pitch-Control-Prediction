@@ -1,0 +1,31 @@
+# 실험 스펙 — 지휘자 작성 2026-08-05 (캠페인 2)
+exp_id: exp_003
+date: "2026-08-05"
+hypothesis: "trackman 투수 정적 프로파일 조인이 fold_2024 valid-R Brier를 개선한다 (cold-start 무격차=개인 신호 미활용의 해소)"
+base_exp: "exp_001"          # 변경 변수 1개: 프로파일 피처 추가. 나머지 전부 exp_001과 동일
+
+model:
+  type: lightgbm
+  params: exp_001과 완전 동일 (seed 42 포함) — exp_001/config.yaml 참조, 변경 금지
+  seed: 42
+
+features:
+  include: ["exp_001의 48컬럼 전부", "+ 투수 정적 프로파일 (아래 리크 규칙)"]
+  exclude: ["row_id", "real_date/stadium (ANALYSIS_ONLY)"]
+  notes: >
+    ⚠️ 리크 규칙: exp_002의 pitcher_static_profile_2024.csv(2024년 말 기준)를
+    fold 검증에 그대로 쓰면 valid 연도의 물리량이 유입된다. exp_002의 매핑
+    (out/pitcher_id_map.csv)과 trackman_history 원본으로 **fold별 as-of 프로파일**을
+    재산출하라: valid 연도 Y인 fold는 season < Y 데이터만 집계한 profile_upto_{Y-1}.
+    (exp_002의 02_build_profile.py 로직 재사용 — 컷오프 파라미터화.)
+    본번(test 2025) 추론 시에는 2024년 말 기준(=exp_002 산출물)이 올바른 형태.
+    조인 키 pitcher_id, 미매핑 투수(13.5%)는 프로파일 NaN 유지 (sentinel 금지).
+
+validation:
+  scheme: rolling-origin      # exp_001과 동일 3 fold
+  primary_metric: brier       # fold_2024 valid-R Brier
+  report_also: ["exp_001 대비 delta", "cold-start 세그먼트 Brier (프로파일 유/무 투수 분리)", "프로파일 피처 중요도 순위"]
+
+runtime:
+  where: a5000
+  expected_min: 25

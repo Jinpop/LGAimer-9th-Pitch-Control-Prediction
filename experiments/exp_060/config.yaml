@@ -1,0 +1,64 @@
+exp_id: exp_060
+date: "2026-08-20"
+hypothesis: >
+  v6 팔 내부 NN(77열·CPU 5에폭)을 99열·GPU 수렴 학습으로 올리면 단독 성능이
+  얼마나 오르는가 — **이 파일럿은 그 본판 앞의 1시드 실측**이다. 목적 둘:
+  ① GPU 학습 벽시계 실측 (ETA 기계가 없다 — 실측표에 GPU 학습이 0줄)
+  ② 99열 단독 BSS 의 첫 정직한 점 (팀원 예비치 +166.7 은 CPU 5에폭·선별 누수 섞임)
+base_exp: 팀원 요청문 (~/Downloads/신경망_GPU재학습_요청.md) + sp_def 배포팩
+
+배경_실측_2026-08-20: >
+  BH zip 내부 대조로 확인 — mate/model 의 NN npz 4개는 AC 시절과 **바이트 동일**
+  (CatBoost·LGBM 만 99열로 재학습됨). 즉 NN 은 팀 전체에서 가장 낡은 멤버이고
+  실효 가중 0.058 로 유일하게 계열이 다른 팔이다(우리 팔 최대 상관 0.9776).
+
+고정_스펙_팀원_요청_3-1:
+  피처: "features_sp.txt 99열 (서버 ~/SungjinPark/sp_def_recv/)"
+  선수_ID_임베딩: >
+    사용 안 함 — pitcher_id·batter_id 임베딩 제거.
+    ⚠️ 요청문이 '선수 ID'만 지정하므로 나머지 5개 범주(base_state·game_type·
+    양팀 id·cnt_state) 임베딩은 **유지**한다. 이는 지휘자 해석이며 결과에 명기.
+  dropout: 0.30
+  구조: >
+    🔴 층 4개 유지 (in → 256 → 128 → 64 → 1, BN 2 + ReLU).
+    근거: 출하 numpy 추론기 mate/nn_infer.py 가 층 인덱스를 하드코딩
+    (lin0→bn1→relu→lin4→bn5→relu→lin8→relu→lin10). 층수를 바꾸면 출하 코드
+    재작성 + 감사 표면 확대. 입력 폭·층 폭은 shape-agnostic 이라 자유.
+  시드: 42          # 파일럿 1시드. 본판에서 42·777·2024·101
+
+파일럿_변인:
+  에폭: "수렴까지 (early stopping, patience 5, val Brier 기준). 에폭당 벽시계 기록"
+  batch: 4096
+  optimizer: "AdamW + OneCycle (현행 관행 승계, 튜닝은 본판에서)"
+
+데이터:
+  분할: "A — train ≤2023 → valid 2024 (fold_2024, 우리 유일 판정 기준)"
+  마스크: "season≤2022 & game_type=='F' 제외 (기존 규약, sp_def README §4-1)"
+  추가_22열: >
+    sp_def README §2 의 **연도별 루프 그대로** (hist = season < Y).
+    ⚠️ deploy_splits.npz(≤2024 표)를 학습·검증 어디에도 쓰지 않는다.
+  sp_결측: "2019 행 sp_* NaN → 0.0 채움 (README §4-1, 모듈의 미지 주체 값이 0). ins_* 는 결측 없음"
+  dense_정규화: "mu/sd 는 학습 분할에서만 계산 (valid 2024 오염 금지)"
+
+측정:
+  - "에폭당 벽시계·수렴 에폭 수 → 본판 4시드 ETA 산출 근거"
+  - "valid 2024 (valid_all, 245,789… 아님 — fold_2024 valid = 2024 전체 253,507행) Brier + 환산 점수"
+  - "대조점: 팀원 예비치 seed42 99열 842.98 (CPU 5에폭) — 이보다 위인가"
+  - "산출물: 예측 벡터(.npy)·학습 곡선·torch state → numpy npz 변환본 + torch 대비 max_abs_diff"
+
+판정: >
+  이 파일럿은 채택 판정이 아니다 (1시드·본판 전 단계). 보고할 것:
+  ① 벽시계 실측표 행 ② 단독 환산 점수와 §4 대역(A≥930/B 890~930/C<890) 예비 위치
+  ③ numpy 재현 오차. 본판 발사는 이 결과를 보고 지휘자·사용자가 결정.
+
+runtime:
+  where: a5000 (GPU 0 또는 1 — 발사 직전 nvidia-smi 재확인, 08-20 04시 기준 둘 다 유휴)
+  expected_min: 60
+  eta_근거: >
+    🔴 실측 근거 없음 — GPU 학습이 실측표에 0줄이다. 추정 내역: 데이터 준비
+    (train 1.47M행 로드 + 연도 루프 22열 생성) 10~15분 + 학습 (124만 행 × MLP,
+    에폭당 1~3분 추정 × 20~40에폭) 20~60분 + 변환·검증 5분.
+    이 파일럿의 산출물 자체가 이 표의 첫 실측 행이 된다.
+산출물:
+  - metrics.json / report.md / 학습곡선 / pred_valid2024_seed42.npy / nn npz+meta
+감사: "파일럿은 감사 불요 (제출물 아님). 본판 채택 경로에 오르면 B단 (새 부스터·같은 피처 경계 — ins_*·sp_* 는 출하 중인 감사 완료 경로)"

@@ -1,0 +1,1787 @@
+{
+ "exp_id": "exp_078",
+ "title": "LB 눈금 전 축 동시 꼭지점 (이미 산 L 재고 회수) + v6 내부 4팔 축 신설 진단",
+ "date": "2026-08-21",
+ "학습_건수": 0,
+ "제출물": 0,
+ "추론_실행": "1회 (파트너 v6 경로만, 4팔 로짓 포획)",
+ "판정_사전등록": "C",
+ "판정_근거": "stage3 A등급 예측 이득 +0.21073점 < +1.5 → 재고가 비었다고 판정",
+ "fold_note": "학습 0건이므로 fold별 Brier 없음. 측정면은 tr2024 보정 프레임 253,507행(표본내 대리면)이고 판정 눈금은 LB 점이다.",
+ "환산식": "점수 = 100000 x (1 - Brier/0.2498069), K = 400309.19882517256",
+ "stage0_gates": {
+  "G0a": {
+   "what": "arms 벡터 재구성 파트너 출력 vs 저장본 비트 동일 (10종)",
+   "PASS": true,
+   "n_cases": 10,
+   "all_bitwise_equal": true,
+   "cases": {
+    "BN_wv6_070": {
+     "bitwise_equal": true,
+     "n_rows_differ": 0
+    },
+    "BN_wv6_050_fresh": {
+     "bitwise_equal": true,
+     "n_rows_differ": 0
+    },
+    "AR": {
+     "bitwise_equal": true,
+     "n_rows_differ": 0
+    },
+    "BO_wv6_vertex": {
+     "bitwise_equal": true,
+     "n_rows_differ": 0
+    },
+    "BO_wv6_070_fresh": {
+     "bitwise_equal": true,
+     "n_rows_differ": 0
+    },
+    "AO_webm_000": {
+     "bitwise_equal": true,
+     "n_rows_differ": 0
+    },
+    "AK_webm_015": {
+     "bitwise_equal": true,
+     "n_rows_differ": 0
+    },
+    "AP_wv6_100": {
+     "bitwise_equal": true,
+     "n_rows_differ": 0
+    },
+    "AQ_wv6_025": {
+     "bitwise_equal": true,
+     "n_rows_differ": 0
+    },
+    "AT_betains_006": {
+     "bitwise_equal": true,
+     "n_rows_differ": 0
+    }
+   },
+   "note": "config 는 sha ab38ec13 재현만 요구했으나 10종 비트 동일로 강화. 저장본은 배포 CSV 왕복(pandas 기본 float 파서, 약 31% 행 1 ulp)을 거친 값이라 재구성도 같은 왕복을 태워야 비트 동일해진다 — float_precision='round_trip' 로 읽으면 직접 계산값과 비트 동일."
+  },
+  "G0b": {
+   "what": "BO 출하 d_adj 용해기 재현",
+   "shipped": "0.02875748759679648",
+   "solver": "0.028757487596796416",
+   "abs_diff": 6.245004513516506e-17,
+   "threshold": 1e-15,
+   "PASS": true
+  },
+  "G0c": {
+   "what": "BN 표본내 Brier 재현",
+   "brier": 0.24552396647966293,
+   "expected": 0.24552396647966293,
+   "abs_diff": 0.0,
+   "PASS": true
+  },
+  "ALL_PASS": true
+ },
+ "stage0_추가_확인": {
+  "역사적_d_adj_재현": {
+   "n_recorded": 17,
+   "max_abs_diff": 4.129e-16,
+   "실패_0건": true
+  },
+  "BH_대비벡터_KQ": {
+   "재현": 2.4622640414875994,
+   "장부": 2.46226,
+   "rel_diff": 1.641373209672796e-06
+  },
+  "방향_표준화_상수": "BI·BJ 의 center/scale 이 BL 출하 blend.json 값과 정확히 일치 (assert)"
+ },
+ "stage1_축": {
+  "축_15개": [
+   "alpha",
+   "beta_skew",
+   "c_aa",
+   "c_S2",
+   "c_S1",
+   "c_T70",
+   "w_out",
+   "w_v6_inner",
+   "w_ebm",
+   "beta_ins",
+   "off_BI",
+   "off_BJ",
+   "off_BK",
+   "seg_spread_BH",
+   "d_mean"
+  ],
+  "config_12축": [
+   "alpha",
+   "beta_skew",
+   "c_aa",
+   "c_T70",
+   "w_out",
+   "w_v6_inner",
+   "w_ebm",
+   "beta_ins",
+   "off_BI",
+   "off_BJ",
+   "off_BK",
+   "seg_spread_BH"
+  ],
+  "추가_3축_사유": "c_S2·c_S1 은 AX/AY/AZ 이동을 표현하는 데 필요하고 BO 에서 값이 0 인 실제 상수다. d_mean 은 AW·BE·BG 이동의 성분이라 빼면 그 점들의 식을 쓸 수 없다.",
+  "h": 0.002,
+  "rms_delta": {
+   "alpha": 0.04904296802707834,
+   "beta_skew": 0.015310087379063489,
+   "c_aa": 0.05577087681032776,
+   "c_S2": 0.0485816717955248,
+   "c_S1": 0.050443260825604005,
+   "c_T70": 0.04970627711438677,
+   "w_out": 0.05334522132094035,
+   "w_v6_inner": 0.013026361779640259,
+   "w_ebm": 0.02072498609129205,
+   "beta_ins": 0.04230976987873582,
+   "off_BI": 0.2671481232292812,
+   "off_BJ": 0.26629138606448477,
+   "off_BK": 0.2686631726644373,
+   "seg_spread_BH": 0.04203978915045014,
+   "d_mean": 0.2468305634826752
+  },
+  "G_diag": {
+   "alpha": 0.0024052127129050305,
+   "beta_skew": 0.00023439877555455924,
+   "c_aa": 0.003110390700192755,
+   "c_S2": 0.002360178834448087,
+   "c_S1": 0.002544522562719914,
+   "c_T70": 0.0024707139845722118,
+   "w_out": 0.0028457126377801054,
+   "w_v6_inner": 0.0001696861012140725,
+   "w_ebm": 0.0004295250484842492,
+   "beta_ins": 0.0017901166271915786,
+   "off_BI": 0.0713681197449272,
+   "off_BJ": 0.07091110229214449,
+   "off_BK": 0.07217990034612119,
+   "seg_spread_BH": 0.001767343871814303,
+   "d_mean": 0.06092532706917502
+  },
+  "K_times_G_diag_pts_at_u1": {
+   "alpha": 962.8287741071325,
+   "beta_skew": 93.83198604784705,
+   "c_aa": 1245.1180092274292,
+   "c_S2": 944.8012983020433,
+   "c_S1": 1018.5957884749837,
+   "c_T70": 989.0495356902518,
+   "w_out": 1139.1649461164225,
+   "w_v6_inner": 67.9269072287725,
+   "w_ebm": 171.9428280340732,
+   "beta_ins": 716.6001528346809,
+   "off_BI": 28569.314836750786,
+   "off_BJ": 28386.36654637822,
+   "off_BK": 28894.27807883657,
+   "seg_spread_BH": 707.4840093745621,
+   "d_mean": 24388.96886722305
+  },
+  "mean_delta": {
+   "alpha": -4.826512052838354e-16,
+   "beta_skew": -1.627254194193033e-14,
+   "c_aa": 2.7345638287938444e-14,
+   "c_S2": -2.0100264503625353e-14,
+   "c_S1": 1.623075841787244e-14,
+   "c_T70": 1.1309397835493986e-14,
+   "w_out": -1.0026588290579319e-14,
+   "w_v6_inner": -4.17709953070915e-14,
+   "w_ebm": -1.930459072803897e-14,
+   "beta_ins": -1.9251448644112248e-14,
+   "off_BI": 1.9207387802375536e-15,
+   "off_BJ": 2.3100437849361804e-14,
+   "off_BK": -4.144723781160755e-14,
+   "seg_spread_BH": 2.5696776202895618e-14,
+   "d_mean": 0.2467914661913596
+  },
+  "mean_delta_note": "d_mean 을 제외한 14축 전부 |mean(δ)| < 5e-14 — d_adj 재못박기가 평균 방향을 정확히 사영해 없앤다는 증거",
+  "선형성_4h_norm_ratio": {
+   "alpha": 0.99973906215692,
+   "beta_skew": 1.0001294391296167,
+   "c_aa": 0.9997455143985838,
+   "c_S2": 0.9997682626675691,
+   "c_S1": 0.9997657716004504,
+   "c_T70": 0.9997708150182201,
+   "w_out": 0.999777046230739,
+   "w_v6_inner": 1.0000224704374001,
+   "w_ebm": 1.0000240523277821,
+   "beta_ins": 1.000006373559995,
+   "off_BI": 0.9995294229727223,
+   "off_BJ": 0.9986823488908724,
+   "off_BK": 0.9999440220876014,
+   "seg_spread_BH": 1.0000220426276727,
+   "d_mean": 1.000112685150114
+  },
+  "G_condition_15axes": 796319977020872.4,
+  "G_condition_spec12": 742939466481638.2,
+  "near_collinear_pairs_abs_corr_gt_0.9": [
+   [
+    "alpha",
+    "c_aa",
+    0.9823176290784889
+   ],
+   [
+    "alpha",
+    "c_S2",
+    0.9691909646526001
+   ],
+   [
+    "alpha",
+    "c_S1",
+    0.9668467293443112
+   ],
+   [
+    "alpha",
+    "c_T70",
+    0.9688666693159682
+   ],
+   [
+    "alpha",
+    "w_out",
+    0.9960693576044906
+   ],
+   [
+    "c_aa",
+    "c_S2",
+    0.9764777954843499
+   ],
+   [
+    "c_aa",
+    "c_S1",
+    0.973306390818413
+   ],
+   [
+    "c_aa",
+    "c_T70",
+    0.9706851797533724
+   ],
+   [
+    "c_aa",
+    "w_out",
+    0.9686829737529024
+   ],
+   [
+    "c_S2",
+    "c_S1",
+    0.9924387090895297
+   ],
+   [
+    "c_S2",
+    "c_T70",
+    0.9890661808678538
+   ],
+   [
+    "c_S2",
+    "w_out",
+    0.953826371663682
+   ],
+   [
+    "c_S1",
+    "c_T70",
+    0.9920768552906873
+   ],
+   [
+    "c_S1",
+    "w_out",
+    0.9525330773581357
+   ],
+   [
+    "c_T70",
+    "w_out",
+    0.9562480628856523
+   ],
+   [
+    "beta_ins",
+    "off_BI",
+    0.9999363848649087
+   ]
+  ]
+ },
+ "stage2_L회수": {
+  "등급규칙": "|보정항|/|L| < 0.3 → A · 0.3~1.0 → B · >=1.0 → 제외",
+  "등급분포": {
+   "A": 3,
+   "B": 7,
+   "EXCLUDE": 11
+  },
+  "이동벡터_항등_max_abs": 1.1102230246251565e-16,
+  "points": [
+   {
+    "child": "AK",
+    "parent": "AJ",
+    "desc": "w_out 0.5->0.7 (우리 몫 0.5->0.3 동반)",
+    "in_config_list": true,
+    "v": {
+     "c_aa": -0.2,
+     "w_out": 0.19999999999999996,
+     "d_mean": 5.234813765873925e-06
+    },
+    "g_pts": 0.660933766899916,
+    "K_times_Q_pts": 2.704741867604481,
+    "K_times_Q_ledger": null,
+    "L_at_parent": 4.203844983305382e-06,
+    "base_shift_correction": -2.225510881836145e-06,
+    "L_at_BO": 1.9783341014692373e-06,
+    "corr_over_L": 0.5293988933165369,
+    "grade": "B",
+    "delta_cos_parent_BO": 0.8569748644746443,
+    "delta_norm_ratio": 1.0675968187526135,
+    "unknown_term_bound_pts": 574.0726246632017
+   },
+   {
+    "child": "AO",
+    "parent": "AK",
+    "desc": "w_ebm 0.15->0.0",
+    "in_config_list": true,
+    "v": {
+     "w_ebm": -0.15,
+     "d_mean": -6.197703522357878e-06
+    },
+    "g_pts": 7.594107377100045,
+    "K_times_Q_pts": 3.3981990893418317,
+    "K_times_Q_ledger": null,
+    "L_at_parent": 1.3729770011158995e-05,
+    "base_shift_correction": -1.4388907477382212e-05,
+    "L_at_BO": -6.591374662232172e-07,
+    "corr_over_L": 1.0480079029501221,
+    "grade": "EXCLUDE",
+    "delta_cos_parent_BO": 0.995689026288252,
+    "delta_norm_ratio": 1.0664210822233369,
+    "unknown_term_bound_pts": 134.81863738388523
+   },
+   {
+    "child": "AP",
+    "parent": "AO",
+    "desc": "w_v6_inner 0.5->1.0",
+    "in_config_list": true,
+    "v": {
+     "w_v6_inner": 0.5,
+     "d_mean": 1.5662303118470916e-05
+    },
+    "g_pts": -5.606861222800035,
+    "K_times_Q_pts": 11.750321964175496,
+    "K_times_Q_ledger": null,
+    "L_at_parent": 7.67339441537353e-06,
+    "base_shift_correction": -4.669424898848466e-06,
+    "L_at_BO": 3.0039695165250634e-06,
+    "corr_over_L": 0.6085214242986577,
+    "grade": "B",
+    "delta_cos_parent_BO": 0.9997155445779172,
+    "delta_norm_ratio": 1.203453919003376,
+    "unknown_term_bound_pts": 440.8667524116921
+   },
+   {
+    "child": "AQ",
+    "parent": "AO",
+    "desc": "w_v6_inner 0.5->0.25",
+    "in_config_list": true,
+    "v": {
+     "w_v6_inner": -0.25,
+     "d_mean": -1.004493985638788e-05
+    },
+    "g_pts": -5.8619593860998975,
+    "K_times_Q_pts": 2.922342256216385,
+    "K_times_Q_ledger": null,
+    "L_at_parent": -3.6716832120154884e-06,
+    "base_shift_correction": 2.350701616334053e-06,
+    "L_at_BO": -1.3209815956814354e-06,
+    "corr_over_L": 0.6402245184555799,
+    "grade": "B",
+    "delta_cos_parent_BO": 0.9996811748355925,
+    "delta_norm_ratio": 1.2043459663094267,
+    "unknown_term_bound_pts": 221.02580008571493
+   },
+   {
+    "child": "AR",
+    "parent": "AO",
+    "desc": "w_ebm 0.0->-0.10",
+    "in_config_list": true,
+    "v": {
+     "w_ebm": -0.1,
+     "d_mean": -5.080137307024446e-06
+    },
+    "g_pts": 1.4986282351001137,
+    "K_times_Q_pts": 1.5054964761487692,
+    "K_times_Q_ledger": null,
+    "L_at_parent": 3.752255406652393e-06,
+    "base_shift_correction": -3.9220880640133696e-06,
+    "L_at_BO": -1.6983265736097647e-07,
+    "corr_over_L": 1.045261486480872,
+    "grade": "EXCLUDE",
+    "delta_cos_parent_BO": 0.9957271207396351,
+    "delta_norm_ratio": 1.0683302035769162,
+    "unknown_term_bound_pts": 90.36769685307898
+   },
+   {
+    "child": "AT",
+    "parent": "AR",
+    "desc": "beta_ins 0.03->0.06",
+    "in_config_list": true,
+    "v": {
+     "beta_ins": 0.03,
+     "d_mean": -5.892308015790354e-06
+    },
+    "g_pts": -1.0314113486999759,
+    "K_times_Q_pts": 0.5360850487358187,
+    "K_times_Q_ledger": null,
+    "L_at_parent": -6.186796374125809e-07,
+    "base_shift_correction": 1.3116373712669945e-07,
+    "L_at_BO": -4.875159002858814e-07,
+    "corr_over_L": 0.212005906118468,
+    "grade": "A",
+    "delta_cos_parent_BO": 0.9995909160916333,
+    "delta_norm_ratio": 1.0968512774044168,
+    "unknown_term_bound_pts": 46.53892691304607
+   },
+   {
+    "child": "AW",
+    "parent": "AV",
+    "desc": "평균축 target_rate 0.4785->0.48296",
+    "in_config_list": false,
+    "v": {
+     "d_mean": 0.018047974263357212
+    },
+    "g_pts": 7.977278481299891,
+    "K_times_Q_pts": 7.95878551347171,
+    "K_times_Q_ledger": null,
+    "L_at_parent": 1.9904693723677547e-05,
+    "base_shift_correction": -2.821248476110724e-05,
+    "L_at_BO": -8.307791037429692e-06,
+    "corr_over_L": 1.4173784913629288,
+    "grade": "EXCLUDE",
+    "delta_cos_parent_BO": 0.9999941320128406,
+    "delta_norm_ratio": 0.9993227738473199,
+    "unknown_term_bound_pts": 6.17475736893136
+   },
+   {
+    "child": "AX",
+    "parent": "AW",
+    "desc": "c 재분할 aa/S2/S1",
+    "in_config_list": false,
+    "v": {
+     "c_aa": -0.15,
+     "c_S2": 0.084,
+     "c_S1": 0.066,
+     "d_mean": 2.967211974022957e-06
+    },
+    "g_pts": -0.4868617161000657,
+    "K_times_Q_pts": 1.2723754103602598,
+    "K_times_Q_ledger": null,
+    "L_at_parent": 9.811337043534343e-07,
+    "base_shift_correction": 1.079097067494723e-06,
+    "L_at_BO": 2.060230771848157e-06,
+    "corr_over_L": 1.0998471082041221,
+    "grade": "EXCLUDE",
+    "delta_cos_parent_BO": 0.999704500163197,
+    "delta_norm_ratio": 1.0938830957408094,
+    "unknown_term_bound_pts": 68.78904217679981
+   },
+   {
+    "child": "AY",
+    "parent": "AX",
+    "desc": "c 재분할 T70 도입",
+    "in_config_list": false,
+    "v": {
+     "c_aa": -0.06449999999999999,
+     "c_S2": -0.036120000000000006,
+     "c_S1": -0.028380000000000002,
+     "c_T70": 0.129,
+     "d_mean": 1.099272170042645e-06
+    },
+    "g_pts": -0.9928135222999117,
+    "K_times_Q_pts": 0.4284997644110584,
+    "K_times_Q_ledger": null,
+    "L_at_parent": -7.04847352427825e-07,
+    "base_shift_correction": 1.6287473559416636e-06,
+    "L_at_BO": 9.239000035138386e-07,
+    "corr_over_L": 2.310780270836648,
+    "grade": "EXCLUDE",
+    "delta_cos_parent_BO": 0.9997161165211228,
+    "delta_norm_ratio": 1.090395647291066,
+    "unknown_term_bound_pts": 38.480021403045455
+   },
+   {
+    "child": "AZ",
+    "parent": "AY",
+    "desc": "c 재분할 S2·S1 제거·aa 확대",
+    "in_config_list": true,
+    "v": {
+     "c_aa": 0.16693999999999998,
+     "c_S2": -0.04788,
+     "c_S1": -0.03762,
+     "c_T70": -0.08144000000000001,
+     "d_mean": -3.1471421225674062e-06
+    },
+    "g_pts": 1.5686201751000226,
+    "K_times_Q_pts": 1.6285603570324259,
+    "K_times_Q_ledger": null,
+    "L_at_parent": 3.993388787361787e-06,
+    "base_shift_correction": -6.389054067837274e-06,
+    "L_at_BO": -2.395665280475487e-06,
+    "corr_over_L": 1.5999078497083103,
+    "grade": "EXCLUDE",
+    "delta_cos_parent_BO": 0.9996909268844019,
+    "delta_norm_ratio": 1.0919365964666345,
+    "unknown_term_bound_pts": 76.44120964193291
+   },
+   {
+    "child": "BA",
+    "parent": "AZ",
+    "desc": "alpha 1.00->1.05",
+    "in_config_list": true,
+    "v": {
+     "alpha": 0.050000000000000044,
+     "d_mean": -7.77005089018859e-06
+    },
+    "g_pts": 6.503482063599904,
+    "K_times_Q_pts": 2.4620520095425213,
+    "K_times_Q_ledger": 2.46205,
+    "K_times_Q_rel_diff": 8.162070312443552e-07,
+    "L_at_parent": 1.1198261368280412e-05,
+    "base_shift_correction": -9.242632520931559e-06,
+    "L_at_BO": 1.9556288473488536e-06,
+    "corr_over_L": 0.8253631717430474,
+    "grade": "B",
+    "delta_cos_parent_BO": 0.9979786726295632,
+    "delta_norm_ratio": 0.9871379678258233,
+    "unknown_term_bound_pts": 63.42276844529889
+   },
+   {
+    "child": "BB",
+    "parent": "BA",
+    "desc": "alpha 1.05->1.10",
+    "in_config_list": true,
+    "v": {
+     "alpha": 0.050000000000000044,
+     "d_mean": -8.130941066573916e-06
+    },
+    "g_pts": 1.213220844800162,
+    "K_times_Q_pts": 2.446152174483829,
+    "K_times_Q_ledger": null,
+    "L_at_parent": 4.570683149454869e-06,
+    "base_shift_correction": -3.083619078153041e-06,
+    "L_at_BO": 1.4870640713018283e-06,
+    "corr_over_L": 0.6746516827623054,
+    "grade": "B",
+    "delta_cos_parent_BO": 0.9979934206952433,
+    "delta_norm_ratio": 0.9903407986520664,
+    "unknown_term_bound_pts": 62.54175141192494
+   },
+   {
+    "child": "BC",
+    "parent": "BB",
+    "desc": "beta_skew 0->+0.15778",
+    "in_config_list": true,
+    "v": {
+     "beta_skew": 0.15778,
+     "d_mean": 3.0295055598438675e-06
+    },
+    "g_pts": -3.6825324122000893,
+    "K_times_Q_pts": 2.4621000548067347,
+    "K_times_Q_ledger": 2.4621,
+    "K_times_Q_rel_diff": 2.2260157875857038e-08,
+    "L_at_parent": -1.5243621193006299e-06,
+    "base_shift_correction": 3.650656769348245e-07,
+    "L_at_BO": -1.1592964423658054e-06,
+    "corr_over_L": 0.23948750255110962,
+    "grade": "A",
+    "delta_cos_parent_BO": 0.9953205639767392,
+    "delta_norm_ratio": 0.9764658371088855,
+    "unknown_term_bound_pts": 96.85550899029353
+   },
+   {
+    "child": "BE",
+    "parent": "BB",
+    "desc": "평균축 -0.01005635",
+    "in_config_list": false,
+    "v": {
+     "d_mean": -0.010051233095112303
+    },
+    "g_pts": -6.450353320100021,
+    "K_times_Q_pts": 2.4595458245060255,
+    "K_times_Q_ledger": 2.46205,
+    "K_times_Q_rel_diff": 0.0010171099262705977,
+    "L_at_parent": -4.984656244855498e-06,
+    "base_shift_correction": 4.5720331462456465e-06,
+    "L_at_BO": -4.1262309860985166e-07,
+    "corr_over_L": 0.9172213532205543,
+    "grade": "B",
+    "delta_cos_parent_BO": 0.9999978491374838,
+    "delta_norm_ratio": 1.0007398976262039,
+    "unknown_term_bound_pts": 2.1659973606889604
+   },
+   {
+    "child": "BG",
+    "parent": "BB",
+    "desc": "alpha·beta_skew·평균 3축 동시",
+    "in_config_list": true,
+    "v": {
+     "alpha": -0.020890000000000075,
+     "beta_skew": -0.059151,
+     "d_mean": 0.007459240611439398
+    },
+    "g_pts": 1.6619834813998295,
+    "K_times_Q_pts": 1.8515421833339802,
+    "K_times_Q_ledger": null,
+    "L_at_parent": 4.388514771887962e-06,
+    "base_shift_correction": -4.798010608309357e-06,
+    "L_at_BO": -4.0949583642139443e-07,
+    "corr_over_L": 1.0933108027901721,
+    "grade": "EXCLUDE",
+    "delta_cos_parent_BO": 0.9992690513067619,
+    "delta_norm_ratio": 0.9979318846579958,
+    "unknown_term_bound_pts": 32.63363985286321
+   },
+   {
+    "child": "BH",
+    "parent": "BG",
+    "desc": "seg_spread 0->0.05868",
+    "in_config_list": true,
+    "v": {
+     "seg_spread_BH": 0.05868
+    },
+    "g_pts": -3.242585666899913,
+    "K_times_Q_pts": 2.4622640414875994,
+    "K_times_Q_ledger": 2.46226,
+    "K_times_Q_rel_diff": 1.641373209672796e-06,
+    "L_at_parent": -9.746486312360565e-07,
+    "base_shift_correction": -8.257142671438838e-09,
+    "L_at_BO": -9.829057739074952e-07,
+    "corr_over_L": 0.008471917372896804,
+    "grade": "A",
+    "delta_cos_parent_BO": 0.9979582674486693,
+    "delta_norm_ratio": 0.9947936128583071,
+    "unknown_term_bound_pts": 62.91388819469419
+   },
+   {
+    "child": "BI",
+    "parent": "BG",
+    "desc": "off_BI -0.006033",
+    "in_config_list": true,
+    "v": {
+     "off_BI": -0.006033
+    },
+    "g_pts": 0.9596987465001803,
+    "K_times_Q_pts": 1.0391466180219788,
+    "K_times_Q_ledger": 1.0391466180219786,
+    "K_times_Q_rel_diff": 2.1367976479362888e-16,
+    "L_at_parent": 2.4966268204532527e-06,
+    "base_shift_correction": -3.3190745727527313e-06,
+    "L_at_BO": -8.224477522994786e-07,
+    "corr_over_L": 1.3294235828765817,
+    "grade": "EXCLUDE",
+    "delta_cos_parent_BO": 0.9999942706546197,
+    "delta_norm_ratio": 1.0006372455245358,
+    "unknown_term_bound_pts": 2.2021953565792463
+   },
+   {
+    "child": "BJ",
+    "parent": "BG",
+    "desc": "off_BJ -0.006087",
+    "in_config_list": true,
+    "v": {
+     "off_BJ": -0.006087
+    },
+    "g_pts": -3.0727297301000362,
+    "K_times_Q_pts": 1.056039272728302,
+    "K_times_Q_ledger": 1.05604,
+    "K_times_Q_rel_diff": 6.886781733624106e-07,
+    "L_at_parent": -2.5189159570780756e-06,
+    "base_shift_correction": 2.7813168492656227e-06,
+    "L_at_BO": 2.6240089218754715e-07,
+    "corr_over_L": 1.1041721505039535,
+    "grade": "EXCLUDE",
+    "delta_cos_parent_BO": 0.9999960903542913,
+    "delta_norm_ratio": 0.9988890540869669,
+    "unknown_term_bound_pts": 1.937732255576426
+   },
+   {
+    "child": "BK",
+    "parent": "BG",
+    "desc": "off_BK -0.006557",
+    "in_config_list": true,
+    "v": {
+     "off_BK": -0.006557
+    },
+    "g_pts": -1.9730218951999632,
+    "K_times_Q_pts": 1.2393267530850138,
+    "K_times_Q_ledger": 1.23933,
+    "K_times_Q_rel_diff": 2.619895416241206e-06,
+    "L_at_parent": -9.164105449839746e-07,
+    "base_shift_correction": 1.4729284958077008e-06,
+    "L_at_BO": 5.565179508237262e-07,
+    "corr_over_L": 1.6072801692100325,
+    "grade": "EXCLUDE",
+    "delta_cos_parent_BO": 0.9999907417075642,
+    "delta_norm_ratio": 1.001114638868247,
+    "unknown_term_bound_pts": 3.1042469789426095
+   },
+   {
+    "child": "BL",
+    "parent": "BG",
+    "desc": "off_BI·off_BJ 동시",
+    "in_config_list": true,
+    "v": {
+     "off_BI": -0.006534,
+     "off_BJ": 0.006544
+    },
+    "g_pts": 1.8501044457000262,
+    "K_times_Q_pts": 2.1636329604904168,
+    "K_times_Q_ledger": null,
+    "L_at_parent": 5.013296494272377e-06,
+    "base_shift_correction": -6.581792642531834e-06,
+    "L_at_BO": -1.5684961482594567e-06,
+    "corr_over_L": 1.3128672222062754,
+    "grade": "EXCLUDE",
+    "delta_cos_parent_BO": 0.9999938272246288,
+    "delta_norm_ratio": 0.9994202459268067,
+    "unknown_term_bound_pts": 3.2833068392822584
+   },
+   {
+    "child": "BN",
+    "parent": "BL",
+    "desc": "w_v6_inner 0.5->0.70",
+    "in_config_list": true,
+    "v": {
+     "w_v6_inner": 0.19999999999999996
+    },
+    "g_pts": 1.814602891100094,
+    "K_times_Q_pts": 2.7148559359363262,
+    "K_times_Q_ledger": 2.714855935936327,
+    "K_times_Q_rel_diff": 3.271548990660535e-16,
+    "L_at_parent": 5.657450341298022e-06,
+    "base_shift_correction": -5.656888079012827e-06,
+    "L_at_BO": 5.622622851953046e-10,
+    "corr_over_L": 0.9999006156039778,
+    "grade": "B",
+    "delta_cos_parent_BO": 0.9999968119263731,
+    "delta_norm_ratio": 1.000918425473072,
+    "unknown_term_bound_pts": 2.776909495800927
+   }
+  ],
+  "자기검사1_다점일치": {
+   "w_ebm": {
+    "per_point_L_at_BO": {
+     "AO": 4.394249774821449e-06,
+     "AR": 1.6983265736097647e-06
+    },
+    "mean": 3.0462881742156068e-06,
+    "spread": 2.695923201211684e-06,
+    "rel_spread": 0.8849862675601469
+   },
+   "alpha": {
+    "per_point_L_at_BO": {
+     "BA": 3.911257694697704e-05,
+     "BB": 2.974128142603654e-05
+    },
+    "mean": 3.442692918650679e-05,
+    "spread": 9.371295520940498e-06,
+    "rel_spread": 0.2722082899166465
+   },
+   "w_v6_inner": {
+    "per_point_L_at_BO": {
+     "AP": 6.007939033050127e-06,
+     "AQ": 5.283926382725742e-06,
+     "BN": 2.811311425976524e-09
+    },
+    "mean": 3.7648922424006154e-06,
+    "spread": 6.00512772162415e-06,
+    "rel_spread": 1.5950330939073807
+   }
+  },
+  "자기검사2_BN": {
+   "L_axis_from_BN_point": 2.828725170649012e-05,
+   "exp_072_recorded_L": 2.8287251706490112e-05,
+   "abs_diff": 6.776263578034403e-21,
+   "rel_diff": 2.3955185354679345e-16,
+   "G_axis_from_BN_point": 0.00016954743632571317,
+   "exp_072_recorded_G": 0.0001695474363257131,
+   "G_rel_diff": 4.796012531867508e-16,
+   "PASS": true
+  },
+  "자기검사2b_BI_vs_BL_blendjson": {
+   "L_axis_ours": -0.00041382841379964405,
+   "L_recorded_in_BL_blend_json": -0.0004138284137996067,
+   "G_axis_ours": 0.07132053755550469,
+   "G_recorded_in_BL_blend_json": 0.07132053755550466
+  },
+  "장부_KQ_대조": {
+   "BA": {
+    "ours": 2.4620520095425213,
+    "ledger": 2.46205,
+    "rel_diff": 8.162070312443552e-07
+   },
+   "BC": {
+    "ours": 2.4621000548067347,
+    "ledger": 2.4621,
+    "rel_diff": 2.2260157875857038e-08
+   },
+   "BE": {
+    "ours": 2.4595458245060255,
+    "ledger": 2.46205,
+    "rel_diff": 0.0010171099262705977
+   },
+   "BH": {
+    "ours": 2.4622640414875994,
+    "ledger": 2.46226,
+    "rel_diff": 1.641373209672796e-06
+   },
+   "BI": {
+    "ours": 1.0391466180219788,
+    "ledger": 1.0391466180219786,
+    "rel_diff": 2.1367976479362888e-16
+   },
+   "BJ": {
+    "ours": 1.056039272728302,
+    "ledger": 1.05604,
+    "rel_diff": 6.886781733624106e-07
+   },
+   "BK": {
+    "ours": 1.2393267530850138,
+    "ledger": 1.23933,
+    "rel_diff": 2.619895416241206e-06
+   },
+   "BN": {
+    "ours": 2.7148559359363262,
+    "ledger": 2.714855935936327,
+    "rel_diff": 3.271548990660535e-16
+   }
+  }
+ },
+ "stage3_동시해": {
+  "A등급판_spec12": {
+   "axes": [
+    "beta_skew",
+    "beta_ins",
+    "seg_spread_BH"
+   ],
+   "u_star": {
+    "beta_skew": -0.03299282484934344,
+    "beta_ins": -0.01007240500444773,
+    "seg_spread_BH": -0.00718259177254663
+   },
+   "new_constants": {
+    "beta_skew": -0.09214382484934344,
+    "beta_ins": 0.01992759499555227,
+    "seg_spread_BH": -0.00718259177254663
+   },
+   "predicted_gain_pts": 0.2107262407784668,
+   "naive_sum_predicted_gain_pts": 0.20667600403131678,
+   "marginal_contribution_pts": {
+    "beta_skew": 0.09854634790771154,
+    "beta_ins": 0.07042996252295086,
+    "seg_spread_BH": 0.035597302103430706
+   },
+   "conditional_vertex_gain_pts": {
+    "beta_skew": 0.0921988153714937,
+    "beta_ins": 0.05905399345253279,
+    "seg_spread_BH": 0.06355036859840454
+   },
+   "G_condition": 8.649893121762164,
+   "ridge_lambda": 0.0,
+   "axes_dropped_uncovered": [
+    "alpha",
+    "c_aa",
+    "c_T70",
+    "w_out",
+    "w_v6_inner",
+    "w_ebm",
+    "off_BI",
+    "off_BJ",
+    "off_BK"
+   ]
+  },
+  "A등급판_L회수": {
+   "n_points": 3,
+   "points": [
+    "AT",
+    "BC",
+    "BH"
+   ],
+   "rank": 3,
+   "singular_values": [
+    0.15778000002908446,
+    0.05868,
+    0.030000000578654887
+   ],
+   "covered_axes": [
+    "beta_skew",
+    "beta_ins",
+    "seg_spread_BH",
+    "d_mean"
+   ],
+   "uncovered_axes": [
+    "alpha",
+    "c_aa",
+    "c_S2",
+    "c_S1",
+    "c_T70",
+    "w_out",
+    "w_v6_inner",
+    "w_ebm",
+    "off_BI",
+    "off_BJ",
+    "off_BK"
+   ],
+   "residual_per_point": {
+    "AT": 1.0587911840678754e-22,
+    "BC": 0.0,
+    "BH": 4.235164736271502e-22
+   },
+   "residual_rms": 2.520427153930957e-22,
+   "L": {
+    "alpha": 0.0,
+    "beta_skew": -7.347550079908057e-06,
+    "c_aa": 0.0,
+    "c_S2": 0.0,
+    "c_S1": 0.0,
+    "c_T70": 0.0,
+    "w_out": 0.0,
+    "w_v6_inner": 0.0,
+    "w_ebm": 0.0,
+    "beta_ins": -1.625052941034218e-05,
+    "off_BI": 0.0,
+    "off_BJ": 0.0,
+    "off_BK": 0.0,
+    "seg_spread_BH": -1.6750268812329496e-05,
+    "d_mean": 3.050691828594249e-09
+   }
+  },
+  "A등급판_ext15_gain": 0.21075775911355726,
+  "AB등급판_spec12": {
+   "axes": [
+    "alpha",
+    "beta_skew",
+    "c_aa",
+    "w_out",
+    "w_v6_inner",
+    "beta_ins",
+    "seg_spread_BH"
+   ],
+   "u_star": {
+    "alpha": 16.67291341619214,
+    "beta_skew": -1.7553103966015595,
+    "c_aa": -4.709599449128525,
+    "w_out": -11.016288952842375,
+    "w_v6_inner": -0.792980605309123,
+    "beta_ins": 0.7055300229663128,
+    "seg_spread_BH": -0.08114157230454486
+   },
+   "new_constants": {
+    "alpha": 17.75202341619214,
+    "beta_skew": -1.8144613966015595,
+    "c_aa": -4.457159449128525,
+    "w_out": -10.316288952842376,
+    "w_v6_inner": -0.12614085640912298,
+    "beta_ins": 0.7355300229663129,
+    "seg_spread_BH": -0.08114157230454486
+   },
+   "predicted_gain_pts": 216.80542961743677,
+   "naive_sum_predicted_gain_pts": 0.5409467895377613,
+   "G_condition": 6925.665677189288
+  },
+  "AB등급판_물리범위_위반": {
+   "alpha": [
+    17.75202341619214,
+    [
+     0.5,
+     2.0
+    ]
+   ],
+   "beta_skew": [
+    -1.8144613966015595,
+    [
+     -0.5,
+     0.5
+    ]
+   ],
+   "c_aa": [
+    -4.457159449128525,
+    [
+     -0.2,
+     0.8
+    ]
+   ],
+   "w_out": [
+    -10.316288952842376,
+    [
+     0.3,
+     1.5
+    ]
+   ],
+   "w_v6_inner": [
+    -0.12614085640912298,
+    [
+     0.0,
+     1.0
+    ]
+   ],
+   "beta_ins": [
+    0.7355300229663129,
+    [
+     -0.2,
+     0.3
+    ]
+   ]
+  },
+  "AB등급판_판정": "물리 범위 검사 탈락 — 사용 불가 (alpha 17.75 / w_out -10.32 / c_aa -4.46)",
+  "착륙해_출하산술_실행": {
+   "d_adj": "0.029340854715161003",
+   "insample_brier": 0.245496130310276,
+   "insample_delta_pts_vs_BO": 1.8163800523661848,
+   "pred_diff_vs_BO_max_abs": 0.006482405269396141,
+   "pred_diff_vs_BO_mean_abs": 0.0005083205686882366,
+   "model_2nd_order_pts": 0.2107262407784668,
+   "exact_2nd_order_pts": 0.20961736655608973,
+   "gain_with_exact_curvature_pts": 0.21183511500084387
+  },
+  "능형스윕": {
+   "A": {
+    "axes": [
+     "beta_skew",
+     "beta_ins",
+     "seg_spread_BH"
+    ],
+    "points": [
+     "AT",
+     "BC",
+     "BH"
+    ],
+    "sweep": [
+     {
+      "lambda_rel": 0.0,
+      "lambda_abs": 0.0,
+      "predicted_gain_pts": 0.2107262407784668,
+      "max_abs_u": 0.03299282484934344,
+      "u_star": {
+       "beta_skew": -0.03299282484934344,
+       "beta_ins": -0.01007240500444773,
+       "seg_spread_BH": -0.00718259177254663
+      },
+      "out_of_range": {},
+      "in_range": true
+     },
+     {
+      "lambda_rel": 1e-06,
+      "lambda_abs": 1.2639530915201471e-09,
+      "predicted_gain_pts": 0.21072624077529734,
+      "max_abs_u": 0.032992639238477554,
+      "u_star": {
+       "beta_skew": -0.032992639238477554,
+       "beta_ins": -0.010072388190034798,
+       "seg_spread_BH": -0.00718259581729403
+      },
+      "out_of_range": {},
+      "in_range": true
+     },
+     {
+      "lambda_rel": 0.0001,
+      "lambda_abs": 1.2639530915201472e-07,
+      "predicted_gain_pts": 0.21072620911864698,
+      "max_abs_u": 0.03297427408782479,
+      "u_star": {
+       "beta_skew": -0.03297427408782479,
+       "beta_ins": -0.010070724247245939,
+       "seg_spread_BH": -0.007182995731457284
+      },
+      "out_of_range": {},
+      "in_range": true
+     },
+     {
+      "lambda_rel": 0.001,
+      "lambda_abs": 1.2639530915201471e-06,
+      "predicted_gain_pts": 0.2107231061549004,
+      "max_abs_u": 0.032808250634581225,
+      "u_star": {
+       "beta_skew": -0.032808250634581225,
+       "beta_ins": -0.010055659289643597,
+       "seg_spread_BH": -0.007186584747399853
+      },
+      "out_of_range": {},
+      "in_range": true
+     },
+     {
+      "lambda_rel": 0.01,
+      "lambda_abs": 1.2639530915201471e-05,
+      "predicted_gain_pts": 0.21044170353640218,
+      "max_abs_u": 0.03123550421599197,
+      "u_star": {
+       "beta_skew": -0.03123550421599197,
+       "beta_ins": -0.009910821131211372,
+       "seg_spread_BH": -0.007218122068684545
+      },
+      "out_of_range": {},
+      "in_range": true
+     },
+     {
+      "lambda_rel": 0.03,
+      "lambda_abs": 3.791859274560441e-05,
+      "predicted_gain_pts": 0.2086278177120825,
+      "max_abs_u": 0.028228103500301905,
+      "u_star": {
+       "beta_skew": -0.028228103500301905,
+       "beta_ins": -0.009621580124079085,
+       "seg_spread_BH": -0.007264227449391368
+      },
+      "out_of_range": {},
+      "in_range": true
+     },
+     {
+      "lambda_rel": 0.1,
+      "lambda_abs": 0.0001263953091520147,
+      "predicted_gain_pts": 0.19751515313956186,
+      "max_abs_u": 0.021111528254511052,
+      "u_star": {
+       "beta_skew": -0.021111528254511052,
+       "beta_ins": -0.008843234241148384,
+       "seg_spread_BH": -0.007265049889811228
+      },
+      "out_of_range": {},
+      "in_range": true
+     },
+     {
+      "lambda_rel": 0.3,
+      "lambda_abs": 0.00037918592745604413,
+      "predicted_gain_pts": 0.16880836710060187,
+      "max_abs_u": 0.012267330910036584,
+      "u_star": {
+       "beta_skew": -0.012267330910036584,
+       "beta_ins": -0.0074803885702701585,
+       "seg_spread_BH": -0.00681295836292473
+      },
+      "out_of_range": {},
+      "in_range": true
+     },
+     {
+      "lambda_rel": 1.0,
+      "lambda_abs": 0.001263953091520147,
+      "predicted_gain_pts": 0.12212644772496166,
+      "max_abs_u": 0.005189757311707219,
+      "u_star": {
+       "beta_skew": -0.004967666685899882,
+       "beta_ins": -0.005189757311707219,
+       "seg_spread_BH": -0.005123852366551018
+      },
+      "out_of_range": {},
+      "in_range": true
+     }
+    ]
+   },
+   "AB": {
+    "axes": [
+     "alpha",
+     "beta_skew",
+     "c_aa",
+     "w_out",
+     "w_v6_inner",
+     "beta_ins",
+     "seg_spread_BH"
+    ],
+    "points": [
+     "AK",
+     "AP",
+     "AQ",
+     "AT",
+     "BA",
+     "BB",
+     "BC",
+     "BE",
+     "BH",
+     "BN"
+    ],
+    "sweep": [
+     {
+      "lambda_rel": 0.0,
+      "lambda_abs": 0.0,
+      "predicted_gain_pts": 216.80542961743677,
+      "max_abs_u": 16.67291341619214,
+      "u_star": {
+       "alpha": 16.67291341619214,
+       "beta_skew": -1.7553103966015595,
+       "c_aa": -4.709599449128525,
+       "w_out": -11.016288952842375,
+       "w_v6_inner": -0.792980605309123,
+       "beta_ins": 0.7055300229663128,
+       "seg_spread_BH": -0.08114157230454486
+      },
+      "out_of_range": {
+       "alpha": 17.75202341619214,
+       "beta_skew": -1.8144613966015595,
+       "c_aa": -4.457159449128525,
+       "w_out": -10.316288952842376,
+       "w_v6_inner": -0.12614085640912298,
+       "beta_ins": 0.7355300229663129
+      },
+      "in_range": false
+     },
+     {
+      "lambda_rel": 1e-06,
+      "lambda_abs": 1.7604087752360572e-09,
+      "predicted_gain_pts": 216.80501377577966,
+      "max_abs_u": 16.649811727624314,
+      "u_star": {
+       "alpha": 16.649811727624314,
+       "beta_skew": -1.7528974058706752,
+       "c_aa": -4.7032126727075285,
+       "w_out": -11.000870490332497,
+       "w_v6_inner": -0.7919012144651363,
+       "beta_ins": 0.7045303130937463,
+       "seg_spread_BH": -0.08103746428551845
+      },
+      "out_of_range": {
+       "alpha": 17.728921727624314,
+       "beta_skew": -1.8120484058706752,
+       "c_aa": -4.4507726727075285,
+       "w_out": -10.300870490332498,
+       "w_v6_inner": -0.1250614655651363,
+       "beta_ins": 0.7345303130937463
+      },
+      "in_range": false
+     },
+     {
+      "lambda_rel": 0.0001,
+      "lambda_abs": 1.7604087752360574e-07,
+      "predicted_gain_pts": 213.5911051473739,
+      "max_abs_u": 14.64183755386001,
+      "u_star": {
+       "alpha": 14.64183755386001,
+       "beta_skew": -1.5431627336487235,
+       "c_aa": -4.148049143597541,
+       "w_out": -9.660746154060831,
+       "w_v6_inner": -0.6980616465530758,
+       "beta_ins": 0.6176379902130685,
+       "seg_spread_BH": -0.07198910317291482
+      },
+      "out_of_range": {
+       "alpha": 15.72094755386001,
+       "beta_skew": -1.6023137336487234,
+       "c_aa": -3.8956091435975413,
+       "w_out": -8.960746154060832,
+       "w_v6_inner": -0.031221897653075814,
+       "beta_ins": 0.6476379902130686
+      },
+      "in_range": false
+     },
+     {
+      "lambda_rel": 0.001,
+      "lambda_abs": 1.7604087752360574e-06,
+      "predicted_gain_pts": 143.8004077205499,
+      "max_abs_u": 6.993006165389388,
+      "u_star": {
+       "alpha": 6.993006165389388,
+       "beta_skew": -0.7442294276988412,
+       "c_aa": -2.031970219729912,
+       "w_out": -4.557253882883128,
+       "w_v6_inner": -0.33976883808627206,
+       "beta_ins": 0.2867039148395399,
+       "seg_spread_BH": -0.03754686068416411
+      },
+      "out_of_range": {
+       "alpha": 8.072116165389389,
+       "beta_skew": -0.8033804276988411,
+       "c_aa": -1.7795302197299119,
+       "w_out": -3.8572538828831275,
+       "beta_ins": 0.31670391483953986
+      },
+      "in_range": false
+     },
+     {
+      "lambda_rel": 0.01,
+      "lambda_abs": 1.7604087752360574e-05,
+      "predicted_gain_pts": 28.94373851150602,
+      "max_abs_u": 1.1419053260457381,
+      "u_star": {
+       "alpha": 1.1419053260457381,
+       "beta_skew": -0.13272052454205688,
+       "c_aa": -0.3967324385761242,
+       "w_out": -0.6699508852931702,
+       "w_v6_inner": -0.05620165818129848,
+       "beta_ins": 0.03426818260826653,
+       "seg_spread_BH": -0.01149801909195648
+      },
+      "out_of_range": {
+       "alpha": 2.2210153260457384,
+       "w_out": 0.030049114706829805
+      },
+      "in_range": false
+     },
+     {
+      "lambda_rel": 0.03,
+      "lambda_abs": 5.281226325708172e-05,
+      "predicted_gain_pts": 10.850338354026583,
+      "max_abs_u": 0.4090440886649459,
+      "u_star": {
+       "alpha": 0.4090440886649459,
+       "beta_skew": -0.0547663703196338,
+       "c_aa": -0.17131535043519386,
+       "w_out": -0.20404878154802347,
+       "w_v6_inner": -0.011877803307579107,
+       "beta_ins": 0.0035521745733616858,
+       "seg_spread_BH": -0.008554935260019601
+      },
+      "out_of_range": {},
+      "in_range": true
+     },
+     {
+      "lambda_rel": 0.1,
+      "lambda_abs": 0.00017604087752360576,
+      "predicted_gain_pts": 3.72474080071236,
+      "max_abs_u": 0.13075773655417916,
+      "u_star": {
+       "alpha": 0.13075773655417916,
+       "beta_skew": -0.021809572908103616,
+       "c_aa": -0.06579253592622261,
+       "w_out": -0.047994038253002,
+       "w_v6_inner": 0.005896407658738669,
+       "beta_ins": -0.006918348952359214,
+       "seg_spread_BH": -0.00748540491149898
+      },
+      "out_of_range": {},
+      "in_range": true
+     },
+     {
+      "lambda_rel": 0.3,
+      "lambda_abs": 0.0005281226325708172,
+      "predicted_gain_pts": 1.4594731394120186,
+      "max_abs_u": 0.0464268909625866,
+      "u_star": {
+       "alpha": 0.0464268909625866,
+       "beta_skew": -0.009029449885160993,
+       "c_aa": -0.024482086967941748,
+       "w_out": -0.011481861137478176,
+       "w_v6_inner": 0.005976969057816835,
+       "beta_ins": -0.008187072477225645,
+       "seg_spread_BH": -0.006479610628733807
+      },
+      "out_of_range": {},
+      "in_range": true
+     },
+     {
+      "lambda_rel": 1.0,
+      "lambda_abs": 0.0017604087752360574,
+      "predicted_gain_pts": 0.5466370459735234,
+      "max_abs_u": 0.0151496705206406,
+      "u_star": {
+       "alpha": 0.0151496705206406,
+       "beta_skew": -0.0032117332438718516,
+       "c_aa": -0.0070559038723097605,
+       "w_out": -0.00194455305251018,
+       "w_v6_inner": 0.0026614863558083565,
+       "beta_ins": -0.005527452190197267,
+       "seg_spread_BH": -0.004426625785824875
+      },
+      "out_of_range": {},
+      "in_range": true
+     }
+    ]
+   }
+  },
+  "공선정리해": {
+   "A": {
+    "axes": [
+     "beta_skew",
+     "beta_ins",
+     "seg_spread_BH"
+    ],
+    "dropped_collinear": [
+     "w_out",
+     "off_BI",
+     "c_S2",
+     "c_S1"
+    ],
+    "G_condition": 8.649893121762164,
+    "u_star": {
+     "beta_skew": -0.03299282484934344,
+     "beta_ins": -0.01007240500444773,
+     "seg_spread_BH": -0.00718259177254663
+    },
+    "new_constants": {
+     "beta_skew": -0.09214382484934344,
+     "beta_ins": 0.01992759499555227,
+     "seg_spread_BH": -0.00718259177254663
+    },
+    "predicted_gain_pts": 0.2107262407784668,
+    "out_of_range": {}
+   },
+   "AB": {
+    "axes": [
+     "alpha",
+     "beta_skew",
+     "c_aa",
+     "w_v6_inner",
+     "beta_ins",
+     "seg_spread_BH"
+    ],
+    "dropped_collinear": [
+     "w_out",
+     "off_BI",
+     "c_S2",
+     "c_S1"
+    ],
+    "G_condition": 202.91873099429114,
+    "u_star": {
+     "alpha": 0.608094414464932,
+     "beta_skew": -0.06494896548718232,
+     "c_aa": -0.5512804566417956,
+     "w_v6_inner": -0.2048626013562823,
+     "beta_ins": -0.0034369075011192974,
+     "seg_spread_BH": -0.003279098798557606
+    },
+    "new_constants": {
+     "alpha": 1.687204414464932,
+     "beta_skew": -0.12409996548718233,
+     "c_aa": -0.2988404566417956,
+     "w_v6_inner": 0.46197714754371766,
+     "beta_ins": 0.0265630924988807,
+     "seg_spread_BH": -0.003279098798557606
+    },
+    "predicted_gain_pts": 9.282531880899482,
+    "out_of_range": {
+     "c_aa": -0.2988404566417956
+    }
+   }
+  },
+  "축별_잔여재고": {
+   "w_ebm": {
+    "AO": {
+     "grade": "EXCLUDE",
+     "parent": "AK",
+     "L_axis_at_parent": -9.153180007439331e-05,
+     "L_axis_at_BO": 4.394249774821449e-06,
+     "G_jj_at_BO": 0.0004295250484842492,
+     "conditional_vertex_u": 0.010230485487000852,
+     "conditional_vertex_gain_pts": 0.017996023547615217,
+     "delta_cos_parent_BO": 0.995689026288252,
+     "delta_norm_ratio": 1.0664210822233369,
+     "unknown_term_bound_pts": 134.81863738388523
+    },
+    "AR": {
+     "grade": "EXCLUDE",
+     "parent": "AO",
+     "L_axis_at_parent": -3.752255406652393e-05,
+     "L_axis_at_BO": 1.6983265736097647e-06,
+     "G_jj_at_BO": 0.0004295250484842492,
+     "conditional_vertex_u": 0.003953963987904753,
+     "conditional_vertex_gain_pts": 0.0026881251525697173,
+     "delta_cos_parent_BO": 0.9957271207396351,
+     "delta_norm_ratio": 1.0683302035769162,
+     "unknown_term_bound_pts": 90.36769685307898
+    }
+   },
+   "w_v6_inner": {
+    "AP": {
+     "grade": "B",
+     "parent": "AO",
+     "L_axis_at_parent": 1.534678883074706e-05,
+     "L_axis_at_BO": 6.007939033050127e-06,
+     "G_jj_at_BO": 0.0001696861012140725,
+     "conditional_vertex_u": 0.035406194084632976,
+     "conditional_vertex_gain_pts": 0.08515307441580476,
+     "delta_cos_parent_BO": 0.9997155445779172,
+     "delta_norm_ratio": 1.203453919003376,
+     "unknown_term_bound_pts": 440.8667524116921
+    },
+    "AQ": {
+     "grade": "B",
+     "parent": "AO",
+     "L_axis_at_parent": 1.4686732848061954e-05,
+     "L_axis_at_BO": 5.283926382725742e-06,
+     "G_jj_at_BO": 0.0001696861012140725,
+     "conditional_vertex_u": 0.031139417694909785,
+     "conditional_vertex_gain_pts": 0.06586623135744074,
+     "delta_cos_parent_BO": 0.9996811748355925,
+     "delta_norm_ratio": 1.2043459663094267,
+     "unknown_term_bound_pts": 221.02580008571493
+    },
+    "BN": {
+     "grade": "B",
+     "parent": "BL",
+     "L_axis_at_parent": 2.828725170649012e-05,
+     "L_axis_at_BO": 2.811311425976524e-09,
+     "G_jj_at_BO": 0.0001696861012140725,
+     "conditional_vertex_u": 1.656771772032072e-05,
+     "conditional_vertex_gain_pts": 1.864520720984543e-08,
+     "delta_cos_parent_BO": 0.9999968119263731,
+     "delta_norm_ratio": 1.000918425473072,
+     "unknown_term_bound_pts": 2.776909495800927
+    }
+   },
+   "beta_ins": {
+    "AT": {
+     "grade": "A",
+     "parent": "AR",
+     "L_axis_at_parent": -2.0622654580419365e-05,
+     "L_axis_at_BO": -1.625053000952938e-05,
+     "G_jj_at_BO": 0.0017901166271915786,
+     "conditional_vertex_u": -0.009077916914845932,
+     "conditional_vertex_gain_pts": 0.059053997807393704,
+     "delta_cos_parent_BO": 0.9995909160916333,
+     "delta_norm_ratio": 1.0968512774044168,
+     "unknown_term_bound_pts": 46.53892691304607
+    }
+   },
+   "alpha": {
+    "BA": {
+     "grade": "B",
+     "parent": "AZ",
+     "L_axis_at_parent": 0.00022396522736560805,
+     "L_axis_at_BO": 3.911257694697704e-05,
+     "G_jj_at_BO": 0.0024052127129050305,
+     "conditional_vertex_u": 0.01626158748335262,
+     "conditional_vertex_gain_pts": 0.25460969721918325,
+     "delta_cos_parent_BO": 0.9979786726295632,
+     "delta_norm_ratio": 0.9871379678258233,
+     "unknown_term_bound_pts": 63.42276844529889
+    },
+    "BB": {
+     "grade": "B",
+     "parent": "BA",
+     "L_axis_at_parent": 9.141366298909731e-05,
+     "L_axis_at_BO": 2.974128142603654e-05,
+     "G_jj_at_BO": 0.0024052127129050305,
+     "conditional_vertex_u": 0.012365343516796417,
+     "conditional_vertex_gain_pts": 0.14721817590413178,
+     "delta_cos_parent_BO": 0.9979934206952433,
+     "delta_norm_ratio": 0.9903407986520664,
+     "unknown_term_bound_pts": 62.54175141192494
+    }
+   },
+   "beta_skew": {
+    "BC": {
+     "grade": "A",
+     "parent": "BB",
+     "L_axis_at_parent": -9.661313977060654e-06,
+     "L_axis_at_BO": -7.3475500213322695e-06,
+     "G_jj_at_BO": 0.00023439877555455924,
+     "conditional_vertex_u": -0.03134636690805595,
+     "conditional_vertex_gain_pts": 0.09219881390144774,
+     "delta_cos_parent_BO": 0.9953205639767392,
+     "delta_norm_ratio": 0.9764658371088855,
+     "unknown_term_bound_pts": 96.85550899029353
+    }
+   },
+   "seg_spread_BH": {
+    "BH": {
+     "grade": "A",
+     "parent": "BG",
+     "L_axis_at_parent": -1.6609554042877582e-05,
+     "L_axis_at_BO": -1.6750268812329503e-05,
+     "G_jj_at_BO": 0.001767343871814303,
+     "conditional_vertex_u": -0.009477651225357842,
+     "conditional_vertex_gain_pts": 0.06355036859840459,
+     "delta_cos_parent_BO": 0.9979582674486693,
+     "delta_norm_ratio": 0.9947936128583071,
+     "unknown_term_bound_pts": 62.91388819469419
+    }
+   },
+   "off_BI": {
+    "BI": {
+     "grade": "EXCLUDE",
+     "parent": "BG",
+     "L_axis_at_parent": -0.00041382841379964405,
+     "L_axis_at_BO": 0.00013632483877001138,
+     "G_jj_at_BO": 0.0713681197449272,
+     "conditional_vertex_u": 0.0019101643599024657,
+     "conditional_vertex_gain_pts": 0.10424165560996339,
+     "delta_cos_parent_BO": 0.9999942706546197,
+     "delta_norm_ratio": 1.0006372455245358,
+     "unknown_term_bound_pts": 2.2021953565792463
+    }
+   },
+   "off_BJ": {
+    "BJ": {
+     "grade": "EXCLUDE",
+     "parent": "BG",
+     "L_axis_at_parent": 0.0004138189513846025,
+     "L_axis_at_BO": -4.3108410085024994e-05,
+     "G_jj_at_BO": 0.07091110229214449,
+     "conditional_vertex_u": -0.000607921872479488,
+     "conditional_vertex_gain_pts": 0.01049072118444368,
+     "delta_cos_parent_BO": 0.9999960903542913,
+     "delta_norm_ratio": 0.9988890540869669,
+     "unknown_term_bound_pts": 1.937732255576426
+    }
+   },
+   "off_BK": {
+    "BK": {
+     "grade": "EXCLUDE",
+     "parent": "BG",
+     "L_axis_at_parent": 0.00013976064434710608,
+     "L_axis_at_BO": -8.487386774801376e-05,
+     "G_jj_at_BO": 0.07217990034612119,
+     "conditional_vertex_u": -0.001175865682011498,
+     "conditional_vertex_gain_pts": 0.03995096547952513,
+     "delta_cos_parent_BO": 0.9999907417075642,
+     "delta_norm_ratio": 1.001114638868247,
+     "unknown_term_bound_pts": 3.1042469789426095
+    }
+   }
+  },
+  "축별_잔여재고_주": "unknown_term_bound_pts 는 2K·rms(δ_BO − δ_parent)·rms(y − p_BO) — 전이 공식이 무시하는 항 mean(Δδ·r0) 의 코시-슈바르츠 상한이다.  이 상한이 조건부 이득보다 크면 그 축의 재고는 부호조차 결정되지 않는다.",
+  "🔴_S5": "stage3 의 예측 이득은 **산술 예측이지 측정이 아니다.** 하방도 대칭이다.  동시 꼭지점 해의 역사적 실현률은 84%(BG 82.7% · BL 85.4%, 2/2)이며 그것도 표본 2건이다."
+ },
+ "stage4_신설3축_진단": {
+  "포획_검증": {
+   "max_abs_diff_vs_arms_lg_p_v6": 4.996003610813204e-16,
+   "4팔_상호상관": {
+    "pl-pc": 0.9754618085326023,
+    "pl-pn": 0.84517238664332,
+    "pl-pf": 0.8486212771452699,
+    "pc-pn": 0.8541580845649909,
+    "pc-pf": 0.8523070977275903,
+    "pn-pf": 0.8310834910907812
+   },
+   "t0_항등": 0.0
+  },
+  "tr2024_축": {
+   "v6_CAT_vs_NN": {
+    "G_jj": 0.0002250541013885022,
+    "K_times_G_jj_pts_at_u1": 90.09122701915047,
+    "rms_delta": 0.015001803271223836,
+    "max_abs_delta": 0.31468089906161456,
+    "max_abs_corr_existing": 0.3624461896909038,
+    "argmax_abs_corr_axis": "w_v6_inner",
+    "probe_u_for_KQ_1pt": 0.10533039449447391,
+    "KQ_at_that_u": 1.0000000000045204,
+    "nonlinearity_at_that_u": 0.0016307864273873512,
+    "max_u_with_nonlinearity_under_1pct": 0.6187472931995988
+   },
+   "v6_CAT_vs_LEAF": {
+    "G_jj": 0.00021952096720680376,
+    "K_times_G_jj_pts_at_u1": 87.87626250788259,
+    "rms_delta": 0.014816239982087349,
+    "max_abs_delta": 0.07986176610669249,
+    "max_abs_corr_existing": 0.40189711122731187,
+    "argmax_abs_corr_axis": "beta_ins",
+    "probe_u_for_KQ_1pt": 0.1066875808353571,
+    "KQ_at_that_u": 1.0000000000021088,
+    "nonlinearity_at_that_u": 0.0007396919461327362,
+    "max_u_with_nonlinearity_under_1pct": 1.3321546041423455
+   },
+   "v6_CAT_vs_LGB": {
+    "G_jj": 3.723890593349662e-05,
+    "K_times_G_jj_pts_at_u1": 14.907076599363997,
+    "rms_delta": 0.006102368878845053,
+    "max_abs_delta": 0.04214582972957015,
+    "max_abs_corr_existing": 0.2258321717650449,
+    "argmax_abs_corr_axis": "w_v6_inner",
+    "probe_u_for_KQ_1pt": 0.2589949271360978,
+    "KQ_at_that_u": 0.999999999998453,
+    "nonlinearity_at_that_u": 0.0007656628143504756,
+    "max_u_with_nonlinearity_under_1pct": 2.9999999972061255
+   }
+  },
+  "기존축과의_상관_전체": {
+   "v6_CAT_vs_NN": {
+    "alpha": 0.15828655722245233,
+    "beta_skew": -0.06338395106356318,
+    "c_aa": 0.20012229768529877,
+    "c_S2": 0.1710989245668072,
+    "c_S1": 0.1676053770696654,
+    "c_T70": 0.17128037038861693,
+    "w_out": 0.1606181607773591,
+    "w_v6_inner": -0.3624461896909038,
+    "w_ebm": -0.07916568973701701,
+    "beta_ins": 0.309078854748638,
+    "off_BI": 0.30879535674871406,
+    "off_BJ": -0.10866606751563555,
+    "off_BK": -0.20027418978859107,
+    "seg_spread_BH": 0.015080130152717494,
+    "d_mean": 0.04442281858073506
+   },
+   "v6_CAT_vs_LEAF": {
+    "alpha": 0.21977936826740863,
+    "beta_skew": -0.022168524431398304,
+    "c_aa": 0.2616447808397549,
+    "c_S2": 0.23366853472769025,
+    "c_S1": 0.2348522971040352,
+    "c_T70": 0.23143363537536862,
+    "w_out": 0.22456941644878833,
+    "w_v6_inner": -0.3843620571106158,
+    "w_ebm": 0.000579334876601835,
+    "beta_ins": 0.40189711122731187,
+    "off_BI": 0.4013527151301215,
+    "off_BJ": -0.14030133937764946,
+    "off_BK": -0.02804483912595841,
+    "seg_spread_BH": 0.0281201581653644,
+    "d_mean": -0.007625379844438148
+   },
+   "v6_CAT_vs_LGB": {
+    "alpha": -0.007576274563193136,
+    "beta_skew": 0.08522242231909163,
+    "c_aa": -0.04770072126415992,
+    "c_S2": -0.025306406041509872,
+    "c_S1": -0.0248289045692737,
+    "c_T70": -0.0058242383295871916,
+    "w_out": -0.0007933314410606255,
+    "w_v6_inner": 0.2258321717650449,
+    "w_ebm": 0.02886324649851894,
+    "beta_ins": 0.030034522034199703,
+    "off_BI": 0.03029619833395179,
+    "off_BJ": 0.12196159618273612,
+    "off_BK": 0.021076628280842936,
+    "seg_spread_BH": 0.034757539331354746,
+    "d_mean": -0.0896176875055331
+   }
+  },
+  "정직면_OOT2024": {
+   "honest_surface_base_pts": 928.501461058684,
+   "surface": "OOT 2024 (팀원 납품 3팔 + exp_071 p_nn), BO 상수, 전역 재중심화",
+   "v6_CAT_vs_NN": {
+    "argmax_t": 0.2890459981654428,
+    "gain_pts": 4.8054643423056405,
+    "new_W_CAT": 0.9690459981654429,
+    "grid": {
+     "-0.30": -15.189737873211357,
+     "-0.20": -8.968635983608351,
+     "-0.10": -3.9059846749012195,
+     "-0.05": -1.8085277959768291,
+     "+0.05": 1.5198507907542762,
+     "+0.10": 2.751288198199404,
+     "+0.20": 4.350034766864496,
+     "+0.30": 4.798577606413005
+    }
+   },
+   "v6_CAT_vs_LEAF": {
+    "argmax_t": 0.011157269403437671,
+    "gain_pts": 0.008219023195351838,
+    "new_W_CAT": 0.6911572694034377,
+    "grid": {
+     "-0.30": -6.384087819821843,
+     "-0.20": -2.9356409584902394,
+     "-0.10": -0.8075662305540163,
+     "-0.05": -0.2387203860698719,
+     "+0.05": -0.09138468098910835,
+     "+0.10": -0.5128390520915218,
+     "+0.20": -2.345740423903635,
+     "+0.30": -5.498121409830446
+    }
+   },
+   "v6_CAT_vs_LGB": {
+    "argmax_t": 0.02287463065209949,
+    "gain_pts": 0.008059396316980383,
+    "new_W_CAT": 0.7028746306520995,
+    "grid": {
+     "-0.30": -1.5972920097029828,
+     "-0.20": -0.7569209221625215,
+     "-0.10": -0.22447018817047137,
+     "-0.05": -0.07373431156759125,
+     "+0.05": -0.0032725857579407602,
+     "+0.10": -0.08355652336706498,
+     "+0.20": -0.47517188107588026,
+     "+0.30": -1.1748641387310954
+    }
+   }
+  },
+  "정직면_시작자격": 0.0,
+  "🔴_S12": "🔴 S12 인용 — '부호 신탁(4/4)은 전역 스칼라 축의 실적이다. 다차원 가중을 적합하는 축에는 적용되지 않으며, 그 대용으로 교차 t 를 쓰면 틀린다(BH 실측 −3.24).'  이 3축은 v6 내부 4팔 가중을 적합하는 축이므로 정직면·프레임 부호를 방향 근거로 쓸 수 없다.  또 BN 이 실측한 정직면→LB 전이 배율 0.39~0.55 는 이 곡면 위에서 나온 값이며 부호까지 보증하지 않는다.",
+  "🔴_착륙금지": "이 3축에는 LB 점이 없다 → L 미측정 → stage3 착륙 해에 넣지 않는다."
+ },
+ "실행시간": {
+  "capture_v6_4arm_min": 0.82,
+  "vertex078_min": 0.4009136239687602,
+  "stage34_min": 1.9375264326731363,
+  "core_reimport_min": 0.4013916293780009,
+  "합계_계산_min": 3.56,
+  "ETA_min": 35,
+  "threads": "OMP/OPENBLAS/MKL/NUMEXPR/VECLIB = 6 고정"
+ },
+ "산출물_서버": "~/SungjinPark/exp078/ (src/ · logs/ · work/ · vertex078.json · stage34_078.json). 삭제·덮어쓰기 0건"
+}

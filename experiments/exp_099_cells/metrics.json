@@ -1,0 +1,679 @@
+{
+ "S57_curvature_law": {
+  "K": 400309.19882517256,
+  "A_target": 10900,
+  "band": [
+   10573.0,
+   11227.0
+  ],
+  "rows": [
+   {
+    "cell": "1|1",
+    "n_fire": 7777,
+    "f": 0.03067765387149073,
+    "KG_frame_s1": 327.46441794841286,
+    "A_implied": 11012.191342215538,
+    "inside_10900_pm3pct": true
+   },
+   {
+    "cell": "1|2",
+    "n_fire": 12444,
+    "f": 0.04908740192578509,
+    "KG_frame_s1": 491.6152839358632,
+    "A_implied": 10532.094048558729,
+    "inside_10900_pm3pct": false
+   },
+   {
+    "cell": "2|1",
+    "n_fire": 17166,
+    "f": 0.06771410651382408,
+    "KG_frame_s1": 687.0424532686346,
+    "A_implied": 10883.167373142911,
+    "inside_10900_pm3pct": true
+   },
+   {
+    "cell": "2|2",
+    "n_fire": 17114,
+    "f": 0.06750898397282916,
+    "KG_frame_s1": 696.4365500749731,
+    "A_implied": 11063.061517732274,
+    "inside_10900_pm3pct": true
+   }
+  ],
+  "A_mean_frame": 10872.628570412364,
+  "cell_2_2_LB_measured_KG_s1": 700.8410107727367,
+  "A_from_LB_2_2": 11133.027431563976,
+  "frame_vs_LB_2_2_rel": 0.006324281368186968,
+  "verdict": "frame curvature reproduces the LB-solved curvature of 2|2 to 0.63%; all four A inside/at the 10,900+-3% band"
+ },
+ "scale_transport_check": {
+  "step": 0.011100912277994783,
+  "KQ_at_s1": 0.04026458582889458,
+  "KQ_at_s060": 0.014512576160884142,
+  "ratio": 0.36043028537672583,
+  "sqrt_ratio": 0.6003584640668655,
+  "predicted_sqrt": 0.6,
+  "rel_err": 0.000597440111442582
+ },
+ "four_cells": {
+  "1|1": {
+   "cell": "1|1",
+   "n_by_cell": 155477,
+   "shipped_value": -0.02630110266550234,
+   "original_value": -0.02630110266550234,
+   "u_shipped_vs_original": 0.0,
+   "f_calframe": 0.03067765387149073,
+   "KG_at_s1": 327.1332359103107,
+   "KG_at_CH": 117.76796492771184,
+   "per_phi": {
+    "0.5": {
+     "u_star_from_original": -0.13583159621300708,
+     "cell_value_at_vertex": -0.16213269887850942,
+     "max_gain": 2.172845159794832,
+     "gain_at_shipped": -0.0,
+     "recoverable": 2.172845159794832,
+     "phi_free": true
+    },
+    "0.7": {
+     "u_star_from_original": -0.13583159621300708,
+     "cell_value_at_vertex": -0.16213269887850942,
+     "max_gain": 2.172845159794832,
+     "gain_at_shipped": -0.0,
+     "recoverable": 2.172845159794832,
+     "phi_free": true
+    },
+    "0.91": {
+     "u_star_from_original": -0.13583159621300708,
+     "cell_value_at_vertex": -0.16213269887850942,
+     "max_gain": 2.172845159794832,
+     "gain_at_shipped": -0.0,
+     "recoverable": 2.172845159794832,
+     "phi_free": true
+    },
+    "1.0": {
+     "u_star_from_original": -0.13583159621300708,
+     "cell_value_at_vertex": -0.16213269887850942,
+     "max_gain": 2.172845159794832,
+     "gain_at_shipped": -0.0,
+     "recoverable": 2.172845159794832,
+     "phi_free": true
+    }
+   },
+   "LB_point": {
+    "candidate": "CJ",
+    "base": "CH (s=0.60)",
+    "u": 0.011100912277994783,
+    "deltaLB": -0.3696665195,
+    "KQ_measured": 0.014512576160884142,
+    "note": "measured ON the current base -> phi-free"
+   },
+   "KL_eff_at_CH": -15.996610658888534
+  },
+  "1|2": {
+   "cell": "1|2",
+   "n_by_cell": 193296,
+   "shipped_value": 0.021155205173021163,
+   "original_value": 0.021155205173021163,
+   "u_shipped_vs_original": 0.0,
+   "f_calframe": 0.04908740192578509,
+   "KG_at_s1": 491.6152839358632,
+   "KG_at_CH": 176.98150221691074,
+   "per_phi": {
+    "0.5": {
+     "note": "미기록 — L unknown, vertex and max gain not computable"
+    },
+    "0.7": {
+     "note": "미기록 — L unknown, vertex and max gain not computable"
+    },
+    "0.91": {
+     "note": "미기록 — L unknown, vertex and max gain not computable"
+    },
+    "1.0": {
+     "note": "미기록 — L unknown, vertex and max gain not computable"
+    }
+   },
+   "LB_point": null,
+   "KL_eff_at_CH": null,
+   "STATUS": "미기록 — no candidate has ever moved this cell on the leaderboard. BS2 was BUILT (step +0.009008515132705674, K*Q=0.03990439608256058 at s=1) but there is NO LB row for it in submissions/CV_LB.md, EXPERIMENTS.md or gates_*.json."
+  },
+  "2|1": {
+   "cell": "2|1",
+   "n_by_cell": 490570,
+   "shipped_value": -0.00924525151882219,
+   "original_value": 0.003841565032476346,
+   "u_shipped_vs_original": -0.013086816551298536,
+   "f_calframe": 0.06771410651382408,
+   "KG_at_s1": 686.4032336562963,
+   "KG_at_CH": 247.10516411626665,
+   "per_phi": {
+    "0.5": {
+     "u_star_from_original": -0.012138159485979174,
+     "cell_value_at_vertex": -0.008296594453502828,
+     "max_gain": 0.03640721852585091,
+     "gain_at_shipped": 0.036184836177168195,
+     "recoverable": 0.00022238234868271478,
+     "past_vertex": true
+    },
+    "0.7": {
+     "u_star_from_original": -0.016993423280370845,
+     "cell_value_at_vertex": -0.013151858247894499,
+     "max_gain": 0.0713581483106678,
+     "gain_at_shipped": 0.06758693403499928,
+     "recoverable": 0.0037712142756685108,
+     "past_vertex": false
+    },
+    "0.91": {
+     "u_star_from_original": -0.0220914502644821,
+     "cell_value_at_vertex": -0.018249885232005755,
+     "max_gain": 0.12059527064502859,
+     "gain_at_shipped": 0.10055913678572194,
+     "recoverable": 0.02003613385930665,
+     "past_vertex": false
+    },
+    "1.0": {
+     "u_star_from_original": -0.02427631897195835,
+     "cell_value_at_vertex": -0.020434753939482003,
+     "max_gain": 0.14562887410340364,
+     "gain_at_shipped": 0.11469008082174591,
+     "recoverable": 0.03093879328165773,
+     "past_vertex": false
+    }
+   },
+   "KL_at_s1": -9.998006306174343,
+   "LB_point": {
+    "candidate": "BS3",
+    "base": "BO (s=1)",
+    "u": 0.007644140084555797,
+    "deltaLB": -0.1929608377,
+    "KQ_measured": 0.04010851615866211
+   }
+  },
+  "2|2": {
+   "cell": "2|2",
+   "n_by_cell": 529843,
+   "shipped_value": 0.1223065671190361,
+   "original_value": -0.0035568207147814723,
+   "u_shipped_vs_original": 0.12586338783381756,
+   "f_calframe": 0.06750898397282916,
+   "KG_at_s1": 700.8410107727367,
+   "KG_at_CH": 252.3027638781852,
+   "per_phi": {
+    "0.5": {
+     "u_star_from_original": 0.10399405495202452,
+     "cell_value_at_vertex": 0.10043723423724304,
+     "max_gain": 2.7285947130003327,
+     "gain_at_shipped": 2.607926445195346,
+     "recoverable": 0.12066826780498685,
+     "past_vertex": true
+    },
+    "0.7": {
+     "u_star_from_original": 0.1455916769328343,
+     "cell_value_at_vertex": 0.14203485621805284,
+     "max_gain": 5.348045637480652,
+     "gain_at_shipped": 5.249848041671985,
+     "recoverable": 0.09819759580866716,
+     "past_vertex": false
+    },
+    "0.91": {
+     "u_star_from_original": 0.18926918001268464,
+     "cell_value_at_vertex": 0.18571235929790317,
+     "max_gain": 9.038197127342304,
+     "gain_at_shipped": 8.023865717972459,
+     "recoverable": 1.014331409369845,
+     "past_vertex": false
+    },
+    "1.0": {
+     "u_star_from_original": 0.20798810990404903,
+     "cell_value_at_vertex": 0.20443128918926756,
+     "max_gain": 10.914378852001331,
+     "gain_at_shipped": 9.212730436386945,
+     "recoverable": 1.701648415614386,
+     "past_vertex": false
+    }
+   },
+   "KL_at_s1": 87.45995830431886,
+   "LB_point": {
+    "candidates": "BW u=0.05 + BX u=0.11",
+    "base": "teammate offset face (s=1)",
+    "twoKL": 174.91991660863772,
+    "KG": 700.8410107727367,
+    "source": "exp_098 B_axis_inventory (same-face two-point solve, S69)"
+   }
+  }
+ },
+ "cross_terms": {
+  "rho_matrix_source": "gates_BS.json G11 move_vector_structure.diag_corr_matrix (<=2023 calframe)",
+  "rho_2_1_vs_2_2": -0.0723899440821682,
+  "results": {
+   "hand_group_2_only": {
+    "0.5": {
+     "u_star_joint": {
+      "2|1": -0.00455514489441965,
+      "2|2": 0.10366772244012228
+     },
+     "cell_values_at_joint_vertex": {
+      "2|1": -0.0007135798619433038,
+      "2|2": 0.1001109017253408
+     },
+     "max_gain_joint": 2.7336951148490223,
+     "max_gain_naive_sum": 2.7650019315261836,
+     "naive_overstates_pct": 1.1452197616006021,
+     "gain_at_CH": 2.584566516647328,
+     "recoverable_joint": 0.1491285982016941
+    },
+    "0.7": {
+     "u_star_joint": {
+      "2|1": -0.006377202852187512,
+      "2|2": 0.14513481141617116
+     },
+     "cell_values_at_joint_vertex": {
+      "2|1": -0.0025356378197111656,
+      "2|2": 0.14157799070138968
+     },
+     "max_gain_joint": 5.358042425104082,
+     "max_gain_naive_sum": 5.41940378579132,
+     "naive_overstates_pct": 1.1452197616006465,
+     "gain_at_CH": 5.257890210981799,
+     "recoverable_joint": 0.10015221412228303
+    },
+    "0.91": {
+     "u_star_joint": {
+      "2|1": -0.008290363707843766,
+      "2|2": 0.18867525484102254
+     },
+     "cell_values_at_joint_vertex": {
+      "2|1": -0.00444879867536742,
+      "2|2": 0.18511843412624107
+     },
+     "max_gain_joint": 9.055091698425903,
+     "max_gain_naive_sum": 9.158792397987332,
+     "naive_overstates_pct": 1.1452197616006021,
+     "gain_at_CH": 8.064880090032993,
+     "recoverable_joint": 0.9902116083929098
+    },
+    "1.0": {
+     "u_star_joint": {
+      "2|1": -0.0091102897888393,
+      "2|2": 0.20733544488024455
+     },
+     "cell_values_at_joint_vertex": {
+      "2|1": -0.005268724756362954,
+      "2|2": 0.20377862416546308
+     },
+     "max_gain_joint": 10.93478045939609,
+     "max_gain_naive_sum": 11.060007726104734,
+     "naive_overstates_pct": 1.1452197616006021,
+     "gain_at_CH": 9.267875752483505,
+     "recoverable_joint": 1.6669047069125842
+    }
+   },
+   "all_priced_three": {
+    "0.5": {
+     "u_star_joint": {
+      "1|1": -0.12961547461203038,
+      "2|1": -0.00914112181054481,
+      "2|2": 0.09916231189697558
+     },
+     "cell_values_at_joint_vertex": {
+      "1|1": -0.15591657727753272,
+      "2|1": -0.005299556778068464,
+      "2|2": 0.09560549118219411
+     },
+     "max_gain_joint": 4.702645679948706,
+     "max_gain_naive_sum": 4.937847091321016,
+     "naive_overstates_pct": 5.001469967749639,
+     "gain_at_CH": 2.584566516647328,
+     "recoverable_joint": 2.1180791633013776
+    },
+    "0.7": {
+     "u_star_joint": {
+      "1|1": -0.1268649054736739,
+      "2|1": -0.010865860782192642,
+      "2|2": 0.14072501016067085
+     },
+     "cell_values_at_joint_vertex": {
+      "1|1": -0.15316600813917625,
+      "2|1": -0.007024295749716296,
+      "2|2": 0.13716818944588938
+     },
+     "max_gain_joint": 7.244313494711846,
+     "max_gain_naive_sum": 7.592248945586152,
+     "naive_overstates_pct": 4.802876782296761,
+     "gain_at_CH": 5.257890210981799,
+     "recoverable_joint": 1.9864232837300468
+    },
+    "0.91": {
+     "u_star_joint": {
+      "1|1": -0.1239768078783996,
+      "2|1": -0.012676836702422868,
+      "2|2": 0.18436584333755093
+     },
+     "cell_values_at_joint_vertex": {
+      "1|1": -0.15027791054390194,
+      "2|1": -0.008835271669946522,
+      "2|2": 0.18080902262276946
+     },
+     "max_gain_joint": 10.856457873490015,
+     "max_gain_naive_sum": 11.331637557782164,
+     "naive_overstates_pct": 4.376931130110795,
+     "gain_at_CH": 8.064880090032993,
+     "recoverable_joint": 2.791577783457022
+    },
+    "1.0": {
+     "u_star_joint": {
+      "1|1": -0.12273905176613917,
+      "2|1": -0.01345296923966439,
+      "2|2": 0.20306905755621382
+     },
+     "cell_values_at_joint_vertex": {
+      "1|1": -0.1490401544316415,
+      "2|1": -0.009611404207188043,
+      "2|2": 0.19951223684143235
+     },
+     "max_gain_joint": 12.700357330579326,
+     "max_gain_naive_sum": 13.232852885899566,
+     "naive_overstates_pct": 4.192760419725539,
+     "gain_at_CH": 9.267875752483505,
+     "recoverable_joint": 3.432481578095821
+    }
+   }
+  },
+  "S60_zero_sum": {
+   "group1_weighted_sum_original": -8.640199666842818e-12,
+   "group2_weighted_sum_original": -3.865352482534945e-11,
+   "group1_weighted_sum_shipped": -8.640199666842818e-12,
+   "group2_weighted_sum_shipped": 60267.83540446284
+  }
+ },
+ "after_CM": {
+  "step": 0.05,
+  "per_phi": {
+   "0.5": {
+    "u_after": 0.17586338783381755,
+    "cell_value_after": 0.17230656711903608,
+    "gain_before": 2.607926445195346,
+    "gain_after": 1.425400222475039,
+    "CM_delta": -1.1825262227203068,
+    "u_star": 0.10399405495202452,
+    "max_gain": 2.7285947130003327,
+    "recoverable_after_CM": 1.3031944905252937
+   },
+   "0.7": {
+    "u_after": 0.17586338783381755,
+    "cell_value_after": 0.17230656711903608,
+    "gain_before": 5.249848041671985,
+    "gain_after": 5.1168413186035036,
+    "CM_delta": -0.1330067230684815,
+    "u_star": 0.1455916769328343,
+    "max_gain": 5.348045637480652,
+    "recoverable_after_CM": 0.23120431887714865
+   },
+   "0.91": {
+    "u_after": 0.17586338783381755,
+    "cell_value_after": 0.17230656711903608,
+    "gain_before": 8.023865717972459,
+    "gain_after": 8.992854469538395,
+    "CM_delta": 0.9689887515659361,
+    "u_star": 0.18926918001268464,
+    "max_gain": 9.038197127342304,
+    "recoverable_after_CM": 0.04534265780390889
+   },
+   "1.0": {
+    "u_after": 0.17586338783381755,
+    "cell_value_after": 0.17230656711903608,
+    "gain_before": 9.212730436386945,
+    "gain_after": 10.654002962796204,
+    "CM_delta": 1.441272526409259,
+    "u_star": 0.20798810990404903,
+    "max_gain": 10.914378852001331,
+    "recoverable_after_CM": 0.2603758892051271
+   }
+  },
+  "break_even_phi": 0.7253462128359894
+ },
+ "clip": {
+  "formula": "mate/q_infer.py stage3: p' = clip(p + beta*d, 1e-6, 1-1e-6), beta=0.59072, d = league_dev[cell] on personal-table MISS rows",
+  "note_scale": "the clip lives INSIDE q_infer, before the deep mix -> it sees the RAW L, not s*L",
+  "free_diagnostic": "S57: if clipping saturated rows, measured K*G would fall BELOW A*f(1-f). For 2|2 the LB-measured K*G at u=0.11 is 700.84 vs law 10900*f(1-f)=686.2 -> +2.14%, i.e. NO attenuation detected at the shipped step.",
+  "per_cell": {
+   "1|1": {
+    "shipped_L": -0.02630110266550234,
+    "prob_offset_now": -0.015536587366565543,
+    "side": "lower (p -> 0)",
+    "q_stage2_p_that_clips_now": 0.015537587366565542,
+    "at_vertex": {
+     "phi=0.5": {
+      "L": -0.16213269887850942,
+      "prob_offset": -0.0957750278815131,
+      "q_stage2_p_that_clips": 0.0957760278815131
+     },
+     "phi=0.7": {
+      "L": -0.16213269887850942,
+      "prob_offset": -0.0957750278815131,
+      "q_stage2_p_that_clips": 0.0957760278815131
+     },
+     "phi=0.91": {
+      "L": -0.16213269887850942,
+      "prob_offset": -0.0957750278815131,
+      "q_stage2_p_that_clips": 0.0957760278815131
+     },
+     "phi=1.0": {
+      "L": -0.16213269887850942,
+      "prob_offset": -0.0957750278815131,
+      "q_stage2_p_that_clips": 0.0957760278815131
+     }
+    },
+    "step_for_offset_to_reach": {
+     "0.01": {
+      "L_needed": 0.016928494041170097,
+      "step_from_shipped": 0.009372608624332243
+     },
+     "0.05": {
+      "L_needed": 0.08464247020585049,
+      "step_from_shipped": -0.058341367540348146
+     },
+     "0.1": {
+      "L_needed": 0.16928494041170097,
+      "step_from_shipped": -0.14298383774619863
+     },
+     "0.15": {
+      "L_needed": 0.2539274106175514,
+      "step_from_shipped": -0.22762630795204908
+     },
+     "0.2": {
+      "L_needed": 0.33856988082340195,
+      "step_from_shipped": -0.3122687781578996
+     }
+    }
+   },
+   "1|2": {
+    "shipped_L": 0.021155205173021163,
+    "prob_offset_now": 0.012496802799807062,
+    "side": "upper (p -> 1)",
+    "q_stage2_p_that_clips_now": 0.9875021972001929,
+    "at_vertex": {},
+    "step_for_offset_to_reach": {
+     "0.01": {
+      "L_needed": 0.016928494041170097,
+      "step_from_shipped": -0.004226711131851066
+     },
+     "0.05": {
+      "L_needed": 0.08464247020585049,
+      "step_from_shipped": 0.06348726503282932
+     },
+     "0.1": {
+      "L_needed": 0.16928494041170097,
+      "step_from_shipped": 0.1481297352386798
+     },
+     "0.15": {
+      "L_needed": 0.2539274106175514,
+      "step_from_shipped": 0.23277220544453026
+     },
+     "0.2": {
+      "L_needed": 0.33856988082340195,
+      "step_from_shipped": 0.3174146756503808
+     }
+    }
+   },
+   "2|1": {
+    "shipped_L": -0.00924525151882219,
+    "prob_offset_now": -0.005461354977198644,
+    "side": "lower (p -> 0)",
+    "q_stage2_p_that_clips_now": 0.005462354977198644,
+    "at_vertex": {
+     "phi=0.5": {
+      "L": -0.008296594453502828,
+      "prob_offset": -0.004900964275573191,
+      "q_stage2_p_that_clips": 0.004901964275573191
+     },
+     "phi=0.7": {
+      "L": -0.013151858247894499,
+      "prob_offset": -0.007769065704196239,
+      "q_stage2_p_that_clips": 0.007770065704196239
+     },
+     "phi=0.91": {
+      "L": -0.018249885232005755,
+      "prob_offset": -0.01078057220425044,
+      "q_stage2_p_that_clips": 0.01078157220425044
+     },
+     "phi=1.0": {
+      "L": -0.020434753939482003,
+      "prob_offset": -0.012071217847130809,
+      "q_stage2_p_that_clips": 0.012072217847130808
+     }
+    },
+    "step_for_offset_to_reach": {
+     "0.01": {
+      "L_needed": 0.016928494041170097,
+      "step_from_shipped": -0.007683242522347908
+     },
+     "0.05": {
+      "L_needed": 0.08464247020585049,
+      "step_from_shipped": -0.0753972186870283
+     },
+     "0.1": {
+      "L_needed": 0.16928494041170097,
+      "step_from_shipped": -0.16003968889287878
+     },
+     "0.15": {
+      "L_needed": 0.2539274106175514,
+      "step_from_shipped": -0.24468215909872923
+     },
+     "0.2": {
+      "L_needed": 0.33856988082340195,
+      "step_from_shipped": -0.32932462930457973
+     }
+    }
+   },
+   "2|2": {
+    "shipped_L": 0.1223065671190361,
+    "prob_offset_now": 0.07224893532855702,
+    "side": "upper (p -> 1)",
+    "q_stage2_p_that_clips_now": 0.9277500646714429,
+    "at_vertex": {
+     "phi=0.5": {
+      "L": 0.10043723423724304,
+      "prob_offset": 0.05933028300862422,
+      "q_stage2_p_that_clips": 0.9406687169913758
+     },
+     "phi=0.7": {
+      "L": 0.14203485621805284,
+      "prob_offset": 0.08390283026512818,
+      "q_stage2_p_that_clips": 0.9160961697348717
+     },
+     "phi=0.91": {
+      "L": 0.18571235929790317,
+      "prob_offset": 0.10970400488445736,
+      "q_stage2_p_that_clips": 0.8902949951155426
+     },
+     "phi=1.0": {
+      "L": 0.20443128918926756,
+      "prob_offset": 0.12076165114988414,
+      "q_stage2_p_that_clips": 0.8792373488501158
+     }
+    },
+    "step_for_offset_to_reach": {
+     "0.01": {
+      "L_needed": 0.016928494041170097,
+      "step_from_shipped": -0.10537807307786601
+     },
+     "0.05": {
+      "L_needed": 0.08464247020585049,
+      "step_from_shipped": -0.03766409691318562
+     },
+     "0.1": {
+      "L_needed": 0.16928494041170097,
+      "step_from_shipped": 0.04697837329266487
+     },
+     "0.15": {
+      "L_needed": 0.2539274106175514,
+      "step_from_shipped": 0.13162084349851533
+     },
+     "0.2": {
+      "L_needed": 0.33856988082340195,
+      "step_from_shipped": 0.21626331370436586
+     }
+    }
+   }
+  },
+  "row_counts": "미측정 — needs the Q stage-2 probability vector per miss row; no cached artifact holds it. exp_098 D4 already specifies the gate (q_infer prints 'clip 발동=N행'; record N for parent and candidate)."
+ },
+ "in_flight": {
+  "CN": {
+   "cell": "1|1",
+   "u": -0.12237080739911066,
+   "cell_value": -0.148671910064613,
+   "ratio_to_u_star": 0.900900900900939,
+   "projected_gain": 2.15150644829942,
+   "max_gain": 2.172845159794832,
+   "residual_after": 0.021338711495412,
+   "phi_free": true
+  },
+  "CM": {
+   "cell": "2|2",
+   "u": 0.17586338783381755,
+   "break_even_phi": 0.7253462128359894,
+   "why_it_matters": "third LB point on the 2|2 axis, and the FIRST one at s=0.60 -> combined with BW(u=.05,s=1) and BX(u=.11,s=1) it IDENTIFIES phi for a mate-internal axis. S142's blocker is resolved by this one submission."
+  }
+ },
+ "🔴_LEDGER_CONFLICT_G_LEDGER": {
+  "claim_in_the_brief": "1|2 raise -> -1.627 (candidate BS2) and 2|1 raise -> -1.500 (candidate BS3), 'both already bought LB points'",
+  "what_the_primary_records_say": {
+   "2|1 / BS3": {
+    "LB": 1115.798425648,
+    "parent": "BO 1115.9913864857",
+    "delta": -0.1929608377,
+    "source": "submissions/CV_LB.md 2026-08-22 submission table, line 1047",
+    "discrepancy": "the brief's -1.500 is 7.78x our own recorded -0.1929608377"
+   },
+   "1|2 / BS2": {
+    "LB": null,
+    "status": "미기록 — BS2 was built, gated and audited (gates_BS.json, CV_LB.md L1090) but there is NO LB row for it anywhere in submissions/CV_LB.md, experiments/EXPERIMENTS.md or submissions/gates_*.json. exp_098 metrics.json independently records it as '미기록 — never landed'."
+   }
+  },
+  "the_only_source_of_-1.627_and_-1.500": "orchestration/팀문서/registry_2026-08-24.md line 112, one summary cell: 'league_dev 4셀 | 제106·108·109·110 | 3발 소모 순 실현 +7.634 · 2|2 소진 · 1|2 −1.627 · 2|1 −1.500 · 남은 1|1 최대 +3.37(추정)'. The referenced entries 제106/108/109/110 are NOT in the local copy — only this one line is.",
+  "🟢_the_same_line_IS_verifiable_in_part": "'3발 소모 순 실현 +7.634' reconciles exactly with OUR three 2|2 shots: BS4 +1.3177794334 + BW (implied +2.5492) + BX +3.7671212931 = +7.634. So the registry line is tracking our submissions, which makes the -1.627/-1.500 figures harder to explain away, not easier.",
+  "verdict": "DO NOT use -1.627 or -1.500. 2|1 is priced by our own LB point at -0.1929608377 and its whole remaining value is <= +0.031. 1|2 has no LB point at all — that is the finding, not a gap to fill with the registry number.",
+  "second_correction": "submissions/CV_LB.md line 1772 says 'league_dev 셀을 올리는 방향은 세 번 연속 음수' — that count rests on the disputed registry figures. OUR OWN record is 2 negative (CJ 1|1 -0.370, BS3 2|1 -0.193) and 1 POSITIVE (BS4 2|2 +1.318). There is no sign prior for 1|2."
+ },
+ "recommendation": {
+  "slots_are_the_binding_resource": "team-shared 5/day; CN and CM already take two",
+  "spend_exactly_one_more_on": "1|2 probe",
+  "candidate_spec": {
+   "file": "mate/model_q/meta.json",
+   "key": "backoff.league_dev[\"1|2\"]",
+   "formula": "ORIGINAL + u, ORIGINAL = 0.021155205173021163 in float64 (S46: ship the formula)",
+   "recommended_u": 0.009008515132705674,
+   "recommended_value": 0.030163720305726838,
+   "why_this_amplitude": "it is candidate BS2's recorded full-precision step, calibrated to K*Q = 0.03990 at s=1 for THIS cell; at s=0.60 it costs K*G*u^2 = 0.01436 pt of curvature. S42 bias in the recovered L is u*(G_frame-G_LB)/2 = 0.005 against |K*L| ~ 17, i.e. 0.03% — negligible.",
+   "dependent": "blend.json d_adj re-solve by the CH convention (calCG frame, aim 0.48487149261815143)",
+   "differing_files": 2,
+   "stage": "A단"
+  },
+  "why_not_2_1": "its whole remaining value is +0.031 at phi=1 and the JOINT vertex sits at -0.009611 while CH already ships -0.00924525 — a move of 0.00037. Freezing it also keeps the 1|2 candidate a one-variable read.",
+  "why_not_more_2_2_before_CM_reads": "CM's own step is the phi identifier. Landing further before phi is known is the only move here with real downside (-1.18 pt at phi=0.5).",
+  "landing_step_rule_for_1_2_tomorrow": "once L is read AT CH the vertex is phi-free (same as 1|1). Land at 0.90 * u_star — the ratio CN used (0.12237080739911066 / 0.135832 = 0.9009) — which is the worst-case-maximizing step under the +-11.15% G band (S69).",
+  "expected_size_honest": "미측정. Sibling analogy only: |K*L_eff| at CH is 15.997 (1|1), 5.999*phi (2|1), 52.476*phi (2|2); geometric mean 17.15 at phi=1 -> max gain 17.15^2/176.98 = +1.66. This is an ANALOGY, not a measurement.",
+  "probe_downside": "if the sign is adverse the submission scores about -0.32. Rank is the max over submission history, so that costs zero rank."
+ }
+}

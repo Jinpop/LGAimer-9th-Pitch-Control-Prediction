@@ -1,0 +1,47 @@
+# 실험 스펙 — 지휘자 작성 2026-08-05
+exp_id: exp_001
+date: "2026-08-05"
+hypothesis: "제공 48컬럼 그대로 LightGBM만으로 수료컷(549.51=RF 베이스라인)을 로컬 재현 기준에서 초과하고, fold_2024 valid-R Brier 기준선을 확립한다"
+base_exp: "exp_000_eda"
+
+model:
+  type: lightgbm
+  params:
+    objective: binary
+    metric: binary_logloss        # 학습 손실은 logloss, 판단은 Brier (전략 §7)
+    n_estimators: 5000            # early stopping으로 결정
+    learning_rate: 0.05
+    num_leaves: 127
+    min_data_in_leaf: 200
+    feature_fraction: 0.8
+    bagging_fraction: 0.8
+    bagging_freq: 1
+    early_stopping_rounds: 200
+  seed: 42
+
+features:
+  include: ["제공 48컬럼 전부 (row_id 제외)"]
+  exclude: ["row_id"]
+  notes: >
+    피처 엔지니어링 없음 (기준선). 범주형(top_bottom, game_type, base_state,
+    pitcher_hand, batter_hand, 팀ID, pitcher_id, batter_id)은 LightGBM categorical
+    지정. 결측(asof cold-start)은 채우지 말고 LightGBM native NaN 처리에 맡김
+    (sentinel 금지 규율). F리그 행 포함(제외는 exp_002+ 실험 변수).
+
+validation:
+  scheme: rolling-origin
+  folds:
+    - {train_until: 2021, valid: 2022}
+    - {train_until: 2022, valid: 2023}
+    - {train_until: 2023, valid: 2024}   # 주 판단 fold
+  primary_metric: brier                  # fold_2024 valid의 R리그(game_type=R) Brier가 주 지표
+  report_also: ["valid 전체 Brier", "BSS(r=valid 실제 성공률)", "AUC", "예측 평균 vs 실제 base rate"]
+
+runtime:
+  where: a5000                # 데이터: ~/SungjinPark/data/ (동기화 완료)
+  expected_min: 30            # fold 3개 × CPU/GPU 학습, 여유 포함
+
+notes: >
+  cold-start 확인: valid에서 train 미등장 투수 행의 Brier를 별도 리포트
+  (test 신규 투수 대비 fallback 필요성 정량화). 산출물 표준: metrics.json,
+  report.md, 학습 코드 보존. 시드·전 파라미터 config 기록 (Phase 3 재현 대비).

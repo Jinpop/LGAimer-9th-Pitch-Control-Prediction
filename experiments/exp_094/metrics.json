@@ -1,0 +1,142 @@
+{
+ "exp_id": "exp_094",
+ "date": "2026-08-25",
+ "title": "Q 팔 시드 확장 — 팀원 정품 빌더 · CPU 재현 증명 후 GPU 생산 (후보 CG LB 실측으로 중단)",
+ "status": "STOPPED_BY_COORDINATOR",
+ "stop_reason": "결과가 나빠서가 아니라 전제가 무너져서다. 후보 CG(AA 시드 6->18 + 딥 시드 5->14)가 부모 1140.3283619813 -> 1137.2845236543 (-3.0438383270)로 채점됐다. 검출한계 +1.4의 2.2배. Q 시드 3->18은 같은 계열이고 기대값이 +0.29였으므로 그 추정의 신뢰도가 무너졌다. 남은 12시드와 GPU 시간을 여기에 쓰지 않는다.",
+
+ "stage_A_CPU_재현_게이트": {
+  "판정": "PASS",
+  "무엇": "시드 42를 CPU thread_count=2로 재적합해 출하 mate/model_q/seed_42/cell_is_both.cbm 과 예측 대조",
+  "ref": "/home/<user>/SungjinPark/build_CECF/pkg/CF/mate/model_q/seed_42 (배포 트리수 {708,1652,551,1101}·77열, 여러 패키지에서 바이트 동일)",
+  "max_abs_dp": 0.0,
+  "mean_abs_dp": 0.0,
+  "n_diff_rows": 0,
+  "n_rows": 1475092,
+  "corr": 1.0,
+  "feat_count": 77,
+  "feat_order_sha256_16": "d387caeb73979555",
+  "feat_order_sha256_16_expect": "d387caeb73979555",
+  "cell_fit_rows": 1369186,
+  "cell_fit_rows_expect": 1369186,
+  "stacker_fit_rows": 1369784,
+  "stacker_fit_rows_expect": 1369784,
+  "feat3_parquet_bytes": 542387670,
+  "feat3_parquet_sha256": "4c9b666dd4f20bba544d3ad90bad93d81b623bb53b72c7f0780cd7d586971896",
+  "함의": "우리 feat3 재생성 체인과 코드 경로가 팀원 것과 같다. 이 자산은 중단과 무관하게 남는다."
+ },
+
+ "stage_A2_스레드수_민감도": {
+  "질문": "출하 meta.json은 thread_count 6이라 적는데 qdeploy3.py는 2다. 어느 쪽이 진짜인가",
+  "thread_count_2": {"max_abs_dp": 0.0, "corr": 1.0, "fit_sec": 204.53, "재현": true},
+  "thread_count_6": {"max_abs_dp": 0.027257514750380407, "mean_abs_dp": 0.001254718514185776,
+                     "corr": 0.9810845429747785, "fit_sec": 117.29, "재현": false},
+  "결론": "출하 Q 모델은 thread_count=2로 구워졌다. mate/model_q/meta.json 의 catboost_params.thread_count=6 · num_threads=6 은 거짓 기록이다. CatBoost CPU도 스레드 수가 히스토그램 누산 순서를 바꿔 모델을 바꾼다(S17의 CatBoost판).",
+  "측정조건": "두 값 모두 build_CJKL의 script.py 6~9개가 동시에 도는 load 18~24 환경. 절대 초는 경합 포함."
+ },
+
+ "stage_B_GPU_대_CPU": {
+  "사전등록_판정": "PASS",
+  "기준": "|GPU42 팔점수 - CPU42 팔점수| <= 시드 하나 바꾼 팔점수 차",
+  "면": "OOT-2024 정직면 — 셀도 스태커도 2024를 안 본 팔. exp_089가 쓴 Q 기준값 859.79의 그 면",
+  "면_동일성_증거": {
+   "exp069_p_q_oot2024_재채점": 859.7931396724712,
+   "exp_089_보고값": 859.79,
+   "비고": "exp069/oot/p_q_oot2024.npy 는 CPU·seed 42·thread_count 2 로 구운 OOT Q 팔이다. 우리가 같은 y·같은 행순서로 다시 재서 그 값을 그대로 냈다."
+  },
+  "arm_scores_OOT2024": {
+   "cpu42_exp069": {"brier": 0.24765907741137153, "score": 859.7931396724712, "p_sd": 0.04624400330013351},
+   "gpu42":        {"brier": 0.24765374624601405, "score": 861.9272542055301, "p_sd": 0.04654444556325906},
+   "gpu7":         {"brier": 0.24760153927678852, "score": 882.8261842292906, "p_sd": 0.04771324838449038}
+  },
+  "장치_격차_GPU42_vs_CPU42": {"score_diff": 2.1341145330588915, "max_abs_dp": 0.08267251071851095,
+                              "mean_abs_dp": 0.00821012086785012, "rho": 0.9728022527938588},
+  "시드_격차_GPU42_vs_GPU7":  {"score_diff": -20.8989300237605, "max_abs_dp": 0.08670693416456027,
+                              "mean_abs_dp": 0.007819426334229338, "rho": 0.9767558877429906},
+  "cpu42_vs_gpu7":           {"score_diff": -23.03304455681939, "rho": 0.974113966584256},
+  "판정_계산": "2.134 <= 20.899 → 장치 격차는 시드 격차의 10.2%",
+  "🔴_반대방향_신호": {
+   "설명": "배포 경로(최종 셀 4개 -> 스태커)로 두 프레임에서 다시 쟀더니 방향이 갈린다",
+   "F2024_표본안_253507행": {"cpu42_ship": 1639.8158687672471, "cpu7_ship": 1624.6832536690792,
+                            "cpu2024_ship": 1631.038534744167, "gpu42": 1678.441943048925, "gpu7": 1672.8790921416214},
+   "FHELD_학습이_안본행_105308행": {"cpu42_ship": 3067.610211064009, "cpu7_ship": 3534.427837902276,
+                            "cpu2024_ship": 3352.5435388224946, "gpu42": 2147.172196498448, "gpu7": 2159.9468342921814},
+   "읽기": "표본 안에서는 GPU가 +38.6 높고 학습이 안 본 행에서는 -920.4 낮다. 둘 다 'GPU가 학습 데이터를 조금 더 세게 맞춘다'와 맞는 방향. 다만 FHELD는 분포 밖(<=2022 F)이지 시간 밖이 아니고, 그 면에서는 CPU 시드끼리도 466.8점 벌어진다(잡음이 큰 면). 배포는 시간 밖이고 그 면이 OOT-2024다.",
+   "CPU_시드밴드_F2024": {"42_vs_7": 15.13261509816789, "42_vs_2024": 8.77733402308013},
+   "GPU_시드밴드_F2024": {"42_vs_7": 5.5628509073035275}
+  }
+ },
+
+ "속도_실측_GPU_대_CPU": {
+  "환경": "RTX A5000 x2 · CPU 쿼터 20코어(cpu.max 2000000/100000) · catboost 1.2.10 · thread_count 2 고정",
+  "GPU_시드_1개_전체_25모델": {"레인1개_seed42": 289, "레인1개_seed7": 291,
+                              "레인2개+CPU2개+CJKL_seed2024": 311, "레인2개+CPU2개+CJKL_seed17": 313,
+                              "단위": "초", "경합비용": "+7.6%"},
+  "GPU_단계별_seed42_클린": {"OOF2020_211608행x4012그루": 29, "OOF2021_432465": 33, "OOF2022_653664": 50,
+                            "OOF2023_870664": 47, "OOF2024_1116070": 54,
+                            "최종셀_1369186x4012": 58, "스태커_1369784x915": 18, "합": 290},
+  "CPU_대조_전부_경합하_load18_24": {
+   "셀1개_551그루x1369186행_tc2": 204.53, "같은셀_GPU": 9.85, "배": 20.8,
+   "셀1개_551그루x1369186행_tc6": 117.29,
+   "OOF2020_tc2": 280, "OOF2020_GPU": 29, "배": 9.7,
+   "OOF2021_tc2": 561, "OOF2021_GPU": 33, "배": 17.0
+  },
+  "OOT_스태커_915그루x1116277행_GPU": [14.63, 14.32],
+  "CPU_시드_1개_환산": "약 6,070초 = 1.69시간 (경합하 단계별 실측 외삽). 팀원 기록 1.5시간과 정합",
+  "GPU_대_CPU_시드당": "약 18.6~20배",
+  "GPU_메모리": "프로세스당 22,929 MiB / 24,564 MiB → GPU 1장당 레인 1개가 상한",
+  "feat3_재생성_체인": {"build.py": 60, "build2.py": 23, "build_p6.py": 110, "합_초": 200,
+                       "비고": "팀원 README 의 '약 9분' 대비 3분 20초"}
+ },
+
+ "산출물": {
+  "완성_시드_GPU_4개": [42, 7, 2024, 17],
+  "부분_시드": {"1": "셀 4개 완료·스태커 없음 (OOF 캐시는 저장됨)", "77": "셀 3개까지"},
+  "미착수_시드_12개": [13, 101, 777, 2025, 31337, 3, 77, 123, 555, 999, 2019, 8191, 65537],
+  "경로_모델": "a5000:~/SungjinPark/qseed/out/gpu/seed_{42,7,2024,17}/  (각 5파일)",
+  "경로_OOF": "a5000:~/SungjinPark/qseed/oofstack_gpu/oof_p6_s{42,7,2024,17,1}.npz",
+  "경로_CPU증명": "a5000:~/SungjinPark/qseed/verify/cpu_tc2_s42/  ·  verify/cpu_tc6_s42/  ·  verify/arms_B.json  ·  verify/oot/",
+  "경로_feat3": "a5000:~/SungjinPark/qseed/feat3.parquet",
+  "트리수_피처수": "셀 {is_mid_only 708, is_rev_only 1652, is_both 551, is_wayoff_true 1101} x 77열 · 스태커 915 x 81열 — 출하본과 동일",
+  "유출_금지_자산_확인": "out/ 아래 qlab*·lab*·teacher*·calls* 0건"
+ },
+
+ "sha256_완성시드": {
+  "seed_42": {"cell_is_both.cbm": "e3bbb74ff0811bf12a6692256d7dfe664d209e3131d15995840c77c09d16e183",
+              "cell_is_mid_only.cbm": "b1e7939a60fcd67a322c5bd679bbf43253a7c75db1b5bdfb48baf50d4a06a556",
+              "cell_is_rev_only.cbm": "ab237404d176d3761eee229d6ba14cfd862e77e890e419e8cd961d26d7241a1b",
+              "cell_is_wayoff_true.cbm": "4f411ffd12c28aa56cadff4e2e90f3bf253d91f2363fd314ac2f1560e0ba7e1a",
+              "stacker.cbm": "9d637a03066978bd38cfb13e02374a714aa8df941aec60cadc75b9f3c032959f"},
+  "seed_7": {"cell_is_both.cbm": "3c602dfec15a7ef14d1868fccd33812c40cfbc2ac3c4ae1a63df6a36412355ee",
+             "cell_is_mid_only.cbm": "8cc491e9dda81a9ac7391630899cbc7b933edd269ba19719360b561ebc69e9b7",
+             "cell_is_rev_only.cbm": "5c6042dcb6906505965dc57a683fb5e18b3041ddbfe1a34f6675de828de787ad",
+             "cell_is_wayoff_true.cbm": "c28e5e99f89aae0e553bb0232148a755c5a6e7639ee6441ea798f91c5fe1d1e5",
+             "stacker.cbm": "942e791685c0b374fa21be1cdb516cb53509aba0ee1404f5f9a5bf3c0c4c9109"},
+  "seed_2024": {"cell_is_both.cbm": "cdddadadebaa138faf9242cc118a8fcb2d602a3317f3d8a05b1764b2ac6c3559",
+                "cell_is_mid_only.cbm": "626b10bd8709fb929162ddeb5891cf8d174487ba353ddd944315a277ae7ddece",
+                "cell_is_rev_only.cbm": "81082775cc4d7563164706c9a2620f62985f54168c8b5fa6d9e6105b162c19f6",
+                "cell_is_wayoff_true.cbm": "a2374945f3b063f6270871ed9672ea4ddc3e617dcb2dc7fcf57f85307b167cc0",
+                "stacker.cbm": "4bbaa1c758ebb5a5505b0ee2089f9c0552e45fbd2d8d8e2f7a52a1cc4793f67b"},
+  "seed_17": {"cell_is_both.cbm": "d949c02aca89b9eda19fd323efb8f9463b637c96acd8024b4702380dbf22877a",
+              "cell_is_mid_only.cbm": "76574777b866a68dd27934d1365d208b175464ccfa32da14328172aa9e148c3b",
+              "cell_is_rev_only.cbm": "6160af3549ba0239e24700ee0dcc0accc487158ce8f6ed3844124d5ec227738b",
+              "cell_is_wayoff_true.cbm": "92dd18e5fde367b0c66c9898062ac2dc83c102f9718642b5b633f681107ec6e4",
+              "stacker.cbm": "3389708b63c28ddf3be1fc3717fef96595460105d69ceed0da4b22dd1af3b4ed"}
+ },
+
+ "부수발견": {
+  "1_meta_thread_count_거짓": "mate/model_q/meta.json 의 catboost_params.thread_count=6 · num_threads=6 은 사실이 아니다 (위 stage_A2). 재현 게이트에 6을 쓰면 실패한다.",
+  "2_meta_oof_blocks_불일치": {
+   "설명": "meta.json stack_column_construction.oof_blocks 의 n_fit 이 qdeploy3.py 실제와 다르다",
+   "기록_대_실제": {"2020": [211500, 211608], "2021": [432317, 432465], "2022": [653545, 653664],
+                   "2023": [870542, 870664], "2024": [1115798, 1116070]},
+   "n_pred": "기록은 마스크된 F 행을 뺀 수, qdeploy3.py 는 그 시즌 전 행. 스태커 학습행이 keepmask 라 이 차이는 스태커에 영향이 없다.",
+   "판단": "elapsed_s 합이 약 15분이라 v18 세대 기록이 남은 것으로 보인다. 셀 학습행·스태커 학습행·최종 셀 바이트가 전부 맞으므로 기록 쪽이 낡았다고 본다. 단 우리 CPU 스태커 대조가 미완이라 확정은 아니다."
+  },
+  "3_seed_dirs_assert": "q_infer.py:553 이 all(str(s) in meta['seed_dirs'] for s in seeds) 를 assert 한다. 시드를 늘리면 meta 의 seed_dirs·seeds 를 같이 옮겨야 한다 (S35 계열 네 번째 사례).",
+  "4_catboost_params_task_type": "meta 에 task_type:'CPU' 가 기록돼 있다. GPU 로 구운 모델을 실으면 그 문장이 거짓이 된다 (S40 계열).",
+  "5_추론시간_경고": "Q 팔은 시드마다 부스터 5개를 태운다. 3->18 이면 6배. 우리 실측(1,475,092행·4스레드로 팔 1개 전체 약 10초)을 배포 프레임 245,789행·1스레드로 환산하면 시드당 약 6.7초 → 15시드 추가 약 +100초. 직전 후보 G4 단독 468.70초/예산 600초라 여유가 충분하지 않다. 환산값이지 실측이 아니다."
+ },
+
+ "안_한_것": ["조립", "mu_mr·mu_wo 재유도", "d_adj 재유도", "stacker_S1/S2", "후보 zip", "파일 삭제"]
+}

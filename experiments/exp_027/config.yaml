@@ -1,0 +1,252 @@
+# 캠페인 ⓪ — 사용자 승인 2026-08-07 "0"
+exp_id: exp_027
+date: "2026-08-07"
+title: "밑단 모델 가족 스크리닝 — LGBM 광폭 · XGBoost · CatBoost(has_time) 17 arm + 로짓 블렌딩"
+hypothesis: >
+  지금의 base는 **LGBM 한 패밀리에서 4안만 비교해 고른 것**이다(exp_010). 그리고 그때
+  **가장 강하게 규제한 arm(D)이 이겼다** — 격자의 끝점이 이겼다는 것은 격자가 짧았다는 신호다.
+  라벨의 신호가 워낙 약해(Brier 0.2483 vs 기저 0.2498, BSS 약 0.6%) 규제를 더 밀면 더 갈
+  여지가 남아 있을 수 있다.
+
+  동시에 전략 문서가 **1순위로 꼽은 CatBoost(`has_time=True` + 고카디널리티 ID 네이티브 처리)는
+  한 번도 돌려본 적이 없다.** 정찰 관측은 "표준 파이프라인으로 3일 만에 1000점대"인 팀이 다수라고
+  했다. 우리가 보정을 정교하게 쌓는 동안 **밑단 자체가 시장 수준보다 낮을** 가능성이 가장 싼 가설이다.
+
+  → 같은 47열·같은 fold·같은 시드에서 세 가족을 정면으로 붙인다.
+  이득이 없다면 **"우리 base는 적정 수준"이라는 확인 자체가 결과**다.
+base_exp: "exp_010 D (fold_2024 valid_all 0.248261)"
+
+# ---------------------------------------------------------------------------
+# 이 실험이 바꾸는 것 / 바꾸지 않는 것 (변경 변인 규율)
+# ---------------------------------------------------------------------------
+variables:
+  changed: "모델 가족 + 하이퍼파라미터 + (CatBoost arm에 한해) ID 처리 방식"
+  unchanged: >
+    피처 47열 그대로 · 라벨 그대로(`control_success` 이진) · fold 정의 그대로 ·
+    복원 라벨/모드 분해 **미사용**(B3 스태킹 아님) · 오프셋 후처리 **미적용**.
+  why_flat: >
+    ⚠️ 이건 **B3 스태킹과의 비교가 아니다.** B3(0.2480)는 이미 flat LGBM D(0.2483)보다 낫다.
+    이 실험은 **flat 대 flat**으로 가족만 가른다 — 가족이 이기면 그 가족을 B3 아키텍처에
+    얹는 것이 후속이고, 그 후속은 별도 실험이다. **여기 숫자를 배포 성능으로 읽지 말 것.**
+  why_no_offset: >
+    오프셋은 어느 base 위에도 얹히는 사후 변환이라 가족 비교에 개입하지 않는다.
+    섞으면 β가 arm마다 재적합돼 비교가 흐려진다.
+
+# ---------------------------------------------------------------------------
+# arm 17개
+# ---------------------------------------------------------------------------
+arms:
+  # --- LGBM: 규제 축을 exp_010이 멈춘 지점 너머로 민다 ---
+  - id: L1
+    family: lightgbm
+    spec: "exp_010 D 재현 — num_leaves 15, min_data_in_leaf 5000, lr 0.01, feature_fraction 0.7"
+    role: "**대조군.** 모든 Δ의 기준"
+  - id: L2
+    family: lightgbm
+    spec: "L1 + 더 강한 규제 — num_leaves 7, min_data_in_leaf 20000"
+    role: "규제 축 연장 1단"
+  - id: L3
+    family: lightgbm
+    spec: "L1 + 극단 — num_leaves 3(사실상 depth-2), min_data_in_leaf 50000, lr 0.02"
+    role: "규제 축 연장 2단. 여기서도 개선되면 축이 아직 안 닫힌 것"
+  - id: L4
+    family: lightgbm
+    spec: "L1 + feature_fraction 0.4, bagging_fraction 0.7 / bagging_freq 1"
+    role: "규제가 아니라 **분산 축소**로 미는 다른 경로"
+  - id: L5
+    family: lightgbm
+    spec: "L1 + lambda_l2 100, min_gain_to_split 1e-3"
+    role: "잎 값 수축 — 구조 규제와 다른 축"
+  - id: L6
+    family: lightgbm
+    spec: "L1 + linear_tree=True (잎에서 선형 적합)"
+    role: "약하고 매끄러운 신호에는 계단 근사보다 선형이 맞을 수 있다"
+
+  # --- XGBoost ---
+  - id: X1
+    family: xgboost
+    spec: "hist, max_depth 4, min_child_weight 5000, eta 0.01, lambda 10"
+    role: "XGB 기본선"
+  - id: X2
+    family: xgboost
+    spec: "X1 + max_depth 3, min_child_weight 20000"
+    role: "규제 연장"
+  - id: X3
+    family: xgboost
+    spec: "X1 + colsample_bytree 0.5, subsample 0.7"
+    role: "분산 축소"
+  - id: X4
+    family: xgboost
+    spec: "grow_policy=lossguide, max_leaves 15, min_child_weight 5000, eta 0.01"
+    role: "**순수 가족 대조.** L1과 트리 기하(leaf-wise 15잎)를 맞춰 가족 차이만 남긴다"
+  - id: X5
+    family: xgboost
+    spec: "X1 + gamma 1.0, max_delta_step 1"
+    role: "분할 이득 문턱 + 스텝 상한"
+
+  # --- CatBoost ---
+  - id: C1
+    family: catboost
+    spec: "has_time=True, depth 6, l2_leaf_reg 10, **pitcher_id/batter_id를 cat_features로**"
+    role: "**주력.** 전략 문서 1순위 구성 — ordered TS + ID 네이티브"
+  - id: C2
+    family: catboost
+    spec: "C1 + depth 4, l2_leaf_reg 50"
+    role: "규제 연장"
+  - id: C3
+    family: catboost
+    spec: "C1 + one_hot_max_size 2 (원핫 경로를 막아 ordered TS를 최대한 태운다)"
+    role: "ordered TS 자체의 기여를 키운 판본"
+  - id: C4
+    family: catboost
+    spec: "C1과 동일하되 **has_time=False** (랜덤 순열)"
+    role: "**귀속 대조.** C1 − C4 = `has_time`의 몫. 없으면 '가족이 이겼다'와 'ordered TS가 이겼다'를 못 가른다"
+  - id: C5
+    family: catboost
+    spec: "C1과 동일하되 **ID를 cat_features에서 빼고 수치로** (LGBM과 같은 ID 처리)"
+    role: "**귀속 대조.** C1 − C5 = ID 네이티브 처리의 몫"
+  - id: C6
+    family: catboost
+    spec: "C1 + rsm 0.5, random_strength 2"
+    role: "분산 축소"
+
+arm_design_note: >
+  **C4·C5·X4는 이득을 노린 arm이 아니라 귀속을 위한 대조다.** CatBoost가 이기면 그 이득이
+  ① 가족(부스팅 방식) ② `has_time`의 ordered TS ③ ID 네이티브 처리 중 **어디서 왔는지**를
+  이 셋 없이는 말할 수 없다. 규약의 "여러 개를 바꿔놓고 하나만 바꿨다고 적지 말 것"이
+  요구하는 것이 정확히 이것이다.
+
+# ---------------------------------------------------------------------------
+# 단계와 정지점
+# ---------------------------------------------------------------------------
+stages:
+  A_screen:
+    fold: "fold_2023 (train ≤2022, 870,752행 → valid 2023)"
+    seeds: [42]
+    what: "17 arm 전부. **선택은 여기서만 한다.**"
+    metric: "fold_2023 valid_all(R+F) Brier"
+    reporting: >
+      ⚠️ **fold_2023의 절대 Brier를 환산 점수로 바꾸지 말 것** — 환산 기준 0.2498069는
+      2025 test 눈금이라 다른 fold의 절대값에 붙이면 거짓 비교가 된다(구 규약의 valid-R
+      눈금 사고와 같은 종류). **Δ만 환산**하라: `Δ점수 = 100000 × ΔBrier / 0.2498069`.
+      이건 민감도 환산이라 fold와 무관하게 크기 감각을 준다.
+
+  STOP_GATE:
+    rule: >
+      **17 arm 중 L1(대조군)을 이긴 arm이 하나도 없으면 Stage B로 넘어가지 말고 종료한다.**
+      그 경우의 결론은 "우리 밑단은 우리가 찾을 수 있는 범위에서 적정 수준"이며,
+      **그 확인 자체가 이 실험의 산출물**이다. Stage B 계산 22분을 아낀다.
+    promote: >
+      L1을 **1.0e-05 Brier(≈ +4.0점) 이상** 이긴 arm을 승격 후보로 놓고,
+      **가족당 최대 1개 · 전체 최대 4개**를 뽑는다. 가족당 1개 제한은 이득을 위해서가 아니라
+      **블렌딩에 기전이 다른 것을 넣기 위해서**다 — 한 가족이 상위를 쓸어도 다양성을 남긴다.
+    never: "fold_2024를 보고 승격 대상을 고르는 경로 없음"
+
+  B_promote:
+    fold: "fold_2024 (train ≤2023, 1,116,277행 → valid 2024)"
+    seeds: [42, 7, 2024]
+    what: "승격된 최대 4 arm + **L1도 반드시 함께**(같은 눈금에 놓기 위해)"
+    metric: "fold_2024 valid_all(R+F) Brier — **유일한 비교 기준**"
+    adoption: >
+      3시드 부호 일치 AND |평균Δ| ≥ L1 시드 std × 3. **완화 금지.**
+      ⚠️ exp_026과 달리 여기서는 이 문턱이 과보수적이지 않다 — 거기서는 모든 arm이 같은 base
+      예측을 공유해 paired std가 훨씬 작았지만, **여기서는 arm마다 모델이 다르므로**
+      시드 std가 실제 비교 잡음의 규모에 맞다. paired std도 참고로 병기하라.
+
+  C_blend:
+    what: "승격 arm들의 **로짓 평균** 블렌딩. 가중치는 닫힌 해"
+    discipline: >
+      가중치는 **fold_2023에서만** 적합하고 fold_2024는 읽기만 한다. 학습 0건(저장된 예측 위 변환).
+    report: "블렌딩이 최고 단일 arm을 못 넘으면 그대로 보고. 넘으면 가중치도 함께 기록"
+
+# ---------------------------------------------------------------------------
+iter_policy:
+  stage_A: >
+    조기 종료를 fold_2023 valid에서 건다. cap은 규약 #3 적응화 — 초기 3000, argmin이 cap에
+    닿으면 **그 arm은 무효 처리하고 cap을 6000으로 올려 재실행**하라. argmin과 곡선을 전부 저장.
+  stage_B: >
+    **fold_2024 valid를 보고 iter를 정하지 않는다.** Stage A의 fold_2023 argmin을
+    **학습행 비율(1,116,277 / 870,752 = 1.2820)로 스케일**해 고정한다(기존 P4/P8 정책 계열).
+    가족마다 lr이 다르므로 스케일은 arm별로 따로 계산한다.
+  why: "fold_2024가 유일한 비교 기준인데 그 위에서 iter를 고르면 기준이 오염된다"
+
+# ---------------------------------------------------------------------------
+preconditions:
+  - id: P1
+    check: "`train.csv`가 **전역 시간순으로 정렬돼 있는가**"
+    why: >
+      **CatBoost `has_time=True`는 '파일 순서 = 시간 순서'를 가정한다.** exp_016이 검증한 것은
+      *투수별* 파일 순서의 단조성이지 전역 정렬이 아니다. 전역이 안 맞으면 C1·C3·C5·C6의
+      ordered TS가 미래 행을 참조할 수 있다 — **그 경우 has_time arm 전체를 중단하고 보고하라.**
+    how: "`game_date`(또는 동등 시각열)가 비감소인지 확인하고, 위반 행 수와 비율을 보고"
+  - id: P2
+    check: "학습행 수·라벨 비율·열 수가 exp_010/exp_018 기록과 일치하는가"
+    why: "외부 재현 게이트가 없는 실험이므로(저장 산출물 재사용 없음) 파이프라인 동일성을 이걸로 확인"
+  - id: P3
+    check: "세 가족 전부 **CPU·결정론·`num_threads`(또는 등가) 6 고정**"
+    why: >
+      GPU가 2장 놀고 있지만 쓰지 않는다. CatBoost GPU와 XGBoost CUDA는 **비트 단위 재현이
+      보장되지 않아** Phase 3 재현 제출 규약과 충돌한다. 스크리닝에서만 GPU를 쓰면 순위가
+      배포로 전이되지 않는다. **속도를 위해 결정론을 팔지 않는다.**
+
+# ---------------------------------------------------------------------------
+method:
+  data: "제공 47열 그대로. 새 소스·새 조인·새 집계 없음"
+  code_reuse: >
+    피처 구축·fold 분할·평가 경로는 **exp_021/exp_010 계열을 바이트 승계**하고 sha를 기록하라.
+    새로 쓰는 것은 **가족 어댑터 2개(XGBoost·CatBoost)뿐**이다 — 같은 설계행렬을 받아
+    같은 형태의 확률 벡터를 뱉는 얇은 층으로 만들고, 어댑터 밖의 코드는 건드리지 말 것.
+  save: "arm별 valid 예측 벡터(`pred/`) + 학습곡선 전체 + argmin. Stage C와 후속 실험이 재사용한다"
+  parallel: "동시 3개, fit당 스레드 6 (규약 #2). **실험 간 병렬은 금지**"
+
+validation:
+  primary_metric: "fold_2024 valid_all(R+F) Brier (Stage B). Stage A는 fold_2023 valid_all"
+  segments: "valid_R / valid_F 분해 병기 — 가족마다 F 행 처리가 다를 수 있다"
+  forbidden: "랜덤 KFold · 현재 행 TrackMan · test 참조 · valid로 iter/arm 선택"
+
+# ---------------------------------------------------------------------------
+runtime:
+  where: a5000
+  expected_min: 105                         # 90~120 (STOP_GATE 발동 시 55~70)
+  eta_basis: >
+    **Stage A** — 87만행 기준 단위 fit: LGBM 47열 강규제 **1.2분**(exp_018 24 fit 실측),
+    cap 상향 여유 1.3배 → **1.6분**. XGBoost hist는 LGBM 동급~1.5배 → **2.4분**.
+    CatBoost는 ordered boosting·TS로 CPU에서 통상 3~4배 → **5.6분**(⚠️ 세 값 중 불확실성
+    최대. 실측이 넘으면 즉시 갱신 보고).
+    → fit 합 = 6×1.6 + 5×2.4 + 6×5.6 = **55.2분**. 동시 3개 · 경합 1.35 → **벽시계 24.8분**.
+
+    **Stage B** — 112만행은 87만행의 1.2820배. 승격 4 + L1 = 5 arm × 3시드 = 15 fit,
+    평균 fit 3.2×1.282 = **4.1분** → 합 61.5분 / 3 × 1.35 → **벽시계 27.7분**.
+
+    **Stage C** — 저장 예측 위 닫힌 해. exp_025 0.35분 / exp_026 0.52분 실측 → **0.5분**.
+
+    **코드 작성** — 신규 어댑터 2종 + 곡선 저장 + P1~P3 게이트. exp_026 교훈("벽시계의 80%가
+    코드")은 계산이 0.5분인 실험의 이야기라 그대로 적용되지 않는다. 피처·라벨·fold 경로가
+    전부 승계이고 새 코드는 어댑터 2개뿐이므로 **30~40분**(신규 아키텍처였던 exp_016의 123.5분
+    대비 4분의 1 이하).
+
+    **회수·집계·리포트 10분.**
+    → 24.8 + 27.7 + 0.5 + 35 + 10 = **약 98분. 폭 90~120분.**
+    **STOP_GATE가 발동하면 Stage B·C가 통째로 빠져 55~70분에 끝난다.**
+
+deliverables: [metrics.json, report.md, "src/ (승계분 sha + 신규 어댑터 2종)", "pred/ (arm별 valid 예측)", "curves/ (학습곡선·argmin)"]
+
+# ---------------------------------------------------------------------------
+audit:
+  required: false
+  why: >
+    CLAUDE.md 감사 생략 조건에 정확히 해당 — **이미 감사된 피처 경로 위의 모델 패밀리·
+    하이퍼파라미터 변경**이다. 새 피처 소스·새 조인·새 타깃 파생·새 시계열 집계가 없다.
+  but: >
+    ⚠️ **제출로 갈 때는 예외 없이 감사**이며, 그때 감사 표면이 셋 늘어난다:
+    ① CatBoost `cat_features`의 미지 범주 처리가 test에서 어떻게 되는가(vocab을 test로
+    만들면 규칙 2-4 위반) ② `has_time` ordered TS가 학습 구간 밖을 참조하지 않는가
+    ③ 새 추론 코드의 행 독립성. **감사 없이 제출하지 말 것.**
+
+risks:
+  - "세 가족이 전부 L1을 못 이길 수 있다 — 그건 실패가 아니라 **'밑단이 적정 수준'이라는 답**이다. STOP_GATE가 그 경우의 비용을 55~70분으로 묶는다"
+  - "CatBoost fit 시간 5.6분은 **추정치이지 실측이 아니다.** 실제로 10분이면 Stage A 벽시계가 24.8→45분으로 늘어난다. 첫 CatBoost fit이 끝나는 즉시 실측을 확인하고 ETA를 갱신 보고하라"
+  - "P1(전역 시간순)이 깨져 있으면 has_time arm 4개가 통째로 무효다. **학습 전에 확인**하라 — 55분 태운 뒤에 알면 늦다"
+  - "flat 비교라 여기서 이긴 가족이 **B3 스태킹 위에서도 이긴다는 보장은 없다.** B3는 모드 분해라는 다른 구조 이득을 이미 쓰고 있다. 승격은 후속 실험의 몫이며 이 실험은 그것을 답하지 않는다"
+  - "로컬→LB 전이 비는 축마다 0.06~1.00으로 흩어져 있다. 로컬 이득이 LB에서 얼마가 될지는 **예측 불가**하며, 지금까지 재본 네 축 어디에서도 안정한 비를 못 찾았다"
+  - "가족을 바꾸면 오프셋 보정의 β가 재적합돼야 한다 — 현재 β 0.5704는 B3 LGBM 위에서 적합된 값이다. 새 base로 갈아타면 **보정 축을 처음부터 다시 재야** 하고 그 비용이 별도로 든다"

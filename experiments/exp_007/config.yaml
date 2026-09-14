@@ -1,0 +1,41 @@
+# 실험 스펙 — 지휘자 작성 2026-08-05 (캠페인 3: 결합 + 첫 제출 준비)
+exp_id: exp_007
+date: "2026-08-05"
+hypothesis: "검증된 3변수(F구체제 제외 + 프로파일 조인 + 보정C)의 결합이 개별 delta 합(≈−0.00039) 수준으로 가산되어 fold_2024 valid-R Brier ~0.24895에 도달한다"
+base_exp: "exp_001"          # 결합 실험 — 각 변수는 exp_003/004/005에서 개별 검증됨 (묶음 probe 아님)
+
+model:
+  type: lightgbm
+  params: exp_001과 동일 (seed 42) — iter만 P4 정책 (아래)
+  seed: 42
+
+variants:                     # 전부 fold_2024로 측정
+  - "V1 (주력): exp_004 마스크 + exp_003 프로파일 + 학습 후 보정C"
+  - "V2 (ablation): exp_004 마스크만 + 보정C (프로파일 제외) — 결합 스펙에서 프로파일 기여 실측"
+  - "참고 분해: V1 보정 전 수치도 보고 (보정 기여 분리)"
+
+method_notes: >
+  - 마스크: 학습에서 season<=2022 & game_type=="F" 제외 (exp_004와 동일)
+  - 프로파일: exp_003의 fold별 as-of 재산출 로직 그대로 (2024년말 CSV 검증 사용 금지)
+  - iter: P4 정책 — 이 스펙(V1, V2 각각)에서 fold_2023의 valid-R Brier argmin을
+    재실측해 fold_2024 학습에 승계 (exp_006 결론. ES로 2024 valid 참조 금지)
+  - 보정C: 이 모델 기준으로 앵커·추세 재계산 (exp_005 결론 — 모델 바뀌면 재계산).
+    적합에 fold_2024 valid 사용 금지 (train 통계만)
+
+submission_prep:              # V1이 V2보다 좋으면 V1, 아니면 V2를 제출 스펙으로
+  final_train: "train ≤2024 전체 (마스크 적용), iter = fold_2024의 valid-R Brier argmin을 P4로 승계"
+  artifacts:
+    - "final_model.txt (LightGBM, deterministic=true, num_threads 고정, seed 42)"
+    - "프로파일 테이블: build_asof_profile(cutoff=2024) — 본번용"
+    - "category vocab: train-only로 구축한 매핑 (감사 지적 이행)"
+    - "보정 상수 δ (r̂_2025 추세 산출 → logit 오프셋, 하드코딩 값과 산출 근거)"
+    - "inference.py 초안: ./data/test.csv (utf-8-sig) → ./output/submission.csv (baseline 인터페이스 준수)"
+
+validation:
+  scheme: rolling-origin
+  primary_metric: brier       # fold_2024 valid-R Brier
+  report_also: ["V1/V2/보정전 각각 vs exp_001·개별 실험 delta 합", "가산성 판정", "cold-start 세그먼트", "제출 스펙 권고 1개"]
+
+runtime:
+  where: a5000
+  expected_min: 40

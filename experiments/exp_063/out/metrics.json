@@ -1,0 +1,837 @@
+{
+ "exp_id": "exp_063",
+ "prereg": {
+  "config": {
+   "widths": [
+    256,
+    128,
+    64
+   ],
+   "dropout": 0.3,
+   "max_lr": 0.003,
+   "epochs": 25,
+   "seeds": [
+    42,
+    777,
+    2024,
+    101
+   ]
+  },
+  "control": "exp_061 out2 pilot arm (99열, 같은 구성·같은 시드)",
+  "changed_variable": "입력 열 14개 제거 (99 -> 85; DENSE 95 -> 81) 하나뿐",
+  "S_14_def": "score(85열 4시드 로짓평균) - score(99열 4시드 로짓평균), 분할별",
+  "thresholds": {
+   "adopt": -5.0,
+   "reject": -15.0
+  },
+  "repro_tol": 5e-06,
+  "nn99_A_score": 888.1566009436015,
+  "nn99_B_score": 746.182077782176,
+  "gate_loss_exp062": -2.97796
+ },
+ "frame_provenance": {
+  "train_csv_sha256": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+  "features_sp_sha256": "783c650c6dd78cdcd641d0f18e35469ced247544b5d1ebf8d138171e04498924",
+  "pipeline_py_sha256": "a3181a10a1c621524460f14bc06b3c7f188fe23955814bb5e5b890e0df3016c9",
+  "inseason_py_sha256": "8186e5a048d71f79e9b9509c14bb71c95a4f25e7c6edbd09ac1ed113acb1dffa",
+  "splits_py_sha256": "5e8884ed7c8d918e6c4fc332d1743c5437d21f72b8e2021a6f37fc4a8dd2ceb4",
+  "n_rows": 1475092,
+  "nan_share_by_block": {
+   "v6_table_cols_2019_expected": "전부 NaN(선행 시즌 없음)",
+   "sp_2019_rows": 237413,
+   "ins_nan_total": 0
+  }
+ },
+ "provenance_recheck": {
+  "expected": {
+   "train_csv_sha256": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+   "features_sp_sha256": "783c650c6dd78cdcd641d0f18e35469ced247544b5d1ebf8d138171e04498924",
+   "pipeline_py_sha256": "a3181a10a1c621524460f14bc06b3c7f188fe23955814bb5e5b890e0df3016c9",
+   "splits_py_sha256": "5e8884ed7c8d918e6c4fc332d1743c5437d21f72b8e2021a6f37fc4a8dd2ceb4"
+  },
+  "pass": true
+ },
+ "columns": {
+  "dropped_14": [
+   "p6_curve",
+   "p6_cutter",
+   "p6_fastball",
+   "p6_offspeed",
+   "p6_sinker",
+   "p6_slider",
+   "i3_anom_curve",
+   "i3_anom_cutter",
+   "i3_anom_fastball",
+   "i3_anom_offspeed",
+   "i3_anom_sinker",
+   "i3_anom_slider",
+   "i3_anom_l1",
+   "idea_matchup_pitch"
+  ],
+  "n_dense_99col": 95,
+  "n_dense_85col": 81,
+  "cats": [
+   "base_state",
+   "game_type",
+   "pitcher_team_id",
+   "batter_team_id",
+   "cnt_state"
+  ],
+  "n_input_99col": 99,
+  "n_input_85col": 85,
+  "kept_on_purpose": [
+   "idea_cnt_te",
+   "i3_te48"
+  ],
+  "kept_check": [
+   "idea_cnt_te",
+   "i3_te48"
+  ]
+ },
+ "repro_gate": {
+  "desc": "이 코드로 99열 seed42 를 재적합해 exp_061 out2/preds/A_pilot_s42 와 대조",
+  "max_abs_diff": 0.0,
+  "tol": 5e-06,
+  "pass": true,
+  "fit": {
+   "tag": "repro_A99_s42",
+   "split": "A99",
+   "widths": [
+    256,
+    128,
+    64
+   ],
+   "dropout": 0.3,
+   "max_lr": 0.003,
+   "seed": 42,
+   "epochs_run": 25,
+   "sched_epochs": 25,
+   "take": "best",
+   "n_params": 74535,
+   "sel_epoch": 5,
+   "best_epoch": 5,
+   "best_brier": 0.2477343225474596,
+   "valid_brier": 0.2477343225474596,
+   "valid_score": 829.6718195295538,
+   "n_train": 1116277,
+   "n_valid": 253507,
+   "fit_wall_min": 1.5913609623908997
+  },
+  "exp061_recorded_score": 829.6718195295538,
+  "wall_min": 1.7219230254491171
+ },
+ "split_A": {
+  "n_train": 1116277,
+  "n_valid": 253507,
+  "unknown_valid_cells": 584,
+  "desc": "train season<=2023 (mask: season<=2022 & F 제외) -> valid 2024 전체 253,507행"
+ },
+ "stage_A": {
+  "nn85": {
+   "fits": [
+    {
+     "tag": "A85_s42",
+     "split": "A85",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 42,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "best",
+     "n_params": 70951,
+     "sel_epoch": 11,
+     "best_epoch": 11,
+     "best_brier": 0.24767312261492433,
+     "valid_brier": 0.24767312261492433,
+     "valid_score": 854.1707154909095,
+     "n_train": 1116277,
+     "n_valid": 253507,
+     "fit_wall_min": 1.5127089818318684
+    },
+    {
+     "tag": "A85_s777",
+     "split": "A85",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 777,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "best",
+     "n_params": 70951,
+     "sel_epoch": 7,
+     "best_epoch": 7,
+     "best_brier": 0.24770678502663127,
+     "valid_brier": 0.24770678502663127,
+     "valid_score": 840.6953424299868,
+     "n_train": 1116277,
+     "n_valid": 253507,
+     "fit_wall_min": 1.551166256268819
+    },
+    {
+     "tag": "A85_s2024",
+     "split": "A85",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 2024,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "best",
+     "n_params": 70951,
+     "sel_epoch": 8,
+     "best_epoch": 8,
+     "best_brier": 0.24767282120095388,
+     "valid_brier": 0.24767282120095388,
+     "valid_score": 854.2913742759395,
+     "n_train": 1116277,
+     "n_valid": 253507,
+     "fit_wall_min": 1.537523901462555
+    },
+    {
+     "tag": "A85_s101",
+     "split": "A85",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 101,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "best",
+     "n_params": 70951,
+     "sel_epoch": 12,
+     "best_epoch": 12,
+     "best_brier": 0.24783036875727088,
+     "valid_brier": 0.24783036875727088,
+     "valid_score": 791.223638229821,
+     "n_train": 1116277,
+     "n_valid": 253507,
+     "fit_wall_min": 1.5313936312993368
+    }
+   ],
+   "n_dense": 81,
+   "per_seed_score": [
+    854.1707154909095,
+    840.6953424299868,
+    854.2913742759395,
+    791.223638229821
+   ],
+   "per_seed_score_mean": 835.0952676066642,
+   "per_seed_score_sd": 29.93573074353712,
+   "per_seed_brier_mean": 0.2477207743999451,
+   "seedavg_logit_brier": 0.24761212755416745,
+   "seedavg_logit_score": 878.5875993947867,
+   "S_seed": 43.492331788122556,
+   "best_epochs": [
+    11,
+    7,
+    8,
+    12
+   ],
+   "metrics_seedavg": {
+    "brier": 0.24761212755416745,
+    "auc": 0.5532881633175191,
+    "logloss": 0.6883507659906906,
+    "score": 878.5875993947867,
+    "valid_R": {
+     "n": 223497,
+     "brier": 0.2476976398100773
+    },
+    "valid_F": {
+     "n": 30010,
+     "brier": 0.24697528208068847
+    }
+   }
+  },
+  "nn99_control_recomputed": {
+   "src": "/home/<user>/SungjinPark/exp061_nn/out2/preds/A_pilot_seedavg.npy",
+   "seedavg_logit_brier": 0.24758822352803742,
+   "seedavg_logit_score": 888.1566009436015,
+   "recorded_in_exp061": 888.1566009436015,
+   "recompute_delta": 0.0
+  },
+  "S_14_A": -9.569001548814754,
+  "wall_min": 6.261389493942261,
+  "vs_AA_arm": {
+   "AA_A1_1400_3seed_mean_of_briers": 0.24787535671986385,
+   "AA_score_mean_of_briers": 773.21454,
+   "NN85_per_seed_brier_mean": 0.2477207743999451,
+   "NN85_per_seed_score_mean": 835.0952676066642,
+   "delta_same_convention": 61.880727606664095
+  }
+ },
+ "split_B": {
+  "n_train": 659125,
+  "n_valid": 219839,
+  "unknown_valid_cells": 0,
+  "desc": "train 2020~2022 R -> valid 2023 R. 환산 ref 는 2024 눈금이라 수준은 분할 간 비교 불가 — 분할 안의 차(Δ)만 읽는다"
+ },
+ "stage_B": {
+  "nn85": {
+   "fits": [
+    {
+     "tag": "B85_s42",
+     "split": "B85",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 42,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "best",
+     "n_params": 70933,
+     "sel_epoch": 9,
+     "best_epoch": 9,
+     "best_brier": 0.24821756259650238,
+     "valid_brier": 0.24821756259650238,
+     "valid_score": 636.2263826570124,
+     "n_train": 659125,
+     "n_valid": 219839,
+     "fit_wall_min": 0.9253343502680461
+    },
+    {
+     "tag": "B85_s777",
+     "split": "B85",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 777,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "best",
+     "n_params": 70933,
+     "sel_epoch": 5,
+     "best_epoch": 5,
+     "best_brier": 0.24816625831503566,
+     "valid_brier": 0.24816625831503566,
+     "valid_score": 656.7639584672546,
+     "n_train": 659125,
+     "n_valid": 219839,
+     "fit_wall_min": 0.8306517124176025
+    },
+    {
+     "tag": "B85_s2024",
+     "split": "B85",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 2024,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "best",
+     "n_params": 70933,
+     "sel_epoch": 4,
+     "best_epoch": 4,
+     "best_brier": 0.248123622657993,
+     "valid_brier": 0.248123622657993,
+     "valid_score": 673.8314041793814,
+     "n_train": 659125,
+     "n_valid": 219839,
+     "fit_wall_min": 0.8943177700042725
+    },
+    {
+     "tag": "B85_s101",
+     "split": "B85",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 101,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "best",
+     "n_params": 70933,
+     "sel_epoch": 5,
+     "best_epoch": 5,
+     "best_brier": 0.24793642183187778,
+     "valid_brier": 0.24793642183187778,
+     "valid_score": 748.7696169009794,
+     "n_train": 659125,
+     "n_valid": 219839,
+     "fit_wall_min": 0.8961970329284668
+    }
+   ],
+   "n_dense": 81,
+   "per_seed_score": [
+    636.2263826570124,
+    656.7639584672546,
+    673.8314041793814,
+    748.7696169009794
+   ],
+   "per_seed_score_mean": 678.8978405511571,
+   "per_seed_score_sd": 49.05267903898385,
+   "per_seed_brier_mean": 0.2481109663503522,
+   "seedavg_logit_brier": 0.2479976246644803,
+   "seedavg_logit_score": 724.2695600160332,
+   "S_seed": 45.37171946487615,
+   "best_epochs": [
+    9,
+    5,
+    4,
+    5
+   ]
+  },
+  "nn99_control_recomputed": {
+   "src": "/home/<user>/SungjinPark/exp061_nn/out2/preds/B_pilot_seedavg.npy",
+   "seedavg_logit_brier": 0.24794288568313674,
+   "seedavg_logit_score": 746.182077782176,
+   "recorded_in_exp061": 746.182077782176,
+   "recompute_delta": 0.0
+  },
+  "S_14_B": -21.91251776614274,
+  "wall_min": 3.639035526911418
+ },
+ "paired_by_seed": {
+  "A": {
+   "per_seed": [
+    {
+     "seed": 42,
+     "score_85": 854.1707154909095,
+     "score_99": 829.6718195295538,
+     "delta": 24.498895961355743
+    },
+    {
+     "seed": 777,
+     "score_85": 840.6953424299868,
+     "score_99": 850.2802869195358,
+     "delta": -9.584944489549002
+    },
+    {
+     "seed": 2024,
+     "score_85": 854.2913742759395,
+     "score_99": 833.5535918679749,
+     "delta": 20.737782407964573
+    },
+    {
+     "seed": 101,
+     "score_85": 791.223638229821,
+     "score_99": 818.7030174834242,
+     "delta": -27.47937925360327
+    }
+   ],
+   "mean_delta": 2.043088656542011,
+   "sd_delta": 24.903427625680717,
+   "n_negative": 2
+  },
+  "B": {
+   "per_seed": [
+    {
+     "seed": 42,
+     "score_85": 636.2263826570124,
+     "score_99": 660.7060592397906,
+     "delta": -24.47967658277821
+    },
+    {
+     "seed": 777,
+     "score_85": 656.7639584672546,
+     "score_99": 704.1130493339765,
+     "delta": -47.349090866721895
+    },
+    {
+     "seed": 2024,
+     "score_85": 673.8314041793814,
+     "score_99": 685.5226303097095,
+     "delta": -11.691226130328118
+    },
+    {
+     "seed": 101,
+     "score_85": 748.7696169009794,
+     "score_99": 732.6734530458068,
+     "delta": 16.096163855172563
+    }
+   ],
+   "mean_delta": -16.855957431163915,
+   "sd_delta": 26.460467538705718,
+   "n_negative": 3
+  },
+  "note": "같은 시드끼리 짝지은 차. 시드 산포(exp_061 sd 8~36점)가 격자 효과보다 컸으므로 짝지음이 앙상블 차보다 잡음이 적다"
+ },
+ "total_wall_min": 11.644362092018127,
+ "gpu": "NVIDIA RTX A5000",
+ "torch": "2.7.1+cu128",
+ "correlations": {
+  "n_rows": 253507,
+  "space": "로짓 (블렌드가 로짓에서 더해지므로 이 공간에서 잰다)",
+  "coef_now": [
+   0.385,
+   0.385,
+   -0.06999999999999999,
+   0.30000000000000004,
+   0.020999999999999998
+  ],
+  "corr_matrix": {
+   "NN85_seedavg(exp063, out-of-time)": {
+    "NN85_seedavg(exp063, out-of-time)": 1.0,
+    "NN99_seedavg(exp061 25ep pilot, out-of-time)": 0.9805253021808077,
+    "AA_67col_A1@1400_3seed(exp048, out-of-time)": 0.9021478772217821,
+    "AA_81col_A1@1400_3seed(exp049, out-of-time)": 0.9100340613513528,
+    "lg_p_v6(arms, tr2024 표본내)": 0.9189456223532934,
+    "lg_p_Q(arms, tr2024 표본내)": 0.9019808087591548,
+    "p_EBM(arms, tr2024 표본내)": 0.7869320789637272,
+    "lg_p_AA_deployed(arms, tr2024 표본내)": 0.9007774576297186,
+    "off(arms)": 0.44644199777539373,
+    "blend_now_logit_ex_d(arms, 합성 = coef_now·X)": 0.917885693394835
+   },
+   "NN99_seedavg(exp061 25ep pilot, out-of-time)": {
+    "NN85_seedavg(exp063, out-of-time)": 0.9805253021808077,
+    "NN99_seedavg(exp061 25ep pilot, out-of-time)": 1.0,
+    "AA_67col_A1@1400_3seed(exp048, out-of-time)": 0.9013795597911097,
+    "AA_81col_A1@1400_3seed(exp049, out-of-time)": 0.9175334400159596,
+    "lg_p_v6(arms, tr2024 표본내)": 0.9254001331025046,
+    "lg_p_Q(arms, tr2024 표본내)": 0.903670284725565,
+    "p_EBM(arms, tr2024 표본내)": 0.7942018106053758,
+    "lg_p_AA_deployed(arms, tr2024 표본내)": 0.8967581204284055,
+    "off(arms)": 0.4468955295585647,
+    "blend_now_logit_ex_d(arms, 합성 = coef_now·X)": 0.9191324120366987
+   },
+   "AA_67col_A1@1400_3seed(exp048, out-of-time)": {
+    "NN85_seedavg(exp063, out-of-time)": 0.9021478772217821,
+    "NN99_seedavg(exp061 25ep pilot, out-of-time)": 0.9013795597911097,
+    "AA_67col_A1@1400_3seed(exp048, out-of-time)": 1.0,
+    "AA_81col_A1@1400_3seed(exp049, out-of-time)": 0.9783763713250797,
+    "lg_p_v6(arms, tr2024 표본내)": 0.8949137218629765,
+    "lg_p_Q(arms, tr2024 표본내)": 0.8855274641328291,
+    "p_EBM(arms, tr2024 표본내)": 0.7740438620927632,
+    "lg_p_AA_deployed(arms, tr2024 표본내)": 0.8950874725098751,
+    "off(arms)": 0.45003012314182644,
+    "blend_now_logit_ex_d(arms, 합성 = coef_now·X)": 0.9020101335482311
+   },
+   "AA_81col_A1@1400_3seed(exp049, out-of-time)": {
+    "NN85_seedavg(exp063, out-of-time)": 0.9100340613513529,
+    "NN99_seedavg(exp061 25ep pilot, out-of-time)": 0.9175334400159596,
+    "AA_67col_A1@1400_3seed(exp048, out-of-time)": 0.9783763713250797,
+    "AA_81col_A1@1400_3seed(exp049, out-of-time)": 1.0,
+    "lg_p_v6(arms, tr2024 표본내)": 0.9069183130529636,
+    "lg_p_Q(arms, tr2024 표본내)": 0.9009936557174489,
+    "p_EBM(arms, tr2024 표본내)": 0.7782313797400683,
+    "lg_p_AA_deployed(arms, tr2024 표본내)": 0.902449844325896,
+    "off(arms)": 0.45041683870710764,
+    "blend_now_logit_ex_d(arms, 합성 = coef_now·X)": 0.9143969072692546
+   },
+   "lg_p_v6(arms, tr2024 표본내)": {
+    "NN85_seedavg(exp063, out-of-time)": 0.9189456223532934,
+    "NN99_seedavg(exp061 25ep pilot, out-of-time)": 0.9254001331025046,
+    "AA_67col_A1@1400_3seed(exp048, out-of-time)": 0.8949137218629765,
+    "AA_81col_A1@1400_3seed(exp049, out-of-time)": 0.9069183130529636,
+    "lg_p_v6(arms, tr2024 표본내)": 1.0,
+    "lg_p_Q(arms, tr2024 표본내)": 0.9558862860346192,
+    "p_EBM(arms, tr2024 표본내)": 0.8550682295425379,
+    "lg_p_AA_deployed(arms, tr2024 표본내)": 0.9491294821533027,
+    "off(arms)": 0.43807963505338704,
+    "blend_now_logit_ex_d(arms, 합성 = coef_now·X)": 0.9781504951712413
+   },
+   "lg_p_Q(arms, tr2024 표본내)": {
+    "NN85_seedavg(exp063, out-of-time)": 0.9019808087591548,
+    "NN99_seedavg(exp061 25ep pilot, out-of-time)": 0.903670284725565,
+    "AA_67col_A1@1400_3seed(exp048, out-of-time)": 0.8855274641328292,
+    "AA_81col_A1@1400_3seed(exp049, out-of-time)": 0.900993655717449,
+    "lg_p_v6(arms, tr2024 표본내)": 0.9558862860346193,
+    "lg_p_Q(arms, tr2024 표본내)": 0.9999999999999999,
+    "p_EBM(arms, tr2024 표본내)": 0.8184777442245166,
+    "lg_p_AA_deployed(arms, tr2024 표본내)": 0.9775783085999424,
+    "off(arms)": 0.4693280274353752,
+    "blend_now_logit_ex_d(arms, 합성 = coef_now·X)": 0.9917582586198903
+   },
+   "p_EBM(arms, tr2024 표본내)": {
+    "NN85_seedavg(exp063, out-of-time)": 0.7869320789637273,
+    "NN99_seedavg(exp061 25ep pilot, out-of-time)": 0.7942018106053756,
+    "AA_67col_A1@1400_3seed(exp048, out-of-time)": 0.7740438620927632,
+    "AA_81col_A1@1400_3seed(exp049, out-of-time)": 0.7782313797400684,
+    "lg_p_v6(arms, tr2024 표본내)": 0.8550682295425379,
+    "lg_p_Q(arms, tr2024 표본내)": 0.8184777442245166,
+    "p_EBM(arms, tr2024 표본내)": 1.0,
+    "lg_p_AA_deployed(arms, tr2024 표본내)": 0.8077765334595912,
+    "off(arms)": 0.41982892472650984,
+    "blend_now_logit_ex_d(arms, 합성 = coef_now·X)": 0.8179829452097558
+   },
+   "lg_p_AA_deployed(arms, tr2024 표본내)": {
+    "NN85_seedavg(exp063, out-of-time)": 0.9007774576297186,
+    "NN99_seedavg(exp061 25ep pilot, out-of-time)": 0.8967581204284055,
+    "AA_67col_A1@1400_3seed(exp048, out-of-time)": 0.8950874725098752,
+    "AA_81col_A1@1400_3seed(exp049, out-of-time)": 0.9024498443258961,
+    "lg_p_v6(arms, tr2024 표본내)": 0.9491294821533028,
+    "lg_p_Q(arms, tr2024 표본내)": 0.9775783085999424,
+    "p_EBM(arms, tr2024 표본내)": 0.8077765334595913,
+    "lg_p_AA_deployed(arms, tr2024 표본내)": 1.0,
+    "off(arms)": 0.467561577613612,
+    "blend_now_logit_ex_d(arms, 합성 = coef_now·X)": 0.9881006872642704
+   },
+   "off(arms)": {
+    "NN85_seedavg(exp063, out-of-time)": 0.44644199777539373,
+    "NN99_seedavg(exp061 25ep pilot, out-of-time)": 0.4468955295585647,
+    "AA_67col_A1@1400_3seed(exp048, out-of-time)": 0.4500301231418264,
+    "AA_81col_A1@1400_3seed(exp049, out-of-time)": 0.45041683870710764,
+    "lg_p_v6(arms, tr2024 표본내)": 0.4380796350533871,
+    "lg_p_Q(arms, tr2024 표본내)": 0.4693280274353752,
+    "p_EBM(arms, tr2024 표본내)": 0.41982892472650984,
+    "lg_p_AA_deployed(arms, tr2024 표본내)": 0.467561577613612,
+    "off(arms)": 0.9999999999999999,
+    "blend_now_logit_ex_d(arms, 합성 = coef_now·X)": 0.47973558140724165
+   },
+   "blend_now_logit_ex_d(arms, 합성 = coef_now·X)": {
+    "NN85_seedavg(exp063, out-of-time)": 0.9178856933948351,
+    "NN99_seedavg(exp061 25ep pilot, out-of-time)": 0.9191324120366987,
+    "AA_67col_A1@1400_3seed(exp048, out-of-time)": 0.902010133548231,
+    "AA_81col_A1@1400_3seed(exp049, out-of-time)": 0.9143969072692545,
+    "lg_p_v6(arms, tr2024 표본내)": 0.9781504951712413,
+    "lg_p_Q(arms, tr2024 표본내)": 0.9917582586198903,
+    "p_EBM(arms, tr2024 표본내)": 0.8179829452097558,
+    "lg_p_AA_deployed(arms, tr2024 표본내)": 0.9881006872642704,
+    "off(arms)": 0.4797355814072417,
+    "blend_now_logit_ex_d(arms, 합성 = coef_now·X)": 1.0
+   }
+  },
+  "NN85_vs": {
+   "NN99_seedavg(exp061 25ep pilot, out-of-time)": 0.9805253021808077,
+   "AA_67col_A1@1400_3seed(exp048, out-of-time)": 0.9021478772217821,
+   "AA_81col_A1@1400_3seed(exp049, out-of-time)": 0.9100340613513528,
+   "lg_p_v6(arms, tr2024 표본내)": 0.9189456223532934,
+   "lg_p_Q(arms, tr2024 표본내)": 0.9019808087591548,
+   "p_EBM(arms, tr2024 표본내)": 0.7869320789637272,
+   "lg_p_AA_deployed(arms, tr2024 표본내)": 0.9007774576297186,
+   "off(arms)": 0.44644199777539373,
+   "blend_now_logit_ex_d(arms, 합성 = coef_now·X)": 0.917885693394835
+  },
+  "NN99_vs": {
+   "NN85_seedavg(exp063, out-of-time)": 0.9805253021808077,
+   "AA_67col_A1@1400_3seed(exp048, out-of-time)": 0.9013795597911097,
+   "AA_81col_A1@1400_3seed(exp049, out-of-time)": 0.9175334400159596,
+   "lg_p_v6(arms, tr2024 표본내)": 0.9254001331025046,
+   "lg_p_Q(arms, tr2024 표본내)": 0.903670284725565,
+   "p_EBM(arms, tr2024 표본내)": 0.7942018106053758,
+   "lg_p_AA_deployed(arms, tr2024 표본내)": 0.8967581204284055,
+   "off(arms)": 0.4468955295585647,
+   "blend_now_logit_ex_d(arms, 합성 = coef_now·X)": 0.9191324120366987
+  },
+  "corr_shift_85_minus_99": {
+   "AA67": {
+    "nn85": 0.9021478772217821,
+    "nn99": 0.9013795597911097,
+    "delta": 0.000768317430672405
+   },
+   "AA81": {
+    "nn85": 0.9100340613513528,
+    "nn99": 0.9175334400159596,
+    "delta": -0.007499378664606815
+   },
+   "team_Q": {
+    "nn85": 0.9019808087591548,
+    "nn99": 0.903670284725565,
+    "delta": -0.0016894759664102255
+   },
+   "blend_now": {
+    "nn85": 0.917885693394835,
+    "nn99": 0.9191324120366987,
+    "delta": -0.0012467186418637644
+   },
+   "AA_deployed": {
+    "nn85": 0.9007774576297186,
+    "nn99": 0.8967581204284055,
+    "delta": 0.004019337201313089
+   },
+   "p_EBM": {
+    "nn85": 0.7869320789637272,
+    "nn99": 0.7942018106053758,
+    "delta": -0.007269731641648569
+   },
+   "v6": {
+    "nn85": 0.9189456223532934,
+    "nn99": 0.9254001331025046,
+    "delta": -0.0064545107492112175
+   }
+  },
+  "corr_NN85_vs_NN99": 0.9805253021808077,
+  "corr_prob_space_out_of_time_only": {
+   "NN85_seedavg": {
+    "NN85_seedavg": 1.0,
+    "NN99_seedavg": 0.9804853461443056,
+    "AA_67col(exp048)": 0.9024737203837376,
+    "AA_81col(exp049)": 0.9102234979290417
+   },
+   "NN99_seedavg": {
+    "NN85_seedavg": 0.9804853461443056,
+    "NN99_seedavg": 1.0,
+    "AA_67col(exp048)": 0.901740142160245,
+    "AA_81col(exp049)": 0.9177994456907306
+   },
+   "AA_67col(exp048)": {
+    "NN85_seedavg": 0.9024737203837376,
+    "NN99_seedavg": 0.9017401421602451,
+    "AA_67col(exp048)": 1.0,
+    "AA_81col(exp049)": 0.9784423938553255
+   },
+   "AA_81col(exp049)": {
+    "NN85_seedavg": 0.9102234979290417,
+    "NN99_seedavg": 0.9177994456907306,
+    "AA_67col(exp048)": 0.9784423938553255,
+    "AA_81col(exp049)": 1.0
+   }
+  },
+  "brier_out_of_time": {
+   "NN85_seedavg": {
+    "brier_of_averaged_pred": 0.24761212755416745,
+    "score_of_averaged_pred": 878.5875993947867
+   },
+   "NN99_seedavg": {
+    "brier_of_averaged_pred": 0.24758822352803742,
+    "score_of_averaged_pred": 888.1566009436015
+   },
+   "AA_67col(exp048)": {
+    "brier_of_averaged_pred": 0.247808741181198,
+    "score_of_averaged_pred": 799.8813558800832
+   },
+   "AA_81col(exp049)": {
+    "brier_of_averaged_pred": 0.24771241129756838,
+    "score_of_averaged_pred": 838.4430944187726
+   }
+  },
+  "reference_check": {
+   "corr(lg_p_AA_deployed, lg_p_Q) 기대 0.9776": 0.9775783085999424,
+   "corr(NN99, AA67) 기대 0.9014 (exp_061 실측 0.9013795597911097)": 0.9013795597911097,
+   "note": "두 값이 재현되면 상관 산출 방식이 exp_061·장부와 같은 눈금"
+  },
+  "NN85_vs_by_segment": {
+   "R": {
+    "NN99_seedavg(exp061 25ep pilot, out-of-time)": 0.9810545707713021,
+    "AA_67col_A1@1400_3seed(exp048, out-of-time)": 0.9083566255002054,
+    "AA_81col_A1@1400_3seed(exp049, out-of-time)": 0.9162338480841052,
+    "lg_p_v6(arms, tr2024 표본내)": 0.9273911544046487,
+    "lg_p_Q(arms, tr2024 표본내)": 0.9106443736225763,
+    "p_EBM(arms, tr2024 표본내)": 0.8445191994222082,
+    "lg_p_AA_deployed(arms, tr2024 표본내)": 0.9044379121771662,
+    "off(arms)": 0.45465869112761503,
+    "blend_now_logit_ex_d(arms, 합성 = coef_now·X)": 0.9234760000865908
+   },
+   "F": {
+    "NN99_seedavg(exp061 25ep pilot, out-of-time)": 0.9667775563509441,
+    "AA_67col_A1@1400_3seed(exp048, out-of-time)": 0.7904882972251142,
+    "AA_81col_A1@1400_3seed(exp049, out-of-time)": 0.8085498492239872,
+    "lg_p_v6(arms, tr2024 표본내)": 0.7955615925992592,
+    "lg_p_Q(arms, tr2024 표본내)": 0.8004200374213882,
+    "p_EBM(arms, tr2024 표본내)": 0.693719463951809,
+    "lg_p_AA_deployed(arms, tr2024 표본내)": 0.814825757939139,
+    "off(arms)": 0.3658619181293805,
+    "blend_now_logit_ex_d(arms, 합성 = coef_now·X)": 0.8213502820474393
+   }
+  }
+ },
+ "🔴_판정": {
+  "S_14_A": -9.569001548814754,
+  "S_14_B": -21.91251776614274,
+  "sign_agree_A_B": true,
+  "S_14_A_plus_deploy_gap": -6.591041548814754,
+  "note_실질비교": "85열은 배포 불일치가 구조상 0 이므로 exp_062 가 잰 -2.97796점 손실이 사라진다. 실질 비교는 S_14 - (-2.97796) = -6.59104 이다",
+  "corr_NN_vs_AA67": {
+   "nn85": 0.9021478772217821,
+   "nn99": 0.9013795597911097,
+   "delta": 0.000768317430672405
+  },
+  "verdict": "🟡 애매 구간 — 상관으로 가름: 상관이 올라갔다 -> 팀원 매핑 대기",
+  "verdict_code": "AMBIGUOUS_WAIT",
+  "action": "corr(NN,AA67) 이 0.9014 아래로 내려가면 채택, 올라가면 대기 — config 사전 등록 규칙"
+ },
+ "headline": {
+  "주지표": "fold_2024 valid_all (train<=2023 -> valid 2024 전체 253,507행) Brier",
+  "환산": "점수 = 100000*(1 - Brier/0.2498069). 6자리 Brier 환산은 ±0.20 불확실 — 뒤 네 자리는 측정값이 아니다",
+  "exp063_85col_4seed_logitavg": {
+   "brier": 0.24761212755416745,
+   "score": 878.5875993947867
+  },
+  "exp061_99col_4seed_logitavg(대조군)": {
+   "brier": 0.24758822352803742,
+   "score": 888.1566009436015
+  },
+  "S_14_A": -9.569001548814754,
+  "split_B": {
+   "85col": 724.2695600160332,
+   "99col": 746.182077782176,
+   "S_14_B": -21.91251776614274,
+   "⚠️": "분할 B 는 환산 ref 가 2024 눈금 — 분할 안의 차만 읽는다"
+  }
+ },
+ "fold_2024": {
+  "brier": 0.24761212755416745,
+  "score": 878.5875993947867,
+  "auc": 0.5532881633175191,
+  "logloss": 0.6883507659906906,
+  "valid_R": {
+   "n": 223497,
+   "brier": 0.2476976398100773
+  },
+  "valid_F": {
+   "n": 30010,
+   "brier": 0.24697528208068847
+  },
+  "⚠️_S7": "F 쪽 변경을 valid_F 로 판정하지 않는다 — 보조 세그먼트일 뿐"
+ },
+ "변경_변인_전량_열거": {
+  "대조군": "exp_061 out2 파일럿 팔 (99열, 256-128-64/do0.30/lr3e-3/25ep/4시드 로짓평균)",
+  "의도한_변인": [
+   "입력 열 14개 제거 (99 -> 85, DENSE 95 -> 81)"
+  ],
+  "딸려_바뀐_것": [
+   "n_params 74535 -> 70951 (첫 Linear 의 입력폭이 14 줄어든 결과 — 열 제거의 직접 결과이지 별개 변인이 아니다)",
+   "가중치 초기화 난수 소비량이 층 크기에 비례하므로 초기값 자체가 달라진다 (같은 시드라도 동일 초기값이 아님). 배치 순서 난수(gcpu)는 동일",
+   "표준화 mu/sd 는 남은 81열에 대해서만 계산 — 각 열의 값은 99열판과 동일"
+  ],
+  "고정": [
+   "frame99 캐시(sha 4종 대조 통과)",
+   "범주 5개·edim 6",
+   "4층 구조",
+   "batch 4096 drop_last",
+   "AdamW wd 1e-4",
+   "BCEWithLogits",
+   "OneCycle pct_start 0.3 / 25에폭 완주",
+   "시드 42/777/2024/101",
+   "전처리 산술(float32 표준화 후 nan_to_num 0)",
+   "결정론 설정",
+   "분할 A·B 마스크"
+  ],
+  "코드_동일성": "nnlib.py 는 exp_061 것과 편집 2곳뿐(작업 dir, DROP14 부록) — fit/Split/Net/load_frame 은 바이트 동일. 재현 게이트가 이를 실측 증명"
+ },
+ "caveats": [
+  "🔴 재현 게이트는 seed 42 단독(규약). 코드 경로 동일성 증명에는 충분하나 채택 판정의 4시드는 별개다",
+  "🔴 시드 산포가 크다(exp_061 실측 sd 8.2~35.8점). 앙상블 차 S_14 는 시드 4개의 짝지은 차(paired_by_seed)와 함께 읽어야 한다",
+  "분할 B 는 game_type R 단독이라 valid_all 규약과 세그먼트 구성이 다르다. 분할 간 점수 수준 비교 금지",
+  "arms/* 5팔은 tr2024 표본 내 계측 — 상관은 읽되 그 팔들의 '점수'는 out-of-time 이 아니다",
+  "이 실험은 제출물이 아니다(감사 불요). 배포 후보로 갈 때 B단 감사 필요"
+ ],
+ "server_paths": {
+  "workdir": "~/SungjinPark/exp063_nn85/",
+  "out": "~/SungjinPark/exp063_nn85/out/",
+  "frame_캐시": "~/SungjinPark/exp060_nn/cache/frame99.parquet (읽기 전용 재사용)",
+  "대조군_예측": "~/SungjinPark/exp061_nn/out2/preds/ (읽기 전용)"
+ }
+}

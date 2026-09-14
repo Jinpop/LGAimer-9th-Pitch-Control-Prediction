@@ -1,0 +1,724 @@
+{
+ "exp_id": "exp_032",
+ "title": "iteration-succession policy repaired \u2014 argmin fitted against training rows on the block units, fold_2024 base rebuilt at the fitted iterations, offset grid and beta re-measured on it",
+ "primary_metric": "fold_2024 valid_all (R+F) Brier",
+ "conversion": {
+  "formula": "score = 100000 * (1 - brier / 0.2498069)",
+  "sensitivity_1e-6_brier": 0.4003,
+  "caveat": "every Brier here is full precision; the +-0.20 rounding caveat does NOT apply"
+ },
+ "fold_2022": {
+  "note": "not run in exp_032; block 2022 is REUSED from exp_031 as beta supply, byte-identical",
+  "brier_by_seed": {
+   "42": 0.24776410672199567,
+   "7": 0.2477255351095544
+  }
+ },
+ "fold_2023": {
+  "note": "block 2023 seed 42 was RE-RUN here as the bit-identity gate; seed 7 is reused from exp_031",
+  "brier_by_seed": {
+   "42": 0.24867962923638576,
+   "7": 0.24865068941236412
+  },
+  "gate_bit_identical": true
+ },
+ "fold_2021_new_block": {
+  "note": "the third observation point created by this experiment",
+  "brier_by_seed": {
+   "42": 0.24842602222957869,
+   "7": 0.24848347381222732
+  },
+  "score_by_seed": {
+   "42": 552.77807,
+   "7": 529.77968
+  }
+ },
+ "fold_2024": {
+  "brier": 0.24805335127611272,
+  "score": 701.96168,
+  "bss": 0.006956,
+  "auc": 0.547255,
+  "bss_note": "bss and auc are seed 42's, from its own res file's valid_all block; brier and score are the 3-seed mean",
+  "bss_by_seed": {
+   "42": 0.006956,
+   "7": 0.007031,
+   "2024": 0.007072
+  },
+  "auc_by_seed": {
+   "42": 0.547255,
+   "7": 0.547723,
+   "2024": 0.547665
+  },
+  "brier_by_seed": {
+   "42": 0.24806923210609916,
+   "7": 0.24805050402922604,
+   "2024": 0.248040317693013
+  },
+  "score_by_seed": {
+   "42": 695.60444,
+   "7": 703.10146,
+   "2024": 707.17915
+  },
+  "seed_std": 1.4665978731564242e-05,
+  "valid_R": {
+   "42": {
+    "n": 223497,
+    "brier": 0.248142,
+    "bss": 0.007012,
+    "score": 701.2,
+    "base_rate": 0.489707,
+    "pred_mean": 0.496614,
+    "auc": 0.547858,
+    "logloss": 0.689418
+   },
+   "7": {
+    "n": 223497,
+    "brier": 0.248128,
+    "bss": 0.007065,
+    "score": 706.521,
+    "base_rate": 0.489707,
+    "pred_mean": 0.497092,
+    "auc": 0.548249,
+    "logloss": 0.689392
+   },
+   "2024": {
+    "n": 223497,
+    "brier": 0.248116,
+    "bss": 0.007114,
+    "score": 711.409,
+    "base_rate": 0.489707,
+    "pred_mean": 0.496892,
+    "auc": 0.548232,
+    "logloss": 0.689367
+   }
+  },
+  "valid_F": {
+   "42": {
+    "n": 30010,
+    "brier": 0.247529,
+    "bss": 0.003274,
+    "score": 327.395,
+    "base_rate": 0.45928,
+    "pred_mean": 0.460433,
+    "auc": 0.532948,
+    "logloss": 0.688187
+   },
+   "7": {
+    "n": 30010,
+    "brier": 0.24747,
+    "bss": 0.003512,
+    "score": 351.225,
+    "base_rate": 0.45928,
+    "pred_mean": 0.461018,
+    "auc": 0.534586,
+    "logloss": 0.688067
+   },
+   "2024": {
+    "n": 30010,
+    "brier": 0.247475,
+    "bss": 0.003492,
+    "score": 349.244,
+    "base_rate": 0.45928,
+    "pred_mean": 0.460867,
+    "auc": 0.534855,
+    "logloss": 0.688077
+   }
+  },
+  "iter_used": {
+   "cell": {
+    "is_mid_only": 551,
+    "is_rev_only": 719,
+    "is_both": 675,
+    "is_wayoff_true": 796
+   },
+   "stack": 241
+  }
+ },
+ "changed_variables_vs_exp031": [
+  "1. fold_2024 base iteration counts: exp_030's row-ratio policy (cells 577/1346/449/897, stacker 481) -> exp_032's per-target fitted law.  This is the intended change.",
+  "2. a THIRD block unit (2021, 432,501 full rows) now exists and is an input to the fit.  It did not exist in exp_031.",
+  "3. block 2023 seed 42 was RE-RUN under exp_032's code (bit-identity gate).  Its vector is identical, so it changes no number.",
+  "4. UNCHANGED and reused byte-for-byte: the beta supply (blocks 2022 and 2023 at their own argmin), the C5 spec, the 47 features, the k grid, the d form, labels.py and every inherited module.",
+  "5. CONSEQUENTLY CHANGED without being chosen: the fold_2024 base's seed std, and therefore the adoption threshold every offset cell is measured against.",
+  "6. wall-clock contention differed (3-wide here vs 4-wide in exp_031's stage A); CatBoost's thread_count stayed 6, and the bit-identity gate is what shows contention did not move results."
+ ],
+ "report_derived": {
+  "block_2021_third_point": {
+   "42": {
+    "brier": 0.24842602222957869,
+    "score": 552.77807,
+    "cell_argmin": {
+     "is_mid_only": 160,
+     "is_rev_only": 270,
+     "is_both": 100,
+     "is_wayoff_true": 575
+    },
+    "stack_argmin": 70,
+    "any_argmin_at_cap": false,
+    "cap": 1650,
+    "minutes": 6.46,
+    "n_train_full": 432501,
+    "n_train_mode": 432317,
+    "nan_stack_pct": 48.931
+   },
+   "7": {
+    "brier": 0.24848347381222732,
+    "score": 529.77968,
+    "cell_argmin": {
+     "is_mid_only": 150,
+     "is_rev_only": 300,
+     "is_both": 100,
+     "is_wayoff_true": 500
+    },
+    "stack_argmin": 60,
+    "any_argmin_at_cap": false,
+    "cap": 1650,
+    "minutes": 6.04,
+    "n_train_full": 432501,
+    "n_train_mode": 432317,
+    "nan_stack_pct": 48.931
+   }
+  },
+  "argmin_vs_rows_table": {
+   "stacker": {
+    "432501_seed42": 70,
+    "432501_seed7": 60,
+    "653728_seed42": 80,
+    "653728_seed7": 140,
+    "870752_seed42": 375,
+    "870752_seed7": 350,
+    "size_means": {
+     "432501": 64.8,
+     "653728": 105.8,
+     "870752": 362.3
+    },
+    "exp030_row_ratio_policy_would_say": 481,
+    "exp032_fitted_law_says": 241,
+    "selected_form": "proportional",
+    "loso_total_abs_err_log": {
+     "loglog": 2.69882,
+     "constant": 2.9516,
+     "proportional": 1.96517,
+     "saturating": 1.9739
+    },
+    "loglog_slope": 2.369885955659515,
+    "loglog_max_residual_ratio": 1.8708973742128763,
+    "loglog_r2_in_log_space": 0.8385733853961369,
+    "curvature_log": -0.5255735782954138,
+    "curvature_as_ratio": 0.5912161583391858,
+    "max_seed_spread_log": 0.5596157879354227,
+    "curvature_over_seed_noise": 0.9391686039352107,
+    "straightness_verdict": "curvature is SMALLER than the seed noise \u2014 the three points are consistent with a straight line, but that is not evidence FOR one",
+    "fold2024_own_argmin_AFTER_THE_FACT": {
+     "42": 240,
+     "7": 241,
+     "2024": 241
+    },
+    "fold2024_own_argmin_mean": 240.66666666666666,
+    "new_policy_over_own_argmin_mean": 1.0013850415512466,
+    "old_policy_over_own_argmin_mean": 1.9986149584487536,
+    "new_policy_is_closer_than_old": true
+   },
+   "is_mid_only": {
+    "432317_seed42": 160,
+    "432317_seed7": 150,
+    "653545_seed42": 450,
+    "653545_seed7": 400,
+    "870542_seed42": 450,
+    "870542_seed7": 450,
+    "size_means": {
+     "432317": 154.9,
+     "653545": 424.3,
+     "870542": 450.0
+    },
+    "exp030_row_ratio_policy_would_say": 577,
+    "exp032_fitted_law_says": 551,
+    "selected_form": "proportional",
+    "loso_total_abs_err_log": {
+     "loglog": 1.94051,
+     "constant": 2.07379,
+     "proportional": 0.96059,
+     "saturating": 1.38168
+    },
+    "loglog_slope": 1.5878097273097513,
+    "loglog_max_residual_ratio": 1.3608374926126277,
+    "loglog_r2_in_log_space": 0.8635130040941088,
+    "curvature_log": 0.3778860493460128,
+    "curvature_as_ratio": 1.459196656988424,
+    "max_seed_spread_log": 0.11778303565638382,
+    "curvature_over_seed_noise": 3.208323229573099,
+    "straightness_verdict": "curvature EXCEEDS the seed noise \u2014 the three points are NOT on a straight line in log-log",
+    "fold2024_own_argmin_AFTER_THE_FACT": {
+     "42": 525,
+     "7": 475,
+     "2024": 551
+    },
+    "fold2024_own_argmin_mean": 517.0,
+    "new_policy_over_own_argmin_mean": 1.0657640232108316,
+    "old_policy_over_own_argmin_mean": 1.11605415860735,
+    "new_policy_is_closer_than_old": true
+   },
+   "is_rev_only": {
+    "432317_seed42": 270,
+    "432317_seed7": 300,
+    "653545_seed42": 230,
+    "653545_seed7": 240,
+    "870542_seed42": 1050,
+    "870542_seed7": 925,
+    "size_means": {
+     "432317": 284.6,
+     "653545": 234.9,
+     "870542": 985.5
+    },
+    "exp030_row_ratio_policy_would_say": 1346,
+    "exp032_fitted_law_says": 719,
+    "selected_form": "proportional",
+    "loso_total_abs_err_log": {
+     "loglog": 4.75031,
+     "constant": 2.67588,
+     "proportional": 1.7521,
+     "saturating": 2.23829
+    },
+    "loglog_slope": 1.616918209886814,
+    "loglog_max_residual_ratio": 1.8801221296699915,
+    "loglog_r2_in_log_space": 0.5311120221546863,
+    "curvature_log": -0.9250556444962275,
+    "curvature_as_ratio": 0.39650935489782074,
+    "max_seed_spread_log": 0.12675170563914406,
+    "curvature_over_seed_noise": 7.2981711751462806,
+    "straightness_verdict": "curvature EXCEEDS the seed noise \u2014 the three points are NOT on a straight line in log-log",
+    "fold2024_own_argmin_AFTER_THE_FACT": {
+     "42": 600,
+     "7": 719,
+     "2024": 719
+    },
+    "fold2024_own_argmin_mean": 679.3333333333334,
+    "new_policy_over_own_argmin_mean": 1.0583905789990187,
+    "old_policy_over_own_argmin_mean": 1.9813542688910695,
+    "new_policy_is_closer_than_old": true
+   },
+   "is_both": {
+    "432317_seed42": 100,
+    "432317_seed7": 100,
+    "653545_seed42": 220,
+    "653545_seed7": 190,
+    "870542_seed42": 350,
+    "870542_seed7": 525,
+    "size_means": {
+     "432317": 100.0,
+     "653545": 204.5,
+     "870542": 428.7
+    },
+    "exp030_row_ratio_policy_would_say": 449,
+    "exp032_fitted_law_says": 675,
+    "selected_form": "loglog",
+    "loso_total_abs_err_log": {
+     "loglog": 0.74031,
+     "constant": 2.19584,
+     "proportional": 1.20917,
+     "saturating": 1.21791
+    },
+    "loglog_slope": 2.0548505938138044,
+    "loglog_max_residual_ratio": 1.295457222845333,
+    "loglog_r2_in_log_space": 0.9455786407954524,
+    "curvature_log": -0.1441642066381661,
+    "curvature_as_ratio": 0.8657455752162487,
+    "max_seed_spread_log": 0.4054651081081646,
+    "curvature_over_seed_noise": 0.3555526819824602,
+    "straightness_verdict": "curvature is SMALLER than the seed noise \u2014 the three points are consistent with a straight line, but that is not evidence FOR one",
+    "fold2024_own_argmin_AFTER_THE_FACT": {
+     "42": 290,
+     "7": 260,
+     "2024": 240
+    },
+    "fold2024_own_argmin_mean": 263.3333333333333,
+    "new_policy_over_own_argmin_mean": 2.5632911392405067,
+    "old_policy_over_own_argmin_mean": 1.7050632911392407,
+    "new_policy_is_closer_than_old": false
+   },
+   "is_wayoff_true": {
+    "432317_seed42": 575,
+    "432317_seed7": 500,
+    "653545_seed42": 725,
+    "653545_seed7": 625,
+    "870542_seed42": 700,
+    "870542_seed7": 750,
+    "size_means": {
+     "432317": 536.2,
+     "653545": 673.1,
+     "870542": 724.6
+    },
+    "exp030_row_ratio_policy_would_say": 897,
+    "exp032_fitted_law_says": 796,
+    "selected_form": "saturating",
+    "loso_total_abs_err_log": {
+     "loglog": 0.25528,
+     "constant": 0.52856,
+     "proportional": 0.61196,
+     "saturating": 0.18621
+    },
+    "loglog_slope": 0.43861956413200126,
+    "loglog_max_residual_ratio": 1.1129272773370973,
+    "loglog_r2_in_log_space": 0.7829152070020554,
+    "curvature_log": 0.04971138166931954,
+    "curvature_as_ratio": 1.0509677240486086,
+    "max_seed_spread_log": 0.14842000511827358,
+    "curvature_over_seed_noise": 0.33493720492534224,
+    "straightness_verdict": "curvature is SMALLER than the seed noise \u2014 the three points are consistent with a straight line, but that is not evidence FOR one",
+    "fold2024_own_argmin_AFTER_THE_FACT": {
+     "42": 650,
+     "7": 796,
+     "2024": 750
+    },
+    "fold2024_own_argmin_mean": 732.0,
+    "new_policy_over_own_argmin_mean": 1.0874316939890711,
+    "old_policy_over_own_argmin_mean": 1.2254098360655739,
+    "new_policy_is_closer_than_old": true
+   }
+  },
+  "iteration_fit": {
+   "selection_rule": "leave-one-SIZE-out, lowest total absolute error in log space.  Declared in fit_iter.py's docstring before unit 2021 finished running.",
+   "per_target_form": {
+    "stacker": "proportional",
+    "is_mid_only": "proportional",
+    "is_rev_only": "proportional",
+    "is_both": "loglog",
+    "is_wayoff_true": "saturating"
+   },
+   "fold_2024_iter_used": {
+    "cell_iter": {
+     "is_mid_only": 551,
+     "is_rev_only": 719,
+     "is_both": 675,
+     "is_wayoff_true": 796
+    },
+    "stack_iter": 241,
+    "sum_cell_iter": 2741
+   },
+   "deploy_iter_recorded": {
+    "cell_iter": {
+     "is_mid_only": 676,
+     "is_rev_only": 883,
+     "is_both": 1028,
+     "is_wayoff_true": 843
+    },
+    "stack_iter": 296,
+    "cell_iter_unguarded": {
+     "is_mid_only": 676,
+     "is_rev_only": 883,
+     "is_both": 1028,
+     "is_wayoff_true": 843
+    },
+    "stack_iter_unguarded": 296,
+    "warning": "NOT BUILT IN THIS EXPERIMENT.  Recorded so a submission build has a written basis instead of a guess."
+   },
+   "extrapolation_leverage": {
+    "stacker": {
+     "what": "(log n_target - log n_largest_observed) / (log n_largest - log n_smallest).  0 = at the edge of the data, 1 = as far beyond the data as the data itself is wide.",
+     "fold_2024": 0.35496835030828666,
+     "deploy_le2024": 0.6474262596406665
+    },
+    "is_mid_only": {
+     "what": "(log n_target - log n_largest_observed) / (log n_largest - log n_smallest).  0 = at the edge of the data, 1 = as far beyond the data as the data itself is wide.",
+     "fold_2024": 0.354606290876005,
+     "deploy_le2024": 0.6469765230861095
+    },
+    "is_rev_only": {
+     "what": "(log n_target - log n_largest_observed) / (log n_largest - log n_smallest).  0 = at the edge of the data, 1 = as far beyond the data as the data itself is wide.",
+     "fold_2024": 0.354606290876005,
+     "deploy_le2024": 0.6469765230861095
+    },
+    "is_both": {
+     "what": "(log n_target - log n_largest_observed) / (log n_largest - log n_smallest).  0 = at the edge of the data, 1 = as far beyond the data as the data itself is wide.",
+     "fold_2024": 0.354606290876005,
+     "deploy_le2024": 0.6469765230861095
+    },
+    "is_wayoff_true": {
+     "what": "(log n_target - log n_largest_observed) / (log n_largest - log n_smallest).  0 = at the edge of the data, 1 = as far beyond the data as the data itself is wide.",
+     "fold_2024": 0.354606290876005,
+     "deploy_le2024": 0.6469765230861095
+    }
+   },
+   "guard_fired_any": false,
+   "deploy_guard_fired_any": false
+  },
+  "new_base_fold_2024": {
+   "brier_by_seed": {
+    "42": 0.24806923210609916,
+    "7": 0.24805050402922604,
+    "2024": 0.248040317693013
+   },
+   "score_by_seed": {
+    "42": 695.60444,
+    "7": 703.10146,
+    "2024": 707.17915
+   },
+   "mean_brier": 0.24805335127611272,
+   "mean_score": 701.96168,
+   "seed_std": 1.4665978731564242e-05,
+   "seed_std_score_points": 5.87093,
+   "old_base_mean_score_exp031": 724.98404,
+   "old_base_seed_std_exp031": 3.881562551959927e-05,
+   "score_gain_of_new_base_vs_old": -23.02235
+  },
+  "seed_std_headline": {
+   "what": "seed standard deviation (ddof=1) of the UNCORRECTED fold_2024 Brier over seeds 42 / 7 / 2024.  It is the denominator of every adoption threshold on this base, which is why exp_031's offset \u2014 worth +38.28802 points with 3/3 signs \u2014 was rejected.",
+   "exp030_iteration_policy_seed_std": 3.881562551959927e-05,
+   "exp032_iteration_policy_seed_std": 1.4665978731564242e-05,
+   "ratio_new_over_old": 0.377836980217127,
+   "shrank": true,
+   "exp030_threshold_score_points": 46.61476,
+   "exp032_threshold_score_points": 17.61278,
+   "exp031_measured_offset_gain_score_points": 38.28802,
+   "exp031_multiple_of_threshold": 0.8213711968050236,
+   "naming_warning": "MULTIPLE_OF_THE_THRESHOLD and MULTIPLE_OF_THE_CONTROL_STD differ by exactly 3x and must never be quoted against each other."
+  },
+  "base_change_adoption": {
+   "rule": "3 seeds same sign AND |mean delta| >= 3 x the CONTROL's seed std, where the CONTROL is exp_030's iteration policy.  NOT relaxed.",
+   "control": "exp_030 row-ratio iteration policy (exp_031 base_no_offset)",
+   "candidate": "exp_032 fitted-law iteration policy",
+   "seeds": [
+    42,
+    7,
+    2024
+   ],
+   "control_brier_by_seed": [
+    0.2480393607892575,
+    0.2479833583326968,
+    0.2479648004372976
+   ],
+   "candidate_brier_by_seed": [
+    0.24806923210609916,
+    0.24805050402922604,
+    0.248040317693013
+   ],
+   "control_mean_brier": 0.24799583985308396,
+   "control_mean_score": 724.98404,
+   "candidate_mean_brier": 0.24805335127611272,
+   "candidate_mean_score": 701.96168,
+   "paired_delta_by_seed": [
+    2.9871316841650897e-05,
+    6.714569652924163e-05,
+    7.551725571539047e-05
+   ],
+   "paired_delta_score_by_seed": [
+    -11.95776,
+    -26.87904,
+    -30.23025
+   ],
+   "mean_delta_brier": 5.7511423028761e-05,
+   "mean_delta_score_points": -23.02235,
+   "control_seed_std_DENOMINATOR": 3.881562551959927e-05,
+   "candidate_seed_std": 1.4665978731564242e-05,
+   "threshold_abs_mean_delta_THIS_IS_THE_THRESHOLD": 0.00011644687655879783,
+   "MULTIPLE_OF_THE_THRESHOLD": 0.4938854929245063,
+   "MULTIPLE_OF_THE_CONTROL_STD": 1.481656478773519,
+   "signs_agree": true,
+   "improves": false,
+   "passes_magnitude": false,
+   "ADOPTED": false
+  },
+  "offset_adoption_on_new_base": {
+   "rule": "3 seeds same sign AND |mean delta| >= 3 x CONTROL seed std. NOT relaxed.",
+   "selected_cell": "S400_self",
+   "beta_applied": 0.59072,
+   "seeds": [
+    42,
+    7,
+    2024
+   ],
+   "control_brier_by_seed": [
+    0.24806923210609916,
+    0.24805050402922604,
+    0.248040317693013
+   ],
+   "candidate_brier_by_seed": [
+    0.24795071064180135,
+    0.2479396329892397,
+    0.2479200301687733
+   ],
+   "control_mean_brier": 0.24805335127611272,
+   "control_mean_score": 701.96168,
+   "candidate_mean_brier": 0.24793679126660476,
+   "candidate_mean_score": 748.62173,
+   "paired_delta_by_seed": [
+    -0.00011852146429780497,
+    -0.00011087103998633219,
+    -0.0001202875242397039
+   ],
+   "paired_delta_score_by_seed": [
+    47.44523,
+    44.3827,
+    48.1522
+   ],
+   "mean_delta_brier": -0.00011656000950794702,
+   "mean_delta_score_points": 46.66004,
+   "control_seed_std_DENOMINATOR": 1.4665978731564242e-05,
+   "candidate_seed_std": 1.5536389444039783e-05,
+   "paired_delta_seed_std_REFERENCE_ONLY": 5.005299450881225e-06,
+   "threshold_abs_mean_delta_THIS_IS_THE_THRESHOLD": 4.3997936194692725e-05,
+   "MULTIPLE_OF_THE_THRESHOLD": 2.649215385743642,
+   "MULTIPLE_OF_THE_CONTROL_STD": 7.947646157230925,
+   "label_warning": "MULTIPLE_OF_THE_THRESHOLD and MULTIPLE_OF_THE_CONTROL_STD differ by exactly 3x.  They are NOT interchangeable and must never be compared across experiments without checking which one the other experiment reported.",
+   "signs_agree": true,
+   "improves": true,
+   "passes_magnitude": true,
+   "ADOPTED": true
+  },
+  "threshold_vs_std_naming": {
+   "warning": "two different multiples get quoted in this project and they differ by exactly 3x.  They are NOT comparable across experiments unless both are the same one.",
+   "offset_MULTIPLE_OF_THE_THRESHOLD": 2.649215385743642,
+   "offset_MULTIPLE_OF_THE_CONTROL_STD": 7.947646157230925,
+   "base_change_MULTIPLE_OF_THE_THRESHOLD": 0.4938854929245063,
+   "base_change_MULTIPLE_OF_THE_CONTROL_STD": 1.481656478773519,
+   "exp031_offset_MULTIPLE_OF_THE_THRESHOLD": 0.8213711968050236
+  },
+  "runtime_minutes": {
+   "block2021_seed42": 6.46,
+   "block2021_seed7": 6.04,
+   "gate_block2023_seed42": 19.48,
+   "fold2024_seed42": 16.73,
+   "fold2024_seed7": 18.18,
+   "fold2024_seed2024": 17.98,
+   "grid_compute_min": 0.691
+  },
+  "self_check": {
+   "mean_brier_recomputed": 0.24805335127611272,
+   "mean_brier_matches": true,
+   "seed_std_recomputed": 1.4665978731564242e-05,
+   "seed_std_matches": true,
+   "mean_score_recomputed": 701.96168,
+   "mean_score_matches": true,
+   "std_ratio_recomputed": 0.377836980217127,
+   "std_ratio_matches": true,
+   "pred_sha_reverified": {
+    "C5B3_u2021_seed42_st3": true,
+    "C5B3_u2021_seed7_st3": true,
+    "C5B3_u2023_seed42_st3": true,
+    "C5B3_u2024_seed42_st4": true,
+    "C5B3_u2024_seed7_st4": true,
+    "C5B3_u2024_seed2024_st4": true
+   },
+   "all_pred_sha_ok": true,
+   "all_checks_pass": true
+  },
+  "seed_std_fluctuation_CAVEAT": {
+   "exp032_st4_newcells": {
+    "k_range_examined_for_fluctuation": [
+     100,
+     241
+    ],
+    "seed_std_min": 7.333534573003936e-06,
+    "seed_std_min_at_k": 110,
+    "seed_std_max": 3.734880644952348e-05,
+    "seed_std_max_at_k": 140,
+    "max_over_min_ratio": 5.0928793036595446,
+    "seed_std_at_final_iter": 1.4665975161689618e-05,
+    "final_iter": 241,
+    "seed_std_min_score_points": 8.807044048427729,
+    "seed_std_max_score_points": 44.85321236065555
+   },
+   "exp030_st2_oldcells": {
+    "k_range_examined_for_fluctuation": [
+     100,
+     481
+    ],
+    "seed_std_min": 3.745745716588226e-06,
+    "seed_std_min_at_k": 190,
+    "seed_std_max": 3.881565171169171e-05,
+    "seed_std_max_at_k": 481,
+    "max_over_min_ratio": 10.362596569167687,
+    "seed_std_at_final_iter": 3.881565171169171e-05,
+    "final_iter": 481,
+    "seed_std_min_score_points": 4.498369400430764,
+    "seed_std_max_score_points": 46.61478731575274
+   },
+   "same_stacker_iter_comparison": {
+    "k": 240,
+    "note": "identical stacker iteration; the ONLY difference is the four cell models' iteration counts and therefore the OOF feature columns",
+    "exp032_newcells_seed_std": 1.457053740566093e-05,
+    "exp030_oldcells_seed_std": 2.3143933517087797e-05,
+    "exp032_newcells_mean_brier": 0.2480535381,
+    "exp030_oldcells_mean_brier": 0.24806293283333333,
+    "score_delta_newcells_minus_oldcells": 3.7608
+   },
+   "interpretation_guard": "A standard deviation from THREE samples has 2 degrees of freedom; its own sampling spread is wide.  Within a single configuration this curve moves the SAME quantity by the ratio recorded above between neighbouring iteration counts, with nothing changed but where the curve was cut.  The 2.65x reduction reported as this experiment's headline is therefore NOT established as a property of the new iteration policy; it is of the same size as the fluctuation the quantity shows on its own."
+  },
+  "loss_decomposition": {
+   "what": "the -23.02 point move from exp_030's configuration to exp_032's splits exactly into two, because the stacker's Brier-vs-iteration curve was recorded for BOTH cell-feature sets and can be read at a COMMON stacker iteration (k=240).",
+   "endpoints": {
+    "exp030_config_oldcells_stack481": {
+     "brier": 0.24799583983333331,
+     "score": 724.98404
+    },
+    "exp032_config_newcells_stack241": {
+     "brier": 0.2480533512666667,
+     "score": 701.96169
+    }
+   },
+   "step1_stacker_stopped_earlier_cells_HELD_FIXED": {
+    "from": "old cells, stacker 481",
+    "to": "old cells, stacker 240",
+    "brier_from": 0.24799583983333331,
+    "brier_to": 0.24806293283333333,
+    "score_points": -26.85795
+   },
+   "step2_cell_iterations_changed_stacker_HELD_FIXED": {
+    "from": "old cells, stacker 240",
+    "to": "new cells, stacker 240",
+    "brier_from": 0.24806293283333333,
+    "brier_to": 0.2480535381,
+    "score_points": 3.7608
+   },
+   "step3_stacker_240_to_241_new_cells": {
+    "brier_from": 0.2480535381,
+    "brier_to": 0.2480533512666667,
+    "score_points": 0.07479
+   },
+   "sum_of_steps_score_points": -23.02236,
+   "direct_total_score_points": -23.02236,
+   "reading": "the entire loss is the stacker being cut at 241 instead of 481.  The cell-iteration change on its own is a small GAIN, so the fitted law helped the cells and hurt the stacker.",
+   "why_the_stacker_number_is_wrong": "the stacker's own fold_2024 curve is still DESCENDING where each run stops: exp_030 capped it at 481 and two of three seeds put their argmin exactly there; exp_032 capped it at 241 and two of three seeds again put their argmin exactly there.  Both runs are censored, so the stacker's true argmin on fold_2024 is only known to be >= 481, and the block observations the law was fitted to (65, 106, 362) were NOT censored.  The law was fitted to uncensored small-unit argmins and extrapolated to a size where the quantity it predicts has never been observed to completion.",
+   "censoring_check": {
+    "exp032_stage4_stack_argmin_by_seed": {
+     "42": 240,
+     "7": 241,
+     "2024": 241
+    },
+    "exp032_stack_iter_cap": 241,
+    "exp030_stage2_stack_argmin_by_seed": {
+     "42": 425,
+     "7": 481,
+     "2024": 481
+    },
+    "exp030_stack_iter_cap": 481,
+    "note": "an argmin equal to the cap means the curve never turned; the 'agreement' between the fitted 241 and the observed 240.67 is therefore an artefact of the cap being the fitted value itself, NOT evidence that the law was right."
+   }
+  }
+ },
+ "grid_metrics_file": "metrics_grid.json",
+ "iter_fit_file": "curves/iter_fit.json",
+ "source_sha256": {
+  "aggregate.py": "0a2192770ee7474faca3beb5f2f1bb8829d3cc8a938eba6187c2680a41fab467",
+  "b3_cat.py": "0984c57e5af66600f9fca5532a984ddd6d4c22996c9e0105d3e798bc7bfa76ca",
+  "backoff.py": "4169d2dadd8a07dceef2098a88971d3b3e437276bfb28834295e7df523591039",
+  "block_iter.py": "b4ecb311ba4a8acaff2484e225fe174cc82ca1a356f128fa42fdea5c6110882d",
+  "block_self.py": "2146d0e78a487b3223be42a743e5d03ff5e56d35c12e502f812c0eb1f3184406",
+  "dev_k.py": "e1cd86dd2795a4d12f279f7ea600353f441cfc7b19eea12207fb87117207a0d9",
+  "devgen.py": "ac9640b94c80566200c89b81642a4b2cfb23aac86b6bb2dbe81bcc595557833c",
+  "exp016_ref.py": "4f24deb71d9eef3d626900f34a71aecd2d6acbae646eb9c92c51189a38a3ece1",
+  "features_platoon.py": "68d63063e8ce659cf2876fbca4f5adef7ee1e720620ae63bb78ea496c8dadf09",
+  "fit_iter.py": "fd787d5b51fcfb9137cbdb935aba800def057602f5559c65a56475728f0c80dc",
+  "grid_c5.py": "03cbfbf1d1d9deba826ac06cb9b61b15d97f407c4670de5a723e6a27f8639324",
+  "grid_c5_32.py": "be2ae6e747b76427a07183f8c37d8ef1301ec21b64e6d6db01cb6fe78b556921",
+  "grid_ds.py": "62405e720849b68c384763f703029f6ab2200dd252d02dc7cdc5f59287b7e96d",
+  "labels.py": "439cd504478b4bc8162e9dedc32be27bfadd5d1178472d6b384b60f46ed7a9f2",
+  "offset.py": "68d6007db03ab850e2a5181383a4148fae8947c711558282c9846391f13e0488"
+ },
+ "train_csv_sha256": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+ "versions": {
+  "python": "3.11.15",
+  "numpy": "1.26.4",
+  "pandas": "2.0.3"
+ }
+}

@@ -1,0 +1,16 @@
+# 캠페인 4 — 지휘자 작성 2026-08-05
+exp_id: exp_011
+date: "2026-08-05"
+hypothesis: "asof_*_rate는 표본수 n이 0~6000+로 극단 편차라 저n 구간이 노이즈다 — 경험적 베이즈 수축(shrinkage)으로 참값 추정을 개선하면 판별력이 오른다"
+base_exp: "exp_008 R1"        # RF·LGBM 양쪽에 적용 가능한 피처 레벨 개선
+method:
+  notes: >
+    제공된 asof_pitcher_success_rate 등은 raw 비율. rate×n으로 분자 복원이 가능하므로
+    (EDA §0 검증) shrunk = (성공수 + k*prior) / (n + k) 형태로 재계산한다.
+    prior = 해당 시점까지의 리그 평균(파일순서 기준, 리크 없음), k는 fold_2023에서 튜닝(2024 미참조).
+    대상: pitcher success/reverse/middle/ball/strike, batter success/middle, prev1/3/5 game rates,
+    pitchmix rates. 원본 rate와 n도 함께 유지(모델이 고를 수 있게).
+    ⚠️ test에서도 동일 재계산이 가능해야 함 — test 행에 rate와 n이 모두 있으므로 행 단위로 재현 가능(규칙 2-4 안전).
+    추가 파생: 매치업 사전확률(투수 rate와 타자 rate의 로그오즈 합), 경험 구간 플래그.
+validation: {primary_metric: brier, note: "RF base(exp_008 R1)와 exp_010 최우수안 양쪽에 적용해 각각 delta 측정"}
+runtime: {where: a5000, expected_min: 35}

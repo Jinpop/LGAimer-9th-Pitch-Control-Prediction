@@ -1,0 +1,33 @@
+# 실험 스펙 — 지휘자 작성 2026-08-05 (진단: CV↔LB 앵커 확보)
+exp_id: exp_008
+date: "2026-08-05"
+hypothesis: "운영진 RF 베이스라인(LB 549.51)을 우리 fold_2024 split에 그대로 돌리면, 우리 로컬 BSS 눈금이 LB 점수로 몇 배 환산되는지 알 수 있다 — 제출 없이 CV↔LB 앵커를 잡는다"
+base_exp: "—"                # 진단 실험 (대조군 = 운영진 공개 베이스라인)
+
+motivation: >
+  현재 우리 로컬 최고 exp_007 V1 = valid-R Brier 0.249061 → BSS 0.00333 → LB 환산 추정 ~333점.
+  그런데 운영진 RF 베이스라인은 LB 549.51이고, LB 상위권은 930~989(BSS ~0.0093~0.0099).
+  환산이 맞다면 우리는 베이스라인보다 못하다는 뜻이 된다. 단 두 수치는 조건이 다르다:
+  RF의 549.51은 **≤2024 전체 학습 → 2025 예측**이고, 우리 0.249061은 **≤2023 학습 → 2024 예측**이다.
+  같은 split에서 RF를 돌려야 비교가 성립한다. 이 실험이 그 앵커를 만든다.
+
+method:
+  runs:
+    - "R1: 운영진 노트북 그대로 — RandomForest(n=100, max_depth=10, min_samples_leaf=200, random_state=42), OrdinalEncoder(3범주)+SimpleImputer(median), 47피처, train≤2023 → valid 2024"
+    - "R2: (참고) 동일 RF를 우리 마스크(season<=2022 & F 제외) 적용해 학습 — 마스크 효과가 모델 무관인지"
+  notes: >
+    R1은 공개 코드를 **한 글자도 바꾸지 말 것** (전처리·하이퍼파라미터·피처 선택 전부 원본).
+    평가만 우리 규약에 맞춰 두 가지로 산출: (a) valid 전체 BSS(운영진 노트북과 동일 정의),
+    (b) valid-R BSS(우리 주 지표). 두 눈금을 모두 보고해야 환산이 가능하다.
+    exp_001/exp_007 V1과 **동일 valid 행 집합**에서 비교할 것.
+
+validation:
+  primary_metric: bss         # 비교 대상: exp_001(0.249337) / exp_007 V1 postcalib(0.249061)
+  report_also:
+    - "RF vs LightGBM 우열 판정 (같은 split·같은 valid에서)"
+    - "LB 환산 계수 추정: RF의 로컬 BSS ↔ RF의 LB 549.51 비율"
+    - "이 계수로 환산한 exp_007 V1의 LB 기대 점수, LB 상위권(989=BSS 0.0099)까지의 실제 격차"
+
+runtime:
+  where: a5000
+  expected_min: 10

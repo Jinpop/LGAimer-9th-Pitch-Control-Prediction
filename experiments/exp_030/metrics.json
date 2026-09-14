@@ -1,0 +1,1021 @@
+{
+ "exp_id": "exp_030",
+ "title": "B3 mode-stacking rebuilt on CatBoost C5 \u2014 new base predictions (no offset, no audit, no zip)",
+ "primary_metric": "fold_2024 valid_all (R+F) Brier",
+ "conversion": {
+  "formula": "score = 100000 * (1 - brier / 0.2498069)",
+  "sensitivity": "1e-06 Brier = 0.4003 score points",
+  "caveat": "every Brier below is full precision, so no +-0.20 rounding caveat applies"
+ },
+ "stage_1": {
+  "unit": 2023,
+  "seed": 42,
+  "cap": 1650,
+  "minutes": 13.34,
+  "n_train_full": 870752,
+  "n_train_mode": 870542,
+  "cells": {
+   "is_mid_only": {
+    "argmin": 450,
+    "cap": 1650,
+    "brier_at_argmin": 0.1046204297,
+    "brier_at_cap": 0.1048244466,
+    "rise_argmin_to_cap": 0.000204017,
+    "is_interior": true
+   },
+   "is_rev_only": {
+    "argmin": 1050,
+    "cap": 1650,
+    "brier_at_argmin": 0.1701868795,
+    "brier_at_cap": 0.1702686725,
+    "rise_argmin_to_cap": 8.1793e-05,
+    "is_interior": true
+   },
+   "is_both": {
+    "argmin": 350,
+    "cap": 1650,
+    "brier_at_argmin": 0.03309588855,
+    "brier_at_cap": 0.03313196345,
+    "rise_argmin_to_cap": 3.60749e-05,
+    "is_interior": true
+   },
+   "is_wayoff_true": {
+    "argmin": 700,
+    "cap": 1650,
+    "brier_at_argmin": 0.1073983617,
+    "brier_at_cap": 0.1074474903,
+    "rise_argmin_to_cap": 4.91286e-05,
+    "is_interior": true
+   }
+  },
+  "stacker": {
+   "argmin": 375,
+   "cap": 1650,
+   "brier_at_argmin": 0.2486796292,
+   "brier_at_cap": 0.2490243245,
+   "rise_argmin_to_cap": 0.000344695,
+   "is_interior": true
+  },
+  "any_argmin_at_cap": false,
+  "verdict": "VALID \u2014 all five argmins are interior extrema, none at cap 1650"
+ },
+ "stage_2_iter_policy": {
+  "rule": "stage-1 fold_2023 argmin x the ratio of TRAINING ROWS in the pool that fits the model; the unit's own valid curve is never consulted to choose",
+  "cell_scale_is_n_mode_ratio": {
+   "2022": 0.7507334511143632,
+   "2023": 1.0,
+   "2024": 1.2817279350106026
+  },
+  "stacker_scale_is_n_train_ratio": {
+   "2022": 0.7507625592591232,
+   "2023": 1.0,
+   "2024": 1.281968918819595
+  },
+  "resulting_cell_iter": {
+   "2022": {
+    "is_mid_only": 338,
+    "is_rev_only": 788,
+    "is_both": 263,
+    "is_wayoff_true": 526
+   },
+   "2023": {
+    "is_mid_only": 450,
+    "is_rev_only": 1050,
+    "is_both": 350,
+    "is_wayoff_true": 700
+   },
+   "2024": {
+    "is_mid_only": 577,
+    "is_rev_only": 1346,
+    "is_both": 449,
+    "is_wayoff_true": 897
+   }
+  },
+  "resulting_stacker_iter": {
+   "2022": 282,
+   "2023": 375,
+   "2024": 481
+  },
+  "fold_2024_boundary_diagnostic": "at seeds 7 and 2024 the fold_2024 stacker curve is still descending at the fixed 481 rounds (curve_argmin_is_interior=False). That is NOT a cap violation \u2014 481 was fixed by pre-registration, not chosen \u2014 but it means 0.24799584 is a LOWER BOUND on what this configuration reaches on fold_2024. At seed 42 the curve does turn at 425, costing 4.62e-06 (1.85 score points) against its own minimum."
+ },
+ "fold_2024": {
+  "rule": "3 seeds same sign AND |mean delta| >= 3 x CONTROL seed std",
+  "seeds": [
+   42,
+   7,
+   2024
+  ],
+  "control_brier_by_seed": [
+   0.24819050861389352,
+   0.24819978703402526,
+   0.24819242766345595
+  ],
+  "candidate_brier_by_seed": [
+   0.24803936078925748,
+   0.24798335833269683,
+   0.2479648004372976
+  ],
+  "control_mean_brier": 0.2481942411037916,
+  "control_mean_score": 645.56219,
+  "candidate_mean_brier": 0.24799583985308396,
+  "candidate_mean_score": 724.98404,
+  "paired_delta_by_seed": [
+   -0.00015114782463604426,
+   -0.0002164287013284305,
+   -0.00022762722615835007
+  ],
+  "paired_delta_score_by_seed": [
+   60.50586,
+   86.6384,
+   91.12127
+  ],
+  "mean_delta_brier": -0.00019840125070760828,
+  "mean_delta_score_points": 79.42185,
+  "control_seed_std_DENOMINATOR": 4.897825479068653e-06,
+  "candidate_seed_std": 3.8815625519579256e-05,
+  "paired_delta_seed_std_REFERENCE_ONLY": 4.1303951944301355e-05,
+  "threshold_abs_mean_delta": 1.4693476437205958e-05,
+  "abs_mean_delta_over_control_std": 40.50802780856441,
+  "signs_agree": true,
+  "passes_magnitude": true,
+  "ADOPTED": true,
+  "note": "negative delta = C5_B3 better.  ADOPTED requires the sign to be an improvement as well as consistent."
+ },
+ "rulers_fold_2024": {
+  "C5_flat_exp027": {
+   "mean_brier": 0.2481012381,
+   "mean_score": 682.79214,
+   "source": "exp_027 stage_B.arms.C5.mean_brier"
+  },
+  "L1_flat_exp027": {
+   "mean_brier": 0.2482572037,
+   "mean_score": 620.35768,
+   "source": "exp_027 stage_B.arms.L1.mean_brier"
+  },
+  "LGBM_B3_mean": {
+   "brier": 0.2481942411037916,
+   "score": 645.56219
+  },
+  "C5_B3_mean": {
+   "brier": 0.24799583985308396,
+   "score": 724.98404
+  },
+  "stacking_gain_on_C5": {
+   "brier": -0.00010539824691604971,
+   "score_points": 42.19189,
+   "meaning": "C5_B3 - C5_flat: what mode-stacking adds ON TOP of C5"
+  },
+  "stacking_gain_on_L1": {
+   "brier": -6.296259620841571e-05,
+   "score_points": 25.20451,
+   "meaning": "LGBM_B3 - L1_flat: what mode-stacking added on LightGBM"
+  },
+  "flat_family_gain": {
+   "brier": -0.00015596560000000204,
+   "score_points": 62.43446,
+   "meaning": "C5_flat - L1_flat: exp_027's measured family gain, flat"
+  },
+  "family_gain_under_stacking": {
+   "brier": -0.00019840125070763603,
+   "score_points": 79.42185,
+   "meaning": "C5_B3 - LGBM_B3: THE HEADLINE \u2014 what the base swap leaves once the stack is on top of it"
+  }
+ },
+ "fold_2023_2x2": {
+  "note": "fold_2023 = train<=2022 -> valid 2023, seed 42 only. EVERY one of the four numbers is at its OWN fold_2023 valid argmin (oracle), so they are comparable in kind but all four are optimistic.",
+  "sources": {
+   "C5_B3": "exp_030 stage 1 (this run), stacker argmin 375",
+   "C5_flat": "exp_027 stage_A_ranking C5, argmin 400",
+   "LGBM_B3": "exp_024 base_vector_provenance.42.block_2023.gate_brier (= exp_020 B3_exp016_path.fold_2023, iter 650)",
+   "L1_flat": "exp_027 stage_A_ranking L1, argmin 750"
+  },
+  "brier": {
+   "C5_B3": 0.24867962923638576,
+   "C5_flat": 0.2486843666,
+   "LGBM_B3": 0.248755908,
+   "L1_flat": 0.2488045198
+  },
+  "score": {
+   "C5_B3": 451.25686,
+   "C5_flat": 449.36045,
+   "LGBM_B3": 420.72177,
+   "L1_flat": 401.26201
+  },
+  "stacking_gain_on_C5": {
+   "brier": -4.737363614254475e-06,
+   "score_points": 1.89641
+  },
+  "stacking_gain_on_LGBM": {
+   "brier": -4.861180000001464e-05,
+   "score_points": 19.45975
+  },
+  "family_gain_flat": {
+   "brier": -0.00012015320000000052,
+   "score_points": 48.09843
+  },
+  "family_gain_under_stacking": {
+   "brier": -7.627876361424035e-05,
+   "score_points": 30.53509
+  },
+  "interaction": {
+   "brier": 4.387443638576016e-05,
+   "score_points": -17.56334,
+   "meaning": "NEGATIVE points = stacking helps LESS on CatBoost than on LightGBM"
+  },
+  "coordinator_correction": "the mid-run note quoted C5_B3 - C5_flat as 4.74e-07 (~0.19 pts); the arithmetic is 4.737364e-06 (~1.896 pts) \u2014 one decade larger. The 2x2 closes to 49.99484 pts both ways only with the corrected value."
+ },
+ "beta_supply_blocks": {
+  "block_2022": {
+   "C5_B3": {
+    "42": {
+     "brier": 0.24810484064910457,
+     "score": 681.35002,
+     "stack_iter_used": 282,
+     "stack_own_argmin_DIAGNOSTIC": 110,
+     "policy_cost_vs_curve_min": 0.000316089,
+     "policy_cost_score_points": -126.53333,
+     "pred": "pred/pred_C5B3_u2022_seed42_st2.npy",
+     "pred_sha256": "85474def1bbf996e5ab7f96862ad8b45531f8daa630b0b973e98ed442ee0237f",
+     "minutes": 5.05
+    },
+    "7": {
+     "brier": 0.24812844147674445,
+     "score": 671.90239,
+     "stack_iter_used": 282,
+     "stack_own_argmin_DIAGNOSTIC": 130,
+     "policy_cost_vs_curve_min": 0.000255797,
+     "policy_cost_score_points": -102.39789,
+     "pred": "pred/pred_C5B3_u2022_seed7_st2.npy",
+     "pred_sha256": "2abd566121f029f31bb8e12b306c1e63c505cb917d5e7e9a3194a91d406ba5c0",
+     "minutes": 4.14
+    }
+   },
+   "LGBM_B3_exp024_no_offset": {
+    "7": 0.24759534968847943,
+    "2024": 0.24764711244577992,
+    "42": 0.247680893
+   },
+   "C5_B3_mean_over_seeds_42_7": 0.24811664106292453
+  },
+  "block_2023": {
+   "C5_B3": {
+    "42": {
+     "brier": 0.24867962923638576,
+     "score": 451.25686,
+     "stack_iter_used": 375,
+     "stack_own_argmin_DIAGNOSTIC": 375,
+     "policy_cost_vs_curve_min": 0.0,
+     "policy_cost_score_points": -0.0,
+     "pred": "pred/pred_C5B3_u2023_seed42_st1.npy",
+     "pred_sha256": "bd8c17ec35e0b9c86a291d361d5fe94b5f7605bf13eff9ece15e86859298ae56",
+     "minutes": 13.34
+    },
+    "7": {
+     "brier": 0.24866143214186356,
+     "score": 458.54132,
+     "stack_iter_used": 375,
+     "stack_own_argmin_DIAGNOSTIC": 270,
+     "policy_cost_vs_curve_min": 6.07463e-06,
+     "policy_cost_score_points": -2.43173,
+     "pred": "pred/pred_C5B3_u2023_seed7_st2.npy",
+     "pred_sha256": "41f01728f679423adc51366515cd57e9aeba3341da2f2f11cb4a930f84088f83",
+     "minutes": 8.58
+    }
+   },
+   "LGBM_B3_exp024_no_offset": {
+    "7": 0.24877793750633828,
+    "2024": 0.24876982436828307,
+    "42": 0.248755908
+   },
+   "C5_B3_mean_over_seeds_42_7": 0.24867053068912465
+  },
+  "WARNING_read_before_fitting_beta": "the family ordering REVERSES on the 2022 block. C5_B3 is 0.24810/0.24813 there while exp_024's LightGBM B3 is 0.24759/0.24765/0.24768 \u2014 LightGBM wins 2022 by roughly 180-210 score points. On the 2023 block and on fold_2024 CatBoost wins. Any beta fitted on 2022+2023 of THIS base is therefore being fitted on one block where the base is comparatively weak; that is a fact about the supply, not a reason to drop it. NO beta was fitted in exp_030.",
+  "policy_cost_note": "the 2022 block's fixed iter 282 (= stage-1 argmin 375 x 0.750763) sits far past that block's own curve minimum (110 at seed 42, 130 at seed 7), costing 2.56e-04 to 3.16e-04 Brier = 102.5 to 126.5 score points versus its own oracle. exp_024's LightGBM blocks used 170 for 2022, also fixed. The fixed rule is what keeps the fold from selecting; the cost is recorded, not hidden."
+ },
+ "segments_fold_2024_3seed_mean": {
+  "valid_all": {
+   "LGBM_B3_brier": 0.2481942411037916,
+   "LGBM_B3_score": 645.56219,
+   "C5_B3_brier": 0.24799583985308396,
+   "C5_B3_score": 724.98404,
+   "delta_brier": -0.00019840125070763603,
+   "delta_score_points": 79.42185
+  },
+  "valid_R": {
+   "LGBM_B3_brier": 0.24824593551134178,
+   "LGBM_B3_score": 624.86844,
+   "C5_B3_brier": 0.2480639928030659,
+   "C5_B3_score": 697.70178,
+   "delta_brier": -0.0001819427082758729,
+   "delta_score_points": 72.83334
+  },
+  "valid_F": {
+   "LGBM_B3_brier": 0.24780925126692885,
+   "LGBM_B3_score": 799.67716,
+   "C5_B3_brier": 0.2474882763788384,
+   "C5_B3_score": 928.16636,
+   "delta_brier": -0.00032097488809043617,
+   "delta_score_points": 128.4892
+  },
+  "pitcher_hand_1": {
+   "n": 71830,
+   "LGBM_B3_brier": 0.24764779983183202,
+   "LGBM_B3_score": 864.30766,
+   "C5_B3_brier": 0.24732664822323094,
+   "C5_B3_score": 992.8676,
+   "delta_brier": -0.00032115160860107794,
+   "delta_score_points": 128.55994
+  },
+  "pitcher_hand_2": {
+   "n": 181677,
+   "LGBM_B3_brier": 0.24841028868584578,
+   "LGBM_B3_score": 559.07636,
+   "C5_B3_brier": 0.24826041949042024,
+   "C5_B3_score": 619.07037,
+   "delta_brier": -0.00014986919542553379,
+   "delta_score_points": 59.99402
+  },
+  "auc_valid_all": {
+   "LGBM_B3": 0.5460168140871585,
+   "C5_B3": 0.5483550666637081
+  }
+ },
+ "per_seed_detail": {
+  "C5_B3": {
+   "42": {
+    "n": 253507,
+    "brier": 0.24803936078925748,
+    "score": 707.56221,
+    "bss": 0.007075728405447346,
+    "auc": 0.547761610761566,
+    "logloss": 0.6892121460901149,
+    "base_rate": 0.4861049201797189,
+    "pred_mean": 0.4935569908104901,
+    "pred_sha256": "ef4bafad23f53798b60e221b497e448c70321ef14e0618233930ff54893d54bf",
+    "iter_used_stacker": 481,
+    "cell_iter_used": {
+     "is_mid_only": 577,
+     "is_rev_only": 1346,
+     "is_both": 449,
+     "is_wayoff_true": 897
+    },
+    "curve_argmin_is_interior": true,
+    "diagnostic_own_argmin": 425,
+    "minutes": 15.48,
+    "valid_R": {
+     "n": 223497,
+     "brier": 0.2481051313179358,
+     "score": 681.23366,
+     "bss": 0.00715870847438127,
+     "auc": 0.5484323198818781,
+     "logloss": 0.689344111271357,
+     "base_rate": 0.4897067969592433,
+     "pred_mean": 0.49804964442944716
+    },
+    "valid_F": {
+     "n": 30010,
+     "brier": 0.24754954020118614,
+     "score": 903.64189,
+     "bss": 0.00319060510614233,
+     "auc": 0.5326183171022777,
+     "logloss": 0.688229346286314,
+     "base_rate": 0.45928023992002664,
+     "pred_mean": 0.46009832350372387
+    },
+    "by_pitcher_hand": {
+     "1": {
+      "n": 71830,
+      "brier": 0.24736323439375646,
+      "score": 978.22182,
+      "bss": 0.009583894530431292,
+      "auc": 0.5564342942296228,
+      "logloss": 0.6878507391672262,
+      "base_rate": 0.48440762912432134,
+      "pred_mean": 0.4904425160015006
+     },
+     "2": {
+      "n": 181677,
+      "brier": 0.24830668223880167,
+      "score": 600.55097,
+      "bss": 0.0060780239584845575,
+      "auc": 0.5441679178976262,
+      "logloss": 0.6897504082766936,
+      "base_rate": 0.48677598154967333,
+      "pred_mean": 0.49478836696448714
+     }
+    },
+    "cells": {
+     "is_mid_only": {
+      "n": 253116,
+      "brier": 0.122117,
+      "bss": 0.003345,
+      "score": 334.474,
+      "base_rate": 0.142966,
+      "pred_mean": 0.121468,
+      "auc": 0.572906,
+      "logloss": 0.408596
+     },
+     "is_rev_only": {
+      "n": 253116,
+      "brier": 0.166484,
+      "bss": 0.012653,
+      "score": 1265.264,
+      "base_rate": 0.214724,
+      "pred_mean": 0.21939,
+      "auc": 0.579248,
+      "logloss": 0.513583
+     },
+     "is_both": {
+      "n": 253116,
+      "brier": 0.032186,
+      "bss": 0.000413,
+      "score": 41.268,
+      "base_rate": 0.033309,
+      "pred_mean": 0.035151,
+      "auc": 0.543395,
+      "logloss": 0.145792
+     },
+     "is_wayoff_true": {
+      "n": 253116,
+      "brier": 0.106212,
+      "bss": 0.01507,
+      "score": 1507.031,
+      "base_rate": 0.122955,
+      "pred_mean": 0.126326,
+      "auc": 0.601021,
+      "logloss": 0.365638
+     }
+    }
+   },
+   "7": {
+    "n": 253507,
+    "brier": 0.24798335833269683,
+    "score": 729.9805,
+    "bss": 0.0072999113666154525,
+    "auc": 0.5485404254793818,
+    "logloss": 0.6890996975851336,
+    "base_rate": 0.4861049201797189,
+    "pred_mean": 0.4931307562928206,
+    "pred_sha256": "d3c606b0433768250219de958864054294d0098fb724dc7377224b1b92153668",
+    "iter_used_stacker": 481,
+    "cell_iter_used": {
+     "is_mid_only": 577,
+     "is_rev_only": 1346,
+     "is_both": 449,
+     "is_wayoff_true": 897
+    },
+    "curve_argmin_is_interior": false,
+    "diagnostic_own_argmin": 481,
+    "minutes": 18.5,
+    "valid_R": {
+     "n": 223497,
+     "brier": 0.24804870074211494,
+     "score": 703.82334,
+     "bss": 0.007384526479361275,
+     "auc": 0.5491870348502499,
+     "logloss": 0.689230922873258,
+     "base_rate": 0.4897067969592433,
+     "pred_mean": 0.4974901461568331
+    },
+    "valid_F": {
+     "n": 30010,
+     "brier": 0.24749672612750803,
+     "score": 924.78385,
+     "bss": 0.0034032718910701476,
+     "auc": 0.5340067103097063,
+     "logloss": 0.6881224080743062,
+     "base_rate": 0.45928023992002664,
+     "pred_mean": 0.46066455981040766
+    },
+    "by_pitcher_hand": {
+     "1": {
+      "n": 71830,
+      "brier": 0.24732629261753591,
+      "score": 993.00995,
+      "bss": 0.009731805476951516,
+      "auc": 0.5568508131864482,
+      "logloss": 0.6877767766984353,
+      "base_rate": 0.48440762912432134,
+      "pred_mean": 0.4896765815833605
+     },
+     "2": {
+      "n": 181677,
+      "brier": 0.24824314372281228,
+      "score": 625.98602,
+      "bss": 0.006332355927312405,
+      "auc": 0.5450628876202522,
+      "logloss": 0.6896227434703669,
+      "base_rate": 0.48677598154967333,
+      "pred_mean": 0.4944964402780279
+     }
+    },
+    "cells": {
+     "is_mid_only": {
+      "n": 253116,
+      "brier": 0.122147,
+      "bss": 0.003097,
+      "score": 309.683,
+      "base_rate": 0.142966,
+      "pred_mean": 0.121126,
+      "auc": 0.572299,
+      "logloss": 0.408715
+     },
+     "is_rev_only": {
+      "n": 253116,
+      "brier": 0.166437,
+      "bss": 0.012934,
+      "score": 1293.407,
+      "base_rate": 0.214724,
+      "pred_mean": 0.219391,
+      "auc": 0.579934,
+      "logloss": 0.513447
+     },
+     "is_both": {
+      "n": 253116,
+      "brier": 0.03219,
+      "bss": 0.000305,
+      "score": 30.541,
+      "base_rate": 0.033309,
+      "pred_mean": 0.035269,
+      "auc": 0.542044,
+      "logloss": 0.14584
+     },
+     "is_wayoff_true": {
+      "n": 253116,
+      "brier": 0.106205,
+      "bss": 0.015141,
+      "score": 1514.107,
+      "base_rate": 0.122955,
+      "pred_mean": 0.126593,
+      "auc": 0.600982,
+      "logloss": 0.36563
+     }
+    }
+   },
+   "2024": {
+    "n": 253507,
+    "brier": 0.2479648004372976,
+    "score": 737.4094,
+    "bss": 0.007374200321049851,
+    "auc": 0.5487631637501766,
+    "logloss": 0.6890619508348033,
+    "base_rate": 0.4861049201797189,
+    "pred_mean": 0.49351112797328694,
+    "pred_sha256": "aa999bb9eee3c419a4239338330e086b72826e57c9cdf03e231768cc89ea330d",
+    "iter_used_stacker": 481,
+    "cell_iter_used": {
+     "is_mid_only": 577,
+     "is_rev_only": 1346,
+     "is_both": 449,
+     "is_wayoff_true": 897
+    },
+    "curve_argmin_is_interior": false,
+    "diagnostic_own_argmin": 481,
+    "minutes": 17.78,
+    "valid_R": {
+     "n": 223497,
+     "brier": 0.24803814634914695,
+     "score": 708.04836,
+     "bss": 0.007426761950630745,
+     "auc": 0.5493235387861046,
+     "logloss": 0.6892093042899458,
+     "base_rate": 0.4897067969592433,
+     "pred_mean": 0.49783789651701005
+    },
+    "valid_F": {
+     "n": 30010,
+     "brier": 0.24741856280782099,
+     "score": 956.07335,
+     "bss": 0.0037180126550271364,
+     "auc": 0.5358918043968101,
+     "logloss": 0.6879645481302374,
+     "base_rate": 0.45928023992002664,
+     "pred_mean": 0.46128787608336735
+    },
+    "by_pitcher_hand": {
+     "1": {
+      "n": 71830,
+      "brier": 0.24729041765840043,
+      "score": 1007.37103,
+      "bss": 0.009875445001224059,
+      "auc": 0.5572027928126074,
+      "logloss": 0.6877038041247575,
+      "base_rate": 0.48440762912432134,
+      "pred_mean": 0.4896146782193887
+     },
+     "2": {
+      "n": 181677,
+      "brier": 0.24823143250964683,
+      "score": 630.67413,
+      "bss": 0.006379233570822929,
+      "auc": 0.5452922790667689,
+      "logloss": 0.6895989240244893,
+      "base_rate": 0.48677598154967333,
+      "pred_mean": 0.4950516751301781
+     }
+    },
+    "cells": {
+     "is_mid_only": {
+      "n": 253116,
+      "brier": 0.122136,
+      "bss": 0.003192,
+      "score": 319.226,
+      "base_rate": 0.142966,
+      "pred_mean": 0.121351,
+      "auc": 0.572152,
+      "logloss": 0.408679
+     },
+     "is_rev_only": {
+      "n": 253116,
+      "brier": 0.166417,
+      "bss": 0.01305,
+      "score": 1304.955,
+      "base_rate": 0.214724,
+      "pred_mean": 0.219609,
+      "auc": 0.579935,
+      "logloss": 0.513403
+     },
+     "is_both": {
+      "n": 253116,
+      "brier": 0.032182,
+      "bss": 0.000528,
+      "score": 52.777,
+      "base_rate": 0.033309,
+      "pred_mean": 0.035103,
+      "auc": 0.54409,
+      "logloss": 0.145753
+     },
+     "is_wayoff_true": {
+      "n": 253116,
+      "brier": 0.106208,
+      "bss": 0.015107,
+      "score": 1510.665,
+      "base_rate": 0.122955,
+      "pred_mean": 0.126654,
+      "auc": 0.601067,
+      "logloss": 0.36563
+     }
+    }
+   }
+  },
+  "LGBM_B3_control": {
+   "42": {
+    "n": 253507,
+    "brier": 0.24819050861389352,
+    "score": 647.05634,
+    "bss": 0.0064706698244128,
+    "auc": 0.5461206274253818,
+    "logloss": 0.689516884694785,
+    "base_rate": 0.4861049201797189,
+    "pred_mean": 0.49493336864987664,
+    "pred_sha256": "1e4fba70fe2322d02c246209e4d2dce967f890044aa182e8de4b47525cfafa97",
+    "recorded_in_exp024": 0.24819050861389355,
+    "valid_R": {
+     "n": 223497,
+     "brier": 0.24824125480167278,
+     "score": 626.74217,
+     "bss": 0.006613983685004765,
+     "auc": 0.5469966749881606,
+     "logloss": 0.689618448366384,
+     "base_rate": 0.4897067969592433,
+     "pred_mean": 0.49897287954580033
+    },
+    "valid_F": {
+     "n": 30010,
+     "brier": 0.24781258056557268,
+     "score": 798.34441,
+     "bss": 0.002131418705538568,
+     "auc": 0.5274283908125085,
+     "logloss": 0.6887604976267627,
+     "base_rate": 0.45928023992002664,
+     "pred_mean": 0.4648494444010845
+    },
+    "by_pitcher_hand": {
+     "1": {
+      "n": 71830,
+      "brier": 0.24765345994571109,
+      "score": 862.04186,
+      "bss": 0.00842186226003705,
+      "auc": 0.553485914810528,
+      "logloss": 0.6884371868367759,
+      "base_rate": 0.48440762912432134,
+      "pred_mean": 0.4917449214108441
+     },
+     "2": {
+      "n": 181677,
+      "brier": 0.2484028426233474,
+      "score": 562.05708,
+      "bss": 0.005693113175726516,
+      "auc": 0.5430542451816587,
+      "logloss": 0.6899437670031717,
+      "base_rate": 0.48677598154967333,
+      "pred_mean": 0.4961939914319554
+     }
+    }
+   },
+   "7": {
+    "n": 253507,
+    "brier": 0.24819978703402526,
+    "score": 643.3421,
+    "bss": 0.006433527459098198,
+    "auc": 0.5458452685427287,
+    "logloss": 0.6895352738267059,
+    "base_rate": 0.4861049201797189,
+    "pred_mean": 0.4948525156261725,
+    "pred_sha256": "a02495934f064ef852b42f4727ab3fb73ff0c557de23ce811f9001fbec6b59f9",
+    "recorded_in_exp024": 0.24819978703402526,
+    "valid_R": {
+     "n": 223497,
+     "brier": 0.24825552234505477,
+     "score": 621.03075,
+     "bss": 0.00655688931487608,
+     "auc": 0.5466790967660233,
+     "logloss": 0.6896469065792575,
+     "base_rate": 0.4897067969592433,
+     "pred_mean": 0.4989730797282185
+    },
+    "valid_F": {
+     "n": 30010,
+     "brier": 0.24778470290176388,
+     "score": 809.5041,
+     "bss": 0.0022436738814912704,
+     "auc": 0.5277652619466542,
+     "logloss": 0.6887038981087109,
+     "base_rate": 0.45928023992002664,
+     "pred_mean": 0.46416495430944543
+    },
+    "by_pitcher_hand": {
+     "1": {
+      "n": 71830,
+      "brier": 0.24763758830047664,
+      "score": 868.39543,
+      "bss": 0.008485410641020263,
+      "auc": 0.5535754232397425,
+      "logloss": 0.6884049530808256,
+      "base_rate": 0.48440762912432134,
+      "pred_mean": 0.49156224107538105
+     },
+     "2": {
+      "n": 181677,
+      "brier": 0.2484220646752831,
+      "score": 554.36232,
+      "bss": 0.005616171147138083,
+      "auc": 0.5426036473040381,
+      "logloss": 0.6899821710078382,
+      "base_rate": 0.48677598154967333,
+      "pred_mean": 0.4961533980768038
+     }
+    }
+   },
+   "2024": {
+    "n": 253507,
+    "brier": 0.24819242766345595,
+    "score": 646.28813,
+    "bss": 0.0064629876933072206,
+    "auc": 0.5460845462933652,
+    "logloss": 0.6895206658007242,
+    "base_rate": 0.4861049201797189,
+    "pred_mean": 0.4949036889214331,
+    "pred_sha256": "deca74c9a717bdadf4fa4540546ac587b89fad3f42abbd05dec916cbb5420dd9",
+    "recorded_in_exp024": 0.24819242766345598,
+    "valid_R": {
+     "n": 223497,
+     "brier": 0.2482410293872978,
+     "score": 626.83241,
+     "bss": 0.006614885724789188,
+     "auc": 0.5469933312495262,
+     "logloss": 0.6896179787537513,
+     "base_rate": 0.4897067969592433,
+     "pred_mean": 0.4988861266916006
+    },
+    "valid_F": {
+     "n": 30010,
+     "brier": 0.24783047033345,
+     "score": 791.18298,
+     "bss": 0.0020593818571643663,
+     "auc": 0.5269471444189557,
+     "logloss": 0.6887959356086982,
+     "base_rate": 0.45928023992002664,
+     "pred_mean": 0.4652448120697464
+    },
+    "by_pitcher_hand": {
+     "1": {
+      "n": 71830,
+      "brier": 0.2476523512493083,
+      "score": 862.48568,
+      "bss": 0.008426301362622679,
+      "auc": 0.5535897675119366,
+      "logloss": 0.688435256146299,
+      "base_rate": 0.48440762912432134,
+      "pred_mean": 0.4916177948245748
+     },
+     "2": {
+      "n": 181677,
+      "brier": 0.24840595875890684,
+      "score": 560.80967,
+      "bss": 0.005680639908455021,
+      "auc": 0.5429249365515263,
+      "logloss": 0.68994980639352,
+      "base_rate": 0.48677598154967333,
+      "pred_mean": 0.49620283946320415
+     }
+    }
+   }
+  }
+ },
+ "nan_confounder": {
+  "fact": "the four OOF stack columns are NaN on exactly the earliest season of each training pool: 24.304% of fold_2023's pool (211,627 of 870,752 = every 2019 row), 18.958% of fold_2024's, 32.372% of block 2022's.",
+  "identical_in_the_control": "exp_020 B3_exp016_path.fold_2023 and every exp_024 blocks/*.json record the SAME percentages (24.304 / 18.958 / 32.372), so the NaN FRACTION is not a variable between the arms.",
+  "catboost_nan_mode": "Min (catboost 1.2.10 default, confirmed by get_all_params() on a probe fit with this exact CB_BASE) \u2014 NaN is replaced by a value below the feature's minimum, a fixed rule.",
+  "lightgbm_nan_handling": "learned default direction per split.",
+  "why_it_is_bounded_here": "within any training pool the NaN set is EXACTLY {season == earliest season}, and `season` is itself one of the 47 features. Both families can therefore isolate the NaN group exactly with a single split on season, so the difference cannot be about identifying the group \u2014 only about where the imputed value lands inside an already-separable region. No sentinel fill was used and no missing-flag column was added (it would be collinear with season).",
+  "honest_label": "the headline delta is nevertheless reported as the effect of 'the CatBoost C5 configuration including its native NaN handling', not of the model family alone. No arm isolating nan_mode was run."
+ },
+ "variables_changed_vs_control": [
+  "model family of the four cell models AND the stacker: LightGBM exp_010-D -> CatBoost C5 (they change TOGETHER, so this experiment cannot attribute the result to cells or stacker separately)",
+  "cell iteration is now PER CELL (4 numbers from each cell's own binary-target argmin) instead of one shared value taken from exp_016 arm B2c's argmin",
+  "all iteration counts: cells 240/1150 -> 338-1346, stacker 170/650 -> 282/375/481",
+  "stage-2 iteration rule: exp_024 carried exp_016/exp_020's constants; exp_030 derives them from its own stage-1 argmin x a training-row ratio",
+  "NaN handling of the four OOF columns (see nan_confounder) \u2014 co-varies with the family, not independently controlled",
+  "library: lightgbm 4.7.0 -> catboost 1.2.10",
+  "unchanged: the 47 provided feature columns, labels.py recovery, the exp_004 F-mask, the fold definitions, the forward-chaining-by-season OOF scheme, all row counts, num_threads/thread_count = 6, no offset applied anywhere"
+ ],
+ "leak_boundary": {
+  "recovered_labels": "assert_no_recovered_in_features fired before every design matrix (base 47, each cell fit, each OOF fit, the 51-column stacker); is_*/cnt_*/draw_*/recov_* can only ever be a target",
+  "oof": "forward chaining by season only \u2014 season s is predicted by cell models fitted on seasons < s. No random KFold, no train-segment self-prediction.",
+  "has_time": "every fit pool re-checked at run time for (season, game_month) inversions; 0 in all of them (asserted, would abort otherwise)",
+  "test": "nothing in exp_030 reads test.csv or any other row's prediction",
+  "missing": "no sentinel fill anywhere"
+ },
+ "reproducibility": {
+  "inherited_sha256": {
+   "labels.py": "439cd504478b4bc8162e9dedc32be27bfadd5d1178472d6b384b60f46ed7a9f2",
+   "exp016_ref.py": "4f24deb71d9eef3d626900f34a71aecd2d6acbae646eb9c92c51189a38a3ece1",
+   "exp_027/src/train.py": "e4b308a5f6e4564ed43aed6715d05c0aa617b5e9d22e1bfd51e71dd127416f0f"
+  },
+  "new_source_sha256": {
+   "src/b3_cat.py": "0984c57e5af66600f9fca5532a984ddd6d4c22996c9e0105d3e798bc7bfa76ca",
+   "src/aggregate.py": "3a5fe2b8c2fd1c2dee497d61e23e8c11089b994cc1f07a473f6fbe76746fe9c9",
+   "src/launch_stage2.sh": "f47b979fd721d0e8c70349524debd5cc37879a23d016557d0cb6f56c070c0ab0"
+  },
+  "train_csv_sha256": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+  "note": "exp_027/src/train.py is IMPORTED by path with its sha asserted before CB_BASE / ARMS['C5'] / build_frame_native / chunked_margin_curve / fit_catboost are read out of it \u2014 the C5 spec is checked, not transcribed",
+  "catboost_effective_params": {
+   "nan_mode": "Min",
+   "boosting_type": "Plain",
+   "bootstrap_type": "Bernoulli",
+   "subsample": 0.800000011920929,
+   "depth": 6,
+   "l2_leaf_reg": 10,
+   "learning_rate": 0.029999999329447743,
+   "task_type": "CPU",
+   "leaf_estimation_method": "Newton",
+   "border_count": 254,
+   "rsm": 1,
+   "one_hot_max_size": 10,
+   "has_time": true,
+   "thread_count": 6
+  }
+ },
+ "versions": {
+  "python": "3.11.15",
+  "numpy": "1.26.4",
+  "pandas": "2.0.3",
+  "catboost": "1.2.10",
+  "lightgbm": "4.7.0 (control vectors only)"
+ },
+ "predictions_recovered_locally": {
+  "u2022_seed42": {
+   "file": "pred/pred_C5B3_u2022_seed42_st2.npy",
+   "sha256": "85474def1bbf996e5ab7f96862ad8b45531f8daa630b0b973e98ed442ee0237f",
+   "role": "beta supply block",
+   "brier": 0.24810484064910457,
+   "score": 681.35002
+  },
+  "u2022_seed7": {
+   "file": "pred/pred_C5B3_u2022_seed7_st2.npy",
+   "sha256": "2abd566121f029f31bb8e12b306c1e63c505cb917d5e7e9a3194a91d406ba5c0",
+   "role": "beta supply block",
+   "brier": 0.24812844147674445,
+   "score": 671.90239
+  },
+  "u2023_seed42": {
+   "file": "pred/pred_C5B3_u2023_seed42_st1.npy",
+   "sha256": "bd8c17ec35e0b9c86a291d361d5fe94b5f7605bf13eff9ece15e86859298ae56",
+   "role": "beta supply block",
+   "brier": 0.24867962923638576,
+   "score": 451.25686
+  },
+  "u2023_seed7": {
+   "file": "pred/pred_C5B3_u2023_seed7_st2.npy",
+   "sha256": "41f01728f679423adc51366515cd57e9aeba3341da2f2f11cb4a930f84088f83",
+   "role": "beta supply block",
+   "brier": 0.24866143214186356,
+   "score": 458.54132
+  },
+  "u2024_seed2024": {
+   "file": "pred/pred_C5B3_u2024_seed2024_st2.npy",
+   "sha256": "aa999bb9eee3c419a4239338330e086b72826e57c9cdf03e231768cc89ea330d",
+   "role": "fold_2024 adoption test",
+   "brier": 0.2479648004372976,
+   "score": 737.4094
+  },
+  "u2024_seed42": {
+   "file": "pred/pred_C5B3_u2024_seed42_st2.npy",
+   "sha256": "ef4bafad23f53798b60e221b497e448c70321ef14e0618233930ff54893d54bf",
+   "role": "fold_2024 adoption test",
+   "brier": 0.2480393607892575,
+   "score": 707.56221
+  },
+  "u2024_seed7": {
+   "file": "pred/pred_C5B3_u2024_seed7_st2.npy",
+   "sha256": "d3c606b0433768250219de958864054294d0098fb724dc7377224b1b92153668",
+   "role": "fold_2024 adoption test",
+   "brier": 0.2479833583326968,
+   "score": 729.9805
+  }
+ },
+ "compute_time_min": {
+  "u2022_seed42": 5.05,
+  "u2022_seed7": 4.14,
+  "u2023_seed42": 13.34,
+  "u2023_seed7": 8.58,
+  "u2024_seed2024": 17.78,
+  "u2024_seed42": 15.48,
+  "u2024_seed7": 18.5,
+  "stage_1_total": 13.34,
+  "wall_clock_note": "stage 1 ran alone; wave 1 (three fold_2024 units) and wave 2 (three block units) each ran 3-wide at thread_count 6. Wall clock: stage 1 13.34 min, wave 1 about 19 min, wave 2 about 9 min."
+ },
+ "scope_not_done": [
+  "offset beta was NOT re-fitted",
+  "leak audit NOT run",
+  "submit.zip NOT built",
+  "nothing submitted",
+  "hyperparameters NOT tuned \u2014 C5's five first-try values from exp_027 were carried unchanged"
+ ],
+ "cell_oof_quality": {
+  "fold_2023_seed42_C5": {
+   "is_mid_only": {
+    "n": 245406,
+    "brier": 0.10462,
+    "bss": 0.002725,
+    "score": 272.528,
+    "base_rate": 0.119088,
+    "pred_mean": 0.109196,
+    "auc": 0.554297,
+    "logloss": 0.363722
+   },
+   "is_rev_only": {
+    "n": 245406,
+    "brier": 0.170187,
+    "bss": 0.01345,
+    "score": 1345.012,
+    "base_rate": 0.221625,
+    "pred_mean": 0.217975,
+    "auc": 0.579128,
+    "logloss": 0.522133
+   },
+   "is_both": {
+    "n": 245406,
+    "brier": 0.033096,
+    "bss": -0.00151,
+    "score": 0.0,
+    "base_rate": 0.034217,
+    "pred_mean": 0.042456,
+    "auc": 0.539467,
+    "logloss": 0.149691
+   },
+   "is_wayoff_true": {
+    "n": 245406,
+    "brier": 0.107398,
+    "bss": 0.018792,
+    "score": 1879.171,
+    "base_rate": 0.125107,
+    "pred_mean": 0.129309,
+    "auc": 0.611507,
+    "logloss": 0.368277
+   }
+  },
+  "fold_2023_seed42_LGBM_exp016": {
+   "is_mid_only": {
+    "brier": 0.104644,
+    "auc": 0.551406
+   },
+   "is_rev_only": {
+    "brier": 0.170536,
+    "auc": 0.573278
+   },
+   "is_both": {
+    "brier": 0.033079,
+    "auc": 0.523086
+   },
+   "is_wayoff_true": {
+    "brier": 0.107377,
+    "auc": 0.611745
+   },
+   "source": "exp_016 metrics.json cell_submodels_seed42.*.fold_2023.own_mode"
+  },
+  "reading": "the CatBoost cell models are AT LEAST AS GOOD at their own modes as the LightGBM ones (AUC 0.5543/0.5791/0.5395/0.6115 vs 0.5514/0.5733/0.5231/0.6117). Whatever happens at the stacker is therefore not caused by worse cell features.",
+  "caveat": "exp_016's cell models were reported at their own oracle iterations (825/2000/4/1450) which differ from exp_030's (450/1050/350/700), and exp_016's own_mode n is 245,406 vs exp_030's 245,406 - both restricted to recov_ok valid rows. Same fold, same rows, different iteration."
+ }
+}

@@ -1,0 +1,842 @@
+{
+ "exp_id": "exp_051",
+ "date": "2026-08-15",
+ "title": "cells upgraded 47 -> 63 columns (+16 ins_*): OOF regenerated, 67-col stacker refit at 1400, fold_2024, seeds 42/7/2024",
+ "scope": "stage 0 + stage 1 + aggregation.  No deployment package.",
+ "score_conversion": {
+  "formula": "100000 * (1 - Brier / 0.2498069)",
+  "ref_brier": 0.2498069,
+  "decimals": 5,
+  "sensitivity": "Brier 1e-06 = 0.4003 points; a 6-decimal Brier converts with +/-0.2002 of rounding uncertainty.  The Brier is the raw quantity."
+ },
+ "unit": {
+  "fold": "fold_2024",
+  "train_upto": 2023,
+  "valid_season": 2024,
+  "n_train": 1116277,
+  "n_train_mode": 1115798,
+  "n_valid": 253507,
+  "n_valid_R": 223497,
+  "n_valid_F": 30010,
+  "arm_base": "C5_B3",
+  "seeds": [
+   42,
+   7,
+   2024
+  ],
+  "cell_n_features": 63,
+  "stacker_n_features": 67,
+  "stacker_rounds": 1400
+ },
+ "cell_iter_pinned": {
+  "policy": "the four cell iterations were READ from the control OOF's artefact, never re-chosen (config \uc140_iter_\uaddc\uc57d; exp_034 precedent)",
+  "read_from": {
+   "path": "/home/<user>/SungjinPark/build_AH/local_reference_AH.json",
+   "key": "per_seed.42.run.cell_iter_used",
+   "values_read": {
+    "is_mid_only": 577,
+    "is_rev_only": 1346,
+    "is_both": 449,
+    "is_wayoff_true": 897
+   }
+  },
+  "values": {
+   "is_mid_only": 577,
+   "is_rev_only": 1346,
+   "is_both": 449,
+   "is_wayoff_true": 897
+  },
+  "note_carried_along_variable": "the 63-col cells' own grid argmins are recorded per seed in cells_vs_AH_47col (exp051_argmin_iter) as a carried-along observation only; nothing selects on them"
+ },
+ "stage0": {
+  "exp_id": "exp_051",
+  "stage": 0,
+  "what": "G0a matrix inheritance, G0b valid-row anchor, G0c missing policy, control artefact availability",
+  "G0a_inputs_sha_vs_exp048": {
+   "recorded_in": [
+    "/home/<user>/SungjinPark/experiments/exp_048/res/res_exp048_s1_seed42.json",
+    "/home/<user>/SungjinPark/experiments/exp_048/res/res_exp048_s1_seed7.json",
+    "/home/<user>/SungjinPark/experiments/exp_048/res/res_exp048_s1_seed2024.json"
+   ],
+   "all_three_res_agree": true,
+   "per_input": {
+    "train.csv": {
+     "exp048_recorded": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+     "observed": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+     "match": true
+    },
+    "ins_feats.py": {
+     "exp048_recorded": "853e682f996e7a081c0d1325490ab91795e88928e612885538b7ac7ed122a6f0",
+     "observed": "853e682f996e7a081c0d1325490ab91795e88928e612885538b7ac7ed122a6f0",
+     "match": true
+    },
+    "inseason.py": {
+     "exp048_recorded": "1b4a407d2b53f2cbdbf0d2c837d0cab7c3db5e1e01bfc2e6b639813723303086",
+     "observed": "1b4a407d2b53f2cbdbf0d2c837d0cab7c3db5e1e01bfc2e6b639813723303086",
+     "match": true
+    },
+    "anchor_lt2024.npz": {
+     "exp048_recorded": "0e4b586da41cd6e78c5e19d4dd656bc9df088413625945e2a88ae85d100e5eb7",
+     "observed": "0e4b586da41cd6e78c5e19d4dd656bc9df088413625945e2a88ae85d100e5eb7",
+     "match": true
+    }
+   }
+  },
+  "G0a_no_saved_matrix_note": "exp_048 saved no matrix file (its .npz files are the two anchors only) \u2014 the matrix is regenerated below with the byte-identical inputs asserted above; build_ins_matrix is deterministic (vector arithmetic, no RNG, no threading).",
+  "build_sec": 3.2,
+  "G0a_season_policy_vs_exp048": {
+   "2019": {
+    "exp048": {
+     "anchor": "NONE -- earliest season, all 16 columns NaN",
+     "n_rows": 237413
+    },
+    "observed": {
+     "anchor": "NONE -- earliest season, all 16 columns NaN",
+     "n_rows": 237413
+    },
+    "match": true
+   },
+   "2020": {
+    "exp048": {
+     "anchor": "build_anchor(train[season < 2020])",
+     "n_rows": 244087,
+     "n_anchor_pitchers": 355,
+     "ins_p_n_mean": 744.776,
+     "ins_p_n_zero_pct": 0.0451
+    },
+    "observed": {
+     "anchor": "build_anchor(train[season < 2020])",
+     "n_rows": 244087,
+     "n_anchor_pitchers": 355,
+     "ins_p_n_mean": 744.776,
+     "ins_p_n_zero_pct": 0.0451
+    },
+    "match": true
+   },
+   "2021": {
+    "exp048": {
+     "anchor": "build_anchor(train[season < 2021])",
+     "n_rows": 247088,
+     "n_anchor_pitchers": 465,
+     "ins_p_n_mean": 712.817,
+     "ins_p_n_zero_pct": 0.0384
+    },
+    "observed": {
+     "anchor": "build_anchor(train[season < 2021])",
+     "n_rows": 247088,
+     "n_anchor_pitchers": 465,
+     "ins_p_n_mean": 712.817,
+     "ins_p_n_zero_pct": 0.0384
+    },
+    "match": true
+   },
+   "2022": {
+    "exp048": {
+     "anchor": "build_anchor(train[season < 2022])",
+     "n_rows": 247472,
+     "n_anchor_pitchers": 560,
+     "ins_p_n_mean": 734.927,
+     "ins_p_n_zero_pct": 0.0356
+    },
+    "observed": {
+     "anchor": "build_anchor(train[season < 2022])",
+     "n_rows": 247472,
+     "n_anchor_pitchers": 560,
+     "ins_p_n_mean": 734.927,
+     "ins_p_n_zero_pct": 0.0356
+    },
+    "match": true
+   },
+   "2023": {
+    "exp048": {
+     "anchor": "build_anchor(train[season < 2023])",
+     "n_rows": 245525,
+     "n_anchor_pitchers": 648,
+     "ins_p_n_mean": 703.477,
+     "ins_p_n_zero_pct": 0.0257
+    },
+    "observed": {
+     "anchor": "build_anchor(train[season < 2023])",
+     "n_rows": 245525,
+     "n_anchor_pitchers": 648,
+     "ins_p_n_mean": 703.477,
+     "ins_p_n_zero_pct": 0.0257
+    },
+    "match": true
+   },
+   "2024": {
+    "exp048": {
+     "anchor": "anchor_lt2024.npz (frozen, verified)",
+     "n_rows": 253507,
+     "n_anchor_pitchers": 711,
+     "ins_p_n_mean": 687.952,
+     "ins_p_n_zero_pct": 0.032
+    },
+    "observed": {
+     "anchor": "anchor_lt2024.npz (frozen, verified)",
+     "n_rows": 253507,
+     "n_anchor_pitchers": 711,
+     "ins_p_n_mean": 687.952,
+     "ins_p_n_zero_pct": 0.032
+    },
+    "match": true
+   }
+  },
+  "G0a_nan_pcts_vs_exp048": {
+   "train_rows": {
+    "exp048": 18.9583,
+    "observed": 18.9583
+   },
+   "valid_rows": {
+    "exp048": 0.0,
+    "observed": 0.0
+   }
+  },
+  "G0a_PASS": true,
+  "G0b_valid_row_anchor": {
+   "anchor_used_for_2024_rows": "anchor_lt2024.npz (frozen, verified)",
+   "frozen_anchor_equals_rebuild_of_train_lt2024": true,
+   "ins_p_n_zero_pct_2024": 0.032,
+   "degeneracy_reference": "exp_048 G0d measured 100.0% zeros with the deploy anchor; this run's value above is the non-degenerate one",
+   "PASS": true
+  },
+  "G0c_missing_policy": {
+   "earliest_season_2019": "NONE -- earliest season, all 16 columns NaN",
+   "nan_pct_train_rows": 18.9583,
+   "nan_pct_valid_rows": 0.0,
+   "note": "inherited exp_048 code: 2019 rows carry NaN in all 16 columns (no prior-season anchor exists); no sentinel fill anywhere in ins_feats.py \u2014 audited in exp_048/AI, not re-audited here per config stage0",
+   "PASS": true
+  },
+  "ins_matrix": {
+   "path": "/home/<user>/SungjinPark/experiments/exp_051/ins_matrix_fold2024.npz",
+   "sha256": "4fe581355aa3922323f23a0fed6384b39997bf82b6546b7d7098d306669163a7",
+   "shape": [
+    1475092,
+    16
+   ],
+   "bytes": 80769004
+  },
+  "control_exp048_A1_pred_sha": {
+   "42": {
+    "pred_file": "/home/<user>/SungjinPark/experiments/exp_048/pred/pred_A1_u2024_seed42_at1400.npy",
+    "recorded_sha256": "0141db5678de394f56da78804ef6087cc20b30233c323f7e466f23f301f74b7f",
+    "observed_sha256": "0141db5678de394f56da78804ef6087cc20b30233c323f7e466f23f301f74b7f",
+    "match": true,
+    "recorded_brier_1400": 0.2478610966346746
+   },
+   "7": {
+    "pred_file": "/home/<user>/SungjinPark/experiments/exp_048/pred/pred_A1_u2024_seed7_at1400.npy",
+    "recorded_sha256": "fabe0dcef1af313d30817b92ed7ece1cc16c4895e903d98ed6793e71d0e7ad4a",
+    "observed_sha256": "fabe0dcef1af313d30817b92ed7ece1cc16c4895e903d98ed6793e71d0e7ad4a",
+    "match": true,
+    "recorded_brier_1400": 0.24785240967443745
+   },
+   "2024": {
+    "pred_file": "/home/<user>/SungjinPark/experiments/exp_048/pred/pred_A1_u2024_seed2024_at1400.npy",
+    "recorded_sha256": "616627187d5017cc5c1cf0f6f70c83325346080c0cad45d037377a6e1b5ba61b",
+    "observed_sha256": "616627187d5017cc5c1cf0f6f70c83325346080c0cad45d037377a6e1b5ba61b",
+    "match": true,
+    "recorded_brier_1400": 0.2479125638504795
+   }
+  },
+  "ah_oof_sha_vs_reference_json": {
+   "42": {
+    "oof_file": "/home/<user>/SungjinPark/build_AH/localref/oof/stack_fold2024_seed42.npz",
+    "recorded_sha256": "666ffda732c41646ef13ab75e841130aa35358ba109bfe7a556f80bd3d433ea3",
+    "observed_sha256": "666ffda732c41646ef13ab75e841130aa35358ba109bfe7a556f80bd3d433ea3",
+    "match": true,
+    "cell_iter_used": {
+     "is_mid_only": 577,
+     "is_rev_only": 1346,
+     "is_both": 449,
+     "is_wayoff_true": 897
+    }
+   },
+   "7": {
+    "oof_file": "/home/<user>/SungjinPark/build_AH/localref/oof/stack_fold2024_seed7.npz",
+    "recorded_sha256": "12488b6f958f04276663c2a5d8fdb928aedb4ce4b48ac27dd1d2ac222720d650",
+    "observed_sha256": "12488b6f958f04276663c2a5d8fdb928aedb4ce4b48ac27dd1d2ac222720d650",
+    "match": true,
+    "cell_iter_used": {
+     "is_mid_only": 577,
+     "is_rev_only": 1346,
+     "is_both": 449,
+     "is_wayoff_true": 897
+    }
+   },
+   "2024": {
+    "oof_file": "/home/<user>/SungjinPark/build_AH/localref/oof/stack_fold2024_seed2024.npz",
+    "recorded_sha256": "ee834969c4f4037fb529ec6a340c8ce59862936f976839698e52ea86c3b60442",
+    "observed_sha256": "ee834969c4f4037fb529ec6a340c8ce59862936f976839698e52ea86c3b60442",
+    "match": true,
+    "cell_iter_used": {
+     "is_mid_only": 577,
+     "is_rev_only": 1346,
+     "is_both": 449,
+     "is_wayoff_true": 897
+    }
+   }
+  },
+  "cell_iter_to_be_pinned": {
+   "is_mid_only": 577,
+   "is_rev_only": 1346,
+   "is_both": 449,
+   "is_wayoff_true": 897
+  },
+  "cell_iter_source": {
+   "path": "/home/<user>/SungjinPark/build_AH/local_reference_AH.json",
+   "key": "per_seed.<seed>.run.cell_iter_used"
+  },
+  "ALL_PASS": true,
+  "minutes": 0.49
+ },
+ "A0_control_gate_vs_exp048_A1": {
+  "42": {
+   "what": "the CONTROL is exp_048 arm A1 (cells 47 cols, stacker 67 cols @1400).  Nothing is refitted: the stored prediction vector is sha256-compared against the digest exp_048 recorded, and its Brier is recomputed here against this run's own y_va.",
+   "control_res_json": "/home/<user>/SungjinPark/experiments/exp_048/res/res_exp048_s1_seed42.json",
+   "control_pred_file": "/home/<user>/SungjinPark/experiments/exp_048/pred/pred_A1_u2024_seed42_at1400.npy",
+   "recorded_pred_sha256": "0141db5678de394f56da78804ef6087cc20b30233c323f7e466f23f301f74b7f",
+   "observed_pred_sha256": "0141db5678de394f56da78804ef6087cc20b30233c323f7e466f23f301f74b7f",
+   "sha_match": true,
+   "recorded_brier": 0.2478610966346746,
+   "recomputed_brier": 0.2478610966346746,
+   "abs_diff_brier": 0.0,
+   "control_brier_by_round": {
+    "655": 0.2477587947684843,
+    "1000": 0.24781110957376087,
+    "1400": 0.2478610966346746
+   },
+   "PASS": true
+  },
+  "7": {
+   "what": "the CONTROL is exp_048 arm A1 (cells 47 cols, stacker 67 cols @1400).  Nothing is refitted: the stored prediction vector is sha256-compared against the digest exp_048 recorded, and its Brier is recomputed here against this run's own y_va.",
+   "control_res_json": "/home/<user>/SungjinPark/experiments/exp_048/res/res_exp048_s1_seed7.json",
+   "control_pred_file": "/home/<user>/SungjinPark/experiments/exp_048/pred/pred_A1_u2024_seed7_at1400.npy",
+   "recorded_pred_sha256": "fabe0dcef1af313d30817b92ed7ece1cc16c4895e903d98ed6793e71d0e7ad4a",
+   "observed_pred_sha256": "fabe0dcef1af313d30817b92ed7ece1cc16c4895e903d98ed6793e71d0e7ad4a",
+   "sha_match": true,
+   "recorded_brier": 0.24785240967443745,
+   "recomputed_brier": 0.24785240967443745,
+   "abs_diff_brier": 0.0,
+   "control_brier_by_round": {
+    "655": 0.24775087363356843,
+    "1000": 0.2477918939757002,
+    "1400": 0.24785240967443745
+   },
+   "PASS": true
+  },
+  "2024": {
+   "what": "the CONTROL is exp_048 arm A1 (cells 47 cols, stacker 67 cols @1400).  Nothing is refitted: the stored prediction vector is sha256-compared against the digest exp_048 recorded, and its Brier is recomputed here against this run's own y_va.",
+   "control_res_json": "/home/<user>/SungjinPark/experiments/exp_048/res/res_exp048_s1_seed2024.json",
+   "control_pred_file": "/home/<user>/SungjinPark/experiments/exp_048/pred/pred_A1_u2024_seed2024_at1400.npy",
+   "recorded_pred_sha256": "616627187d5017cc5c1cf0f6f70c83325346080c0cad45d037377a6e1b5ba61b",
+   "observed_pred_sha256": "616627187d5017cc5c1cf0f6f70c83325346080c0cad45d037377a6e1b5ba61b",
+   "sha_match": true,
+   "recorded_brier": 0.2479125638504795,
+   "recomputed_brier": 0.2479125638504795,
+   "abs_diff_brier": 0.0,
+   "control_brier_by_round": {
+    "655": 0.2477728396545526,
+    "1000": 0.24782502688934077,
+    "1400": 0.2479125638504795
+   },
+   "PASS": true
+  }
+ },
+ "fold_2024": {
+  "655": {
+   "per_seed": {
+    "42": {
+     "brier_T1": 0.24776345956844945,
+     "brier_A0": 0.2477587947684843,
+     "delta_brier": 4.664799965137245e-06,
+     "delta_score": -1.86736
+    },
+    "7": {
+     "brier_T1": 0.24778657936935108,
+     "brier_A0": 0.24775087363356843,
+     "delta_brier": 3.570573578265401e-05,
+     "delta_score": -14.29333
+    },
+    "2024": {
+     "brier_T1": 0.2478055533792183,
+     "brier_A0": 0.2477728396545526,
+     "delta_brier": 3.27137246657061e-05,
+     "delta_score": -13.0956
+    }
+   },
+   "mean_brier_T1": 0.2477851974390063,
+   "mean_brier_A0": 0.24776083601886845,
+   "mean_score_T1": 809.30613,
+   "mean_score_A0": 819.05823,
+   "mean_delta_score": -9.7521,
+   "sd_delta_score_ddof1": 6.85459,
+   "all_same_sign": true
+  },
+  "1000": {
+   "per_seed": {
+    "42": {
+     "brier_T1": 0.2478235085967798,
+     "brier_A0": 0.24781110957376087,
+     "delta_brier": 1.2399023018916377e-05,
+     "delta_score": -4.96344
+    },
+    "7": {
+     "brier_T1": 0.24783527389065624,
+     "brier_A0": 0.2477918939757002,
+     "delta_brier": 4.337991495603766e-05,
+     "delta_score": -17.36538
+    },
+    "2024": {
+     "brier_T1": 0.24785739320831712,
+     "brier_A0": 0.24782502688934077,
+     "delta_brier": 3.236631897635123e-05,
+     "delta_score": -12.95654
+    }
+   },
+   "mean_brier_T1": 0.24783872523191772,
+   "mean_brier_A0": 0.24780934347960062,
+   "mean_score_T1": 787.87846,
+   "mean_score_A0": 799.64025,
+   "mean_delta_score": -11.76179,
+   "sd_delta_score_ddof1": 6.2867,
+   "all_same_sign": true
+  },
+  "1400": {
+   "per_seed": {
+    "42": {
+     "brier_T1": 0.2479262860941882,
+     "brier_A0": 0.2478610966346746,
+     "delta_brier": 6.518945951361488e-05,
+     "delta_score": -26.09594
+    },
+    "7": {
+     "brier_T1": 0.2479014052373174,
+     "brier_A0": 0.24785240967443745,
+     "delta_brier": 4.8995562879960985e-05,
+     "delta_score": -19.61337
+    },
+    "2024": {
+     "brier_T1": 0.247941098757337,
+     "brier_A0": 0.2479125638504795,
+     "delta_brier": 2.8534906857502484e-05,
+     "delta_score": -11.42279
+    }
+   },
+   "mean_brier_T1": 0.24792293002961419,
+   "mean_brier_A0": 0.24787535671986385,
+   "mean_score_T1": 754.17051,
+   "mean_score_A0": 773.21454,
+   "mean_delta_score": -19.04403,
+   "sd_delta_score_ddof1": 7.35312,
+   "all_same_sign": true
+  }
+ },
+ "headline_fold_2024_at_1400": {
+  "brier_A0_control": 0.24787535671986385,
+  "score_A0_control": 773.21454,
+  "brier_T1": 0.24792293002961419,
+  "score_T1": 754.17051,
+  "mean_delta_score": -19.04403
+ },
+ "pre_registered_decision": {
+  "rule": "all 3 seeds same sign AND |mean delta| >= 25.65339 points (3 sigma, sigma = 8.55113).  Registered before the run; not revised after seeing the numbers (clue S8).",
+  "sigma_score": 8.55113,
+  "threshold_3sigma": 25.65339,
+  "control": "exp_048 A1 @1400 (per-seed briers read from res files)",
+  "per_seed_delta_score": {
+   "42": -26.09594,
+   "7": -19.61337,
+   "2024": -11.42279
+  },
+  "all_same_sign": true,
+  "mean_delta_score": -19.04403,
+  "abs_mean_delta_score": 19.04403,
+  "threshold_met": false,
+  "delta_in_sigma": -2.22708,
+  "VERDICT": "REJECT"
+ },
+ "cells_47_vs_63": {
+  "is_mid_only": {
+   "per_seed": {
+    "42": {
+     "ah_47col": {
+      "brier": 0.122117,
+      "auc": 0.572906,
+      "logloss": 0.408596
+     },
+     "exp051_63col": {
+      "brier": 0.121754,
+      "auc": 0.57924,
+      "logloss": 0.406964
+     },
+     "argmin_iter_47col": 525,
+     "argmin_iter_63col": 575,
+     "iter_used_pinned": 577,
+     "ins_gain_share": 0.267531
+    },
+    "7": {
+     "ah_47col": {
+      "brier": 0.122147,
+      "auc": 0.572299,
+      "logloss": 0.408715
+     },
+     "exp051_63col": {
+      "brier": 0.121826,
+      "auc": 0.577926,
+      "logloss": 0.407269
+     },
+     "argmin_iter_47col": 475,
+     "argmin_iter_63col": 525,
+     "iter_used_pinned": 577,
+     "ins_gain_share": 0.266196
+    },
+    "2024": {
+     "ah_47col": {
+      "brier": 0.122136,
+      "auc": 0.572152,
+      "logloss": 0.408679
+     },
+     "exp051_63col": {
+      "brier": 0.121797,
+      "auc": 0.578955,
+      "logloss": 0.407144
+     },
+     "argmin_iter_47col": 577,
+     "argmin_iter_63col": 525,
+     "iter_used_pinned": 577,
+     "ins_gain_share": 0.26036
+    }
+   },
+   "mean_ins_gain_share": 0.264696,
+   "mean_auc_47": 0.572452,
+   "mean_auc_63": 0.578707,
+   "mean_logloss_47": 0.408663,
+   "mean_logloss_63": 0.407126
+  },
+  "is_rev_only": {
+   "per_seed": {
+    "42": {
+     "ah_47col": {
+      "brier": 0.166484,
+      "auc": 0.579248,
+      "logloss": 0.513583
+     },
+     "exp051_63col": {
+      "brier": 0.166216,
+      "auc": 0.582968,
+      "logloss": 0.51282
+     },
+     "argmin_iter_47col": 600,
+     "argmin_iter_63col": 675,
+     "iter_used_pinned": 1346,
+     "ins_gain_share": 0.257544
+    },
+    "7": {
+     "ah_47col": {
+      "brier": 0.166437,
+      "auc": 0.579934,
+      "logloss": 0.513447
+     },
+     "exp051_63col": {
+      "brier": 0.166204,
+      "auc": 0.583423,
+      "logloss": 0.512785
+     },
+     "argmin_iter_47col": 1000,
+     "argmin_iter_63col": 650,
+     "iter_used_pinned": 1346,
+     "ins_gain_share": 0.267239
+    },
+    "2024": {
+     "ah_47col": {
+      "brier": 0.166417,
+      "auc": 0.579935,
+      "logloss": 0.513403
+     },
+     "exp051_63col": {
+      "brier": 0.166165,
+      "auc": 0.583852,
+      "logloss": 0.512665
+     },
+     "argmin_iter_47col": 850,
+     "argmin_iter_63col": 550,
+     "iter_used_pinned": 1346,
+     "ins_gain_share": 0.26874
+    }
+   },
+   "mean_ins_gain_share": 0.264508,
+   "mean_auc_47": 0.579706,
+   "mean_auc_63": 0.583414,
+   "mean_logloss_47": 0.513478,
+   "mean_logloss_63": 0.512757
+  },
+  "is_both": {
+   "per_seed": {
+    "42": {
+     "ah_47col": {
+      "brier": 0.032186,
+      "auc": 0.543395,
+      "logloss": 0.145792
+     },
+     "exp051_63col": {
+      "brier": 0.032178,
+      "auc": 0.552459,
+      "logloss": 0.145635
+     },
+     "argmin_iter_47col": 290,
+     "argmin_iter_63col": 300,
+     "iter_used_pinned": 449,
+     "ins_gain_share": 0.260165
+    },
+    "7": {
+     "ah_47col": {
+      "brier": 0.03219,
+      "auc": 0.542044,
+      "logloss": 0.14584
+     },
+     "exp051_63col": {
+      "brier": 0.032175,
+      "auc": 0.554004,
+      "logloss": 0.145599
+     },
+     "argmin_iter_47col": 260,
+     "argmin_iter_63col": 325,
+     "iter_used_pinned": 449,
+     "ins_gain_share": 0.256177
+    },
+    "2024": {
+     "ah_47col": {
+      "brier": 0.032182,
+      "auc": 0.54409,
+      "logloss": 0.145753
+     },
+     "exp051_63col": {
+      "brier": 0.032174,
+      "auc": 0.552273,
+      "logloss": 0.145607
+     },
+     "argmin_iter_47col": 240,
+     "argmin_iter_63col": 375,
+     "iter_used_pinned": 449,
+     "ins_gain_share": 0.246709
+    }
+   },
+   "mean_ins_gain_share": 0.25435,
+   "mean_auc_47": 0.543176,
+   "mean_auc_63": 0.552912,
+   "mean_logloss_47": 0.145795,
+   "mean_logloss_63": 0.145614
+  },
+  "is_wayoff_true": {
+   "per_seed": {
+    "42": {
+     "ah_47col": {
+      "brier": 0.106212,
+      "auc": 0.601021,
+      "logloss": 0.365638
+     },
+     "exp051_63col": {
+      "brier": 0.106188,
+      "auc": 0.601299,
+      "logloss": 0.365564
+     },
+     "argmin_iter_47col": 650,
+     "argmin_iter_63col": 650,
+     "iter_used_pinned": 897,
+     "ins_gain_share": 0.130923
+    },
+    "7": {
+     "ah_47col": {
+      "brier": 0.106205,
+      "auc": 0.600982,
+      "logloss": 0.36563
+     },
+     "exp051_63col": {
+      "brier": 0.106176,
+      "auc": 0.601803,
+      "logloss": 0.365504
+     },
+     "argmin_iter_47col": 800,
+     "argmin_iter_63col": 675,
+     "iter_used_pinned": 897,
+     "ins_gain_share": 0.128118
+    },
+    "2024": {
+     "ah_47col": {
+      "brier": 0.106208,
+      "auc": 0.601067,
+      "logloss": 0.36563
+     },
+     "exp051_63col": {
+      "brier": 0.106176,
+      "auc": 0.601781,
+      "logloss": 0.365505
+     },
+     "argmin_iter_47col": 750,
+     "argmin_iter_63col": 775,
+     "iter_used_pinned": 897,
+     "ins_gain_share": 0.126179
+    }
+   },
+   "mean_ins_gain_share": 0.128407,
+   "mean_auc_47": 0.601023,
+   "mean_auc_63": 0.601628,
+   "mean_logloss_47": 0.365633,
+   "mean_logloss_63": 0.365524
+  }
+ },
+ "oof_movement_vs_AH": {
+  "p_is_mid_only": {
+   "train_rows": {
+    "mean_abs_over_seeds": 0.0073619,
+    "p99_abs_over_seeds": 0.0273856,
+    "max_abs_over_seeds": 0.0995519,
+    "corr_new_old_mean": 0.89459
+   },
+   "valid_rows": {
+    "mean_abs_over_seeds": 0.00916971,
+    "p99_abs_over_seeds": 0.0303189,
+    "max_abs_over_seeds": 0.0866008,
+    "corr_new_old_mean": 0.901351
+   }
+  },
+  "p_is_rev_only": {
+   "train_rows": {
+    "mean_abs_over_seeds": 0.0170256,
+    "p99_abs_over_seeds": 0.0690212,
+    "max_abs_over_seeds": 0.246492,
+    "corr_new_old_mean": 0.920912
+   },
+   "valid_rows": {
+    "mean_abs_over_seeds": 0.0156114,
+    "p99_abs_over_seeds": 0.0634455,
+    "max_abs_over_seeds": 0.183644,
+    "corr_new_old_mean": 0.924294
+   }
+  },
+  "p_is_both": {
+   "train_rows": {
+    "mean_abs_over_seeds": 0.00330308,
+    "p99_abs_over_seeds": 0.0128923,
+    "max_abs_over_seeds": 0.0725645,
+    "corr_new_old_mean": 0.881071
+   },
+   "valid_rows": {
+    "mean_abs_over_seeds": 0.00312565,
+    "p99_abs_over_seeds": 0.0109351,
+    "max_abs_over_seeds": 0.0327647,
+    "corr_new_old_mean": 0.873419
+   }
+  },
+  "p_is_wayoff_true": {
+   "train_rows": {
+    "mean_abs_over_seeds": 0.00717961,
+    "p99_abs_over_seeds": 0.0311906,
+    "max_abs_over_seeds": 0.11738,
+    "corr_new_old_mean": 0.975721
+   },
+   "valid_rows": {
+    "mean_abs_over_seeds": 0.00564826,
+    "p99_abs_over_seeds": 0.0247592,
+    "max_abs_over_seeds": 0.0860941,
+    "corr_new_old_mean": 0.9836
+   }
+  }
+ },
+ "stacker_importance_top20_seed42": {
+  "asof_pitcher_success_rate": 5.45101,
+  "ins_p_success": 3.72397,
+  "p_is_rev_only": 3.4223,
+  "asof_pitcher_reverse_rate": 3.22376,
+  "batter_team_id": 3.1043,
+  "asof_pitcher_prev5_game_success_rate": 2.87642,
+  "pitcher_team_id": 2.84653,
+  "ins_p_reverse": 2.82022,
+  "ins_p_n": 2.45948,
+  "batter_hand": 2.40415,
+  "pitcher_id": 2.37119,
+  "asof_pitcher_prev1_game_success_rate": 2.34062,
+  "asof_pitcher_ball_rate": 2.21448,
+  "asof_batter_success_rate": 2.17788,
+  "asof_pitcher_prev3_game_success_rate": 1.93271,
+  "asof_pitcher_fastball_rate": 1.8491,
+  "asof_pitcher_prev1_game_middle_rate": 1.79146,
+  "asof_pitcher_breaking_rate": 1.74426,
+  "ins_p_reverse_dev": 1.70662,
+  "asof_pitcher_offspeed_rate": 1.69152
+ },
+ "sha256_seed42_run": {
+  "train.csv": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+  "self_stack_argmin.py": "91e1454546d3d72b61547a523afcd349f38a961d8b3d74d28b0de86498e548b7",
+  "exp032_block_iter.py": "b4ecb311ba4a8acaff2484e225fe174cc82ca1a356f128fa42fdea5c6110882d",
+  "exp031_block_self.py": "2146d0e78a487b3223be42a743e5d03ff5e56d35c12e502f812c0eb1f3184406",
+  "exp030_b3_cat.py": "0984c57e5af66600f9fca5532a984ddd6d4c22996c9e0105d3e798bc7bfa76ca",
+  "labels.py": "439cd504478b4bc8162e9dedc32be27bfadd5d1178472d6b384b60f46ed7a9f2",
+  "exp016_ref.py": "4f24deb71d9eef3d626900f34a71aecd2d6acbae646eb9c92c51189a38a3ece1",
+  "exp_027_train.py": "e4b308a5f6e4564ed43aed6715d05c0aa617b5e9d22e1bfd51e71dd127416f0f",
+  "ins_matrix_fold2024.npz": "4fe581355aa3922323f23a0fed6384b39997bf82b6546b7d7098d306669163a7",
+  "ins_feats.py": "853e682f996e7a081c0d1325490ab91795e88928e612885538b7ac7ed122a6f0",
+  "inseason.py": "1b4a407d2b53f2cbdbf0d2c837d0cab7c3db5e1e01bfc2e6b639813723303086",
+  "anchor_lt2024.npz": "0e4b586da41cd6e78c5e19d4dd656bc9df088413625945e2a88ae85d100e5eb7"
+ },
+ "versions": {
+  "python": "3.11.15",
+  "numpy": "1.26.4",
+  "pandas": "2.0.3",
+  "catboost": "1.2.10"
+ },
+ "changed_vs_control": {
+  "the_one": "the four CELL models' input: 47 -> 63 columns (the 16 ins_* columns)",
+  "dependent_reproductions_forced_by_the_one": [
+   "the four OOF columns regenerated (same forward-chaining, same season blocks, same pinned cell iterations)",
+   "the 67-column stacker refit at 1400 on the new OOF (input list unchanged: base 47 + p_* 4 + ins 16, exp_048 A1's exact order)"
+  ],
+  "carried_along": [
+   "cell fit time (63 cols)",
+   "the OOF values themselves (measured in oof_movement_vs_AH)",
+   "the OOF distribution the stacker receives",
+   "63-col cell grid argmins differ from the pinned iterations (recorded, not acted on)"
+  ],
+  "held_fixed": [
+   "cell iterations (pinned from local_reference_AH.json)",
+   "stacker rounds 1400, input column list and order (67)",
+   "masks, fold definition, seeds 42/7/2024, CatBoost params, library versions",
+   "the ins matrix itself (stage-0 regeneration byte-checked against exp_048's recorded input shas and value-checked against its recorded season stats)"
+  ]
+ },
+ "runtime_min": {
+  "42": 29.95,
+  "7": 29.8,
+  "2024": 29.81
+ },
+ "oof_min": {
+  "42": 16.87,
+  "7": 16.73,
+  "2024": 16.76
+ },
+ "stage0_min": 0.49,
+ "train_time_min": 29.95,
+ "inference_time_sec": null,
+ "note_on_inference_time": "not measured: no deployment package was built (out of scope).",
+ "artifact_paths_server": {
+  "oof": [
+   "~/SungjinPark/experiments/exp_051/oof/stack_fold2024_seed42.npz",
+   "~/SungjinPark/experiments/exp_051/oof/stack_fold2024_seed7.npz",
+   "~/SungjinPark/experiments/exp_051/oof/stack_fold2024_seed2024.npz"
+  ],
+  "pred": [
+   "~/SungjinPark/experiments/exp_051/pred/pred_exp051_u2024_seed42_at655.npy",
+   "~/SungjinPark/experiments/exp_051/pred/pred_exp051_u2024_seed42_at1000.npy",
+   "~/SungjinPark/experiments/exp_051/pred/pred_exp051_u2024_seed42_at1400.npy",
+   "~/SungjinPark/experiments/exp_051/pred/pred_exp051_u2024_seed7_at655.npy",
+   "~/SungjinPark/experiments/exp_051/pred/pred_exp051_u2024_seed7_at1000.npy",
+   "~/SungjinPark/experiments/exp_051/pred/pred_exp051_u2024_seed7_at1400.npy",
+   "~/SungjinPark/experiments/exp_051/pred/pred_exp051_u2024_seed2024_at655.npy",
+   "~/SungjinPark/experiments/exp_051/pred/pred_exp051_u2024_seed2024_at1000.npy",
+   "~/SungjinPark/experiments/exp_051/pred/pred_exp051_u2024_seed2024_at1400.npy"
+  ],
+  "ins_matrix": "~/SungjinPark/experiments/exp_051/ins_matrix_fold2024.npz",
+  "res": "~/SungjinPark/experiments/exp_051/res/"
+ }
+}

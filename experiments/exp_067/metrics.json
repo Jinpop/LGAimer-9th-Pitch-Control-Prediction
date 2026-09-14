@@ -1,0 +1,1009 @@
+{
+ "exp_id": "exp_067",
+ "date": "2026-08-21",
+ "type": "배포용(<=2024) NN 재학습 + 출하 실현 가능성 게이트. 제출물 없음.",
+ "prereg": {
+  "config": {
+   "widths": [
+    256,
+    128,
+    64
+   ],
+   "dropout": 0.3,
+   "max_lr": 0.003,
+   "epochs": 25,
+   "seeds": [
+    42,
+    777,
+    2024,
+    101
+   ],
+   "batch": 4096,
+   "wd": 0.0001,
+   "pct_start": 0.3,
+   "edim": 6,
+   "layers": 4
+  },
+  "epoch_rule": "OneCycle 25에폭 완주 take='last' (배포에는 out-of-time valid 가 없다)",
+  "changed_variable": "학습 범위 <=2023 -> <=2024. 그 밖은 exp_064 고정.",
+  "incidental": [
+   "🔴 에폭 선택 규칙 best-epoch -> last-epoch (exp_064 대비 딸려 바뀐 변인)",
+   "학습 행수 1,116,277 -> 1,369,784 (+22.71%) 에 따른 steps/epoch 272 -> 334",
+   "표준화 mu/sd 와 범주 레벨이 2024 행 포함으로 재계산됨"
+  ],
+  "repro_tol": 5e-06,
+  "deploy_n_full_expected": 1369784,
+  "control_exp064_fold2024_bestepoch": {
+   "score": 896.3836931443536,
+   "brier": 0.24756767168405058,
+   "best_epochs": [
+    5,
+    9,
+    8,
+    12
+   ]
+  }
+ },
+ "env": {
+  "torch": "2.7.1+cu128",
+  "gpu": "NVIDIA RTX A5000",
+  "cuda_visible_devices": "0",
+  "threads_env": {
+   "OMP_NUM_THREADS": "6",
+   "OPENBLAS_NUM_THREADS": "6",
+   "MKL_NUM_THREADS": "6",
+   "NUMEXPR_NUM_THREADS": "6",
+   "VECLIB_MAXIMUM_THREADS": "6"
+  }
+ },
+ "fold_2022": null,
+ "fold_2023": null,
+ "fold_2024": {
+  "🔴 무엇을_잰_것인가": "이 실험의 **배포본은 fold_2024 로 평가할 수 없다**(2024 가 학습 안에 있다, S1). 아래 fold_2024 숫자는 배포본이 아니라 **에폭 선택 규칙 변인을 재기 위해 같은 코드로 돌린 <=2023 학습 판**이다.",
+  "best_epoch_arm": {
+   "brier": 0.24756767168405058,
+   "bss": 0.008963836931443536,
+   "score": 896.3836931443536,
+   "per_seed_score": [
+    822.0148931806337,
+    845.8226782069534,
+    836.5097511547459,
+    851.3616259122836
+   ],
+   "sel_epochs": [
+    5,
+    9,
+    8,
+    12
+   ],
+   "seg": {
+    "n": 253507,
+    "brier": 0.24756767168405058,
+    "valid_R": {
+     "n": 223497,
+     "brier": 0.24766574445780287
+    },
+    "valid_F": {
+     "n": 30010,
+     "brier": 0.2468372827898379
+    }
+   },
+   "==exp_064": true
+  },
+  "last_epoch_arm_사전등록_배포규칙": {
+   "brier": 0.24816373710126327,
+   "bss": 0.006577732235325429,
+   "score": 657.7732235325428,
+   "per_seed_score": [
+    503.6899682075102,
+    569.8133712854436,
+    497.5480729491055,
+    557.3153535763709
+   ],
+   "seg": {
+    "n": 253507,
+    "brier": 0.24816373710126327,
+    "valid_R": {
+     "n": 223497,
+     "brier": 0.24830861264196988
+    },
+    "valid_F": {
+     "n": 30010,
+     "brier": 0.24708478846010093
+    }
+   }
+  },
+  "D_last_minus_best": {
+   "per_seed_score": [
+    -318.32492497312353,
+    -276.00930692150973,
+    -338.9616782056404,
+    -294.0462723359127
+   ],
+   "seedavg_brier": 0.0005960654172126878,
+   "seedavg_score": -238.6104696118108,
+   "🔴": "이것이 '에폭 선택 규칙' 변인의 fold_2024 대가다. 배포에서 그대로 나타난다는 보장은 없다(S1) — 크기의 눈금으로만 읽는다."
+  },
+  "n_train": 1116277,
+  "n_valid": 253507
+ },
+ "stage0_gate": {
+  "Q1_99열이_추론시점_test행에서_만들어지는가": {
+   "answer": "예",
+   "band_frame_245789행": true,
+   "실제_대회표본_5행": true,
+   "attrib_tally": {
+    "test.csv(raw)": 33,
+    "pipeline.apply_features": 22,
+    "pipeline.apply_ratio_features": 22,
+    "splits.apply": 6,
+    "inseason.apply": 16
+   },
+   "🔴 cnt_state": "features_sp.txt 99열에는 없다. NN 입력은 99 + cnt_state = 100열이고 cnt_state 는 v6_infer 가 자기 줄에서 만든다. 실측 존재: True"
+  },
+  "Q2_빠진_열": {
+   "n": 0,
+   "cols": [],
+   "새_표·새_조인·새_상수_필요": "없음"
+  },
+  "Q3_출하_상이·추가_파일": {
+   "n": 8,
+   "total_bytes": 1253292,
+   "files": [
+    {
+     "name": "nn_sp42.npz",
+     "bytes": 307182,
+     "sha256": "038145cbbe02bf272b73297bf2a96663b761ffbb29c6aae4ec4c770eb6893c6d"
+    },
+    {
+     "name": "nn_sp42_meta.json",
+     "bytes": 6141,
+     "sha256": "53b3f0a72b5019d932534090649d10a523f5e7eb472e8eb7ee9db7ff1b145c02"
+    },
+    {
+     "name": "nn_sp777.npz",
+     "bytes": 307182,
+     "sha256": "7e208be74ed976f30b9b071a78fb64e88e0e7f44dfded1f157d14ba0da5d2fb2"
+    },
+    {
+     "name": "nn_sp777_meta.json",
+     "bytes": 6141,
+     "sha256": "53b3f0a72b5019d932534090649d10a523f5e7eb472e8eb7ee9db7ff1b145c02"
+    },
+    {
+     "name": "nn_sp2024.npz",
+     "bytes": 307182,
+     "sha256": "3e2d838062d107790510f636ca3bfe82432efe21ea0758cf52f2063d4fa54130"
+    },
+    {
+     "name": "nn_sp2024_meta.json",
+     "bytes": 6141,
+     "sha256": "53b3f0a72b5019d932534090649d10a523f5e7eb472e8eb7ee9db7ff1b145c02"
+    },
+    {
+     "name": "nn_sp101.npz",
+     "bytes": 307182,
+     "sha256": "2b8d56d7f314a0121612a816a4bae2e5716c8c116a392d790ce4be4b4c7506af"
+    },
+    {
+     "name": "nn_sp101_meta.json",
+     "bytes": 6141,
+     "sha256": "53b3f0a72b5019d932534090649d10a523f5e7eb472e8eb7ee9db7ff1b145c02"
+    }
+   ]
+  },
+  "Q4_추론_시간": {
+   "n_rows": 245789,
+   "n_seeds": 4,
+   "nn_forward_total_s": 8.6,
+   "nn_forward_per_seed_s": 2.15,
+   "note": "프레임은 v6 팔이 이미 만든 것을 재사용하므로 피처 생성 추가비용 0. 이 값이 NN 팔의 전량 추가비용이다.",
+   "band_frame_only": "대역 프레임 245,789행 — 행 수만 쓰는 측정이라 축퇴 무관",
+   "pred_mean": 0.48493612287783694,
+   "pred_sd": 0.047525074964430196
+  },
+  "Q5_R/F_분기_규칙": {
+   "answer": "NN 에는 R/F 분기가 없다 — 그리고 그것이 이미 정의된 규칙이다(새 자유도 아님)",
+   "근거": [
+    "NN 은 game_type 을 범주 입력으로 받는 단일 모델이다. 분기 코드가 없다.",
+    "학습 마스크의 F 제외는 season<=2022 에 고정된 데이터 품질 규칙이고 배포 팔(T70)이 이미 쓰는 바로 그 규칙이다(stage 1 에서 행수로 확인).",
+    "블렌드의 팔 가중은 전역 스칼라뿐이다(w_v6·c_aa·c_S2·c_S1·c_T70). 세그먼트별 팔 가중은 존재하지 않는다. beta_f 는 현재 0.0.",
+    "따라서 여섯째 팔을 더하는 것은 전역 스칼라 c_nn 하나를 더하는 일이고, 그건 이미 감사된 축의 확장이지 새 종류의 자유도가 아니다."
+   ],
+   "🔴 남는_것": "c_nn 값 자체는 이 실험이 정하지 않는다(판정 금지). 빌드 계획서 소관.",
+   "🔴 빌드가_고쳐야_할_것": "script.py 의 `assert abs((c_aa+c_s2+c_s1+c_t70)-(1-w_v6))<1e-12` 는 5항 합만 검사한다. c_nn 을 더하면 이 assert 를 함께 고치지 않는 한 채점 서버에서 터진다."
+  },
+  "🔴 대역_프레임_경고": {
+   "관찰": "패키지 안 test.csv(row_id 가 TRAIN_1221586..)는 대역 프레임이다. 거기서 ins_* 16열이 245789/245789 행 = 100% 축퇴한다(ins_p_n 전부 0).",
+   "실제_표본_대조": {
+    "ins_p_n": [
+     381.0,
+     86.0,
+     400.0,
+     0.0,
+     9.0
+    ],
+    "발동_행수": 4,
+    "n": 5
+   },
+   "함의": "커버리지·발동 판정을 대역 단독으로 하면 아무것도 시험하지 않은 것이 된다(CLAUDE.md 의 AF~AI 사고와 같은 자리). 이 실험은 실제 표본을 병행했다."
+  },
+  "wall_s": 19.334
+ },
+ "stage1_mask": {
+  "target_n_full_measured": 1369784,
+  "source_of_target": "build_AY/logs/fit_42_T70.log RESULT.n_full (배포 팔 T70)",
+  "candidate_counts": {
+   "A_fixed_F_rule(<=2022 F 제외, 전 시즌)": 1369784,
+   "B_shifted(<=2023 F 제외, config 추측)": 1344098,
+   "C_exp064_fold_train": 1116277
+  },
+  "chosen_rule": "A_fixed_F_rule(<=2022 F 제외, 전 시즌)",
+  "chosen_expr": "~((season <= 2022) & (game_type == 'F'))  # 전 시즌 <=2024",
+  "🔴 config_guess_was_wrong": {
+   "config_expr": "~((season <= 2023) & (game_type == 'F'))",
+   "config_n": 1344098,
+   "off_by": -25686,
+   "why": "F 제외는 검증 경계를 따라 미는 규칙이 아니라 시즌<=2022 에 고정된 데이터 품질 규칙이다. 배포 = exp_064 fold 학습셋 + 2024 전체 253,507행."
+  },
+  "total_rows": 1475092,
+  "n_deploy_train": 1369784,
+  "delta_vs_fold2024_train": 253507,
+  "F_rows_excluded": 105308,
+  "frame_sha256": "6c8a40c643563070b5d008d603d96eb172b3d51f0e51c7329f0f8a6a18ab21d6",
+  "frame_provenance": {
+   "train_csv_sha256": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+   "features_sp_sha256": "783c650c6dd78cdcd641d0f18e35469ced247544b5d1ebf8d138171e04498924",
+   "pipeline_py_sha256": "a3181a10a1c621524460f14bc06b3c7f188fe23955814bb5e5b890e0df3016c9",
+   "inseason_py_sha256": "8186e5a048d71f79e9b9509c14bb71c95a4f25e7c6edbd09ac1ed113acb1dffa",
+   "splits_py_sha256": "5e8884ed7c8d918e6c4fc332d1743c5437d21f72b8e2021a6f37fc4a8dd2ceb4",
+   "n_rows": 1475092,
+   "nan_share_by_block": {
+    "v6_table_cols_2019_expected": "전부 NaN(선행 시즌 없음)",
+    "sp_2019_rows": 237413,
+    "ins_nan_total": 0
+   }
+  },
+  "wall_s": 2.6
+ },
+ "stage2b_deploy_배포본": {
+  "🔴 S1": "아래 2024 수치는 전부 **표본내**다(2024 가 학습 안에 있다). 성능이 아니라 적합 상태 점검용이다. 비교·판정에 쓰지 마라.",
+  "n_train": 1369784,
+  "n_monitor_insample": 253507,
+  "unknown_monitor_cells": 0,
+  "steps_per_epoch": 334,
+  "insample_per_seed_score_LAST": [
+   1854.5437970537093,
+   1840.9350004039538,
+   1895.4806483359675,
+   1879.2778893891305
+  ],
+  "insample_seedavg_brier_LAST": 0.24493181981925824,
+  "insample_seedavg_score_LAST": 1951.5394413612164,
+  "insample_seg_LAST": {
+   "n": 253507,
+   "brier": 0.24493181981925824,
+   "valid_R": {
+    "n": 223497,
+    "brier": 0.24511033170960878
+   },
+   "valid_F": {
+    "n": 30010,
+    "brier": 0.24360236723819623
+   }
+  },
+  "insample_best_epochs_IGNORED": [
+   24,
+   25,
+   25,
+   25
+  ],
+  "fits": [
+   {
+    "last": {
+     "tag": "D_s42_last",
+     "split": "DEPLOY99_067",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 42,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "last",
+     "n_params": 74547,
+     "sel_epoch": 25,
+     "best_epoch": 24,
+     "best_brier": 0.24516774520225573,
+     "valid_brier": 0.24517412163143784,
+     "valid_score": 1854.5437970537093,
+     "n_train": 1369784,
+     "n_valid": 253507,
+     "fit_wall_min": 1.5913560191790264
+    },
+    "insample_best": {
+     "tag": "D_s42_best",
+     "split": "DEPLOY99_067",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 42,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "best",
+     "n_params": 74547,
+     "sel_epoch": 24,
+     "best_epoch": 24,
+     "best_brier": 0.24516774520225573,
+     "valid_brier": 0.24516774520225573,
+     "valid_score": 1857.0963403109597,
+     "n_train": 1369784,
+     "n_valid": 253507,
+     "fit_wall_min": 1.5913560191790264
+    }
+   },
+   {
+    "last": {
+     "tag": "D_s777_last",
+     "split": "DEPLOY99_067",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 777,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "last",
+     "n_params": 74547,
+     "sel_epoch": 25,
+     "best_epoch": 25,
+     "best_brier": 0.2452081173444759,
+     "valid_brier": 0.2452081173444759,
+     "valid_score": 1840.9350004039538,
+     "n_train": 1369784,
+     "n_valid": 253507,
+     "fit_wall_min": 1.5924881180127461
+    },
+    "insample_best": {
+     "tag": "D_s777_best",
+     "split": "DEPLOY99_067",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 777,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "best",
+     "n_params": 74547,
+     "sel_epoch": 25,
+     "best_epoch": 25,
+     "best_brier": 0.2452081173444759,
+     "valid_brier": 0.2452081173444759,
+     "valid_score": 1840.9350004039538,
+     "n_train": 1369784,
+     "n_valid": 253507,
+     "fit_wall_min": 1.5924881180127461
+    }
+   },
+   {
+    "last": {
+     "tag": "D_s2024_last",
+     "split": "DEPLOY99_067",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 2024,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "last",
+     "n_params": 74547,
+     "sel_epoch": 25,
+     "best_epoch": 25,
+     "best_brier": 0.24507185855229202,
+     "valid_brier": 0.24507185855229202,
+     "valid_score": 1895.4806483359675,
+     "n_train": 1369784,
+     "n_valid": 253507,
+     "fit_wall_min": 1.9098556637763977
+    },
+    "insample_best": {
+     "tag": "D_s2024_best",
+     "split": "DEPLOY99_067",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 2024,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "best",
+     "n_params": 74547,
+     "sel_epoch": 25,
+     "best_epoch": 25,
+     "best_brier": 0.24507185855229202,
+     "valid_brier": 0.24507185855229202,
+     "valid_score": 1895.4806483359675,
+     "n_train": 1369784,
+     "n_valid": 253507,
+     "fit_wall_min": 1.9098556637763977
+    }
+   },
+   {
+    "last": {
+     "tag": "D_s101_last",
+     "split": "DEPLOY99_067",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 101,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "last",
+     "n_params": 74547,
+     "sel_epoch": 25,
+     "best_epoch": 25,
+     "best_brier": 0.24511233416213157,
+     "valid_brier": 0.24511233416213157,
+     "valid_score": 1879.2778893891305,
+     "n_train": 1369784,
+     "n_valid": 253507,
+     "fit_wall_min": 1.5835998813311258
+    },
+    "insample_best": {
+     "tag": "D_s101_best",
+     "split": "DEPLOY99_067",
+     "widths": [
+      256,
+      128,
+      64
+     ],
+     "dropout": 0.3,
+     "max_lr": 0.003,
+     "seed": 101,
+     "epochs_run": 25,
+     "sched_epochs": 25,
+     "take": "best",
+     "n_params": 74547,
+     "sel_epoch": 25,
+     "best_epoch": 25,
+     "best_brier": 0.24511233416213157,
+     "valid_brier": 0.24511233416213157,
+     "valid_score": 1879.2778893891305,
+     "n_train": 1369784,
+     "n_valid": 253507,
+     "fit_wall_min": 1.5835998813311258
+    }
+   }
+  ],
+  "wall_min": 6.81764235496521
+ },
+ "deploy_contrast_2024rows": {
+  "🔴": "exp_067 쪽은 표본내다. 상관·분포는 서술이지 성능 비교가 아니다.",
+  "pearson_prob": 0.8965595922625801,
+  "pearson_logit": 0.8960043682197859,
+  "spearman_like_rank": 0.8923168652813676,
+  "mean_exp064": 0.4902411251758215,
+  "mean_exp067_deploy": 0.48730579035024324,
+  "sd_exp064": 0.04763856193576665,
+  "sd_exp067_deploy": 0.05637198783586094,
+  "logit_sd_exp064": 0.19229496378475902,
+  "logit_sd_exp067_deploy": 0.22857603156287026,
+  "max_abs_prob_diff": 0.14698567520013522,
+  "mean_abs_prob_diff": 0.019753407696235067
+ },
+ "three_way_contrast": {
+  "🔴": "세 벡터 전부 2024 행 위다. 앞 둘은 out-of-time(2024 미학습), 셋째는 **표본내**다(2024 가 학습 안에 있다). 상관·분포는 서술이고 셋째의 Brier 를 성능으로 읽으면 안 된다(S1).",
+  "변인_분해": "① exp064_le2023_best -> exp067_le2023_last = 에폭 규칙 단독 변인 ② exp067_le2023_last -> exp067_le2024_last = 학습 범위 단독 변인",
+  "moments": {
+   "exp064_le2023_best": {
+    "mean": 0.4902411251758215,
+    "sd": 0.04763856193576665,
+    "logit_sd": 0.19229496378475902
+   },
+   "exp067_le2023_last": {
+    "mean": 0.4988175357345,
+    "sd": 0.0572002775188173,
+    "logit_sd": 0.23188342733824116
+   },
+   "exp067_le2024_last_DEPLOY": {
+    "mean": 0.48730579035024324,
+    "sd": 0.05637198783586094,
+    "logit_sd": 0.22857603156287026
+   }
+  },
+  "pairs": {
+   "exp064_le2023_best vs exp067_le2023_last": {
+    "pearson_prob": 0.9116088463226286,
+    "pearson_logit": 0.9111153080226365,
+    "mean_abs_prob_diff": 0.019487596128828562,
+    "max_abs_prob_diff": 0.1318834269375735
+   },
+   "exp064_le2023_best vs exp067_le2024_last_DEPLOY": {
+    "pearson_prob": 0.8965595922625801,
+    "pearson_logit": 0.8960043682197859,
+    "mean_abs_prob_diff": 0.019753407696235067,
+    "max_abs_prob_diff": 0.14698567520013522
+   },
+   "exp067_le2023_last vs exp067_le2024_last_DEPLOY": {
+    "pearson_prob": 0.8980612425893685,
+    "pearson_logit": 0.897557792209236,
+    "mean_abs_prob_diff": 0.021919378542356434,
+    "max_abs_prob_diff": 0.13168621736783348
+   }
+  }
+ },
+ "repro_gate": {
+  "desc": "exp_067 fit_both(best) 예측 vs exp_064 out/preds/A99ship_s* — 학습 루프가 exp_064 와 동일함의 기계 증명",
+  "tol": 5e-06,
+  "max_abs_diff": {
+   "seed_42_best_vs_exp064": 0.0,
+   "seed_777_best_vs_exp064": 0.0,
+   "seed_2024_best_vs_exp064": 0.0,
+   "seed_101_best_vs_exp064": 0.0
+  },
+  "gate_seed": 42,
+  "pass": true,
+  "all_seeds_pass": true
+ },
+ "ship_format_gates": {
+  "S1_npz_roundtrip": {
+   "desc": "출하 mate/nn_infer.predict_nn(배포 npz) vs 학습 torch 예측, 2024행",
+   "tol": 1e-06,
+   "per_seed": {
+    "seed_42": {
+     "max_abs_diff_numpy_vs_torch": 1.1920928955078125e-07,
+     "mean_abs_diff": 1.1341380899573305e-08,
+     "n": 253507
+    },
+    "seed_777": {
+     "max_abs_diff_numpy_vs_torch": 1.1920928955078125e-07,
+     "mean_abs_diff": 1.115234416922892e-08,
+     "n": 253507
+    },
+    "seed_2024": {
+     "max_abs_diff_numpy_vs_torch": 1.1920928955078125e-07,
+     "mean_abs_diff": 1.1080750034415655e-08,
+     "n": 253507
+    },
+    "seed_101": {
+     "max_abs_diff_numpy_vs_torch": 1.1920928955078125e-07,
+     "mean_abs_diff": 1.12300514321379e-08,
+     "n": 253507
+    }
+   },
+   "pass": true
+  },
+  "S1_seedavg_max_abs_diff": 7.472099294858481e-08,
+  "S2_cat_vocab_pass": true,
+  "S2_cat_vocab": {
+   "base_state": {
+    "n_levels_train": 8,
+    "dtype_train_frame": "object",
+    "dtype_band_frame": "object",
+    "dtype_real_frame": "object",
+    "band_unmapped_rows": 0,
+    "real_unmapped_rows": 0,
+    "sample_train_str": [
+     "123",
+     "12_",
+     "1_3",
+     "1__"
+    ],
+    "sample_real_str": [
+     "1__",
+     "___"
+    ]
+   },
+   "game_type": {
+    "n_levels_train": 2,
+    "dtype_train_frame": "object",
+    "dtype_band_frame": "object",
+    "dtype_real_frame": "object",
+    "band_unmapped_rows": 0,
+    "real_unmapped_rows": 0,
+    "sample_train_str": [
+     "F",
+     "R"
+    ],
+    "sample_real_str": [
+     "R"
+    ]
+   },
+   "pitcher_team_id": {
+    "n_levels_train": 12,
+    "dtype_train_frame": "int64",
+    "dtype_band_frame": "int64",
+    "dtype_real_frame": "int64",
+    "band_unmapped_rows": 0,
+    "real_unmapped_rows": 0,
+    "sample_train_str": [
+     "12",
+     "13",
+     "14",
+     "15"
+    ],
+    "sample_real_str": [
+     "14",
+     "16",
+     "19"
+    ]
+   },
+   "batter_team_id": {
+    "n_levels_train": 12,
+    "dtype_train_frame": "int64",
+    "dtype_band_frame": "int64",
+    "dtype_real_frame": "int64",
+    "band_unmapped_rows": 0,
+    "real_unmapped_rows": 0,
+    "sample_train_str": [
+     "12",
+     "13",
+     "14",
+     "15"
+    ],
+    "sample_real_str": [
+     "14",
+     "16",
+     "21"
+    ]
+   },
+   "cnt_state": {
+    "n_levels_train": 12,
+    "dtype_train_frame": "int64",
+    "dtype_band_frame": "int64",
+    "dtype_real_frame": "int64",
+    "band_unmapped_rows": 0,
+    "real_unmapped_rows": 0,
+    "sample_train_str": [
+     "0",
+     "1",
+     "10",
+     "11"
+    ],
+    "sample_real_str": [
+     "0",
+     "3",
+     "6"
+    ]
+   }
+  },
+  "S3_real5": {
+   "n": 5,
+   "row_ids": [
+    "TEST_000001",
+    "TEST_000017",
+    "TEST_000213",
+    "TEST_005332",
+    "TEST_035185"
+   ],
+   "preds": {
+    "seed_42": [
+     0.4464802145957947,
+     0.350065141916275,
+     0.4327201843261719,
+     0.5107221603393555,
+     0.4988739788532257
+    ],
+    "seed_777": [
+     0.45090410113334656,
+     0.3505902588367462,
+     0.4182298183441162,
+     0.51700758934021,
+     0.49407342076301575
+    ],
+    "seed_2024": [
+     0.4420253336429596,
+     0.38484281301498413,
+     0.4915845990180969,
+     0.5261724591255188,
+     0.46980947256088257
+    ],
+    "seed_101": [
+     0.4473603665828705,
+     0.37967413663864136,
+     0.4664406180381775,
+     0.5446999073028564,
+     0.5135468244552612
+    ]
+   },
+   "ins_p_n": [
+    381.0,
+    86.0,
+    400.0,
+    0.0,
+    9.0
+   ],
+   "all_finite": true
+  },
+  "meta_shape": {
+   "n_CATS": 5,
+   "n_DENSE": 95,
+   "n_mu": 95,
+   "n_sd": 95,
+   "levels_sizes": {
+    "base_state": 8,
+    "game_type": 2,
+    "pitcher_team_id": 12,
+    "batter_team_id": 12,
+    "cnt_state": 12
+   }
+  },
+  "source_sha": {
+   "mate/nn_infer.py": "0bfe34a43d2c533eea5f223f4f7756466bd7b47f2b95e21de5b3ed6fa4df98d8",
+   "mate/pipeline.py": "a3181a10a1c621524460f14bc06b3c7f188fe23955814bb5e5b890e0df3016c9",
+   "mate/splits.py": "5e8884ed7c8d918e6c4fc332d1743c5437d21f72b8e2021a6f37fc4a8dd2ceb4",
+   "mate/inseason.py": "8186e5a048d71f79e9b9509c14bb71c95a4f25e7c6edbd09ac1ed113acb1dffa",
+   "mate/model/features_sp.txt": "783c650c6dd78cdcd641d0f18e35469ced247544b5d1ebf8d138171e04498924"
+  }
+ },
+ "epoch_rule_analysis": {
+  "🔴": "fold_2024(<=2023 학습, 2024 valid) 곡선에서 읽은 **시드 평균 per-seed 점수**다. 로짓 4시드 평균 점수가 아니다(그건 예측 벡터가 있어야 계산된다). 고정 에폭 규칙끼리의 상대 비교용.",
+  "prereg_epoch25_last": {
+   "epoch": 25,
+   "per_seed_brier": [
+    0.24854864770480983,
+    0.24838346688140633,
+    0.2485639905829561,
+    0.24841468779200682
+   ],
+   "mean_brier": 0.24847769824029478,
+   "mean_score": 532.0916915046075,
+   "worst_seed_score": 497.5480729491055
+  },
+  "best_fixed_epoch_on_fold2024": {
+   "epoch": 4,
+   "per_seed_brier": [
+    0.24777005385692397,
+    0.2477790249551678,
+    0.24781472797334833,
+    0.2478482083388149
+   ],
+   "mean_brier": 0.24780300378106376,
+   "mean_score": 802.1780899311603,
+   "worst_seed_score": 784.0822896345468
+  },
+  "gap_points_best_fixed_minus_25": 270.0863984265528,
+  "per_seed_argmin_epoch": {
+   "42": 5,
+   "777": 9,
+   "2024": 8,
+   "101": 12
+  },
+  "curve_mean_score_by_epoch": [
+   723.1166277717859,
+   778.6945368199849,
+   799.1592358504079,
+   802.1780899311603,
+   795.2136854030623,
+   775.9675568727641,
+   751.8137933644308,
+   773.6431733909283,
+   790.8472048491683,
+   765.2727397675668,
+   777.4344609264406,
+   789.3681125136998,
+   728.163902621401,
+   717.6119271344455,
+   676.4078830280379,
+   690.5303680806496,
+   699.0608437674573,
+   657.0482441827785,
+   623.6077309127397,
+   590.1100168153733,
+   591.0218389491017,
+   550.7541511639236,
+   540.9005212755142,
+   530.2401224569736,
+   532.0916915046075
+  ],
+  "해석_주의": "여기서 좋은 에폭을 골라 배포에 쓰면 그것은 fold_2024 위의 선택이다. 허용되는 설계이지만 **사전 등록 규칙을 결과를 보고 바꾸는 것은 아니어야 한다**(S8). 이 실험의 배포본은 사전 등록대로 25에폭 완주(last)로 만들었다.",
+  "argmin_epoch_vs_train_size": {
+   "관측점": [
+    {
+     "split": "exp_064 B (2020~2022 -> 2023R)",
+     "n_train": 659125,
+     "steps_per_epoch": 160,
+     "best_epochs": [
+      9,
+      3,
+      4,
+      5
+     ],
+     "mean": 5.25,
+     "median": 4.5
+    },
+    {
+     "split": "exp_064/067 A (<=2023 -> 2024)",
+     "n_train": 1116277,
+     "steps_per_epoch": 272,
+     "best_epochs": [
+      5,
+      9,
+      8,
+      12
+     ],
+     "mean": 8.5,
+     "median": 8.5
+    },
+    {
+     "split": "exp_067 배포 (<=2024)",
+     "n_train": 1369784,
+     "steps_per_epoch": 334,
+     "best_epochs": "🔴 잴 수 없다 — out-of-time valid 가 없다"
+    }
+   ],
+   "선형_외삽": {
+    "slope_epochs_per_row": 7.1092328153436935e-06,
+    "extrapolated_argmin_at_1369784": 10.302240283319334
+   },
+   "🔴 신뢰도": "관측점이 둘, 각 4시드이고 시드 산포가 크다(3~12). 추세는 **시사적일 뿐 확립된 것이 아니다**. 그리고 '에폭'은 행수에 따라 스텝 수가 달라지는 단위라(160 -> 272 -> 334 스텝) 눈금 자체가 행수와 얽혀 있다. 외삽값을 규칙으로 쓰지 마라."
+  }
+ },
+ "train_time_min": 12.966899689038595,
+ "inference_time_sec": 8.6,
+ "wall_clock_measured": {
+  "단위": "분 (서버 UTC 타임스탬프 기준)",
+  "stage0_게이트_코드읽기·sha대조": "약 20 (출하 경로 전량 대조 — 이게 이 단계의 본체다)",
+  "stage0_게이트_실행": {
+   "band_245789행": 0.32,
+   "real5행": 0.01,
+   "합": 0.33
+  },
+  "stage1_마스크_확정": 0.6,
+  "stage2_재학습_8fit": 12.97,
+  "stage3_출하검증·시간측정": 0.62,
+  "stage3_취합": 0.32,
+  "계산_합": 14.84,
+  "세션_총계_추정": 45,
+  "ETA_대비": "ETA 40~50분. 계산 14.8분 + 게이트 조사 20분 + 취합. 범위 안."
+ },
+ "artifacts": {
+  "서버_배포_가중치": "~/SungjinPark/exp067/out/ship/nn_sp{42,777,2024,101}.npz + nn_sp{seed}_meta.json (meta 4개는 sha 동일 — 빌드에서 1개로 합쳐도 된다)",
+  "🔴 대조_보관용": "~/SungjinPark/exp067/out/ship/_contrast_insbest_{seed}.npz — **표본내 2024 로 고른 상태다. 배포에 쓰면 안 된다.** in-sample best epoch 가 24/25/25/25 라 사실상 last 와 같다 (표본내 선택이 아무 정보도 주지 않는다는 증거).",
+  "예측_벡터": "~/SungjinPark/exp067/out/preds/ (A_best_*·A_last_* = 2024 out-of-time, D_last_* = 표본내, BAND_deploy_seedavg = 대역 프레임 245,789행)",
+  "게이트_원자료": "out/g0_frame.json · out/g0_real5.json · out/g3_ship.json · out/run067.json",
+  "에폭_곡선": "out/curves/curve_{A,D}_s{seed}.json",
+  "추론_코드_초안": "experiments/exp_067/src/nn_arm_draft.py (어디에도 배포되지 않음)",
+  "로컬_회수": "experiments/exp_067/out/ (가중치는 서버에 둔다 — 대용량 아님, npz 4벌 1.2MB 뿐이라 C단 빌드가 서버에서 바로 집으면 된다)"
+ },
+ "handoff_C단": {
+  "결론": "NN 을 여섯째 팔로 출하하는 데 **막히는 자리가 없다.** BM 이 죽은 종류의 문제(필요한 값이 함수 밖으로 안 나옴)가 이 팔에는 없다.",
+  "왜": [
+   "NN 99열은 이미 `mate/v6_infer.py::run` 안에서 전량 조립된다. `mate/model/features_sp.txt` sha 783c650c... 가 우리 학습 피처 목록과 **같은 파일**이다.",
+   "그 df 는 `mate/nn_infer.py::predict_nn(df, ...)` 의 첫 인자로 함수 밖으로 나온다.",
+   "우리 top-level script.py 는 BK 이후 이미 자식 프로세스의 함수를 감싸 값을 회수한다 — 같은 자리에 하나를 더 감싸면 된다.",
+   "출하 `predict_nn` 은 CATS·DENSE·levels·mu·sd 를 meta 에서 읽는 **범용** 함수라 우리 5범주·95밀집 구성을 코드 수정 없이 그대로 돈다(층 인덱스만 하드코딩, 우리도 4층)."
+  ],
+  "넣을_것": "새 디렉터리 `model_nn_sp/` 에 npz 4 + meta 1~4 = 5~8 파일 (총 1.23 MB). 🔴 `mate/` 안의 파일은 한 바이트도 바뀌지 않는다.",
+  "고칠_것": [
+   "🔴 top-level `script.py` 의 `assert abs((c_aa+c_s2+c_s1+c_t70)-(1.0-w_v6))<1e-12` — 5항 합만 검사한다. `c_nn` 을 더하면서 이 assert 를 같이 고치지 않으면 **채점 서버에서 터진다**.",
+   "`blend.json` 에 `c_nn` 과 그 유래 기록.",
+   "BOOT 문자열에 `nn_infer.predict_nn` 래퍼 추가 (초안: src/nn_arm_draft.py)."
+  ],
+  "안_고쳐도_되는_것": "`model/meta.json` 의 부스터 트리 수 대조 — NN 팔은 부스터를 건드리지 않는다. 그래도 빌드 때 확인은 할 것.",
+  "추론_시간": "NN 팔 추가비용 = **8.6초** (4시드 × 245,789행, numpy, 스레드 6, 단독 실행). 프레임은 v6 팔이 만든 것을 재사용하므로 피처 생성 추가비용 0. 현행 zip 실측 1분 30초 대비 +9.6%.",
+  "게이트_설계": [
+   "항등 앵커: `c_nn = 0.0` 으로 빌드해 출력 CSV sha 가 부모와 같은지. 통과하면 프레임·조인·산술이 부모와 동일함이 한 번에 증명된다.",
+   "규칙 2-4 는 내용/위치 분리 실험으로. 우리 NN 도 팀원 v6 NN 과 같은 numpy 축약이라 SIMD 블록 경계 잡음(~1e-9)이 나올 수 있다.",
+   "🔴 커버리지 게이트를 대역 프레임 단독으로 돌리지 말 것 (아래 대역 경고)."
+  ],
+  "판정하지_않은_것": "`c_nn` 값. 이 팔을 실제로 쓸지. 에폭 규칙을 바꿀지. 전부 사용자·빌드 계획서 소관이다."
+ },
+ "report": {
+  "한줄": "출하 실현 가능성 게이트 **전부 통과**(빠진 열 0, 새 표·새 조인·새 상수 0), 배포 마스크는 **config 추측이 틀렸고** 실측 1,369,784 를 재현하는 규칙을 찾았으며, 배포 4시드를 만들었다. 다만 사전 등록한 에폭 규칙(25에폭 완주)이 fold_2024 에서 **−238.61점**의 대가를 갖는 것이 측정됐다.",
+  "1_stage0_실현가능성": {
+   "Q1 99열이 추론 시점 test 행에서 만들어지는가": "예. **대역 245,789행·실제 표본 5행 양쪽에서 99/99.**",
+   "Q2 빠진 열": "0개. 새 표·새 조인·새 상수 필요 없음.",
+   "귀속(실측)": "test.csv raw 33 / pipeline.apply_features 22 / apply_ratio_features 22 / splits.apply 6 / inseason.apply 16 = 99. 여기에 `cnt_state` 1열(=balls*3+strikes, v6_infer 자기 줄)을 더한 **100열이 모델 입력**이다 — cnt_state 는 features_sp.txt 99열 안에 없다.",
+   "Q3 출하 상이·추가 파일": "8개 1.23 MB (npz 4 + meta 4, meta 는 sha 동일해 1개로 합쳐도 됨). mate/ 무변경.",
+   "Q4 추론 시간": "8.6초 (프레임 재사용, 추가 피처 계산 0).",
+   "Q5 R/F 분기": "🔴 **새 자유도가 아니다.** NN 에는 분기가 없고 game_type 을 범주 입력으로 받는 단일 모델이다. 학습 마스크의 F 제외는 배포 팔(T70)이 이미 쓰는 고정 규칙이고 stage 1 에서 행수로 확인했다. 블렌드의 팔 가중은 전역 스칼라뿐이라(세그먼트별 팔 가중 없음, beta_f=0.0) 여섯째 팔은 전역 스칼라 c_nn 하나를 더하는 일이다 — 이미 감사된 축의 확장.",
+   "결론": "**중단 사유 없음.** stage 1·2 로 진행했다."
+  },
+  "2_🔴 대역_프레임_경고_재발": {
+   "관찰": "패키지 안 `mate/data/test.csv` 는 **대역(스탠드인) 프레임**이다 (row_id 가 `TRAIN_1221586..`, 실제 `data/test.csv` 와 sha 다름). 거기서 `ins_*` 16열이 **245,789/245,789 = 100% 축퇴**한다(ins_p_n 전부 0).",
+   "대조": "실제 대회 표본 5행에서는 ins_p_n = [381, 86, 400, 0, 9] — **4/5 행에서 발동**한다.",
+   "함의": "CLAUDE.md 가 AF~AI 에서 지적한 바로 그 자리다. 이 실험은 실제 표본을 병행해 판정했다. **C단 빌드도 반드시 병행할 것** — 대역 단독 통과는 아무것도 시험하지 않은 것이다."
+  },
+  "3_stage1_마스크_🔴 config_정정": {
+   "config 가 적은 규칙": "`~((season<=2023) & F)` → 1,344,098행. **틀렸다** (−25,686).",
+   "맞는 규칙": "`~((season<=2022) & F)` 를 전 시즌(≤2024)에 적용 → **1,369,784행 정확 일치**.",
+   "왜": "F 제외는 검증 경계를 따라 미는 규칙이 아니라 **season≤2022 에 고정된 규칙**이다. 그래서 배포 학습셋 = exp_064 fold 학습셋(1,116,277) + **2024 전체 253,507행**이고, 학습 범위 확장 말고는 아무것도 달라지지 않는다 — 의도한 변인이 깨끗하게 하나다.",
+   "근거": "build_AY/logs/fit_42_T70.log 의 `n_full: 1369784` 실측과 비트 단위 일치."
+  },
+  "4_재현_게이트": "exp_067 의 best-epoch 예측 vs exp_064 저장 예측 **max_abs_diff = 0.0, 네 시드 전부**(규약은 seed 42 단독이지만 4/4 통과). fit_both 가 fit 과 같은 학습 루프임이 기계 증명됐다.",
+  "5_🔴 에폭_선택_규칙이_큰_변인이다": {
+   "무엇": "배포(≤2024)에는 out-of-time valid 가 없어 사전 등록대로 25에폭 완주(last)로 만들었다. exp_064 는 valid 2024 로 best epoch 를 골랐다. **이 규칙 차이의 대가를 fold_2024 에서 직접 쟀다** (거기엔 정직한 valid 가 있다).",
+   "측정": {
+    "best-epoch 4시드 로짓평균": "Brier 0.24756767 · BSS 0.00896384 · 환산 896.38369 (= exp_064 주지표와 정확히 일치)",
+    "last-epoch(사전 등록 배포 규칙)": "Brier 0.24816374 · BSS 0.00657773 · 환산 657.77322",
+    "Δ": "**−238.61047점** (Brier +5.9607e-04)",
+    "세그먼트(참고)": "best R 0.24766574 / F 0.24683728 → last R 0.24830861 / F 0.24708479 (S7: F 판정에 쓰지 않는다)",
+    "시드별 per-seed Δ": "−318.3 / −276.0 / −339.0 / −294.0 — 네 시드 전부 같은 부호, 큰 폭"
+   },
+   "고정_에폭이면": "시드 공통 고정 에폭 k 로 잡으면 fold_2024 per-seed 평균이 k=4 에서 802.18 로 최대(25에폭 완주는 532.09). 격차 **+270.09점**. 곡선은 k=4~12 에서 평탄(752~802)하고 k≥13 부터 무너진다.",
+   "🔴 그러나": "학습 행수가 늘면 과적합 시작점이 뒤로 밀릴 수 있다. 우리 관측점 둘 — n=659k 에서 argmin 평균 5.25, n=1,116k 에서 8.5 — 은 그 방향을 시사하고 선형 외삽은 n=1,370k 에서 10.3 을 준다. **관측점 둘·시드 산포 3~12 이므로 확립된 추세가 아니고, '에폭'은 행수에 따라 스텝 수가 달라지는 단위라 눈금 자체가 행수와 얽혀 있다.** 외삽값을 규칙으로 쓰면 안 된다.",
+   "표본내_선택은_쓸모없다는_증거": "배포 적합의 in-sample 2024 best epoch 가 24/25/25/25 — 표본내 곡선은 끝까지 좋아진다. 그래서 배포에서 best 를 '고를' 방법이 실제로 없다.",
+   "🔴 판정하지 않음": "에폭 규칙을 바꿀지는 사용자 판단이다. 바꾼다면 그것은 fold_2024 위의 선택이므로 **사전 등록으로 못 박은 뒤** 재적합해야 한다(S8). 비용은 4시드 재적합 약 7분."
+  },
+  "6_배포본_상태_🔴 표본내": {
+   "🔴": "배포본은 fold_2024 로 평가할 수 없다(2024 가 학습 안에 있다, S1). 아래는 **성능이 아니라 적합 상태 점검**이다.",
+   "표본내 2024 4시드 로짓평균": "Brier 0.24493182 · 환산 1951.53944 — 표본내이므로 **어떤 비교에도 쓰지 마라**.",
+   "학습 행수": "1,369,784 (steps/epoch 334, exp_064 의 272 대비 1.23배)",
+   "적합 시간": "시드당 1.58~1.91분, 4시드 6.7분"
+  },
+  "7_변경_변인_전량_열거": {
+   "대조군": "exp_064 stage_A (99열 배포 p6 프레임, 같은 구성·같은 4시드)",
+   "의도한_변인": [
+    "학습 범위 ≤2023(1,116,277행) → ≤2024(1,369,784행), +253,507행"
+   ],
+   "딸려_바뀐_것": [
+    "🔴 에폭 선택 규칙 best-epoch → last-epoch. **이게 가장 큰 변인이다** — fold_2024 에서 단독으로 −238.61점.",
+    "steps/epoch 272 → 334 (같은 25에폭이 더 많은 최적화 스텝이 된다)",
+    "표준화 mu/sd 와 범주 레벨이 2024 행 포함으로 재계산됨",
+    "범주 미등재 셀: fold 분할 584 → 배포 0 (모니터셋이 학습셋의 부분집합이라 당연)"
+   ],
+   "고정": [
+    "프레임(frame99_ship, sha 6c8a40c6..., 읽기 전용)",
+    "99열·5범주·4층·edim 6",
+    "구성 256-128-64 / dropout 0.30 / max_lr 3e-3 / OneCycle 25 / batch 4096 drop_last / AdamW wd 1e-4 / BCEWithLogits",
+    "시드 [42,777,2024,101]",
+    "결정론 설정",
+    "스레드 5종 env 전부 6"
+   ],
+   "🔴 귀속_주의": "exp_064(896.38) 와 배포본을 직접 빼서 '학습 범위의 효과'라고 읽으면 틀린다. 두 변인이 겹쳐 있고, 게다가 배포본 쪽 숫자는 표본내다. 떼어낼 수 있는 것은 **에폭 규칙 단독 −238.61점**뿐이다 (같은 ≤2023 분할·같은 시드에서 잰 것이므로)."
+  },
+  "8_출하_형식_게이트": {
+   "S1 npz 왕복": "출하 `mate/nn_infer.py::predict_nn` (사본 아님, 그 파일) 로 배포 npz 를 읽어 학습 torch 예측과 대조 → **max_abs_diff 1.192e-07** (float32 eps 규모), 네 시드 전부. 4시드 로짓평균은 7.472e-08. **형식이 맞다.**",
+   "S2 범주 어휘·dtype": "5범주 전부 int64/object 가 학습·대역·실제 표본에서 같은 문자열로 떨어지고 **미등재 행 0** (exp_007 dtype 사고 방지).",
+   "S3 실제 표본 5행": "전방향 전파 정상, 예측 전부 유한 (seed 42: 0.4465·0.3501·0.4327·0.5107·0.4989).",
+   "S4 시간": "8.6초 / 4시드 / 245,789행."
+  },
+  "9_예측_분포_3자_대조_(2024행)": {
+   "🔴": "앞 둘은 out-of-time, 셋째(배포본)는 **표본내**. 상관·분포는 서술이다.",
+   "exp064 ≤2023 best": "mean 0.49024 · sd 0.04764 · logit sd 0.19229",
+   "exp067 ≤2023 last": "mean 0.49882 · sd 0.05720 · logit sd 0.23188",
+   "exp067 ≤2024 last (배포)": "mean 0.48731 · sd 0.05637 · logit sd 0.22857",
+   "상관(로짓)": "best↔last(≤2023) 0.9111 / best↔배포 0.8960 / last(≤2023)↔배포 0.8976",
+   "관찰": "25에폭 완주판은 로짓 퍼짐이 **20.6% 크다**(0.1923→0.2319). 과적합한 판이 더 확신에 차 있다는 뜻이고 Brier 악화와 방향이 맞는다. ⚠️ 이것이 블렌드의 α(퍼짐) 축과 어떻게 상호작용하는지는 **재본 적 없다** — 여섯째 팔을 넣으면 혼합 로짓의 퍼짐이 바뀌므로 α·d_adj 가 종속 재해 대상이다."
+  },
+  "10_다음_제안_(결정_아님)": [
+   "① 에폭 규칙을 사전 등록으로 다시 못 박을지 판단. 후보 셋 — (a) 현행 25 완주 (b) 고정 k=8~10 (fold_2024 곡선 평탄대 + 행수 외삽) (c) 고정 k=4 (fold_2024 최대). 🔴 (b)·(c) 는 fold_2024 위의 선택이므로 고르는 순간 자유도 1개를 쓰는 것이다. 비용 약 7분.",
+   "② 블렌드 위에서 c_nn 을 재는 실험. 이 실험은 팔 단독만 만들었고 **블렌드 기여는 한 번도 재지 않았다**(S4: 팔 기준 Δ ≠ 블렌드 Δ).",
+   "③ α·d_adj 종속 재해 — 여섯째 팔이 들어오면 혼합 로짓의 퍼짐과 평균이 둘 다 움직인다.",
+   "④ C단 빌드 (항등 앵커 c_nn=0.0 부터)."
+  ],
+  "특이사항": [
+   "🔴 config 의 stage 1 마스크 추측이 틀렸다 — 검증 게이트가 그것을 잡았다. 규칙을 추측으로 적었다면 25,686행을 잘못 뺀 채 배포본을 만들었을 것이다.",
+   "🔴 패키지 안 test.csv 가 대역 프레임이라 첫 게이트 결과(ins_* 100% 축퇴)를 그대로 적었으면 **배포 사실로 오독할 뻔했다.** 실제 표본 5행으로 되잡았다.",
+   "🔴 사전 등록 에폭 규칙의 대가가 −238.61점으로 컸다. 이 실험은 그것을 재기만 하고 바꾸지 않았다.",
+   "경고·에러 없음. GPU 1대(cuda:0) 단독, 스레드 5종 env 전부 6.",
+   "삭제한 파일 없음. audit_BIJK_indep/ · audit_BL_ind/ 는 읽지도 쓰지도 않았다. exp060_nn/ · exp064/ · exp065/ · exp066/ 는 읽기만 했다."
+  ]
+ }
+}

@@ -1,0 +1,397 @@
+{
+ "question": "w_deep 0 -> 0.40 rescales every Q-arm (in fact every mate-internal) post-hoc constant by s = 1-w_deep. How far are they from their rescaled vertices and what comes back?",
+ "package": {
+  "zip": "~/Downloads/submit_CF_3axis.zip",
+  "internal_candidate": "CH",
+  "lb": 1140.3283619813,
+  "w_deep_now": 0.4,
+  "s_now": 0.6,
+  "w_deep_when_the_axes_were_landed": 0.0,
+  "s_then": 1.0,
+  "🔴_correction_to_S138": "S138 says the Q-arm constants were landed at w_deep = 0.20 (r = 0.75, 6.25% leak). They were not. CA's joint solve ran on base BX (submit_BX_q22v.zip, NO deep arm, s = 1.0) and candidate CF transplanted the identical absolute steps onto the deep base WITHOUT re-solving the landing (blend.json changed_vs_CE: '축의 값은 CA2 의 것이고 착륙점을 다시 풀지 않았다'). Verified: CF_six_axis_joint.steps == CA_joint_solve.landing_simultaneous to the last digit. So r = 0.60, not 0.75, and the leak is 15.59% of max gain, not 6.25% -- 2.56x larger."
+ },
+ "arithmetic": {
+  "model": "gain(u;s) = s*2KL*u - s^2*KG*u^2  ->  u*(s) = u*(1)/s ; max gain invariant ; leak = 1 - (2r - r^2), r = u_shipped/u*(s_now)"
+ },
+ "A_scale_law_verification": {
+  "🔑": "Second..fifth confirmation of the (1-w_deep)^2 law, ledger-only, zero compute, WITH A CONTROL: the two mate-internal axes scale by 0.64 and the three root axes do not move. Sources: blend.json CA_joint_solve.K_times_G_matrix (w_deep=0) vs CF_six_axis_joint.K_times_G_jj_pts (w_deep=0.20), both on the calBX 253,507-row frame.",
+  "audit_CJ_point": {
+   "axis": "league_dev 1|1 (candidate BS1 step 0.011100912277994783)",
+   "K_mean_sq_at_wdeep_0": 0.040265,
+   "K_mean_sq_at_wdeep_040": 0.014513,
+   "sqrt_ratio": 0.60036,
+   "predicted": 0.6
+  },
+  "rows": [
+   {
+    "axis": "q22",
+    "inside": true,
+    "KG_per_unit_sq_at_wdeep_0": 686.5029810969455,
+    "KG_per_unit_sq_at_wdeep_020": 441.32947205558884,
+    "ratio": 0.6428660678944172,
+    "sqrt_ratio": 0.801789291456563,
+    "predicted_ratio": 0.64,
+    "rel_err_on_sqrt": 0.002236614320703545
+   },
+   {
+    "axis": "b",
+    "inside": false,
+    "KG_per_unit_sq_at_wdeep_0": 1868.349672262296,
+    "KG_per_unit_sq_at_wdeep_020": 1872.8572325582988,
+    "ratio": 1.0024125892293732,
+    "sqrt_ratio": 1.0012055679176846,
+    "predicted_ratio": 1.0,
+    "rel_err_on_sqrt": 0.001205567917684558
+   },
+   {
+    "axis": "q21",
+    "inside": true,
+    "KG_per_unit_sq_at_wdeep_0": 685.3973018954648,
+    "KG_per_unit_sq_at_wdeep_020": 439.51661010126935,
+    "ratio": 0.6412581562340369,
+    "sqrt_ratio": 0.8007859615615379,
+    "predicted_ratio": 0.64,
+    "rel_err_on_sqrt": 0.0009824519519223696
+   },
+   {
+    "axis": "nact",
+    "inside": false,
+    "KG_per_unit_sq_at_wdeep_0": 309511.6661402728,
+    "KG_per_unit_sq_at_wdeep_020": 309625.0898845389,
+    "ratio": 1.000366460320157,
+    "sqrt_ratio": 1.0001832133765078,
+    "predicted_ratio": 1.0,
+    "rel_err_on_sqrt": 0.0001832133765078403
+   },
+   {
+    "axis": "sd18",
+    "inside": false,
+    "KG_per_unit_sq_at_wdeep_0": 2.3632946328874787,
+    "KG_per_unit_sq_at_wdeep_020": 2.3650497385090983,
+    "ratio": 1.0007426520575113,
+    "sqrt_ratio": 1.0003712571128338,
+    "predicted_ratio": 1.0,
+    "rel_err_on_sqrt": 0.0003712571128338116
+   }
+  ],
+  "verdict": "LINEARITY CONFIRMED for G. Max |error| on sqrt = 0.22%."
+ },
+ "B_axis_inventory": {
+  "q_league_2|2": {
+   "twoKL": 174.91991660863772,
+   "K_G_per_unit_sq": 700.8410107727367,
+   "u_star_s1": 0.12479286594242942,
+   "u_star_s_now": 0.20798810990404903,
+   "u_shipped": 0.12586338783381756,
+   "r": 0.6051470340871025,
+   "fraction_of_max_captured": 0.8440911353097882,
+   "max_gain_pts": 10.914378852001331,
+   "deficit_pts": 1.7016484156143847,
+   "inside": true,
+   "source": "TWO LB points, both at w_deep=0: BW u=0.05 (1125.6619722869) and BX u=0.11 (1129.42909358). Curvature is LB-measured, not frame-measured.",
+   "note": "shipped cell value 0.1223065671190361 = ORIGINAL(-0.0035568207147814723) + 0.1258633878338176"
+  },
+  "q_league_2|1": {
+   "twoKL": -19.996012612372773,
+   "K_G_per_unit_sq": 686.4032336562963,
+   "u_star_s1": -0.014565791383192556,
+   "u_star_s_now": -0.024276318971987593,
+   "u_shipped": -0.013086816551298536,
+   "r": 0.5390774674858817,
+   "fraction_of_max_captured": 0.7875504190207716,
+   "max_gain_pts": 0.1456288741037545,
+   "deficit_pts": 0.03093879328181945,
+   "inside": true,
+   "source": "ONE LB point at w_deep=0 (BS3, -0.1929608377) + FRAME curvature.",
+   "note": "shipped cell value -0.00924525151882219"
+  },
+  "mate_inner_w_v6": {
+   "twoKL": 22.647294135182104,
+   "K_G_per_unit_sq": 67.87139839840816,
+   "u_star_s1": 0.16683974891928313,
+   "u_star_s_now": 0.2780662481988052,
+   "u_shipped": 0.1668397489,
+   "r": 0.5999999999306528,
+   "fraction_of_max_captured": 0.8399999999445222,
+   "max_gain_pts": 1.8892344336074678,
+   "deficit_pts": 0.3022775094820053,
+   "inside": true,
+   "source": "candidate BN probe u=0.20 -> +1.8146028911 (LB 1115.9165956458), vertex solved and shipped by BO. w_deep=0.",
+   "note": "u = w_v6_inner - 0.5 ; shipped 0.6668397489 sits EXACTLY on the s=1 vertex"
+  },
+  "mate_inner_w_ebm": {
+   "twoKL": -29.24272242,
+   "K_G_per_unit_sq": 142.56440065,
+   "u_star_s1": -0.10255969332691892,
+   "u_star_s_now": -0.17093282221153153,
+   "u_shipped": -0.1,
+   "r": 0.5850251502677979,
+   "fraction_of_max_captured": 0.8277958740897362,
+   "max_gain_pts": 1.499562321719708,
+   "deficit_pts": 0.2582308188597081,
+   "inside": true,
+   "source": "THREE LB points on the AK-era base (AO w=0.00 +7.5941073771 ; AR w=-0.10 +1.4986282351 ; AN w=0.15 origin), quadratic y = -142.56440065w^2 - 29.24272242w + 1092.43669795. w_deep=0.",
+   "note": "🔴 WEAKEST BASIS IN THIS TABLE: that quadratic was fitted at LB 1086-1094, before the deep arm, before AA 76 columns, before the Q cell retree. The AE lesson (blend.json 🔴_axis_flipped_sign_across_bases) says a vertex is a property OF THE BASE."
+  },
+  "root_failtype_b": {
+   "twoKL": -147.23879333428016,
+   "K_G_per_unit_sq": 1874.0988676056702,
+   "u_star_s1": -0.03928255757456141,
+   "u_star_s_now": -0.03928255757456141,
+   "u_shipped": -0.03645076320272027,
+   "r": 0.927912168995968,
+   "fraction_of_max_captured": 0.9948033446211341,
+   "max_gain_pts": 2.8919581881814045,
+   "deficit_pts": 0.015028510074068274,
+   "inside": false,
+   "source": "ONE LB point (teammate failtype offset +2.6766924977) + FRAME curvature.",
+   "note": "OUTSIDE: applied at the ROOT after lg(p_partner), so (1-w_deep) never multiplies it. The 0.015 residual is the CA joint solve trading against sd18, which candidate CH then switched off (u -> 0.0) -- so it is a leftover from a DIFFERENT cause."
+  }
+ },
+ "B_total_inside_deficit_single_axis_pts": 2.293095537237918,
+ "B_axes_inside_the_scale_with_NO_LB_VERTEX": {
+  "mate/model_q/meta.json offset.beta": {
+   "value": 0.59072,
+   "why_no_number": "미기록 — never moved by any candidate. Teammate exp_033 block fit (S400_self, pooled 2022/2023 x seeds 42/7). No LB point, no L, no G."
+  },
+  "mate/model_q/meta.json logit_calibration.gamma": {
+   "value": -0.029941,
+   "why_no_number": "미기록 — never moved. Solved on TRAIN 2024 to pin the mean. No LB point."
+  },
+  "mate/model_q/meta.json backoff.league_dev 1|1 and 1|2": {
+   "values": [
+    -0.02630110266550234,
+    0.021155205173021163
+   ],
+   "why_no_number": "미기록 — never landed, so there is nothing to RE-land. 1|1 is the open cell (candidate CJ, built, unsubmitted)."
+  },
+  "mate/model_q/meta.json offset.lookup_d (1392 keys) / lookup_n / eb_k=400": {
+   "why_no_number": "frozen lookup tables, not a scalar axis. Their SHIPPED magnitude is scaled by s like everything else, but there is no vertex to move."
+  },
+  "mate/model/blend.json beta_ins": {
+   "value": 0.03,
+   "why_no_number": "미기록 on LB. Teammate fold_2024 sweep argmax (+2.48 local, _v18_note). Under the same scale logic its vertex is now 0.05, but the local->LB transfer ratio for this axis has never been measured, so no points can be quoted."
+  }
+ },
+ "B_constants_that_are_NOT_scaled": {
+  "mate/model/blend.json d_adj (-0.019641085540766146)": "mate/script.py applies it as preds = expit(z + d) AFTER the deep mix, so (1-w_deep) never reaches it.",
+  "root blend.json w_v6 (0.7), c_aa (0.25244), smooth_weights.T70 (0.04756)": "root arm shares, applied to lg(p_partner) which already contains the deep mix.",
+  "root blend.json alpha (1.07911), beta_skew (-0.059151)": "applied at the root to logit_mix. ⚠️ NOT scale-free in a second sense: the deep insert changes sd(z_mate), so the alpha vertex does move -- by a different mechanism. Order of magnitude only (sd change ~1.5% on the mate logit at rho~0.94, K*G_alpha = 1058.0 from BA/BB): ~0.1 pt. 개략 추정 — the sd inputs are not measured on this base.",
+  "root blend.json d_adj (0.032913480457649656), target_rate": "dependent constant, re-solved every build.",
+  "root blend.json failtype_offset.b/.c": "added at the root after alpha*z + beta*z^2.",
+  "root blend.json axis_offsets[*].u (beta_ins_off -0.006534, ctrl_asof_psr 0.006544), aux_offsets[*].u (nact 0.00035931, sd18 0.0)": "added to logit_mix at the root.",
+  "mate/model/blend.json w_deep itself": "S130 — the corrected honest surface puts the optimum at 0.42 and 0.40 ships. Nothing to re-land."
+ },
+ "C_joint_relanding_at_s_060": {
+  "method": "CA's own machinery: gain(D) = slope^T D - D^T (K*G) D around the CH shipped point; slope from each axis's own LB quadratic scaled by s; Gram = CA_joint_solve.K_times_G_matrix scaled elementwise by s^(a_i+a_j). sd18 held at 0.0 (CH disabled it); nact held (its L was never split out).",
+  "slopes_pts_per_unit_at_CH": {
+   "q22": 41.44058872209439,
+   "b": -10.61412525111919,
+   "q21": -5.529967664087465
+  },
+  "steps": {
+   "q22": 0.08336980377510649,
+   "b": -0.002308395296946067,
+   "q21": -0.005026954177379273
+  },
+  "new_values": {
+   "q_league_2|2": 0.2056763708941426,
+   "failtype_b": -0.03875915849966634,
+   "q_league_2|1": -0.014272205696201462
+  },
+  "recoverable_pts_joint": 1.7535971204732685,
+  "recoverable_pts_naive_sum": 1.783247327294502,
+  "cross_term_cost_of_naive_sum_pct": 1.6627086084698095
+ },
+ "C_grand_total_pts": {
+  "joint_three_CA_axes": 1.7535971204732685,
+  "mate_inner_w_v6": 0.3022775094820053,
+  "mate_inner_w_ebm": 0.2582308188597081,
+  "🔴_cross_terms_between_these_three_groups": "미측정 — w_v6_inner and w_ebm are not in any Gram we hold, and they are both global mate re-weightings so they are almost certainly correlated with each other.",
+  "naive_total": 2.314105448814982,
+  "share_from_q_league_2|2": 1.7016484156143847
+ },
+ "D1_downside_LINEARITY_of_L": {
+  "🔴_what_is_verified_and_what_is_not": "G scales as s^2 -- verified 5 ways to 0.22% (block A). L = s * Ltilde assumes Ltilde (the correlation of the axis direction with the residual) is unchanged. Ltilde is NOT verified and cannot be, without an LB point.",
+  "the_one_out_of_sample_test_we_have": {
+   "setup": "CA put the same five absolute steps on base BX (no deep arm, s=1) and got LB +0.5884742447. CF put the SAME five absolute steps on base CE (6-epoch deep arm at w_deep=0.20, s=0.8) and got +0.7519063106. The scale model predicts the second from the first.",
+   "model_reproduces_CA_exactly": {
+    "known_gain_model": 0.5515683653359612,
+    "ledger_known_gain_pts_simultaneous": 0.5515683653359613,
+    "probe_slope_term_P_backed_out": 0.036905879364038774,
+    "ledger_CA2_probe_residual": 0.0369042
+   },
+   "prediction_for_CF": 0.9673834196141428,
+   "actual_CF": 0.7519063106,
+   "actual_over_predicted": 0.7772578021855188,
+   "🔴_verdict": "The DIRECTION is confirmed (the same steps are worth MORE on the smaller-s base: +0.588 -> +0.752, and the model demands exactly that). The MAGNITUDE came in at 78% of prediction -- a 0.2155 pt shortfall on a 0.9674 pt prediction.",
+   "implied_slope_retention_phi": {
+    "uniform_on_all_three_harvest_slopes": 0.5037742564208839,
+    "on_the_two_INSIDE_slopes_only": 0.9112972835376583,
+    "on_q22_only": 0.90293202952689,
+    "🔴_this_is_the_headline_uncertainty": "One observation, one free parameter -- the fit is exact by construction and identifies nothing on its own (the AE lesson). Where you put the shortfall changes phi from 0.50 to 0.91, because q22's slope at s=0.8 is a near-cancellation of two large terms (0.8*174.92 = 139.94 against -2*0.64*700.841*0.11 = -98.68), so a few percent on phi swings it a lot.",
+    "🔴_a_mechanism_that_argues_phi_lt_1": "league_dev fires ONLY on personal-table MISS rows -- data-poor pitcher/batter pairs. A strong new arm helps most exactly there, so the residual on those rows should shrink faster than average and Ltilde for the backoff axes should fall faster than for global axes.",
+    "🔴_a_mechanism_that_argues_phi_close_to_1": "the deep arm bought about +10 LB points on a 1129 base = 2.5e-05 of Brier, 0.01% of the residual field. That is far too small to halve a directional correlation."
+   }
+  },
+  "q22_decision_table": {
+   "shipped_u": 0.12586338783381756,
+   "shipped_cell_value": 0.12230656711903609,
+   "scale_corrected_vertex_u": 0.20798810990404903,
+   "K_G_at_s060": 252.3027638781852,
+   "note": "break_even_phi = (u_new + u_shipped)/(2*u*(s=0.6)). Landing on the full vertex needs phi >= 0.8026.",
+   "rows": [
+    {
+     "step": 0.02,
+     "new_u": 0.14586338783381755,
+     "new_cell_value": 0.14230656711903608,
+     "break_even_phi": 0.6532267055866574,
+     "gain_pts_at_phi_0.5": -0.32162883076121235,
+     "gain_pts_at_phi_0.6": -0.11172493083084727,
+     "gain_pts_at_phi_0.7": 0.09817896909951786,
+     "gain_pts_at_phi_0.8": 0.30808286902988324,
+     "gain_pts_at_phi_0.9": 0.5179867689602484,
+     "gain_pts_at_phi_1.0": 0.7278906688906135,
+     "gain_pts_at_phi_1.1": 0.9377945688209788
+    },
+    {
+     "step": 0.03,
+     "new_u": 0.15586338783381756,
+     "new_cell_value": 0.1523065671190361,
+     "break_even_phi": 0.6772665413364348,
+     "gain_pts_at_phi_0.5": -0.5581340753052744,
+     "gain_pts_at_phi_0.6": -0.2432782254097266,
+     "gain_pts_at_phi_0.7": 0.0715776244858212,
+     "gain_pts_at_phi_0.8": 0.38643347438136944,
+     "gain_pts_at_phi_0.9": 0.7012893242769173,
+     "gain_pts_at_phi_1.0": 1.0161451741724652,
+     "gain_pts_at_phi_1.1": 1.331001024068013
+    },
+    {
+     "step": 0.04,
+     "new_u": 0.16586338783381757,
+     "new_cell_value": 0.1623065671190361,
+     "break_even_phi": 0.7013063770862124,
+     "gain_pts_at_phi_0.5": -0.8450998726249737,
+     "gain_pts_at_phi_0.6": -0.4252920727642431,
+     "gain_pts_at_phi_0.7": -0.005484272903512567,
+     "gain_pts_at_phi_0.8": 0.4143235269572185,
+     "gain_pts_at_phi_0.9": 0.834131326817949,
+     "gain_pts_at_phi_1.0": 1.2539391266786797,
+     "gain_pts_at_phi_1.1": 1.6737469265394105
+    },
+    {
+     "step": 0.05,
+     "new_u": 0.17586338783381755,
+     "new_cell_value": 0.17230656711903608,
+     "break_even_phi": 0.7253462128359897,
+     "gain_pts_at_phi_0.5": -1.1825262227203088,
+     "gain_pts_at_phi_0.6": -0.6577664728943958,
+     "gain_pts_at_phi_0.7": -0.13300672306848305,
+     "gain_pts_at_phi_0.8": 0.39175302675743057,
+     "gain_pts_at_phi_0.9": 0.9165127765833435,
+     "gain_pts_at_phi_1.0": 1.4412725264092565,
+     "gain_pts_at_phi_1.1": 1.9660322762351699
+    },
+    {
+     "step": 0.06,
+     "new_u": 0.18586338783381756,
+     "new_cell_value": 0.1823065671190361,
+     "break_even_phi": 0.7493860485857671,
+     "gain_pts_at_phi_0.5": -1.5704131255912823,
+     "gain_pts_at_phi_0.6": -0.9407014258001865,
+     "gain_pts_at_phi_0.7": -0.3109897260090909,
+     "gain_pts_at_phi_0.8": 0.31872197378200556,
+     "gain_pts_at_phi_0.9": 0.9484336735731013,
+     "gain_pts_at_phi_1.0": 1.5781453733641968,
+     "gain_pts_at_phi_1.1": 2.2078570731552936
+    },
+    {
+     "step": 0.07,
+     "new_u": 0.19586338783381757,
+     "new_cell_value": 0.1923065671190361,
+     "break_even_phi": 0.7734258843355446,
+     "gain_pts_at_phi_0.5": -2.0087605812378926,
+     "gain_pts_at_phi_0.6": -1.2740969314816142,
+     "gain_pts_at_phi_0.7": -0.539433281725336,
+     "gain_pts_at_phi_0.8": 0.19523036803094337,
+     "gain_pts_at_phi_0.9": 0.9298940177872217,
+     "gain_pts_at_phi_1.0": 1.6645576675434999,
+     "gain_pts_at_phi_1.1": 2.399221317299779
+    },
+    {
+     "step": 0.08212472207023147,
+     "new_u": 0.20798810990404903,
+     "new_cell_value": 0.20443128918926756,
+     "break_even_phi": 0.8025735170435512,
+     "gain_pts_at_phi_0.5": -2.607926445195346,
+     "gain_pts_at_phi_0.6": -1.7460114730334002,
+     "gain_pts_at_phi_0.7": -0.8840965008714541,
+     "gain_pts_at_phi_0.8": -0.022181528709506838,
+     "gain_pts_at_phi_0.9": 0.8397334434524393,
+     "gain_pts_at_phi_1.0": 1.7016484156143854,
+     "gain_pts_at_phi_1.1": 2.5635633877763326
+    }
+   ]
+  }
+ },
+ "D2_downside_CROSS_TERMS": {
+  "measured_here": "naive sum of the three CA axes 1.78325 vs joint 1.75360 = 1.66% over",
+  "🔴_why_it_is_small_here_and_not_13.6pct_as_in_S109": "S109's 13.6% was six directions including the deep arm and the two aux offsets. Here the three axes have near-disjoint support (q22 and q21 fire on different miss cells) and |rho| <= 0.073.",
+  "🔴_but": "the sign of the correction is not benign for q21: the joint solve moves it AWAY from its own single-axis vertex (-0.01309 -> -0.01811 while the single-axis vertex is -0.02428) because q22 is being pushed far. Landing the three one-at-a-time would be wrong.",
+  "🔴_unmeasured": "w_v6_inner and w_ebm have no Gram entry against anything. They are both global mate re-weightings, so their mutual cross term is probably LARGE. Do not add their 0.302 and 0.258 and ship both."
+ },
+ "D3_downside_d_adj_ANCHOR_DRAG": {
+  "🟢_already_inside_the_measured_G": "blend.json axis_offsets_derivation.G_definition: 'd_i = (p(u_i_probe*e_i) - p_base)/u_i_probe computed through the SHIPPED arithmetic (offset into the blend logit, then alpha/beta_skew, then d_adj RE-PINNED)'. So the Gram entries already carry the anchor's response, and so does the LB-measured K_G for q22 (BW and BX each re-solved d_adj).",
+  "🔴_what_is_NOT_covered": "the d_adj re-solve keeps the mean pinned to target_rate = 0.4847980356943589, which is itself an LB-solved vertex (candidates AV/AW). Pinning the mean is therefore CORRECT, not a leak -- as long as the target_rate vertex is still valid on this base. It was solved on the AR/AV base and blend.json 🔴_axis_flipped_sign_across_bases says in its own words that this vertex is valid for that base only. That axis has not been re-read since.",
+  "size_of_the_drag_to_expect": "candidate CG moved d_adj by -4.04e-03 for a much smaller perturbation. A +0.08 step on 2|2 moves the offset on miss rows by beta*0.08 = +0.047 in PROBABILITY, so expect a d_adj step of order 1e-2. Record it; it is dependent, not a variable."
+ },
+ "D4_downside_NOT_IN_THE_BRIEF_probability_space_clip": {
+  "🔴": "mate/q_infer.py stage 3 is p' = clip(p + beta*d, 1e-6, 1-1e-6) -- PROBABILITY space, hard clip. On a 2|2 miss row the offset is beta*L = 0.59072*L. Shipped L = 0.1223 -> +0.0722. At the scale-corrected vertex L = 0.2057 -> +0.1215. Rows whose Q stage-2 probability exceeds about 0.878 start clipping, and a clip is a hard nonlinearity the quadratic model does not have.",
+  "the_axis_own_recorded_nonlinearity_budget": {
+   "1pct_limit_step": 0.10170401793088349,
+   "BX_shipped_step_as_fraction": 1.0815698557234419,
+   "BX_measured_deviation_from_quadratic": -0.0035625128596372814,
+   "full_vertex_step_as_fraction": 2.0450333638283062
+  },
+  "required_gate": "q_infer prints 'clip 발동=N행'. Record N for parent and candidate on the calibration frame. If N moves off the parent value, the quadratic model is void and the step must come down."
+ },
+ "E_build_spec": {
+  "stage": "A단 (post-hoc constant only). Differing files exactly TWO: mate/model_q/meta.json and blend.json. Boosters, tables, vocab, every .py byte-identical. Same shape as candidate CJ.",
+  "parent": {
+   "zip": "~/Downloads/submit_CF_3axis.zip",
+   "sha256": "31adc7f513796d9da4763d9e2c9744116e5a0ab85d61dea6b4488bb2cfad035b",
+   "internal_candidate_key": "CH",
+   "lb": 1140.3283619813
+  },
+  "change_ONE_key": {
+   "file": "mate/model_q/meta.json",
+   "key": "backoff.league_dev[\"2|2\"]",
+   "formula": "ORIGINAL + u_new, ORIGINAL = -0.0035568207147814723, evaluated in float64 (S46: ship the formula, not a rounded decimal)",
+   "current_u": 0.12586338783381756,
+   "current_value": 0.12230656711903609,
+   "recommended_u_new": 0.17586338783381755,
+   "recommended_value": 0.17230656711903608,
+   "full_vertex_u": 0.20798810990404903,
+   "full_vertex_value": 0.20443128918926756,
+   "why_not_the_full_vertex": "break-even phi 0.8026 at the full vertex vs 0.7254 at +0.05; +0.05 captures 88% of the phi=1 deficit (+1.494 of +1.702) and still gives the third LB point on this axis."
+  },
+  "dependent_re_derivations": {
+   "blend.json d_adj": "re-solve by the CH convention recorded in changed_vs_CG_aa76: aim point = calibration-frame mean 0.48487149261815143; ins anchor swap anchor_lt2024 (sha256 0e4b586d…) in BOTH meta files; offset.lookup_d/lookup_n 1392 -> 1202 (<=2023) in BOTH mate/model_q/meta.json and model/meta.json; brentq xtol 1e-15; mkcal.py.",
+   "failtype_offset.mu_mr / mu_wo": "UNCHANGED. lg_mr / lg_wo come from the stage-1 cell models (q_infer, \"셀 4열은 위 stage-1 에서 스태커 입력으로 이미 계산됐다\"), which the stage-3 league offset never touches. Candidate CH re-derived them only because it changed the cell tree count.",
+   "nothing_else": "w_deep, alpha, beta_skew, failtype_offset.b, axis_offsets, aux_offsets, c_aa, smooth_weights, target_rate, outer w_v6, mate/model/blend.json -- all frozen."
+  },
+  "gates": [
+   "G1 identity anchor: revert 2|2 to 0.1223065671190361 and d_adj to 0.032913480457649656, rebuild the package the same way, output CSV sha256 == parent on real5 / keep110 / cov / band / caD, SAME SESSION (S13).",
+   "G2 differing files exactly {mate/model_q/meta.json, blend.json}; 0 added, 0 deleted; the 116 unchanged model files byte-identical.",
+   "G3 rule 2-4 content separation on a frame whose KEEP rows actually MISS the personal table AND land in cell 2|2 (S61, S68: degen and sep_n do not fire this path; S139: every miss row in train is game_type=F, 2|2 has 4,193 of them). Equal row counts on both sides (S114). Require max|delta| exactly 0.0. Run the PARENT in the same frame (S74, S131).",
+   "G4 record-comparison asserts, all four, with negative controls that must return rc!=0: model/meta.json branches.R.n_trees ; mate/q_infer.py:536 offset.beta == beta_record.deployed ; aa_infer.py:1079-1080 ; branches.R.stacker_extra_features.anchor 3 fields.",
+   "G5 S137 flattened-leaf comparison, NOT a value grep: flatten mate/model_q/meta.json and compare every leaf whose key or cell name collides with backoff.league_dev against the shipped block. backoff.🔴_league_dev_cell_moved_in_BX.shipped_now[\"2|2\"] currently reads 0.1223065671190361 and MUST be updated.",
+   "G6 prose. Three sentences become false or more false: (a) mate/q_infer.py:117-120 \"zero-sum over bh within each ph by construction\" and \"copied BYTE FOR BYTE out of candidate N meta.json\" (S48, already false since BW -- this candidate makes it worse); (b) mate/model_q/meta.json backoff.definition, same claim; (c) blend.json identity_anchor, parent, candidate, changed_vs_* (S91). Record the new sample-weighted sum over bh within ph=2: n(2|1)=490570, n(2|2)=529843.",
+   "G7 amplitude (S63, S65): K*mean(delta_p^2) at the new step vs the quadratic prediction from the shipped step; decompose surface-change from nonlinearity; do NOT claim saturation from a sub-1% residual on one frame.",
+   "G8 NEW -- clip count. Record q_infer stage-3 \"clip 발동=N행\" for parent and candidate on the calibration frame. Any increase voids the quadratic model (D4).",
+   "G9 order: analyze BEFORE pack; freeze the prose BEFORE launching the gate batch (S45, S77, S110)."
+  ],
+  "ETA": "게이트 배치 동시 5 기준 약 40~60분 + 산문 통독. 학습 0. 추론 시간 재측정 불필요(A단, 상수 2개)."
+ }
+}

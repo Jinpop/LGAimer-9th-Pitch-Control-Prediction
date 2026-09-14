@@ -1,0 +1,711 @@
+{
+  "exp_id": "exp_027",
+  "reporting_rule": {
+    "fold_2023": "ABSOLUTE Brier only; deltas converted via 100000 * dBrier / 0.2498069",
+    "fold_2024": "absolute Brier + converted score both reported",
+    "why": "the 0.2498069 reference is the 2025-test scale"
+  },
+  "gate": {
+    "data_sha256": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+    "versions": {
+      "python": "3.11.15",
+      "numpy": "1.26.4",
+      "pandas": "2.0.3",
+      "lightgbm": "4.7.0",
+      "xgboost": "3.2.0",
+      "catboost": "1.2.10"
+    },
+    "shape": [
+      1475092,
+      49
+    ],
+    "n_features": 47,
+    "row_id_unique": true,
+    "P1": {
+      "time_key": "(season, game_month)  -- train.csv has NO game_date column",
+      "granularity_caveat": "month-level.  Within one (season, month) block the relative order of rows is unverifiable from the provided columns.",
+      "season_monotonic_nondecreasing": true,
+      "month_key_monotonic_nondecreasing": false,
+      "n_decreasing_transitions": 6,
+      "pct_decreasing_transitions": 0.000407,
+      "distinct_month_blocks": 72,
+      "distinct_month_values": 43,
+      "decreasing_transitions_detail": [
+        {
+          "row_idx": 211626,
+          "from": "2019-10 R",
+          "to": "2019-03 F",
+          "either_side_dropped_by_exp004_mask": true
+        },
+        {
+          "row_idx": 458286,
+          "from": "2020-10 R",
+          "to": "2020-06 F",
+          "either_side_dropped_by_exp004_mask": true
+        },
+        {
+          "row_idx": 458638,
+          "from": "2020-06 F",
+          "to": "2020-05 F",
+          "either_side_dropped_by_exp004_mask": true
+        },
+        {
+          "row_idx": 702726,
+          "from": "2021-10 R",
+          "to": "2021-04 F",
+          "either_side_dropped_by_exp004_mask": true
+        },
+        {
+          "row_idx": 945611,
+          "from": "2022-10 R",
+          "to": "2022-04 F",
+          "either_side_dropped_by_exp004_mask": true
+        },
+        {
+          "row_idx": 975759,
+          "from": "2022-10 F",
+          "to": "2022-04 F",
+          "either_side_dropped_by_exp004_mask": true
+        }
+      ],
+      "all_inversions_removed_by_mask": true,
+      "file_layout": "seasons 2019-2022 are laid out as [all R, month-sorted][all F, month-sorted], so the month resets at the R->F seam; seasons 2023-2024 interleave R and F in month order.  Every inversion is at a season<=2022 F seam, and the exp_004 mask drops exactly those rows from training.",
+      "fold_2022_train_decreasing_transitions": 0,
+      "fold_2023_train_decreasing_transitions": 0,
+      "fold_2024_train_decreasing_transitions": 0,
+      "asof_fileorder_identity_n_maxabsdiff": 0.0,
+      "asof_fileorder_identity_sum_maxabsdiff": 0.007588000000396278,
+      "asof_identity_rows_checked": 1474300,
+      "verdict": "PASS for every training pool — the raw file has 6 decreasing (season, month) transitions, but all of them sit at season<=2022 R->F / F->F seams whose F rows the exp_004 mask removes from training, so fold_2022 / fold_2023 / fold_2024 training pools each have ZERO inversions.  The organisers' as-of columns are also file-order expanding shift(1) (verified here: n matches exactly), which is only meaningful if file order is chronological.  CAVEAT: month granularity — order within a (season, month) block is unverifiable from the provided columns.  train.py re-asserts pool-order == 0 inversions at run time for every has_time arm.",
+      "pool_order_ok": true
+    },
+    "P2": {
+      "n_rows_masked_exp004": 105308,
+      "expected": {
+        "n_features": 47,
+        "fold_2023_n_train": 870752,
+        "fold_2024_n_train": 1116277,
+        "fold_2024_valid_all": 253507,
+        "fold_2024_valid_R": 223497
+      },
+      "folds": {
+        "fold_2022": {
+          "n_train": 653728,
+          "train_label_rate": 0.52943732,
+          "n_valid_all": 247472,
+          "n_valid_R": 217024,
+          "n_valid_F": 30448,
+          "valid_all_label_rate": 0.52892044,
+          "valid_all_brier_of_base_rate": 0.24916361
+        },
+        "fold_2023": {
+          "n_train": 870752,
+          "train_label_rate": 0.52302033,
+          "n_valid_all": 245525,
+          "n_valid_R": 219839,
+          "n_valid_F": 25686,
+          "valid_all_label_rate": 0.49995723,
+          "valid_all_brier_of_base_rate": 0.25
+        },
+        "fold_2024": {
+          "n_train": 1116277,
+          "train_label_rate": 0.51794761,
+          "n_valid_all": 253507,
+          "n_valid_R": 223497,
+          "n_valid_F": 30010,
+          "valid_all_label_rate": 0.48610492,
+          "valid_all_brier_of_base_rate": 0.24980693
+        }
+      },
+      "checks": {
+        "n_features_47": true,
+        "fold_2023_n_train": true,
+        "fold_2024_n_train": true,
+        "fold_2024_valid_all": true,
+        "fold_2024_valid_R": true,
+        "labels_binary": true,
+        "row_id_unique": true
+      },
+      "scale_ratio_2024_over_2023": 1.281969,
+      "verdict": "PASS"
+    },
+    "P3": {
+      "device": "CPU only for all three families (no GPU / no CUDA)",
+      "threads": 6,
+      "determinism": {
+        "lightgbm": "deterministic=True, force_row_wise=True, seed=<seed>",
+        "xgboost": "device=cpu, tree_method=hist, nthread=6, seed=<seed>",
+        "catboost": "task_type=CPU, thread_count=6, random_seed=<seed>"
+      },
+      "why": "CatBoost GPU / XGBoost CUDA are not bit-reproducible -> Phase 3 conflict"
+    }
+  },
+  "L1_control_fold2023_brier": 0.2488045198,
+  "stage_A_ranking": [
+    {
+      "arm": "C5",
+      "family": "catboost",
+      "role": "ATTRIBUTION — C1-C5 = the native-ID share",
+      "argmin_iter": 400,
+      "brier_fold2023_at_argmin": 0.2486843666,
+      "delta_vs_L1_brier": -0.000120153,
+      "delta_vs_L1_score_points": 48.09843,
+      "beats_L1": true,
+      "beats_L1_by_threshold": true,
+      "argmin_at_cap": false,
+      "cap": 3000,
+      "fit_min": 3.31,
+      "diagnostic_only": false,
+      "valid_R_brier": 0.2486508627,
+      "valid_F_brier": 0.248971116549,
+      "auc": 0.540756,
+      "stage_b_iter": 513
+    },
+    {
+      "arm": "C5N",
+      "family": "catboost",
+      "role": "DIAGNOSTIC (not promotable) — C5 with has_time=False; C5 - C5N = the has_time share AT THE WINNING CONFIG",
+      "argmin_iter": 325,
+      "brier_fold2023_at_argmin": 0.2486972294,
+      "delta_vs_L1_brier": -0.00010729,
+      "delta_vs_L1_score_points": 42.94933,
+      "beats_L1": true,
+      "beats_L1_by_threshold": true,
+      "argmin_at_cap": false,
+      "cap": 3000,
+      "fit_min": 3.227,
+      "diagnostic_only": true,
+      "valid_R_brier": 0.248654968811,
+      "valid_F_brier": 0.249058925043,
+      "auc": 0.54054,
+      "stage_b_iter": 417
+    },
+    {
+      "arm": "X4H",
+      "family": "xgboost",
+      "role": "DIAGNOSTIC (not promotable) — X4 with the leaf-size and sampling constraints converted to LightGBM's scale",
+      "argmin_iter": 650,
+      "brier_fold2023_at_argmin": 0.2488009274,
+      "delta_vs_L1_brier": -3.5924e-06,
+      "delta_vs_L1_score_points": 1.43807,
+      "beats_L1": true,
+      "beats_L1_by_threshold": false,
+      "argmin_at_cap": false,
+      "cap": 3000,
+      "fit_min": 1.587,
+      "diagnostic_only": true,
+      "valid_R_brier": 0.248735266534,
+      "valid_F_brier": 0.249362899866,
+      "auc": 0.538546,
+      "stage_b_iter": 833
+    },
+    {
+      "arm": "L4",
+      "family": "lightgbm",
+      "role": "variance reduction, not regularisation",
+      "argmin_iter": 725,
+      "brier_fold2023_at_argmin": 0.2488019405,
+      "delta_vs_L1_brier": -2.5793e-06,
+      "delta_vs_L1_score_points": 1.03252,
+      "beats_L1": true,
+      "beats_L1_by_threshold": false,
+      "argmin_at_cap": false,
+      "cap": 3000,
+      "fit_min": 1.516,
+      "diagnostic_only": false,
+      "valid_R_brier": 0.248734676772,
+      "valid_F_brier": 0.249377631333,
+      "auc": 0.538532,
+      "stage_b_iter": 929
+    },
+    {
+      "arm": "L1",
+      "family": "lightgbm",
+      "role": "CONTROL — exp_010 D reproduced",
+      "argmin_iter": 750,
+      "brier_fold2023_at_argmin": 0.2488045198,
+      "delta_vs_L1_brier": 0.0,
+      "delta_vs_L1_score_points": -0.0,
+      "beats_L1": false,
+      "beats_L1_by_threshold": false,
+      "argmin_at_cap": false,
+      "cap": 3000,
+      "fit_min": 2.095,
+      "diagnostic_only": false,
+      "valid_R_brier": 0.248751514841,
+      "valid_F_brier": 0.249258173958,
+      "auc": 0.538376,
+      "stage_b_iter": 961
+    },
+    {
+      "arm": "L5",
+      "family": "lightgbm",
+      "role": "leaf-value shrinkage",
+      "argmin_iter": 775,
+      "brier_fold2023_at_argmin": 0.2488090431,
+      "delta_vs_L1_brier": 4.5233e-06,
+      "delta_vs_L1_score_points": -1.81072,
+      "beats_L1": false,
+      "beats_L1_by_threshold": false,
+      "argmin_at_cap": false,
+      "cap": 3000,
+      "fit_min": 1.577,
+      "diagnostic_only": false,
+      "valid_R_brier": 0.248759555528,
+      "valid_F_brier": 0.249232592414,
+      "auc": 0.538372,
+      "stage_b_iter": 994
+    },
+    {
+      "arm": "L2",
+      "family": "lightgbm",
+      "role": "regularisation axis, step 1",
+      "argmin_iter": 2000,
+      "brier_fold2023_at_argmin": 0.2488538103,
+      "delta_vs_L1_brier": 4.92905e-05,
+      "delta_vs_L1_score_points": -19.73144,
+      "beats_L1": false,
+      "beats_L1_by_threshold": false,
+      "argmin_at_cap": false,
+      "cap": 3000,
+      "fit_min": 1.93,
+      "diagnostic_only": false,
+      "valid_R_brier": 0.248793819519,
+      "valid_F_brier": 0.249367253979,
+      "auc": 0.538085,
+      "stage_b_iter": 2564
+    },
+    {
+      "arm": "L6",
+      "family": "lightgbm",
+      "role": "linear fit in the leaves",
+      "argmin_iter": 375,
+      "brier_fold2023_at_argmin": 0.2488557963,
+      "delta_vs_L1_brier": 5.12765e-05,
+      "delta_vs_L1_score_points": -20.52645,
+      "beats_L1": false,
+      "beats_L1_by_threshold": false,
+      "argmin_at_cap": false,
+      "cap": 3000,
+      "fit_min": 1.94,
+      "diagnostic_only": false,
+      "valid_R_brier": 0.248801704717,
+      "valid_F_brier": 0.24931875039,
+      "auc": 0.53742,
+      "stage_b_iter": 481
+    },
+    {
+      "arm": "X3",
+      "family": "xgboost",
+      "role": "variance reduction",
+      "argmin_iter": 1100,
+      "brier_fold2023_at_argmin": 0.2488665332,
+      "delta_vs_L1_brier": 6.20134e-05,
+      "delta_vs_L1_score_points": -24.82453,
+      "beats_L1": false,
+      "beats_L1_by_threshold": false,
+      "argmin_at_cap": false,
+      "cap": 3000,
+      "fit_min": 1.52,
+      "diagnostic_only": false,
+      "valid_R_brier": 0.248765464677,
+      "valid_F_brier": 0.249731549372,
+      "auc": 0.537804,
+      "stage_b_iter": 1410
+    },
+    {
+      "arm": "X1",
+      "family": "xgboost",
+      "role": "XGB reference",
+      "argmin_iter": 875,
+      "brier_fold2023_at_argmin": 0.2488959474,
+      "delta_vs_L1_brier": 9.14276e-05,
+      "delta_vs_L1_score_points": -36.59931,
+      "beats_L1": false,
+      "beats_L1_by_threshold": false,
+      "argmin_at_cap": false,
+      "cap": 3000,
+      "fit_min": 1.311,
+      "diagnostic_only": false,
+      "valid_R_brier": 0.248817825679,
+      "valid_F_brier": 0.249564568056,
+      "auc": 0.537165,
+      "stage_b_iter": 1122
+    },
+    {
+      "arm": "X5",
+      "family": "xgboost",
+      "role": "split-gain threshold + step cap",
+      "argmin_iter": 875,
+      "brier_fold2023_at_argmin": 0.2488960216,
+      "delta_vs_L1_brier": 9.15018e-05,
+      "delta_vs_L1_score_points": -36.62901,
+      "beats_L1": false,
+      "beats_L1_by_threshold": false,
+      "argmin_at_cap": false,
+      "cap": 3000,
+      "fit_min": 1.154,
+      "diagnostic_only": false,
+      "valid_R_brier": 0.248817878199,
+      "valid_F_brier": 0.249564828176,
+      "auc": 0.537164,
+      "stage_b_iter": 1122
+    },
+    {
+      "arm": "X4",
+      "family": "xgboost",
+      "role": "PURE-FAMILY CONTRAST vs L1 (leaf-wise, 15 leaves)",
+      "argmin_iter": 825,
+      "brier_fold2023_at_argmin": 0.2489045212,
+      "delta_vs_L1_brier": 0.000100001,
+      "delta_vs_L1_score_points": -40.03148,
+      "beats_L1": false,
+      "beats_L1_by_threshold": false,
+      "argmin_at_cap": false,
+      "cap": 3000,
+      "fit_min": 1.742,
+      "diagnostic_only": false,
+      "valid_R_brier": 0.248832464872,
+      "valid_F_brier": 0.249521230616,
+      "auc": 0.537103,
+      "stage_b_iter": 1058
+    },
+    {
+      "arm": "C4",
+      "family": "catboost",
+      "role": "ATTRIBUTION — C1-C4 = the has_time share",
+      "argmin_iter": 230,
+      "brier_fold2023_at_argmin": 0.2489258966,
+      "delta_vs_L1_brier": 0.000121377,
+      "delta_vs_L1_score_points": -48.58825,
+      "beats_L1": false,
+      "beats_L1_by_threshold": false,
+      "argmin_at_cap": false,
+      "cap": 3000,
+      "fit_min": 13.503,
+      "diagnostic_only": false,
+      "valid_R_brier": 0.248921277262,
+      "valid_F_brier": 0.248965432087,
+      "auc": 0.537451,
+      "stage_b_iter": 295
+    },
+    {
+      "arm": "C6",
+      "family": "catboost",
+      "role": "variance reduction",
+      "argmin_iter": 170,
+      "brier_fold2023_at_argmin": 0.2489452337,
+      "delta_vs_L1_brier": 0.000140714,
+      "delta_vs_L1_score_points": -56.32907,
+      "beats_L1": false,
+      "beats_L1_by_threshold": false,
+      "argmin_at_cap": false,
+      "cap": 3000,
+      "fit_min": 8.173,
+      "diagnostic_only": false,
+      "valid_R_brier": 0.248932953562,
+      "valid_F_brier": 0.24905033562,
+      "auc": 0.536758,
+      "stage_b_iter": 218
+    },
+    {
+      "arm": "C2",
+      "family": "catboost",
+      "role": "regularisation axis",
+      "argmin_iter": 325,
+      "brier_fold2023_at_argmin": 0.2489831868,
+      "delta_vs_L1_brier": 0.000178667,
+      "delta_vs_L1_score_points": -71.52204,
+      "beats_L1": false,
+      "beats_L1_by_threshold": false,
+      "argmin_at_cap": false,
+      "cap": 3000,
+      "fit_min": 4.96,
+      "diagnostic_only": false,
+      "valid_R_brier": 0.24898795583,
+      "valid_F_brier": 0.248942369792,
+      "auc": 0.536539,
+      "stage_b_iter": 417
+    },
+    {
+      "arm": "C1",
+      "family": "catboost",
+      "role": "PRIMARY — ordered TS (has_time) + native ID categoricals",
+      "argmin_iter": 180,
+      "brier_fold2023_at_argmin": 0.2490053646,
+      "delta_vs_L1_brier": 0.000200845,
+      "delta_vs_L1_score_points": -80.40002,
+      "beats_L1": false,
+      "beats_L1_by_threshold": false,
+      "argmin_at_cap": false,
+      "cap": 3000,
+      "fit_min": 7.8,
+      "diagnostic_only": false,
+      "valid_R_brier": 0.249001168541,
+      "valid_F_brier": 0.249041277045,
+      "auc": 0.536046,
+      "stage_b_iter": 231
+    },
+    {
+      "arm": "C3",
+      "family": "catboost",
+      "role": "one-hot path closed -> more ordered TS",
+      "argmin_iter": 210,
+      "brier_fold2023_at_argmin": 0.2490357875,
+      "delta_vs_L1_brier": 0.000231268,
+      "delta_vs_L1_score_points": -92.57859,
+      "beats_L1": false,
+      "beats_L1_by_threshold": false,
+      "argmin_at_cap": false,
+      "cap": 3000,
+      "fit_min": 10.324,
+      "diagnostic_only": false,
+      "valid_R_brier": 0.249026841999,
+      "valid_F_brier": 0.249112349782,
+      "auc": 0.535743,
+      "stage_b_iter": 269
+    },
+    {
+      "arm": "L3",
+      "family": "lightgbm",
+      "role": "regularisation axis, step 2 (extreme)",
+      "argmin_iter": 300,
+      "brier_fold2023_at_argmin": 0.24905463,
+      "delta_vs_L1_brier": 0.00025011,
+      "delta_vs_L1_score_points": -100.12141,
+      "beats_L1": false,
+      "beats_L1_by_threshold": false,
+      "argmin_at_cap": false,
+      "cap": 3000,
+      "fit_min": 1.575,
+      "diagnostic_only": false,
+      "valid_R_brier": 0.248817921801,
+      "valid_F_brier": 0.251080546808,
+      "auc": 0.53569,
+      "stage_b_iter": 385
+    },
+    {
+      "arm": "X2",
+      "family": "xgboost",
+      "role": "regularisation axis",
+      "argmin_iter": 450,
+      "brier_fold2023_at_argmin": 0.2491005138,
+      "delta_vs_L1_brier": 0.000295994,
+      "delta_vs_L1_score_points": -118.48912,
+      "beats_L1": false,
+      "beats_L1_by_threshold": false,
+      "argmin_at_cap": false,
+      "cap": 3000,
+      "fit_min": 1.12,
+      "diagnostic_only": false,
+      "valid_R_brier": 0.24892289603,
+      "valid_F_brier": 0.250620692501,
+      "auc": 0.534426,
+      "stage_b_iter": 577
+    }
+  ],
+  "STOP_GATE": {
+    "arms_invalid_argmin_at_cap": [],
+    "n_arms_beating_L1_any_margin": 2,
+    "arms_beating_L1_any_margin": [
+      "C5",
+      "L4"
+    ],
+    "n_arms_beating_L1_by_1e-05": 1,
+    "arms_beating_L1_by_1e-05": [
+      "C5"
+    ],
+    "promote_rule": "<= -1e-05 Brier, max 1/family, max 4 total",
+    "promoted": [
+      "C5"
+    ],
+    "STOP": false,
+    "verdict": "PROCEED to Stage B with ['C5'] + L1"
+  },
+  "attribution": {
+    "has_time_share": {
+      "contrast": "C1 - C4",
+      "what": "ordered target statistics (has_time), measured WITH native ID categoricals — i.e. where ordered TS actually acts",
+      "delta_brier": 7.9468e-05,
+      "delta_score_points": -31.81177,
+      "reading": "C1 is worse than C4"
+    },
+    "has_time_share_at_winner": {
+      "contrast": "C5 - C5N",
+      "what": "has_time at the WINNING configuration (IDs numeric). Here every cat feature has 1, 2 or 8 levels, all at or below one_hot_max_size=10, so CatBoost one-hot encodes them and computes no target statistics to order",
+      "delta_brier": -1.28628e-05,
+      "delta_score_points": 5.1491,
+      "reading": "C5 is better than C5N"
+    },
+    "native_id_share": {
+      "contrast": "C1 - C5",
+      "what": "pitcher_id/batter_id as native CatBoost categoricals",
+      "delta_brier": 0.000320998,
+      "delta_score_points": -128.49845,
+      "reading": "C1 is worse than C5"
+    },
+    "pure_family_as_specified": {
+      "contrast": "X4 - L1",
+      "what": "XGBoost vs LightGBM at 15 leaves — CONFOUNDED, see caveats",
+      "delta_brier": 0.000100001,
+      "delta_score_points": -40.03148,
+      "reading": "X4 is worse than L1"
+    },
+    "pure_family_matched": {
+      "contrast": "X4H - L1",
+      "what": "XGBoost vs LightGBM with leaf-size and sampling put on the same scale",
+      "delta_brier": -3.5924e-06,
+      "delta_score_points": 1.43807,
+      "reading": "X4H is better than L1"
+    },
+    "lgbm_regularisation_axis_closed": {
+      "L2_minus_L1": 4.92905e-05,
+      "L3_minus_L1": 0.00025011,
+      "L2_score": -19.73144,
+      "L3_score": -100.12141,
+      "closed": true,
+      "meaning": "closed=True means pushing regularisation past exp_010's endpoint does NOT help, i.e. exp_010's grid was long enough after all"
+    },
+    "caveats": [
+      "X4 - L1 conflates three things: (a) the family, (b) XGBoost is not told the three string columns are categorical while LightGBM is (exp_021 D vs D_NOCAT_DIAG sizes that at 1.1e-05 Brier on this exact fold/seed), (c) XGBoost min_child_weight is a hessian sum, so 5000 is a ~20,000-row constraint vs LightGBM's 5000 rows, and X4 also lacks L1's feature_fraction 0.7 / bagging 0.8.  X4H removes (c).",
+      "C1 - C4 and C1 - C5 each change exactly one thing and are clean."
+    ]
+  },
+  "stage_B": {
+    "seeds": [
+      7,
+      42,
+      2024
+    ],
+    "L1_seed_briers": [
+      0.2482578375,
+      0.2482543699,
+      0.2482594036
+    ],
+    "L1_seed_std": 2.576007808956942e-06,
+    "adoption_threshold_abs_mean_delta": 7.728023426870827e-06,
+    "rule": "3 seeds same sign AND |mean delta| >= 3 x L1 seed std",
+    "arms": {
+      "C5": {
+        "seed_briers": [
+          0.2481138221,
+          0.2481022032,
+          0.248087689
+        ],
+        "mean_brier": 0.2481012381,
+        "mean_score": 682.79214,
+        "seed_std": 1.309329072775371e-05,
+        "paired_delta_per_seed": [
+          -0.000144015,
+          -0.000152167,
+          -0.000171715
+        ],
+        "paired_std": 1.4235039697588004e-05,
+        "mean_delta_vs_L1": -0.000155966,
+        "mean_delta_score_points": 62.43446,
+        "signs_agree": true,
+        "passes_magnitude": true,
+        "ADOPTED": true
+      },
+      "L1": {
+        "seed_briers": [
+          0.2482578375,
+          0.2482543699,
+          0.2482594036
+        ],
+        "mean_brier": 0.2482572037,
+        "mean_score": 620.35768,
+        "seed_std": 2.576007808956942e-06,
+        "paired_delta_per_seed": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "paired_std": 0.0,
+        "mean_delta_vs_L1": 0.0,
+        "mean_delta_score_points": -0.0,
+        "signs_agree": false,
+        "passes_magnitude": false,
+        "ADOPTED": false
+      }
+    }
+  },
+  "stage_C_blend": {
+    "members": [
+      "L1",
+      "C5"
+    ],
+    "weight_search": "exhaustive grid on the simplex (SLSQP returned its starting point and was discarded — see docstring)",
+    "weights_fit_on": "fold_2023 only; fold_2024 read-only",
+    "fold_2023": {
+      "singles": {
+        "L1": 0.2488045198,
+        "C5": 0.2486843666
+      },
+      "best_single": "C5",
+      "best_single_brier": 0.2486843666,
+      "equal_weight_brier": 0.2487265704,
+      "fitted_weights": [
+        0.0,
+        1.0
+      ],
+      "fitted_brier": 0.2486843666,
+      "fitted_gain_vs_best_single_brier": 0.0,
+      "fitted_gain_vs_best_single_points": -0.0,
+      "beats_best_single": false
+    },
+    "fold_2024": {
+      "per_seed": {
+        "42": {
+          "singles": {
+            "L1": 0.2482543699,
+            "C5": 0.2481022032
+          },
+          "equal_weight_brier": 0.2481556184,
+          "fitted_weight_brier": 0.2481022032
+        },
+        "7": {
+          "singles": {
+            "L1": 0.2482578375,
+            "C5": 0.2481138221
+          },
+          "equal_weight_brier": 0.2481600287,
+          "fitted_weight_brier": 0.2481138221
+        },
+        "2024": {
+          "singles": {
+            "L1": 0.2482594036,
+            "C5": 0.248087689
+          },
+          "equal_weight_brier": 0.2481500285,
+          "fitted_weight_brier": 0.248087689
+        }
+      },
+      "mean_best_single_brier": 0.2481012381,
+      "mean_best_single_score": 682.79215,
+      "mean_blend_brier": 0.2481012381,
+      "mean_blend_score": 682.79215,
+      "blend_minus_best_single_brier": 0.0,
+      "blend_minus_best_single_points": -0.0,
+      "beats_best_single": false,
+      "note": "weights came from fold_2023; this fold only reads them"
+    }
+  },
+  "fit_time_by_family_min": {
+    "lightgbm": {
+      "n": 6,
+      "mean_fit_min": 1.772,
+      "mean_sec_per_round": 0.03544
+    },
+    "xgboost": {
+      "n": 6,
+      "mean_fit_min": 1.406,
+      "mean_sec_per_round": 0.02812
+    },
+    "catboost": {
+      "n": 7,
+      "mean_fit_min": 7.328,
+      "mean_sec_per_round": 0.14657
+    }
+  }
+}

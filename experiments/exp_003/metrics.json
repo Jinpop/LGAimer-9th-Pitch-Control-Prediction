@@ -1,0 +1,1456 @@
+{
+  "exp_id": "exp_003",
+  "base_exp": "exp_001",
+  "seed": 42,
+  "lgb_params": {
+    "objective": "binary",
+    "metric": "binary_logloss",
+    "learning_rate": 0.05,
+    "num_leaves": 127,
+    "min_data_in_leaf": 200,
+    "feature_fraction": 0.8,
+    "bagging_fraction": 0.8,
+    "bagging_freq": 1,
+    "seed": 42,
+    "num_threads": 8,
+    "verbose": -1
+  },
+  "num_boost_round": 5000,
+  "early_stopping_rounds": 200,
+  "n_base_features": 47,
+  "categorical": [
+    "top_bottom",
+    "game_type",
+    "base_state",
+    "pitcher_hand",
+    "batter_hand",
+    "pitcher_team_id",
+    "batter_team_id",
+    "pitcher_id",
+    "batter_id"
+  ],
+  "profile": {
+    "source": "trackman_history via exp_002 pitcher_id_map (685 pitchers)",
+    "asof_rule": "fold valid year Y -> profile from seasons <= Y-1 only",
+    "prefixes": [
+      "career_* (all seasons <= cutoff)",
+      "recent_* (season == cutoff)",
+      "last_season_gap"
+    ],
+    "missing": "NaN kept (no sentinel)"
+  },
+  "sha256": {
+    "train.csv": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+    "trackman_history.csv": "f7818f9ee0ccefe7c2cf69fa99efe6e5cb882d8b886dd96d2394bcf3b53f33a9",
+    "pitcher_id_map.csv": "49ce6fc6c6f7b89106d0714ccb437161fd71a19cde90467c932a5e71cb6e1756",
+    "train.py": "e657d25b18836dcb55f3f60d50da4077e4448bfb813b34bb0baad17e037166a1"
+  },
+  "versions": {
+    "python": "3.11.15",
+    "numpy": "1.26.4",
+    "pandas": "2.0.3",
+    "lightgbm": "4.7.0"
+  },
+  "fold_2022": {
+    "train_until": 2021,
+    "valid_year": 2022,
+    "n_train": 728588,
+    "n_features": 112,
+    "best_iteration": 49,
+    "train_time_min": 0.42,
+    "inference_time_sec": 0.34,
+    "valid_all": {
+      "n": 247472,
+      "brier": 0.244493,
+      "bss": 0.018745,
+      "base_rate": 0.52892,
+      "pred_mean": 0.537239,
+      "auc": 0.568456,
+      "logloss": 0.681862
+    },
+    "valid_R": {
+      "n": 217024,
+      "brier": 0.249511,
+      "bss": 0.001904,
+      "base_rate": 0.503691,
+      "pred_mean": 0.517368,
+      "auc": 0.531743,
+      "logloss": 0.692176
+    },
+    "valid_F": {
+      "n": 30448,
+      "brier": 0.20873,
+      "bss": -0.011171,
+      "base_rate": 0.708749,
+      "pred_mean": 0.678875,
+      "auc": 0.510053,
+      "logloss": 0.60835
+    },
+    "cold_start_all": {
+      "n": 38950,
+      "brier": 0.243709,
+      "bss": 0.017601,
+      "base_rate": 0.543877,
+      "pred_mean": 0.544832,
+      "auc": 0.562096,
+      "logloss": 0.680272
+    },
+    "cold_start_R": {
+      "n": 33098,
+      "brier": 0.249499,
+      "bss": 0.000963,
+      "base_rate": 0.516134,
+      "pred_mean": 0.520003,
+      "auc": 0.520043,
+      "logloss": 0.692147
+    },
+    "seen_R": {
+      "n": 183926,
+      "brier": 0.249513,
+      "bss": 0.001941,
+      "base_rate": 0.501452,
+      "pred_mean": 0.516894,
+      "auc": 0.533511,
+      "logloss": 0.692181
+    },
+    "n_cold_start_pitchers": 88,
+    "valid_R_has_profile": {
+      "n": 184193,
+      "brier": 0.249511,
+      "bss": 0.001947,
+      "base_rate": 0.501425,
+      "pred_mean": 0.516874,
+      "auc": 0.533529,
+      "logloss": 0.692178
+    },
+    "valid_R_no_profile": {
+      "n": 32831,
+      "brier": 0.249507,
+      "bss": 0.000897,
+      "base_rate": 0.516402,
+      "pred_mean": 0.520141,
+      "auc": 0.519711,
+      "logloss": 0.692163
+    },
+    "cold_start_R_has_profile": {
+      "n": 267,
+      "brier": 0.248531,
+      "bss": 0.004747,
+      "base_rate": 0.483146,
+      "pred_mean": 0.503024,
+      "auc": 0.561566,
+      "logloss": 0.690202
+    },
+    "cold_start_R_no_profile": {
+      "n": 32831,
+      "brier": 0.249507,
+      "bss": 0.000897,
+      "base_rate": 0.516402,
+      "pred_mean": 0.520141,
+      "auc": 0.519711,
+      "logloss": 0.692163
+    },
+    "valid_profile_row_coverage": 0.8432,
+    "feature_importance_gain_top30": [
+      [
+        "batter_id",
+        97881.0
+      ],
+      [
+        "pitcher_id",
+        89610.8
+      ],
+      [
+        "game_type",
+        33263.1
+      ],
+      [
+        "asof_pitcher_success_rate",
+        14171.6
+      ],
+      [
+        "asof_pitcher_reverse_rate",
+        9418.6
+      ],
+      [
+        "season",
+        4666.9
+      ],
+      [
+        "batter_team_id",
+        2636.5
+      ],
+      [
+        "asof_batter_success_rate",
+        2426.9
+      ],
+      [
+        "asof_pitcher_prev3_game_success_rate",
+        2249.8
+      ],
+      [
+        "asof_pitcher_prev5_game_success_rate",
+        1710.8
+      ],
+      [
+        "asof_pitcher_n",
+        1451.6
+      ],
+      [
+        "asof_pitcher_prev1_game_success_rate",
+        1416.3
+      ],
+      [
+        "asof_batter_n",
+        1295.1
+      ],
+      [
+        "game_month",
+        1231.4
+      ],
+      [
+        "strikes_before",
+        1167.9
+      ],
+      [
+        "asof_pitcher_prev3_game_middle_rate",
+        901.1
+      ],
+      [
+        "asof_pitcher_middle_rate",
+        885.2
+      ],
+      [
+        "pitcher_team_id",
+        864.7
+      ],
+      [
+        "asof_pitcher_prev1_game_middle_rate",
+        862.5
+      ],
+      [
+        "asof_pitcher_prev5_game_middle_rate",
+        824.5
+      ],
+      [
+        "asof_pitcher_ball_rate",
+        692.5
+      ],
+      [
+        "balls_before",
+        669.7
+      ],
+      [
+        "asof_batter_middle_rate",
+        616.3
+      ],
+      [
+        "run_total_before",
+        577.8
+      ],
+      [
+        "li",
+        566.2
+      ],
+      [
+        "base_state",
+        496.8
+      ],
+      [
+        "home_win_expectancy",
+        452.7
+      ],
+      [
+        "asof_pitcher_strike_rate",
+        442.7
+      ],
+      [
+        "career_rel_speed_p90",
+        430.5
+      ],
+      [
+        "run_top_before",
+        331.5
+      ]
+    ],
+    "profile_feature_importance": [
+      [
+        29,
+        "career_rel_speed_p90",
+        430.5
+      ],
+      [
+        32,
+        "recent_rel_side_std",
+        294.6
+      ],
+      [
+        38,
+        "career_rel_side_mean",
+        241.9
+      ],
+      [
+        39,
+        "recent_fastball_share",
+        219.6
+      ],
+      [
+        42,
+        "recent_breaking_rel_speed_mean",
+        179.1
+      ],
+      [
+        43,
+        "career_n_pitches",
+        175.9
+      ],
+      [
+        44,
+        "recent_offspeed_share",
+        174.3
+      ],
+      [
+        46,
+        "recent_offspeed_ivb_mean",
+        162.1
+      ],
+      [
+        47,
+        "recent_rel_height_std",
+        162.0
+      ],
+      [
+        49,
+        "career_offspeed_hb_mean",
+        160.0
+      ],
+      [
+        50,
+        "recent_breaking_spin_rate_mean",
+        158.8
+      ],
+      [
+        51,
+        "recent_extension_mean",
+        158.2
+      ],
+      [
+        52,
+        "recent_n_games",
+        158.1
+      ],
+      [
+        53,
+        "recent_n_pitches",
+        153.2
+      ],
+      [
+        54,
+        "career_breaking_rel_speed_mean",
+        149.0
+      ],
+      [
+        55,
+        "career_rel_height_mean",
+        148.2
+      ],
+      [
+        57,
+        "career_offspeed_rel_speed_mean",
+        147.6
+      ],
+      [
+        58,
+        "career_spin_rate_mean",
+        145.9
+      ],
+      [
+        59,
+        "recent_fastball_hb_mean",
+        145.3
+      ],
+      [
+        60,
+        "career_breaking_share",
+        144.8
+      ],
+      [
+        61,
+        "recent_rel_height_mean",
+        143.8
+      ],
+      [
+        62,
+        "career_breaking_ivb_mean",
+        131.0
+      ],
+      [
+        63,
+        "recent_breaking_share",
+        124.2
+      ],
+      [
+        64,
+        "career_induced_vert_break_std",
+        121.7
+      ],
+      [
+        65,
+        "career_offspeed_spin_rate_mean",
+        114.3
+      ],
+      [
+        66,
+        "career_fastball_share",
+        113.8
+      ],
+      [
+        67,
+        "recent_offspeed_spin_rate_mean",
+        113.6
+      ],
+      [
+        68,
+        "career_extension_mean",
+        111.9
+      ],
+      [
+        69,
+        "career_fastball_rel_speed_mean",
+        111.1
+      ],
+      [
+        70,
+        "recent_rel_speed_mean",
+        109.1
+      ],
+      [
+        71,
+        "recent_breaking_ivb_mean",
+        104.8
+      ],
+      [
+        72,
+        "recent_rel_speed_p90",
+        103.8
+      ],
+      [
+        73,
+        "recent_rel_side_mean",
+        101.4
+      ],
+      [
+        74,
+        "recent_fastball_spin_rate_mean",
+        101.0
+      ],
+      [
+        75,
+        "recent_spin_rate_std",
+        97.9
+      ],
+      [
+        76,
+        "career_rel_speed_mean",
+        95.0
+      ],
+      [
+        77,
+        "recent_induced_vert_break_mean",
+        93.1
+      ],
+      [
+        78,
+        "recent_offspeed_hb_mean",
+        93.1
+      ],
+      [
+        79,
+        "career_breaking_hb_mean",
+        92.9
+      ],
+      [
+        81,
+        "recent_fastball_ivb_mean",
+        91.5
+      ]
+    ],
+    "profile_gain_share": 0.0256,
+    "profile_cutoff": 2021,
+    "n_profile_pitchers": 514
+  },
+  "fold_2023": {
+    "train_until": 2022,
+    "valid_year": 2023,
+    "n_train": 976060,
+    "n_features": 112,
+    "best_iteration": 6,
+    "train_time_min": 0.42,
+    "inference_time_sec": 0.21,
+    "valid_all": {
+      "n": 245525,
+      "brier": 0.251356,
+      "bss": -0.005424,
+      "base_rate": 0.499957,
+      "pred_mean": 0.536808,
+      "auc": 0.51567,
+      "logloss": 0.69588
+    },
+    "valid_R": {
+      "n": 219839,
+      "brier": 0.250442,
+      "bss": -0.001806,
+      "base_rate": 0.503118,
+      "pred_mean": 0.532508,
+      "auc": 0.526046,
+      "logloss": 0.694032
+    },
+    "valid_F": {
+      "n": 25686,
+      "brier": 0.259181,
+      "bss": -0.039776,
+      "base_rate": 0.472904,
+      "pred_mean": 0.57361,
+      "auc": 0.518285,
+      "logloss": 0.711691
+    },
+    "cold_start_all": {
+      "n": 33878,
+      "brier": 0.251865,
+      "bss": -0.007469,
+      "base_rate": 0.498642,
+      "pred_mean": 0.535869,
+      "auc": 0.491478,
+      "logloss": 0.6969
+    },
+    "cold_start_R": {
+      "n": 30765,
+      "brier": 0.250805,
+      "bss": -0.003299,
+      "base_rate": 0.504437,
+      "pred_mean": 0.532575,
+      "auc": 0.501823,
+      "logloss": 0.694762
+    },
+    "seen_R": {
+      "n": 189074,
+      "brier": 0.250383,
+      "bss": -0.001564,
+      "base_rate": 0.502904,
+      "pred_mean": 0.532498,
+      "auc": 0.529279,
+      "logloss": 0.693914
+    },
+    "n_cold_start_pitchers": 63,
+    "valid_R_has_profile": {
+      "n": 189637,
+      "brier": 0.250383,
+      "bss": -0.001567,
+      "base_rate": 0.502929,
+      "pred_mean": 0.532487,
+      "auc": 0.529123,
+      "logloss": 0.693915
+    },
+    "valid_R_no_profile": {
+      "n": 30202,
+      "brier": 0.250809,
+      "bss": -0.003309,
+      "base_rate": 0.504304,
+      "pred_mean": 0.53264,
+      "auc": 0.502625,
+      "logloss": 0.694769
+    },
+    "cold_start_R_has_profile": {
+      "n": 563,
+      "brier": 0.250611,
+      "bss": -0.00298,
+      "base_rate": 0.511545,
+      "pred_mean": 0.529078,
+      "auc": 0.47137,
+      "logloss": 0.694376
+    },
+    "cold_start_R_no_profile": {
+      "n": 30202,
+      "brier": 0.250809,
+      "bss": -0.003309,
+      "base_rate": 0.504304,
+      "pred_mean": 0.53264,
+      "auc": 0.502625,
+      "logloss": 0.694769
+    },
+    "valid_profile_row_coverage": 0.8649,
+    "feature_importance_gain_top30": [
+      [
+        "batter_id",
+        28796.2
+      ],
+      [
+        "game_type",
+        23886.6
+      ],
+      [
+        "pitcher_id",
+        20401.6
+      ],
+      [
+        "asof_pitcher_reverse_rate",
+        9097.6
+      ],
+      [
+        "asof_pitcher_success_rate",
+        5736.1
+      ],
+      [
+        "asof_batter_success_rate",
+        3278.8
+      ],
+      [
+        "season",
+        3149.7
+      ],
+      [
+        "asof_pitcher_prev5_game_success_rate",
+        1159.7
+      ],
+      [
+        "batter_team_id",
+        697.3
+      ],
+      [
+        "asof_pitcher_prev1_game_success_rate",
+        485.8
+      ],
+      [
+        "pitcher_team_id",
+        359.1
+      ],
+      [
+        "asof_pitcher_ball_rate",
+        293.3
+      ],
+      [
+        "asof_pitcher_middle_rate",
+        235.7
+      ],
+      [
+        "career_fastball_rel_speed_mean",
+        228.3
+      ],
+      [
+        "asof_pitcher_prev3_game_success_rate",
+        192.4
+      ],
+      [
+        "asof_batter_n",
+        192.3
+      ],
+      [
+        "career_rel_height_mean",
+        183.1
+      ],
+      [
+        "career_induced_vert_break_mean",
+        143.2
+      ],
+      [
+        "career_offspeed_share",
+        130.5
+      ],
+      [
+        "recent_offspeed_share",
+        114.8
+      ],
+      [
+        "career_horz_break_std",
+        105.9
+      ],
+      [
+        "strikes_before",
+        94.7
+      ],
+      [
+        "asof_pitcher_n",
+        92.5
+      ],
+      [
+        "career_zone_speed_mean",
+        91.1
+      ],
+      [
+        "career_breaking_rel_speed_mean",
+        86.5
+      ],
+      [
+        "recent_n_pitches",
+        78.5
+      ],
+      [
+        "recent_fastball_hb_mean",
+        71.9
+      ],
+      [
+        "game_month",
+        70.2
+      ],
+      [
+        "recent_rel_side_std",
+        45.2
+      ],
+      [
+        "recent_fastball_spin_rate_mean",
+        42.4
+      ]
+    ],
+    "profile_feature_importance": [
+      [
+        14,
+        "career_fastball_rel_speed_mean",
+        228.3
+      ],
+      [
+        17,
+        "career_rel_height_mean",
+        183.1
+      ],
+      [
+        18,
+        "career_induced_vert_break_mean",
+        143.2
+      ],
+      [
+        19,
+        "career_offspeed_share",
+        130.5
+      ],
+      [
+        20,
+        "recent_offspeed_share",
+        114.8
+      ],
+      [
+        21,
+        "career_horz_break_std",
+        105.9
+      ],
+      [
+        24,
+        "career_zone_speed_mean",
+        91.1
+      ],
+      [
+        25,
+        "career_breaking_rel_speed_mean",
+        86.5
+      ],
+      [
+        26,
+        "recent_n_pitches",
+        78.5
+      ],
+      [
+        27,
+        "recent_fastball_hb_mean",
+        71.9
+      ],
+      [
+        29,
+        "recent_rel_side_std",
+        45.2
+      ],
+      [
+        30,
+        "recent_fastball_spin_rate_mean",
+        42.4
+      ],
+      [
+        31,
+        "career_offspeed_hb_mean",
+        40.0
+      ],
+      [
+        32,
+        "recent_breaking_ivb_mean",
+        37.2
+      ],
+      [
+        33,
+        "recent_fastball_ivb_mean",
+        35.0
+      ],
+      [
+        34,
+        "career_fastball_spin_rate_mean",
+        34.5
+      ],
+      [
+        35,
+        "career_spin_rate_mean",
+        34.0
+      ],
+      [
+        36,
+        "career_offspeed_spin_rate_mean",
+        33.4
+      ],
+      [
+        37,
+        "career_induced_vert_break_std",
+        31.5
+      ],
+      [
+        38,
+        "recent_rel_side_mean",
+        28.6
+      ],
+      [
+        39,
+        "career_rel_speed_p90",
+        28.0
+      ],
+      [
+        41,
+        "recent_breaking_hb_mean",
+        26.8
+      ],
+      [
+        43,
+        "recent_offspeed_spin_rate_mean",
+        26.0
+      ],
+      [
+        44,
+        "career_fastball_share",
+        24.8
+      ],
+      [
+        46,
+        "recent_horz_break_mean",
+        23.8
+      ],
+      [
+        47,
+        "recent_rel_height_std",
+        23.6
+      ]
+    ],
+    "profile_gain_share": 0.0175,
+    "profile_cutoff": 2022,
+    "n_profile_pitchers": 578
+  },
+  "fold_2024": {
+    "train_until": 2023,
+    "valid_year": 2024,
+    "n_train": 1221585,
+    "n_features": 112,
+    "best_iteration": 49,
+    "train_time_min": 0.57,
+    "inference_time_sec": 0.32,
+    "valid_all": {
+      "n": 253507,
+      "brier": 0.249368,
+      "bss": 0.001757,
+      "base_rate": 0.486105,
+      "pred_mean": 0.504579,
+      "auc": 0.533222,
+      "logloss": 0.691885
+    },
+    "valid_R": {
+      "n": 223497,
+      "brier": 0.249267,
+      "bss": 0.002507,
+      "base_rate": 0.489707,
+      "pred_mean": 0.506044,
+      "auc": 0.534903,
+      "logloss": 0.691682
+    },
+    "valid_F": {
+      "n": 30010,
+      "brier": 0.250116,
+      "bss": -0.007143,
+      "base_rate": 0.45928,
+      "pred_mean": 0.493669,
+      "auc": 0.513033,
+      "logloss": 0.693395
+    },
+    "cold_start_all": {
+      "n": 50348,
+      "brier": 0.249417,
+      "bss": 0.001927,
+      "base_rate": 0.48993,
+      "pred_mean": 0.505978,
+      "auc": 0.532899,
+      "logloss": 0.691981
+    },
+    "cold_start_R": {
+      "n": 44033,
+      "brier": 0.249406,
+      "bss": 0.002301,
+      "base_rate": 0.495696,
+      "pred_mean": 0.508154,
+      "auc": 0.532364,
+      "logloss": 0.691959
+    },
+    "seen_R": {
+      "n": 179464,
+      "brier": 0.249233,
+      "bss": 0.002514,
+      "base_rate": 0.488237,
+      "pred_mean": 0.505526,
+      "auc": 0.535731,
+      "logloss": 0.691614
+    },
+    "n_cold_start_pitchers": 81,
+    "valid_R_has_profile": {
+      "n": 180906,
+      "brier": 0.249244,
+      "bss": 0.002474,
+      "base_rate": 0.488243,
+      "pred_mean": 0.505474,
+      "auc": 0.535492,
+      "logloss": 0.691634
+    },
+    "valid_R_no_profile": {
+      "n": 42591,
+      "brier": 0.249369,
+      "bss": 0.002458,
+      "base_rate": 0.495926,
+      "pred_mean": 0.508466,
+      "auc": 0.533482,
+      "logloss": 0.691884
+    },
+    "cold_start_R_has_profile": {
+      "n": 1442,
+      "brier": 0.250512,
+      "bss": -0.00254,
+      "base_rate": 0.488904,
+      "pred_mean": 0.498937,
+      "auc": 0.493115,
+      "logloss": 0.694173
+    },
+    "cold_start_R_no_profile": {
+      "n": 42591,
+      "brier": 0.249369,
+      "bss": 0.002458,
+      "base_rate": 0.495926,
+      "pred_mean": 0.508466,
+      "auc": 0.533482,
+      "logloss": 0.691884
+    },
+    "valid_profile_row_coverage": 0.807,
+    "feature_importance_gain_top30": [
+      [
+        "batter_id",
+        134127.4
+      ],
+      [
+        "pitcher_id",
+        118700.0
+      ],
+      [
+        "game_type",
+        44323.9
+      ],
+      [
+        "season",
+        30211.6
+      ],
+      [
+        "asof_pitcher_success_rate",
+        26805.9
+      ],
+      [
+        "asof_pitcher_reverse_rate",
+        15735.1
+      ],
+      [
+        "asof_batter_success_rate",
+        5125.9
+      ],
+      [
+        "asof_pitcher_prev5_game_success_rate",
+        4865.4
+      ],
+      [
+        "asof_pitcher_prev1_game_success_rate",
+        3385.4
+      ],
+      [
+        "asof_pitcher_prev3_game_success_rate",
+        2418.9
+      ],
+      [
+        "batter_team_id",
+        1717.3
+      ],
+      [
+        "asof_pitcher_n",
+        1580.7
+      ],
+      [
+        "balls_before",
+        1444.1
+      ],
+      [
+        "asof_pitcher_ball_rate",
+        1175.6
+      ],
+      [
+        "strikes_before",
+        1097.4
+      ],
+      [
+        "asof_batter_n",
+        945.4
+      ],
+      [
+        "pitcher_team_id",
+        908.7
+      ],
+      [
+        "game_month",
+        814.1
+      ],
+      [
+        "asof_pitcher_middle_rate",
+        778.8
+      ],
+      [
+        "asof_pitcher_prev3_game_middle_rate",
+        766.5
+      ],
+      [
+        "home_win_expectancy",
+        597.4
+      ],
+      [
+        "base_state",
+        539.4
+      ],
+      [
+        "asof_pitcher_prev5_game_middle_rate",
+        498.0
+      ],
+      [
+        "li",
+        494.3
+      ],
+      [
+        "asof_batter_middle_rate",
+        490.6
+      ],
+      [
+        "asof_pitcher_prev1_game_middle_rate",
+        468.8
+      ],
+      [
+        "asof_pitcher_fastball_rate",
+        385.6
+      ],
+      [
+        "asof_pitcher_strike_rate",
+        384.3
+      ],
+      [
+        "career_breaking_rel_speed_mean",
+        366.1
+      ],
+      [
+        "asof_pitcher_offspeed_rate",
+        364.2
+      ]
+    ],
+    "profile_feature_importance": [
+      [
+        29,
+        "career_breaking_rel_speed_mean",
+        366.1
+      ],
+      [
+        33,
+        "career_zone_speed_mean",
+        285.9
+      ],
+      [
+        34,
+        "career_offspeed_share",
+        255.2
+      ],
+      [
+        35,
+        "career_fastball_ivb_mean",
+        236.3
+      ],
+      [
+        37,
+        "career_horz_break_std",
+        205.4
+      ],
+      [
+        38,
+        "career_rel_side_mean",
+        190.0
+      ],
+      [
+        39,
+        "recent_breaking_rel_speed_mean",
+        177.4
+      ],
+      [
+        40,
+        "recent_offspeed_share",
+        176.9
+      ],
+      [
+        42,
+        "career_n_pitches",
+        175.2
+      ],
+      [
+        45,
+        "recent_rel_speed_std",
+        153.9
+      ],
+      [
+        46,
+        "recent_n_pitches",
+        152.1
+      ],
+      [
+        47,
+        "career_offspeed_spin_rate_mean",
+        150.1
+      ],
+      [
+        49,
+        "career_offspeed_rel_speed_mean",
+        134.7
+      ],
+      [
+        50,
+        "career_rel_height_mean",
+        130.6
+      ],
+      [
+        51,
+        "career_breaking_share",
+        126.5
+      ],
+      [
+        52,
+        "recent_breaking_spin_rate_mean",
+        125.1
+      ],
+      [
+        53,
+        "recent_fastball_hb_mean",
+        118.7
+      ],
+      [
+        54,
+        "career_breaking_hb_mean",
+        118.6
+      ],
+      [
+        56,
+        "recent_extension_mean",
+        110.2
+      ],
+      [
+        57,
+        "recent_offspeed_hb_mean",
+        105.9
+      ],
+      [
+        58,
+        "recent_spin_rate_mean",
+        102.1
+      ],
+      [
+        59,
+        "career_fastball_hb_mean",
+        101.2
+      ],
+      [
+        60,
+        "career_induced_vert_break_mean",
+        100.5
+      ],
+      [
+        62,
+        "recent_horz_break_std",
+        98.3
+      ],
+      [
+        63,
+        "career_n_games",
+        96.1
+      ],
+      [
+        64,
+        "career_breaking_ivb_mean",
+        94.8
+      ],
+      [
+        65,
+        "career_offspeed_hb_mean",
+        94.4
+      ],
+      [
+        67,
+        "recent_spin_rate_std",
+        90.5
+      ],
+      [
+        68,
+        "career_offspeed_ivb_mean",
+        90.1
+      ],
+      [
+        69,
+        "recent_rel_side_mean",
+        88.2
+      ],
+      [
+        70,
+        "recent_fastball_spin_rate_mean",
+        86.0
+      ],
+      [
+        71,
+        "recent_offspeed_spin_rate_mean",
+        78.0
+      ],
+      [
+        72,
+        "recent_offspeed_rel_speed_mean",
+        77.4
+      ],
+      [
+        73,
+        "recent_n_games",
+        76.7
+      ],
+      [
+        74,
+        "career_horz_break_mean",
+        76.4
+      ],
+      [
+        75,
+        "career_extension_mean",
+        75.4
+      ],
+      [
+        76,
+        "recent_fastball_share",
+        74.9
+      ],
+      [
+        77,
+        "career_rel_height_std",
+        74.9
+      ],
+      [
+        79,
+        "career_rel_speed_std",
+        67.0
+      ],
+      [
+        80,
+        "recent_breaking_ivb_mean",
+        66.8
+      ]
+    ],
+    "profile_gain_share": 0.015,
+    "profile_cutoff": 2023,
+    "n_profile_pitchers": 627
+  },
+  "reference_exp001_threads8_fold_2024": {
+    "train_until": 2023,
+    "valid_year": 2024,
+    "n_train": 1221585,
+    "n_features": 47,
+    "best_iteration": 45,
+    "train_time_min": 0.28,
+    "inference_time_sec": 0.21,
+    "valid_all": {
+      "n": 253507,
+      "brier": 0.24945,
+      "bss": 0.001428,
+      "base_rate": 0.486105,
+      "pred_mean": 0.505291,
+      "auc": 0.532425,
+      "logloss": 0.69205
+    },
+    "valid_R": {
+      "n": 223497,
+      "brier": 0.249337,
+      "bss": 0.002227,
+      "base_rate": 0.489707,
+      "pred_mean": 0.506371,
+      "auc": 0.534062,
+      "logloss": 0.691823
+    },
+    "valid_F": {
+      "n": 30010,
+      "brier": 0.250289,
+      "bss": -0.007841,
+      "base_rate": 0.45928,
+      "pred_mean": 0.497251,
+      "auc": 0.514814,
+      "logloss": 0.693744
+    },
+    "cold_start_all": {
+      "n": 50348,
+      "brier": 0.249513,
+      "bss": 0.001541,
+      "base_rate": 0.48993,
+      "pred_mean": 0.505974,
+      "auc": 0.531743,
+      "logloss": 0.692174
+    },
+    "cold_start_R": {
+      "n": 44033,
+      "brier": 0.249447,
+      "bss": 0.002139,
+      "base_rate": 0.495696,
+      "pred_mean": 0.507333,
+      "auc": 0.531791,
+      "logloss": 0.69204
+    },
+    "seen_R": {
+      "n": 179464,
+      "brier": 0.249311,
+      "bss": 0.002205,
+      "base_rate": 0.488237,
+      "pred_mean": 0.506135,
+      "auc": 0.535074,
+      "logloss": 0.691769
+    },
+    "n_cold_start_pitchers": 81,
+    "feature_importance_gain_top30": [
+      [
+        "pitcher_id",
+        132671.5
+      ],
+      [
+        "batter_id",
+        125988.2
+      ],
+      [
+        "game_type",
+        47773.1
+      ],
+      [
+        "season",
+        30476.7
+      ],
+      [
+        "asof_pitcher_success_rate",
+        27369.9
+      ],
+      [
+        "asof_pitcher_reverse_rate",
+        12296.0
+      ],
+      [
+        "asof_pitcher_prev5_game_success_rate",
+        5543.5
+      ],
+      [
+        "asof_batter_success_rate",
+        2974.0
+      ],
+      [
+        "asof_pitcher_prev1_game_success_rate",
+        2715.3
+      ],
+      [
+        "batter_team_id",
+        2405.9
+      ],
+      [
+        "balls_before",
+        1527.7
+      ],
+      [
+        "asof_pitcher_n",
+        1475.1
+      ],
+      [
+        "asof_pitcher_prev3_game_success_rate",
+        1260.6
+      ],
+      [
+        "asof_pitcher_ball_rate",
+        1048.0
+      ],
+      [
+        "strikes_before",
+        1002.5
+      ],
+      [
+        "asof_batter_n",
+        866.8
+      ],
+      [
+        "game_month",
+        666.9
+      ],
+      [
+        "asof_pitcher_prev1_game_middle_rate",
+        624.6
+      ],
+      [
+        "asof_pitcher_middle_rate",
+        568.6
+      ],
+      [
+        "pitcher_team_id",
+        544.9
+      ],
+      [
+        "asof_pitcher_prev5_game_middle_rate",
+        510.2
+      ],
+      [
+        "batter_hand",
+        451.2
+      ],
+      [
+        "asof_pitcher_prev3_game_middle_rate",
+        432.3
+      ],
+      [
+        "asof_pitcher_strike_rate",
+        397.8
+      ],
+      [
+        "asof_pitcher_pitchmix_n",
+        321.1
+      ],
+      [
+        "inning",
+        300.3
+      ],
+      [
+        "li",
+        296.3
+      ],
+      [
+        "asof_batter_middle_rate",
+        289.7
+      ],
+      [
+        "run_top_before",
+        284.3
+      ],
+      [
+        "asof_pitcher_fastball_rate",
+        278.8
+      ]
+    ]
+  },
+  "train_time_min": 2.05,
+  "inference_time_sec": 0.87
+}

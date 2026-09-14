@@ -1,0 +1,999 @@
+{
+ "exp_id": "exp_117",
+ "type": "measurement_scan",
+ "lb_slots_used": 0,
+ "retraining": 0,
+ "learning": 0,
+ "verdict": "기각 — 3단 천장 +1.4 를 넘는 셀 0개. 프로브 후보 없음.",
+ "data": {
+  "train_rows": 1475092,
+  "test_used": false,
+  "note": "data/test.csv 는 5행 껍데기라 열지 않았다. train 만 썼다."
+ },
+ "frozen_bins_S170": {
+  "values": {
+   "li_q": [
+    0.4,
+    0.8,
+    1.32
+   ],
+   "asof_pitcher_n_q": [
+    684.0,
+    1776.0,
+    3725.0
+   ],
+   "score_diff_cuts": [
+    -3.5,
+    -0.5,
+    0.5,
+    3.5
+   ],
+   "inning_cuts": [
+    3.5,
+    6.5
+   ]
+  },
+  "recomputed_from_train": {
+   "li_q": [
+    0.4,
+    0.8,
+    1.32
+   ],
+   "asof_pitcher_n_q": [
+    684.0,
+    1776.0,
+    3725.0
+   ]
+  },
+  "match": true,
+  "note": "배포에서 test 분위수를 다시 계산하면 규칙 2-4 위반. 이 값은 train 전체 동결값이다."
+ },
+ "positive_controls": {
+  "PC1_count_3_0": {
+   "reproduced": true,
+   "winning_convention": "probR (R행, 확률척도, dev = 셀평균 - 시즌평균)",
+   "max_abs_err": 3.697544062118696e-06,
+   "tolerance_declared_before_measuring": 0.0025,
+   "measured": [
+    -0.027172780370250615,
+    -0.023968459883382476,
+    -0.02781194487185057,
+    -0.03029100228760223,
+    -0.007340145201454651,
+    -0.0021336975440621186
+   ],
+   "target": [
+    -0.02717,
+    -0.02397,
+    -0.02781,
+    -0.03029,
+    -0.00734,
+    -0.00213
+   ],
+   "logit_convention_max_abs_err": 0.09097482917601935
+  },
+  "PC2_game_type_F": {
+   "reproduced": true,
+   "winning_window": "W2 = 인접 시즌 2022 -> 2023 (창 평균이 아니다)",
+   "F_pre": 0.7087493431424067,
+   "F_post": 0.47290352721326795,
+   "err_F_pre": 4.934314240667703e-05,
+   "err_F_post": 3.527213267962015e-06,
+   "tolerance_declared_before_measuring": 0.01,
+   "R_quote_.55_to_.49_NOT_reproduced": {
+    "W2_R": [
+     0.5036908360365674,
+     0.5031181910398064
+    ],
+    "W1_R": [
+     0.5230203318510896,
+     0.4963571647689337
+    ],
+    "note": "인용된 R .55->.49 는 두 관례 어느 쪽으로도 안 나온다. R 은 6시즌 매끄러운 하락 0.5495 -> 0.4897 이다."
+   }
+  }
+ },
+ "season_rates": {
+  "F": {
+   "2019": {
+    "rate": 0.6892499806096332,
+    "n": 25786
+   },
+   "2020": {
+    "rate": 0.5877740921035627,
+    "n": 23213
+   },
+   "2021": {
+    "rate": 0.7038397587100267,
+    "n": 25861
+   },
+   "2022": {
+    "rate": 0.7087493431424067,
+    "n": 30448
+   },
+   "2023": {
+    "rate": 0.47290352721326795,
+    "n": 25686
+   },
+   "2024": {
+    "rate": 0.45928023992002664,
+    "n": 30010
+   }
+  },
+  "R": {
+   "2019": {
+    "rate": 0.5494903769367803,
+    "n": 211627
+   },
+   "2020": {
+    "rate": 0.5269248530836586,
+    "n": 220874
+   },
+   "2021": {
+    "rate": 0.5127629086865527,
+    "n": 221227
+   },
+   "2022": {
+    "rate": 0.5036908360365674,
+    "n": 217024
+   },
+   "2023": {
+    "rate": 0.5031181910398064,
+    "n": 219839
+   },
+   "2024": {
+    "rate": 0.4897067969592433,
+    "n": 223497
+   }
+  },
+  "ALL": {
+   "2019": {
+    "rate": 0.5646700054335694,
+    "n": 237413
+   },
+   "2020": {
+    "rate": 0.5327116970588356,
+    "n": 244087
+   },
+   "2021": {
+    "rate": 0.5327616072006734,
+    "n": 247088
+   },
+   "2022": {
+    "rate": 0.5289204435249241,
+    "n": 247472
+   },
+   "2023": {
+    "rate": 0.49995723449750534,
+    "n": 245525
+   },
+   "2024": {
+    "rate": 0.4861049201797189,
+    "n": 253507
+   }
+  }
+ },
+ "prereg_gate_selfcheck": {
+  "cell": "count 3-0 (probR 관례 = PC1 을 정확히 재현한 관례)",
+  "dev_by_season": [
+   -0.027172780370250615,
+   -0.023968459883382476,
+   -0.02781194487185057,
+   -0.03029100228760223,
+   -0.007340145201454651,
+   -0.0021336975440621186
+  ],
+  "n_by_season": [
+   2330,
+   2706,
+   2957,
+   2406,
+   2487,
+   2736
+  ],
+  "shift": 0.022574125480513088,
+  "hold": 0.005206447657392532,
+  "pre_sd": 0.0022540540414557803,
+  "hold_over_pre_sd": 2.3098149208658496,
+  "cond2_hold_le_1.5x_pre_sd": false,
+  "cond3_n_ge_20000_in_2023_and_2024": false,
+  "verdict": "사전 등록 게이트가 자기 양성 대조 셀을 떨어뜨린다 — 이 게이트는 값이 아니라 표본수를 재고 있었다."
+ },
+ "stage1": {
+  "panels": [
+   {
+    "tag": "P1",
+    "scale": "logit",
+    "rows": "all",
+    "baseline": "season"
+   },
+   {
+    "tag": "P2",
+    "scale": "logit",
+    "rows": "R",
+    "baseline": "season"
+   },
+   {
+    "tag": "P3",
+    "scale": "prob",
+    "rows": "all",
+    "baseline": "season"
+   },
+   {
+    "tag": "P4",
+    "scale": "prob",
+    "rows": "R",
+    "baseline": "season"
+   },
+   {
+    "tag": "P5",
+    "scale": "logit",
+    "rows": "all",
+    "baseline": "season_x_gametype"
+   }
+  ],
+  "threshold": "사전 등록 3조건 (00_prereg.json)",
+  "n_distinct_cells_passing_any_panel": 38,
+  "n_cells_passing_all_5_panels": 18,
+  "verdict": "🔴 판정 불능 — 게이트가 자기 양성 대조(3-0)를 떨어뜨리면서 38셀을 통과시킨다. 통과 목록에 증거 가치가 없다."
+ },
+ "stage2": {
+  "variants": {
+   "R1": {
+    "n_cols": 25,
+    "n_rows": 1475092,
+    "iters": 5,
+    "rows": "all",
+    "baseline": "season",
+    "mean_resid": 1.6107842143959665e-17,
+    "brier_resid": 0.24659650667670813,
+    "count_trend_slope": [
+     -0.0028860318329138428,
+     0.008234422511645374,
+     0.020934288563823993,
+     -0.014325375813732227,
+     -0.003853219845890988,
+     0.015775326250484622,
+     -0.008135296685003585,
+     -0.01332584253616729,
+     0.00839335089966515,
+     0.013292414169771708,
+     -0.012488780957420845,
+     -0.015537087254877565
+    ],
+    "count_trend_sign": [
+     -1,
+     1,
+     1,
+     -1,
+     -1,
+     1,
+     -1,
+     -1,
+     1,
+     1,
+     -1,
+     -1
+    ],
+    "z_columns": [
+     "intercept",
+     "season_2020",
+     "season_2021",
+     "season_2022",
+     "season_2023",
+     "season_2024",
+     "count_0-1",
+     "count_0-2",
+     "count_1-0",
+     "count_1-1",
+     "count_1-2",
+     "count_2-0",
+     "count_2-1",
+     "count_2-2",
+     "count_3-0",
+     "count_3-1",
+     "count_3-2",
+     "CS3_trend_dir_x_season",
+     "ind_3_0",
+     "ind_3_0_x_post2023",
+     "isF",
+     "sp_pit_bhand",
+     "sp_bat_phand",
+     "sp_pit_strk2",
+     "sp_pit_ball3"
+    ]
+   },
+   "R2": {
+    "n_cols": 25,
+    "n_rows": 1314088,
+    "iters": 4,
+    "rows": "R",
+    "baseline": "season",
+    "mean_resid": 1.5226441029066866e-17,
+    "brier_resid": 0.2483328112003054,
+    "count_trend_slope": [
+     -0.0028860318329138428,
+     0.008234422511645374,
+     0.020934288563823993,
+     -0.014325375813732227,
+     -0.003853219845890988,
+     0.015775326250484622,
+     -0.008135296685003585,
+     -0.01332584253616729,
+     0.00839335089966515,
+     0.013292414169771708,
+     -0.012488780957420845,
+     -0.015537087254877565
+    ],
+    "count_trend_sign": [
+     -1,
+     1,
+     1,
+     -1,
+     -1,
+     1,
+     -1,
+     -1,
+     1,
+     1,
+     -1,
+     -1
+    ],
+    "z_columns": [
+     "intercept",
+     "season_2020",
+     "season_2021",
+     "season_2022",
+     "season_2023",
+     "season_2024",
+     "count_0-1",
+     "count_0-2",
+     "count_1-0",
+     "count_1-1",
+     "count_1-2",
+     "count_2-0",
+     "count_2-1",
+     "count_2-2",
+     "count_3-0",
+     "count_3-1",
+     "count_3-2",
+     "CS3_trend_dir_x_season",
+     "ind_3_0",
+     "ind_3_0_x_post2023",
+     "isF",
+     "sp_pit_bhand",
+     "sp_bat_phand",
+     "sp_pit_strk2"
+    ]
+   },
+   "R3": {
+    "n_cols": 21,
+    "n_rows": 1475092,
+    "iters": 4,
+    "rows": "all",
+    "baseline": "season",
+    "mean_resid": 1.78978164683303e-15,
+    "brier_resid": 0.24794368969484193,
+    "count_trend_slope": [
+     -0.0028860318329138428,
+     0.008234422511645374,
+     0.020934288563823993,
+     -0.014325375813732227,
+     -0.003853219845890988,
+     0.015775326250484622,
+     -0.008135296685003585,
+     -0.01332584253616729,
+     0.00839335089966515,
+     0.013292414169771708,
+     -0.012488780957420845,
+     -0.015537087254877565
+    ],
+    "count_trend_sign": [
+     -1,
+     1,
+     1,
+     -1,
+     -1,
+     1,
+     -1,
+     -1,
+     1,
+     1,
+     -1,
+     -1
+    ],
+    "z_columns": [
+     "intercept",
+     "season_2020",
+     "season_2021",
+     "season_2022",
+     "season_2023",
+     "season_2024",
+     "count_0-1",
+     "count_0-2",
+     "count_1-0",
+     "count_1-1",
+     "count_1-2",
+     "count_2-0",
+     "count_2-1",
+     "count_2-2",
+     "count_3-0",
+     "count_3-1",
+     "count_3-2",
+     "CS3_trend_dir_x_season",
+     "ind_3_0",
+     "ind_3_0_x_post2023",
+     "isF"
+    ]
+   },
+   "R4": {
+    "n_cols": 80,
+    "n_rows": 1475092,
+    "iters": 30,
+    "rows": "all",
+    "baseline": "season",
+    "mean_resid": 9.017308760015697e-18,
+    "brier_resid": 0.24658126114495296,
+    "count_trend_slope": [
+     -0.0028860318329138428,
+     0.008234422511645374,
+     0.020934288563823993,
+     -0.014325375813732227,
+     -0.003853219845890988,
+     0.015775326250484622,
+     -0.008135296685003585,
+     -0.01332584253616729,
+     0.00839335089966515,
+     0.013292414169771708,
+     -0.012488780957420845,
+     -0.015537087254877565
+    ],
+    "count_trend_sign": [
+     -1,
+     1,
+     1,
+     -1,
+     -1,
+     1,
+     -1,
+     -1,
+     1,
+     1,
+     -1,
+     -1
+    ],
+    "z_columns": [
+     "intercept",
+     "season_2020",
+     "season_2021",
+     "season_2022",
+     "season_2023",
+     "season_2024",
+     "count_0-1",
+     "count_0-2",
+     "count_1-0",
+     "count_1-1",
+     "count_1-2",
+     "count_2-0",
+     "count_2-1",
+     "count_2-2",
+     "count_3-0",
+     "count_3-1",
+     "count_3-2",
+     "CS3_trend_dir_x_season",
+     "ind_3_0",
+     "ind_3_0_x_post2023",
+     "isF",
+     "sp_pit_bhand",
+     "sp_bat_phand",
+     "sp_pit_strk2"
+    ]
+   },
+   "R5": {
+    "n_cols": 30,
+    "n_rows": 1475092,
+    "iters": 5,
+    "rows": "all",
+    "baseline": "season_x_gametype",
+    "mean_resid": -1.2601110959509116e-17,
+    "brier_resid": 0.2458636005431767,
+    "count_trend_slope": [
+     -0.0028860318329138428,
+     0.008234422511645374,
+     0.020934288563823993,
+     -0.014325375813732227,
+     -0.003853219845890988,
+     0.015775326250484622,
+     -0.008135296685003585,
+     -0.01332584253616729,
+     0.00839335089966515,
+     0.013292414169771708,
+     -0.012488780957420845,
+     -0.015537087254877565
+    ],
+    "count_trend_sign": [
+     -1,
+     1,
+     1,
+     -1,
+     -1,
+     1,
+     -1,
+     -1,
+     1,
+     1,
+     -1,
+     -1
+    ],
+    "z_columns": [
+     "intercept",
+     "season_2020",
+     "season_2021",
+     "season_2022",
+     "season_2023",
+     "season_2024",
+     "count_0-1",
+     "count_0-2",
+     "count_1-0",
+     "count_1-1",
+     "count_1-2",
+     "count_2-0",
+     "count_2-1",
+     "count_2-2",
+     "count_3-0",
+     "count_3-1",
+     "count_3-2",
+     "CS3_trend_dir_x_season",
+     "ind_3_0",
+     "ind_3_0_x_post2023",
+     "isF",
+     "sp_pit_bhand",
+     "sp_bat_phand",
+     "sp_pit_strk2"
+    ]
+   }
+  },
+  "n_distinct_cells_passing_any_variant": 40,
+  "residual_over_raw_shift_typical": "0.88 ~ 1.19 (exp_116 의 -80% 붕괴가 재현되지 않는다)",
+  "mechanism": "배포 스플릿 4축은 시간 불변이라 시간 이동을 원리적으로 흡수 못 한다. 흡수하는 것은 시간 가변 항(CS3 카운트)뿐이고, 그쪽으로는 count12 가 6.3802 -> 0.9460 (-85%) 로 무너진다 = 기계는 작동한다.",
+  "verdict": "🔴 판정 불능 — 1단과 같은 이유."
+ },
+ "stage3_value": {
+  "method": "V = K * sum_c f_c * eps_c^2 (잡음 편향 보정), eps = 사후창평균 - 전체평균. CS3 카운트 축의 실측 LB +0.78666 을 눈금으로 환산.",
+  "K": 400309.19882517256,
+  "CS3_LB_anchor": 0.78666,
+  "calibration": {
+   "count12_F0_V_regime_net": 5.6584774615984905,
+   "count12_F0_V_holdout_net": 20.26977578229009,
+   "scale_regime": 0.13902326294285047,
+   "scale_holdout": 0.03880950674784044,
+   "meaning": "CS3 는 이 값 전부를 실현하지 않았다(12칸 방향 + 1칸 레벨만). 따라서 환산값은 '같은 실현률로 배포했을 때'의 기대 LB 이득이다."
+  },
+  "detection_limit": 1.4,
+  "n_axes_above_1.4_after_correct_accounting": 0,
+  "axes": {
+   "game_type": {
+    "family": "positive_control",
+    "stage1_cells_pass_P1": 2,
+    "stage1_panels_with_any_pass": 4,
+    "stage1_null_p95_absz": 1.0224312755852645,
+    "stage2_cells_pass_R1": 2,
+    "stage2_variants_with_any_pass": 4,
+    "stage2_null_p95_absz": 0.9192983371824297,
+    "V_regime_net_F1": 395.4016244243715,
+    "score_regime_F1": 54.97002400037961,
+    "V_holdout_net_F1": 515.0747207348401,
+    "score_holdout_F1": 19.989795850000807,
+    "score_regime_F2": 0.0,
+    "score_holdout_F2": 0.013384403507841572,
+    "null_max_score_regime": 0.009251928593499206,
+    "null_max_score_holdout": -0.019971168589608936,
+    "score_conservative_2024ref_F1": 0.11470188043573175,
+    "V_regime_F0": 401.2291093183692,
+    "V_regime_F1": 395.4016244243715
+   },
+   "asof_pn_bin": {
+    "family": "single",
+    "stage1_cells_pass_P1": 2,
+    "stage1_panels_with_any_pass": 4,
+    "stage1_null_p95_absz": 1.9509087718839861,
+    "stage2_cells_pass_R1": 1,
+    "stage2_variants_with_any_pass": 5,
+    "stage2_null_p95_absz": 1.9207981349918404,
+    "V_regime_net_F1": 28.65071136762858,
+    "score_regime_F1": 3.9831153799615433,
+    "V_holdout_net_F1": -9.685209435803934,
+    "score_holdout_F1": -0.3758782009530807,
+    "score_regime_F2": 1.1382237705144806,
+    "score_holdout_F2": -0.4395455153028228,
+    "null_max_score_regime": 0.0892206632939094,
+    "null_max_score_holdout": -0.052381319958362066,
+    "score_conservative_2024ref_F1": 0.961029745051376,
+    "V_regime_F0": 30.569704917517317,
+    "V_regime_F1": 28.928162522485486
+   },
+   "count_x_hand": {
+    "family": "cross_count",
+    "stage1_cells_pass_P1": 1,
+    "stage1_panels_with_any_pass": 5,
+    "stage1_null_p95_absz": 1.203558141091676,
+    "stage2_cells_pass_R1": 2,
+    "stage2_variants_with_any_pass": 3,
+    "stage2_null_p95_absz": 1.1469035870715507,
+    "V_regime_net_F1": 14.612930699502229,
+    "score_regime_F1": 2.03153730700255,
+    "V_holdout_net_F1": 8.431327189116843,
+    "score_holdout_F1": 0.3272156494392807,
+    "score_regime_F2": 1.07837150239352,
+    "score_holdout_F2": 0.04018913780003433,
+    "null_max_score_regime": 0.6417043703033424,
+    "null_max_score_holdout": -0.6179527590290741,
+    "score_conservative_2024ref_F1": 0.640422717311619,
+    "V_regime_F0": 23.249616819268155,
+    "V_regime_F1": 18.374764220390613
+   },
+   "hand_x_base": {
+    "family": "cross",
+    "stage1_cells_pass_P1": 1,
+    "stage1_panels_with_any_pass": 5,
+    "stage1_null_p95_absz": 1.049464020482309,
+    "stage2_cells_pass_R1": 0,
+    "stage2_variants_with_any_pass": 3,
+    "stage2_null_p95_absz": 1.0385781622379233,
+    "V_regime_net_F1": 12.440601914728685,
+    "score_regime_F1": 1.729533071158655,
+    "V_holdout_net_F1": 13.835333403050734,
+    "score_holdout_F1": 0.5369424650643198,
+    "score_regime_F2": 0.8127950943827632,
+    "score_holdout_F2": 0.3022689441453813,
+    "null_max_score_regime": 0.4665957787945953,
+    "null_max_score_holdout": -0.3943920914350344,
+    "score_conservative_2024ref_F1": 0.6722843269515187,
+    "V_regime_F0": 15.111728209022314,
+    "V_regime_F1": 15.23091786388157
+   },
+   "hand_x_outs": {
+    "family": "cross",
+    "stage1_cells_pass_P1": 5,
+    "stage1_panels_with_any_pass": 5,
+    "stage1_null_p95_absz": 1.7048722749111078,
+    "stage2_cells_pass_R1": 3,
+    "stage2_variants_with_any_pass": 5,
+    "stage2_null_p95_absz": 1.7101311446018574,
+    "V_regime_net_F1": 12.366431062915288,
+    "score_regime_F1": 1.719221597324306,
+    "V_holdout_net_F1": 7.470790595938006,
+    "score_holdout_F1": 0.28993769804475894,
+    "score_regime_F2": 0.8128595927098803,
+    "score_holdout_F2": 0.05541384687742103,
+    "null_max_score_regime": 0.23424015484231606,
+    "null_max_score_holdout": -0.11353108288561914,
+    "score_conservative_2024ref_F1": 0.767780661828688,
+    "V_regime_F0": 12.963375463186734,
+    "V_regime_F1": 13.193571947656647
+   },
+   "hand_pair": {
+    "family": "single",
+    "stage1_cells_pass_P1": 3,
+    "stage1_panels_with_any_pass": 5,
+    "stage1_null_p95_absz": 1.3780068106684755,
+    "stage2_cells_pass_R1": 2,
+    "stage2_variants_with_any_pass": 5,
+    "stage2_null_p95_absz": 1.3282362047525407,
+    "V_regime_net_F1": 11.83095423738349,
+    "score_regime_F1": 1.644777861808596,
+    "V_holdout_net_F1": 9.286394856226497,
+    "score_holdout_F1": 0.36040040383583305,
+    "score_regime_F2": 0.7373946392672454,
+    "score_holdout_F2": 0.07735429196178406,
+    "null_max_score_regime": 0.04924528506458315,
+    "null_max_score_holdout": -0.018027226335308115,
+    "score_conservative_2024ref_F1": 0.7737066739352286,
+    "V_regime_F0": 11.88023440544679,
+    "V_regime_F1": 12.023820415295024
+   },
+   "game_month": {
+    "family": "single",
+    "stage1_cells_pass_P1": 2,
+    "stage1_panels_with_any_pass": 5,
+    "stage1_null_p95_absz": 1.726708325326937,
+    "stage2_cells_pass_R1": 2,
+    "stage2_variants_with_any_pass": 5,
+    "stage2_null_p95_absz": 1.775512721452114,
+    "V_regime_net_F1": 4.16112861140755,
+    "score_regime_F1": 0.5784936770827301,
+    "V_holdout_net_F1": -43.96763513882763,
+    "score_holdout_F1": -1.7063622326069174,
+    "score_regime_F2": 0.9450809849650711,
+    "score_holdout_F2": 0.10554957551301888,
+    "null_max_score_regime": 0.12631747136040497,
+    "null_max_score_holdout": -0.10093679410403754,
+    "score_conservative_2024ref_F1": 2.1542118062180315,
+    "V_regime_F0": 4.632417168579779,
+    "V_regime_F1": 4.596076242065282
+   },
+   "dayofweek": {
+    "family": "single",
+    "stage1_cells_pass_P1": 1,
+    "stage1_panels_with_any_pass": 3,
+    "stage1_null_p95_absz": 1.2890991401153515,
+    "stage2_cells_pass_R1": 0,
+    "stage2_variants_with_any_pass": 0,
+    "stage2_null_p95_absz": 1.3066126826210462,
+    "V_regime_net_F1": 2.851006774092807,
+    "score_regime_F1": 0.3963562644065522,
+    "V_holdout_net_F1": -19.439010626047818,
+    "score_holdout_F1": -0.7544184140629449,
+    "score_regime_F2": 0.11890272922508466,
+    "score_holdout_F2": -0.6738309171513136,
+    "null_max_score_regime": 0.06607900792437695,
+    "null_max_score_holdout": -0.14197106518960295,
+    "score_conservative_2024ref_F1": 0.5988443540211702,
+    "V_regime_F0": 3.06659170855035,
+    "V_regime_F1": 3.092143920363157
+   },
+   "inning_bin": {
+    "family": "single",
+    "stage1_cells_pass_P1": 1,
+    "stage1_panels_with_any_pass": 5,
+    "stage1_null_p95_absz": 1.1279329762728536,
+    "stage2_cells_pass_R1": 1,
+    "stage2_variants_with_any_pass": 5,
+    "stage2_null_p95_absz": 1.0557395183219767,
+    "V_regime_net_F1": 2.248577969380829,
+    "score_regime_F1": 0.3126046462847318,
+    "V_holdout_net_F1": 0.41682096005807423,
+    "score_holdout_F1": 0.016176615862015162,
+    "score_regime_F2": 0.20947578052034302,
+    "score_holdout_F2": 0.004849022191909169,
+    "null_max_score_regime": 0.02083398032103771,
+    "null_max_score_holdout": -0.023598688511301064,
+    "score_conservative_2024ref_F1": 0.011616809548586607,
+    "V_regime_F0": 2.2051639395071807,
+    "V_regime_F1": 2.3053721491375296
+   },
+   "outs_x_base": {
+    "family": "cross",
+    "stage1_cells_pass_P1": 1,
+    "stage1_panels_with_any_pass": 5,
+    "stage1_null_p95_absz": 2.03504715951205,
+    "stage2_cells_pass_R1": 0,
+    "stage2_variants_with_any_pass": 3,
+    "stage2_null_p95_absz": 2.0799503052245787,
+    "V_regime_net_F1": 1.6371585511848243,
+    "score_regime_F1": 0.22760312374050395,
+    "V_holdout_net_F1": 4.6461558417236155,
+    "score_holdout_F1": 0.18031501649089096,
+    "score_regime_F2": 0.27199398177133915,
+    "score_holdout_F2": 0.20289268942042898,
+    "null_max_score_regime": 0.5530948019552131,
+    "null_max_score_holdout": -0.38204903451054484,
+    "score_conservative_2024ref_F1": -0.05088021174446849,
+    "V_regime_F0": 4.682490008617599,
+    "V_regime_F1": 4.644011388606168
+   },
+   "score_diff_bin": {
+    "family": "single",
+    "stage1_cells_pass_P1": 0,
+    "stage1_panels_with_any_pass": 0,
+    "stage1_null_p95_absz": 2.6744548513844153,
+    "stage2_cells_pass_R1": 0,
+    "stage2_variants_with_any_pass": 2,
+    "stage2_null_p95_absz": 2.5270649109376526,
+    "V_regime_net_F1": 1.380470108915936,
+    "score_regime_F1": 0.1919174589365656,
+    "V_holdout_net_F1": -1.9805814839030675,
+    "score_holdout_F1": -0.07686539046418393,
+    "score_regime_F2": 0.1836539107644743,
+    "score_holdout_F2": -0.050619336031803366,
+    "null_max_score_regime": 0.2532847114618503,
+    "null_max_score_holdout": 0.003840632895156283,
+    "score_conservative_2024ref_F1": 0.06599821406084062,
+    "V_regime_F0": 1.3388823182659504,
+    "V_regime_F1": 1.4621811847867323
+   },
+   "count12": {
+    "family": "count",
+    "stage1_cells_pass_P1": 3,
+    "stage1_panels_with_any_pass": 5,
+    "stage1_null_p95_absz": 1.4079848574172278,
+    "stage2_cells_pass_R1": 2,
+    "stage2_variants_with_any_pass": 4,
+    "stage2_null_p95_absz": 1.4949306867468868,
+    "V_regime_net_F1": 0.9460061003965764,
+    "score_regime_F1": 0.13151685484097383,
+    "V_holdout_net_F1": 8.4839749662091,
+    "score_holdout_F1": 0.3292588836996015,
+    "score_regime_F2": 0.15956825240260278,
+    "score_holdout_F2": 0.30422700001888875,
+    "null_max_score_regime": 0.1333513170890683,
+    "null_max_score_holdout": -0.08347840467638477,
+    "score_conservative_2024ref_F1": -0.2510385914060846,
+    "V_regime_F0": 6.3801943980972124,
+    "V_regime_F1": 1.6699731482918854
+   },
+   "balls": {
+    "family": "count",
+    "stage1_cells_pass_P1": 2,
+    "stage1_panels_with_any_pass": 5,
+    "stage1_null_p95_absz": 1.134334007925321,
+    "stage2_cells_pass_R1": 3,
+    "stage2_variants_with_any_pass": 4,
+    "stage2_null_p95_absz": 1.1473840883762942,
+    "V_regime_net_F1": 0.7825471690651244,
+    "score_regime_F1": 0.10879226085012406,
+    "V_holdout_net_F1": 2.0959289066823703,
+    "score_holdout_F1": 0.08134196704688329,
+    "score_regime_F2": 0.10370282322337272,
+    "score_holdout_F2": 0.06971972896248099,
+    "null_max_score_regime": 0.03140239335307967,
+    "null_max_score_holdout": -0.04280028483418743,
+    "score_conservative_2024ref_F1": 0.0,
+    "V_regime_F0": 1.2438960148262295,
+    "V_regime_F1": 0.8311726986168931
+   },
+   "runners": {
+    "family": "single",
+    "stage1_cells_pass_P1": 2,
+    "stage1_panels_with_any_pass": 5,
+    "stage1_null_p95_absz": 1.1982688996015163,
+    "stage2_cells_pass_R1": 2,
+    "stage2_variants_with_any_pass": 5,
+    "stage2_null_p95_absz": 1.236009157433903,
+    "V_regime_net_F1": 0.7352837942867351,
+    "score_regime_F1": 0.10222155227074155,
+    "V_holdout_net_F1": 0.8777184114449289,
+    "score_holdout_F1": 0.03406381861167576,
+    "score_regime_F2": 0.11380524736036597,
+    "score_holdout_F2": 0.06643358419630584,
+    "null_max_score_regime": 0.18943231030893276,
+    "null_max_score_holdout": -0.009676266208490164,
+    "score_conservative_2024ref_F1": -0.001687238987874951,
+    "V_regime_F0": 1.2961977309988135,
+    "V_regime_F1": 1.2511753040064189
+   },
+   "li_bin": {
+    "family": "single",
+    "stage1_cells_pass_P1": 0,
+    "stage1_panels_with_any_pass": 0,
+    "stage1_null_p95_absz": 1.529834778968248,
+    "stage2_cells_pass_R1": 2,
+    "stage2_variants_with_any_pass": 4,
+    "stage2_null_p95_absz": 1.4859164792392998,
+    "V_regime_net_F1": 0.39315231338266693,
+    "score_regime_F1": 0.05465731743998845,
+    "V_holdout_net_F1": 0.6509558869365024,
+    "score_holdout_F1": 0.025263276886608652,
+    "score_regime_F2": 0.058591049491685795,
+    "score_holdout_F2": 0.03742105065661417,
+    "null_max_score_regime": 0.07665935004315459,
+    "null_max_score_holdout": -0.0275267655061374,
+    "score_conservative_2024ref_F1": 0.0030289054478731784,
+    "V_regime_F0": 0.6447817991450259,
+    "V_regime_F1": 0.7257038290713863
+   },
+   "base_state": {
+    "family": "single",
+    "stage1_cells_pass_P1": 2,
+    "stage1_panels_with_any_pass": 5,
+    "stage1_null_p95_absz": 1.2677497852111805,
+    "stage2_cells_pass_R1": 2,
+    "stage2_variants_with_any_pass": 5,
+    "stage2_null_p95_absz": 1.2346210769995127,
+    "V_regime_net_F1": 0.28381903699090516,
+    "score_regime_F1": 0.03945744860777321,
+    "V_holdout_net_F1": 2.177628821789119,
+    "score_holdout_F1": 0.08451270045351664,
+    "score_regime_F2": 0.07443009507524558,
+    "score_holdout_F2": 0.11742647267501402,
+    "null_max_score_regime": 0.2171090927075591,
+    "null_max_score_holdout": -0.03136307119315563,
+    "score_conservative_2024ref_F1": -0.07583052625546914,
+    "V_regime_F0": 1.1674231172986926,
+    "V_regime_F1": 1.122024704197449
+   },
+   "outs": {
+    "family": "single",
+    "stage1_cells_pass_P1": 0,
+    "stage1_panels_with_any_pass": 3,
+    "stage1_null_p95_absz": 1.7144398282914777,
+    "stage2_cells_pass_R1": 0,
+    "stage2_variants_with_any_pass": 1,
+    "stage2_null_p95_absz": 1.679757503684185,
+    "V_regime_net_F1": 0.15754198099128877,
+    "score_regime_F1": 0.02190200024788949,
+    "V_holdout_net_F1": 0.4107683964323924,
+    "score_holdout_F1": 0.01594171885314253,
+    "score_regime_F2": 0.013749334935805414,
+    "score_holdout_F2": 0.010655556176767117,
+    "null_max_score_regime": 0.09262562741930337,
+    "null_max_score_holdout": 0.01077811542336387,
+    "score_conservative_2024ref_F1": 0.0,
+    "V_regime_F0": 0.23557542663229206,
+    "V_regime_F1": 0.27750811233368716
+   },
+   "pitchmix_dom": {
+    "family": "single",
+    "stage1_cells_pass_P1": 0,
+    "stage1_panels_with_any_pass": 3,
+    "stage1_null_p95_absz": 0.48333986920434097,
+    "stage2_cells_pass_R1": 0,
+    "stage2_variants_with_any_pass": 2,
+    "stage2_null_p95_absz": 0.5003323371701751,
+    "V_regime_net_F1": 0.14262812087611892,
+    "score_regime_F1": 0.019828626751605342,
+    "V_holdout_net_F1": 1.447628525271441,
+    "score_holdout_F1": 0.056181749019888295,
+    "score_regime_F2": 0.17323860725641488,
+    "score_holdout_F2": 0.09551023947946972,
+    "null_max_score_regime": 0.09650615327630567,
+    "null_max_score_holdout": -0.08907544227906602,
+    "score_conservative_2024ref_F1": -0.002077095766608428,
+    "V_regime_F0": 0.2982272094966682,
+    "V_regime_F1": 0.21917017496060026
+   },
+   "strikes": {
+    "family": "count",
+    "stage1_cells_pass_P1": 2,
+    "stage1_panels_with_any_pass": 5,
+    "stage1_null_p95_absz": 1.3184449751673477,
+    "stage2_cells_pass_R1": 0,
+    "stage2_variants_with_any_pass": 2,
+    "stage2_null_p95_absz": 1.31504883260107,
+    "V_regime_net_F1": 0.14191908286947733,
+    "score_regime_F1": 0.019730053974371532,
+    "V_holdout_net_F1": 0.6160909789713349,
+    "score_holdout_F1": 0.023910187005671647,
+    "score_regime_F2": 0.05491135226064024,
+    "score_holdout_F2": 0.03371462467742831,
+    "null_max_score_regime": 0.046886760779996234,
+    "null_max_score_holdout": -0.023852852316393603,
+    "score_conservative_2024ref_F1": 0.0,
+    "V_regime_F0": 1.2373788330302697,
+    "V_regime_F1": 0.17861434582782837
+   },
+   "top_bottom": {
+    "family": "single",
+    "stage1_cells_pass_P1": 0,
+    "stage1_panels_with_any_pass": 0,
+    "stage1_null_p95_absz": 1.2435770496210505,
+    "stage2_cells_pass_R1": 0,
+    "stage2_variants_with_any_pass": 0,
+    "stage2_null_p95_absz": 1.2346230931277458,
+    "V_regime_net_F1": 0.035002814453050056,
+    "score_regime_F1": 0.004866205477446185,
+    "V_holdout_net_F1": -0.4994119387127399,
+    "score_holdout_F1": -0.01938193100542416,
+    "score_regime_F2": 0.006650332439550252,
+    "score_holdout_F2": -0.02294452292220881,
+    "null_max_score_regime": 0.03791577970264165,
+    "null_max_score_holdout": 0.009875553674231725,
+    "score_conservative_2024ref_F1": 0.0,
+    "V_regime_F0": 0.0126799425237891,
+    "V_regime_F1": 0.035002814453050056
+   }
+  }
+ },
+ "ruled_out": {
+  "game_type": "F1 점수 54.97 은 「모델이 6시즌 무차별 평균에 서 있다」 전제의 산물이고 이 축에서만 그 전제가 거짓이다. aa_infer.py stage 4 gamma[game_type] 가 각 세그먼트 평균을 그 세그먼트의 realised 2024 rate 에 맞춘다. F2(season x isF 흡수) 0.000 · 보수열(2024 기준) 0.115. 그리고 LB 가 독립으로 같은 답을 냈다 — CV_LB.md L199 「F의 2025 기저율은 붕괴하지 않았다」, 후보 P 가 2025 전역 외삽 0.4785 로 LB -20.1196855618.",
+  "asof_pn_bin": "표본 안 3.983 인데 2024 홀드아웃 -0.376. 구간 정의가 시간 단조(S173)라 표본 안 이동이 구성 표류다. 표본 밖 반증.",
+  "game_month": "표본 안 0.578 · 홀드아웃 -1.706. 표본 밖 반증.",
+  "dayofweek": "표본 안 0.396 · 홀드아웃 -0.754. 표본 밖 반증.",
+  "handedness_family": "hand_pair/hand_x_outs/hand_x_base/count_x_hand — F1 1.645~2.032 인데 절반 이상이 F 구성 누출이다(F2 에서 0.737~1.078). 홀드아웃 F2 0.040~0.302. 검출한계 +1.4 아래.",
+  "global_level_axis": "이번 스캔의 셀 축은 아니지만 같은 계열이라 확인했다 — 전역 기저율 추세 외삽(2025 ~0.4747)은 이미 LB 로 닫혔다. AW 가 target_rate 0.4829582933733939 로 꼭지점에 착륙(+7.9772784813), 남은 몫 +0.00001점."
+ },
+ "timing_min": {
+  "stage1_scan": 0.65,
+  "stage2_resid": 1.66,
+  "stage3_value": 0.54,
+  "stage4_detail": 0.54
+ },
+ "artifacts": {
+  "prereg": "experiments/exp_117/out/00_prereg.json",
+  "scan": "experiments/exp_117/out/10_scan.json",
+  "resid": "experiments/exp_117/out/20_resid.json",
+  "value": "experiments/exp_117/out/30_value.json",
+  "detail": "experiments/exp_117/out/40_detail.json"
+ },
+ "note_no_fold_metrics": "이 실험은 학습·재적합·제출 0 의 측정 스캔이다. fold_2022/2023/2024 Brier 를 만드는 적합이 없으므로 그 칸은 해당 없음이다."
+}

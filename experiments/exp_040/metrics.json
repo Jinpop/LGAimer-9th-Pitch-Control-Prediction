@@ -1,0 +1,850 @@
+{
+ "exp_id": "exp_040",
+ "title": "do the offset and the global calibration still pay on top of the teammate features",
+ "no_training": true,
+ "fold_2022": "NOT MEASURED \u2014 this experiment trains nothing; it transforms exp_037's stored fold_2024 predictions",
+ "fold_2023": "NOT MEASURED \u2014 same reason",
+ "fold_2024": {
+  "n_valid": 253507,
+  "n_valid_R": 223497,
+  "n_valid_F": 30010,
+  "seeds": [
+   42,
+   7,
+   2024
+  ],
+  "transforms": {
+   "T0": "none",
+   "T1": "offset only: clip(p + beta*d, 1e-6, 1-1e-6)",
+   "T2": "calibration only: sigmoid(logit(p) + gamma)",
+   "T3": "offset first, then gamma on its output (deployment order)"
+  },
+  "beta": 0.59072,
+  "cell": "S400_self",
+  "k": 400,
+  "observed_rate_2024": 0.4861049201797189,
+  "R0": {
+   "T0": {
+    "valid_all": {
+     "brier": 0.24799583985308396,
+     "score": 724.98404,
+     "per_seed_brier": {
+      "42": 0.2480393607892575,
+      "7": 0.2479833583326968,
+      "2024": 0.2479648004372976
+     },
+     "seed_std_brier": 3.169282552332379e-05,
+     "seed_std_score_points": 12.68693
+    },
+    "valid_R": {
+     "brier": 0.2480639928030659,
+     "score": 697.70178,
+     "per_seed_brier": {
+      "42": 0.2481051313179358,
+      "7": 0.24804870074211496,
+      "2024": 0.24803814634914695
+     },
+     "seed_std_brier": 2.9406709631262927e-05,
+     "seed_std_score_points": 11.77178
+    },
+    "valid_F": {
+     "brier": 0.24748827637883838,
+     "score": 928.16636,
+     "per_seed_brier": {
+      "42": 0.24754954020118614,
+      "7": 0.24749672612750806,
+      "2024": 0.24741856280782096
+     },
+     "seed_std_brier": 5.380407718515803e-05,
+     "seed_std_score_points": 21.53827
+    },
+    "auc_valid_all": 0.5483550666637081,
+    "pred_mean": 0.49339962502553253
+   },
+   "T1": {
+    "valid_all": {
+     "brier": 0.24790019374272065,
+     "score": 763.27205,
+     "per_seed_brier": {
+      "42": 0.24794831900950637,
+      "7": 0.24788834471528198,
+      "2024": 0.24786391750337364
+     },
+     "seed_std_brier": 3.5460806042731085e-05,
+     "seed_std_score_points": 14.19529
+    },
+    "valid_R": {
+     "brier": 0.24798826993518533,
+     "score": 728.01434,
+     "per_seed_brier": {
+      "42": 0.24803531166765838,
+      "7": 0.24797326656542296,
+      "2024": 0.24795623157247468
+     },
+     "seed_std_brier": 3.3982752407027234e-05,
+     "seed_std_score_points": 13.60361
+    },
+    "valid_F": {
+     "brier": 0.24724425356320504,
+     "score": 1025.85094,
+     "per_seed_brier": {
+      "42": 0.2473004483624226,
+      "7": 0.24725589624007563,
+      "2024": 0.2471764160871169
+     },
+     "seed_std_brier": 5.13008464706728e-05,
+     "seed_std_score_points": 20.5362
+    },
+    "auc_valid_all": 0.5495691055516234,
+    "pred_mean": 0.49353192982916344
+   },
+   "T2": {
+    "valid_all": {
+     "brier": 0.24794231266086272,
+     "score": 746.41146,
+     "per_seed_brier": {
+      "42": 0.24798352504240517,
+      "7": 0.2479337124658195,
+      "2024": 0.24790970047436342
+     },
+     "seed_std_brier": 3.074615669991584e-05,
+     "seed_std_score_points": 12.30797
+    },
+    "valid_R": {
+     "brier": 0.24799889753899984,
+     "score": 723.76002,
+     "per_seed_brier": {
+      "42": 0.24803629846922023,
+      "7": 0.2479879808088967,
+      "2024": 0.24797241333888262
+     },
+     "seed_std_brier": 2.719937152058664e-05,
+     "seed_std_score_points": 10.88816
+    },
+    "valid_F": {
+     "brier": 0.24752090144763325,
+     "score": 915.10625,
+     "per_seed_brier": {
+      "42": 0.24759049929855678,
+      "7": 0.24752955345639896,
+      "2024": 0.24744265158794398
+     },
+     "seed_std_brier": 6.0667835108470813e-05,
+     "seed_std_score_points": 24.28589
+    },
+    "auc_valid_all": 0.5483550666637081,
+    "pred_mean": 0.48610485159446637
+   },
+   "T3": {
+    "valid_all": {
+     "brier": 0.24784463562970935,
+     "score": 785.51248,
+     "per_seed_brier": {
+      "42": 0.24789041739138568,
+      "7": 0.24783672512643953,
+      "2024": 0.24780676437130275
+     },
+     "seed_std_brier": 3.460625173514673e-05,
+     "seed_std_score_points": 13.8532
+    },
+    "valid_R": {
+     "brier": 0.24792078688787103,
+     "score": 755.02843,
+     "per_seed_brier": {
+      "42": 0.24796402424026645,
+      "7": 0.24791023062078257,
+      "2024": 0.2478881058025641
+     },
+     "seed_std_brier": 3.1879757181466124e-05,
+     "seed_std_score_points": 12.76176
+    },
+    "valid_F": {
+     "brier": 0.24727750541493543,
+     "score": 1012.53992,
+     "per_seed_brier": {
+      "42": 0.24734223645488865,
+      "7": 0.24728929901950178,
+      "2024": 0.2472009807704158
+     },
+     "seed_std_brier": 5.82672516969524e-05,
+     "seed_std_score_points": 23.32492
+    },
+    "auc_valid_all": 0.5495691055516234,
+    "pred_mean": 0.48610480994653305
+   },
+   "delta_vs_T0": {
+    "T1": {
+     "per_seed_brier": {
+      "42": -9.10417797511387e-05,
+      "7": -9.501361741481862e-05,
+      "2024": -0.00010088293392396253
+     },
+     "per_seed_score": {
+      "42": 36.44486,
+      "7": 38.03483,
+      "2024": 40.38437
+     },
+     "mean_brier": -9.564611036330661e-05,
+     "mean_score": 38.28802,
+     "signs_agree": true,
+     "improves": true
+    },
+    "T2": {
+     "per_seed_brier": {
+      "42": -5.5835746852334056e-05,
+      "7": -4.964586687730699e-05,
+      "2024": -5.5099962934179736e-05
+     },
+     "per_seed_score": {
+      "42": 22.35156,
+      "7": 19.8737,
+      "2024": 22.05702
+     },
+     "mean_brier": -5.352719222127359e-05,
+     "mean_score": 21.42743,
+     "signs_agree": true,
+     "improves": true
+    },
+    "T3": {
+     "per_seed_brier": {
+      "42": -0.0001489433978718313,
+      "7": -0.0001466332062572684,
+      "2024": -0.00015803606599484876
+     },
+     "per_seed_score": {
+      "42": 59.62341,
+      "7": 58.69862,
+      "2024": 63.26329
+     },
+     "mean_brier": -0.00015120422337464948,
+     "mean_score": 60.52844,
+     "signs_agree": true,
+     "improves": true
+    },
+    "T3_minus_T1": {
+     "per_seed_brier": {
+      "42": -5.790161812069261e-05,
+      "7": -5.161958884244977e-05,
+      "2024": -5.715313207088624e-05
+     },
+     "per_seed_score": {
+      "42": 23.17855,
+      "7": 20.6638,
+      "2024": 22.87892
+     },
+     "mean_brier": -5.555811301134287e-05,
+     "mean_score": 22.24042,
+     "signs_agree": true,
+     "improves": true
+    },
+    "T3_minus_T2": {
+     "per_seed_brier": {
+      "42": -9.310765101949725e-05,
+      "7": -9.69873393799614e-05,
+      "2024": -0.00010293610306066903
+     },
+     "per_seed_score": {
+      "42": 37.27185,
+      "7": 38.82492,
+      "2024": 41.20627
+     },
+     "mean_brier": -9.767703115337589e-05,
+     "mean_score": 39.10101,
+     "signs_agree": true,
+     "improves": true
+    }
+   },
+   "n_clipped_offset_by_seed": {
+    "42": 0,
+    "7": 0,
+    "2024": 0
+   },
+   "gamma": {
+    "T2_solved_on_base": -0.029392,
+    "T3_solved_on_offset_output": -0.029944,
+    "per_seed_unrounded": {
+     "on_base": {
+      "42": -0.030024177217910845,
+      "7": -0.028309219018220613,
+      "2024": -0.02984171179999881
+     },
+     "on_offset": {
+      "42": -0.030576939688445545,
+      "7": -0.028860467383909568,
+      "2024": -0.030393195502085076
+     }
+    }
+   }
+  },
+  "L_no_sit": {
+   "T0": {
+    "valid_all": {
+     "brier": 0.2479184940800174,
+     "score": 755.94626,
+     "per_seed_brier": {
+      "42": 0.24790902263670747,
+      "7": 0.24791863620797533,
+      "2024": 0.24792782339536937
+     },
+     "seed_std_brier": 7.676035514640823e-06,
+     "seed_std_score_points": 3.07279
+    },
+    "valid_R": {
+     "brier": 0.24800920772329918,
+     "score": 719.63276,
+     "per_seed_brier": {
+      "42": 0.2480057132116806,
+      "7": 0.24800565623120188,
+      "2024": 0.24801625372701508
+     },
+     "seed_std_brier": 4.982331312882265e-06,
+     "seed_std_score_points": 1.99447
+    },
+    "valid_F": {
+     "brier": 0.24724291170305815,
+     "score": 1026.3881,
+     "per_seed_brier": {
+      "42": 0.2471889275539094,
+      "7": 0.24727056176175538,
+      "2024": 0.24726924579350976
+     },
+     "seed_std_brier": 3.817633833143644e-05,
+     "seed_std_score_points": 15.28234
+    },
+    "auc_valid_all": 0.5490271899830149,
+    "pred_mean": 0.49095047716344875
+   },
+   "T1": {
+    "valid_all": {
+     "brier": 0.24784993095064922,
+     "score": 783.39271,
+     "per_seed_brier": {
+      "42": 0.2478365787156982,
+      "7": 0.24785300825192683,
+      "2024": 0.24786020588432273
+     },
+     "seed_std_brier": 9.888144809744497e-06,
+     "seed_std_score_points": 3.95832
+    },
+    "valid_R": {
+     "brier": 0.24796032480764305,
+     "score": 739.20104,
+     "per_seed_brier": {
+      "42": 0.24795287549574135,
+      "7": 0.24795964611571014,
+      "2024": 0.24796845281147764
+     },
+     "seed_std_brier": 6.377494724515561e-06,
+     "seed_std_score_points": 2.55297
+    },
+    "valid_F": {
+     "brier": 0.24702778180514642,
+     "score": 1112.50658,
+     "per_seed_brier": {
+      "42": 0.2469704680376144,
+      "7": 0.2470588315560926,
+      "2024": 0.24705404582173232
+     },
+     "seed_std_brier": 4.057402103874372e-05,
+     "seed_std_score_points": 16.24215
+    },
+    "auc_valid_all": 0.5498833239839661,
+    "pred_mean": 0.4910827819670796
+   },
+   "T2": {
+    "valid_all": {
+     "brier": 0.2478948223377048,
+     "score": 765.42228,
+     "per_seed_brier": {
+      "42": 0.24787909875971648,
+      "7": 0.24790228120709415,
+      "2024": 0.24790308704630387
+     },
+     "seed_std_brier": 1.1123114754867296e-05,
+     "seed_std_score_points": 4.45269
+    },
+    "valid_R": {
+     "brier": 0.24797881036244865,
+     "score": 731.8011,
+     "per_seed_brier": {
+      "42": 0.2479689715832294,
+      "7": 0.24798263559580647,
+      "2024": 0.24798482390831011
+     },
+     "seed_std_brier": 7.014193244058801e-06,
+     "seed_std_score_points": 2.80785
+    },
+    "valid_F": {
+     "brier": 0.24726932845012836,
+     "score": 1015.81323,
+     "per_seed_brier": {
+      "42": 0.24720977831864108,
+      "7": 0.2473038485241874,
+      "2024": 0.24729435850755652
+     },
+     "seed_std_brier": 4.228615789298634e-05,
+     "seed_std_score_points": 16.92754
+    },
+    "auc_valid_all": 0.5490271899830149,
+    "pred_mean": 0.48610497593628477
+   },
+   "T3": {
+    "valid_all": {
+     "brier": 0.24782482588412025,
+     "score": 793.4425,
+     "per_seed_brier": {
+      "42": 0.2478050655464364,
+      "7": 0.24783540976983467,
+      "2024": 0.24783400233608963
+     },
+     "seed_std_brier": 1.3984477739533917e-05,
+     "seed_std_score_points": 5.59812
+    },
+    "valid_R": {
+     "brier": 0.24792821632093454,
+     "score": 752.05436,
+     "per_seed_brier": {
+      "42": 0.2479142666031044,
+      "7": 0.24793510366617533,
+      "2024": 0.24793527869352391
+     },
+     "seed_std_brier": 9.864198879409422e-06,
+     "seed_std_score_points": 3.94873
+    },
+    "valid_F": {
+     "brier": 0.24705483413281448,
+     "score": 1101.67728,
+     "per_seed_brier": {
+      "42": 0.24699179968298687,
+      "7": 0.2470929476988434,
+      "2024": 0.24707975501661314
+     },
+     "seed_std_brier": 4.4896311020753624e-05,
+     "seed_std_score_points": 17.97241
+    },
+    "auc_valid_all": 0.5498833239839661,
+    "pred_mean": 0.48610491286691504
+   },
+   "delta_vs_T0": {
+    "T1": {
+     "per_seed_brier": {
+      "42": -7.244392100927421e-05,
+      "7": -6.562795604850291e-05,
+      "2024": -6.761751104664149e-05
+     },
+     "per_seed_score": {
+      "42": 28.99997,
+      "7": 26.27147,
+      "2024": 27.06791
+     },
+     "mean_brier": -6.856312936813953e-05,
+     "mean_score": 27.44645,
+     "signs_agree": true,
+     "improves": true
+    },
+    "T2": {
+     "per_seed_brier": {
+      "42": -2.9923876990994858e-05,
+      "7": -1.6355000881179693e-05,
+      "2024": -2.4736349065496155e-05
+     },
+     "per_seed_score": {
+      "42": 11.9788,
+      "7": 6.54706,
+      "2024": 9.90219
+     },
+     "mean_brier": -2.3671742312556903e-05,
+     "mean_score": 9.47602,
+     "signs_agree": true,
+     "improves": true
+    },
+    "T3": {
+     "per_seed_brier": {
+      "42": -0.00010395709027108402,
+      "7": -8.322643814065445e-05,
+      "2024": -9.382105927974171e-05
+     },
+     "per_seed_score": {
+      "42": 41.61498,
+      "7": 33.31631,
+      "2024": 37.55743
+     },
+     "mean_brier": -9.366819589716006e-05,
+     "mean_score": 37.49624,
+     "signs_agree": true,
+     "improves": true
+    },
+    "T3_minus_T1": {
+     "per_seed_brier": {
+      "42": -3.1513169261809804e-05,
+      "7": -1.7598482092151535e-05,
+      "2024": -2.6203548233100227e-05
+     },
+     "per_seed_score": {
+      "42": 12.61501,
+      "7": 7.04483,
+      "2024": 10.48952
+     },
+     "mean_brier": -2.510506652902052e-05,
+     "mean_score": 10.04979,
+     "signs_agree": true,
+     "improves": true
+    },
+    "T3_minus_T2": {
+     "per_seed_brier": {
+      "42": -7.403321328008916e-05,
+      "7": -6.687143725947475e-05,
+      "2024": -6.908471021424556e-05
+     },
+     "per_seed_score": {
+      "42": 29.63618,
+      "7": 26.76925,
+      "2024": 27.65524
+     },
+     "mean_brier": -6.999645358460316e-05,
+     "mean_score": 28.02022,
+     "signs_agree": true,
+     "improves": true
+    }
+   },
+   "n_clipped_offset_by_seed": {
+    "42": 0,
+    "7": 0,
+    "2024": 0
+   },
+   "gamma": {
+    "T2_solved_on_base": -0.019519,
+    "T3_solved_on_offset_output": -0.020067,
+    "per_seed_unrounded": {
+     "on_base": {
+      "42": -0.02212437182211663,
+      "7": -0.01648630749732972,
+      "2024": -0.019946121125329494
+     },
+     "on_offset": {
+      "42": -0.022673578217427087,
+      "7": -0.01703209955867572,
+      "2024": -0.02049427947533352
+     }
+    }
+   }
+  },
+  "interaction_gain_L_minus_R": {
+   "T1": {
+    "per_seed": {
+     "42": {
+      "gain_points_R0": 36.44486,
+      "gain_points_L_no_sit": 28.99997,
+      "L_minus_R_points": -7.44489,
+      "L_minus_R_brier": 1.859785874186448e-05
+     },
+     "7": {
+      "gain_points_R0": 38.03483,
+      "gain_points_L_no_sit": 26.27147,
+      "L_minus_R_points": -11.76336,
+      "L_minus_R_brier": 2.9385661366315707e-05
+     },
+     "2024": {
+      "gain_points_R0": 40.38437,
+      "gain_points_L_no_sit": 27.06791,
+      "L_minus_R_points": -13.31646,
+      "L_minus_R_brier": 3.326542287732104e-05
+     }
+    },
+    "mean_L_minus_R_brier": 2.7082980995167077e-05,
+    "mean_L_minus_R_points": -10.84157,
+    "seed_signs_agree": true,
+    "VERDICT": "features_absorb_part_of_it",
+    "caveat": "beta was fitted without the teammate features, so a shrunken gain on L_no_sit is equally consistent with 'beta is mis-fitted for this base'. Not separable here."
+   },
+   "T2": {
+    "per_seed": {
+     "42": {
+      "gain_points_R0": 22.35156,
+      "gain_points_L_no_sit": 11.9788,
+      "L_minus_R_points": -10.37276,
+      "L_minus_R_brier": 2.59118698613392e-05
+     },
+     "7": {
+      "gain_points_R0": 19.8737,
+      "gain_points_L_no_sit": 6.54706,
+      "L_minus_R_points": -13.32664,
+      "L_minus_R_brier": 3.3290865996127295e-05
+     },
+     "2024": {
+      "gain_points_R0": 22.05702,
+      "gain_points_L_no_sit": 9.90219,
+      "L_minus_R_points": -12.15483,
+      "L_minus_R_brier": 3.036361386868358e-05
+     }
+    },
+    "mean_L_minus_R_brier": 2.985544990871669e-05,
+    "mean_L_minus_R_points": -11.95141,
+    "seed_signs_agree": true,
+    "VERDICT": "features_absorb_part_of_it",
+    "caveat": "gamma is solved per base, so no mis-fit confound here; it is in-sample on both bases equally."
+   },
+   "T3": {
+    "per_seed": {
+     "42": {
+      "gain_points_R0": 59.62341,
+      "gain_points_L_no_sit": 41.61498,
+      "L_minus_R_points": -18.00843,
+      "L_minus_R_brier": 4.498630760074729e-05
+     },
+     "7": {
+      "gain_points_R0": 58.69862,
+      "gain_points_L_no_sit": 33.31631,
+      "L_minus_R_points": -25.38231,
+      "L_minus_R_brier": 6.340676811661394e-05
+     },
+     "2024": {
+      "gain_points_R0": 63.26329,
+      "gain_points_L_no_sit": 37.55743,
+      "L_minus_R_points": -25.70586,
+      "L_minus_R_brier": 6.421500671510705e-05
+     }
+    },
+    "mean_L_minus_R_brier": 5.7536027477489426e-05,
+    "mean_L_minus_R_points": -23.0322,
+    "seed_signs_agree": true,
+    "VERDICT": "features_absorb_part_of_it",
+    "caveat": "beta was fitted without the teammate features, so a shrunken gain on L_no_sit is equally consistent with 'beta is mis-fitted for this base'. Not separable here."
+   }
+  },
+  "absolute_L_minus_R_by_transform": {
+   "T0": {
+    "per_seed_points": {
+     "42": 52.17556,
+     "7": 25.90886,
+     "2024": 14.80225
+    },
+    "mean_points": 30.96222,
+    "seed_signs_agree": true
+   },
+   "T1": {
+    "per_seed_points": {
+     "42": 44.73067,
+     "7": 14.14551,
+     "2024": 1.4858
+    },
+    "mean_points": 20.12066,
+    "seed_signs_agree": true
+   },
+   "T2": {
+    "per_seed_points": {
+     "42": 41.8028,
+     "7": 12.58222,
+     "2024": 2.64742
+    },
+    "mean_points": 19.01081,
+    "seed_signs_agree": true
+   },
+   "T3": {
+    "per_seed_points": {
+     "42": 34.16713,
+     "7": 0.52655,
+     "2024": -10.90361
+    },
+    "mean_points": 7.93002,
+    "seed_signs_agree": false
+   },
+   "_note": "L_no_sit minus R0 on the same transform, positive = the featured base is better. At T3 the three seeds DISAGREE in sign (seed 2024 flips), so the post-correction standing of the featured base is NOT MEASURABLE at 3 seeds."
+  },
+  "segment_deltas_vs_T0": {
+   "R0": {
+    "T1": {
+     "valid_all": {
+      "mean_points": 38.28802,
+      "seed_signs_agree": true
+     },
+     "valid_R": {
+      "mean_points": 30.31256,
+      "seed_signs_agree": true
+     },
+     "valid_F": {
+      "mean_points": 97.68458,
+      "seed_signs_agree": true
+     }
+    },
+    "T2": {
+     "valid_all": {
+      "mean_points": 21.42743,
+      "seed_signs_agree": true
+     },
+     "valid_R": {
+      "mean_points": 26.05823,
+      "seed_signs_agree": true
+     },
+     "valid_F": {
+      "mean_points": -13.06012,
+      "seed_signs_agree": true
+     }
+    },
+    "T3": {
+     "valid_all": {
+      "mean_points": 60.52844,
+      "seed_signs_agree": true
+     },
+     "valid_R": {
+      "mean_points": 57.32665,
+      "seed_signs_agree": true
+     },
+     "valid_F": {
+      "mean_points": 84.37356,
+      "seed_signs_agree": true
+     }
+    }
+   },
+   "L_no_sit": {
+    "T1": {
+     "valid_all": {
+      "mean_points": 27.44645,
+      "seed_signs_agree": true
+     },
+     "valid_R": {
+      "mean_points": 19.56828,
+      "seed_signs_agree": true
+     },
+     "valid_F": {
+      "mean_points": 86.11848,
+      "seed_signs_agree": true
+     }
+    },
+    "T2": {
+     "valid_all": {
+      "mean_points": 9.47602,
+      "seed_signs_agree": true
+     },
+     "valid_R": {
+      "mean_points": 12.16834,
+      "seed_signs_agree": true
+     },
+     "valid_F": {
+      "mean_points": -10.57487,
+      "seed_signs_agree": true
+     }
+    },
+    "T3": {
+     "valid_all": {
+      "mean_points": 37.49624,
+      "seed_signs_agree": true
+     },
+     "valid_R": {
+      "mean_points": 32.4216,
+      "seed_signs_agree": true
+     },
+     "valid_F": {
+      "mean_points": 75.28918,
+      "seed_signs_agree": true
+     }
+    }
+   }
+  },
+  "brier": 0.24782482588412025,
+  "score": 793.4425,
+  "auc": 0.5498833239839661,
+  "headline_key_note": "the flat brier/score/auc keys above are L_no_sit @ T3, i.e. the fullest arm; they are NOT an adoption claim. This experiment applies no threshold."
+ },
+ "conversion": "score = 100000 * (1 - brier / 0.2498069); 6-digit Brier converts with +-0.2002 uncertainty",
+ "train_time_min": 0.0,
+ "compute_min": 0.41,
+ "inference_time_sec": null,
+ "provenance": {
+  "exp037_predictions": {
+   "R0_u2024_seed42_st2": {
+    "sha256": "ef4bafad23f53798b60e221b497e448c70321ef14e0618233930ff54893d54bf",
+    "exp037_brier_full": 0.2480393607892575,
+    "our_recomputed_brier": 0.2480393607892575,
+    "stack_argmin_iter": 425,
+    "cap": 1650,
+    "any_argmin_at_cap": false
+   },
+   "R0_u2024_seed7_st2": {
+    "sha256": "d3c606b0433768250219de958864054294d0098fb724dc7377224b1b92153668",
+    "exp037_brier_full": 0.2479833583326968,
+    "our_recomputed_brier": 0.2479833583326968,
+    "stack_argmin_iter": 481,
+    "cap": 1650,
+    "any_argmin_at_cap": false
+   },
+   "R0_u2024_seed2024_st2": {
+    "sha256": "aa999bb9eee3c419a4239338330e086b72826e57c9cdf03e231768cc89ea330d",
+    "exp037_brier_full": 0.2479648004372976,
+    "our_recomputed_brier": 0.2479648004372976,
+    "stack_argmin_iter": 481,
+    "cap": 1650,
+    "any_argmin_at_cap": false
+   },
+   "L_no_sit_u2024_seed42_st2": {
+    "sha256": "db1631cb07989f3e8c92ed7b25555193eb1a529a896b59d1bc0687fb9d50a1c5",
+    "exp037_brier_full": 0.24790902263670747,
+    "our_recomputed_brier": 0.24790902263670747,
+    "stack_argmin_iter": 282,
+    "cap": 1650,
+    "any_argmin_at_cap": false
+   },
+   "L_no_sit_u2024_seed7_st2": {
+    "sha256": "7fbad15d1e2df8218df63caa4c9774040e87a41e7dfed61aa181e203be456b9e",
+    "exp037_brier_full": 0.24791863620797533,
+    "our_recomputed_brier": 0.24791863620797533,
+    "stack_argmin_iter": 282,
+    "cap": 1650,
+    "any_argmin_at_cap": false
+   },
+   "L_no_sit_u2024_seed2024_st2": {
+    "sha256": "0fc566b7b2eda4d36059ea526fe0f0f40102172a2db934f8021aa0b3bc9cb75e",
+    "exp037_brier_full": 0.24792782339536937,
+    "our_recomputed_brier": 0.24792782339536937,
+    "stack_argmin_iter": 282,
+    "cap": 1650,
+    "any_argmin_at_cap": false
+   }
+  },
+  "train_csv_sha256": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+  "inherited_src_sha256": {
+   "dev_k.py": "e1cd86dd2795a4d12f279f7ea600353f441cfc7b19eea12207fb87117207a0d9",
+   "backoff.py": "4169d2dadd8a07dceef2098a88971d3b3e437276bfb28834295e7df523591039",
+   "features_platoon.py": "68d63063e8ce659cf2876fbca4f5adef7ee1e720620ae63bb78ea496c8dadf09",
+   "offset.py": "68d6007db03ab850e2a5181383a4148fae8947c711558282c9846391f13e0488",
+   "labels.py": "439cd504478b4bc8162e9dedc32be27bfadd5d1178472d6b384b60f46ed7a9f2"
+  },
+  "own_src_sha256": {
+   "postproc.py": "7f6fed6daba96347528a7339e9eeebdadf855391e9835c8e6d4dbb512c023562"
+  },
+  "beta_refit_on_supply": {
+   "beta": 0.59072,
+   "se": 0.032372,
+   "n": 985994,
+   "sum_d2": 236.126043,
+   "mean_d2": 0.0002394802,
+   "t": 18.248,
+   "expected_brier_gain": -8.3567e-05
+  },
+  "beta_reproduces_frozen": true
+ },
+ "d_table": {
+  "n": 253507,
+  "sd": 0.014856504213995606,
+  "cell_hit_pct": 78.501,
+  "max_abs_beta_d": 0.04561535509435441,
+  "note": "max_abs_beta_d is a PROBABILITY shift, not a score. Whether a given row moved toward or away from its label is not known row-wise, so it does NOT convert to points.",
+  "max_source_season_for_2024_rows": 2023.0,
+  "all_rows_same_source": true,
+  "built_from_test_or_2024_labels": false
+ },
+ "clip_firings_total": 0,
+ "known_biases": {
+  "beta_fitted_without_features": "beta 0.59072 was fitted on supply blocks of a base with no teammate features. A smaller offset gain on L_no_sit is equally consistent with 'the features already carry it' and with 'beta is wrong for this base'. Not separable without a refit, which needs training and is out of scope here.",
+  "gamma_in_sample": "gamma is solved so the mean prediction over the fold_2024 rows equals those same rows' realised rate \u2014 in-sample by construction. 1 parameter vs 253,507 rows; the deployed analogue (candidate N) transferred to LB at 1.1143x local, which does not disconfirm it. The bias is stated, not hidden.",
+  "three_seeds_only": "3 seeds. exp_039's re-measured sigma is NOT applied here (pre-registration)."
+ },
+ "changed_vs_prior_measurements": [
+  "1. the offset is applied on a base carrying the teammate features for the first time",
+  "2. the calibration is applied on a base carrying the teammate features for the first time",
+  "3. offset+calibration measured together on fold_2024 for the first time (candidate N combined them only in the deployment build)",
+  "4. the base is an exp_037 artefact \u2014 its stacker iteration is fold_2023 argmin x scale, not exp_030's 481",
+  "CORRECTION to item 4: exp_037's R0 fold_2024 prediction files are sha256-identical to exp_030's stage-2 files (ef4bafad.../d3c606b0.../aa999bb9...). For the R0 arm nothing changed at all \u2014 and T1/T3 on it reproduce BUILD_PLAN_N's recorded local numbers exactly (brier_M 0.24790019374272065, brier_N 0.2478446356, gain 22.24042 pts, per-seed identical). Item 4 applies only to the L_no_sit arm."
+ ],
+ "not_an_adoption_experiment": "no threshold is applied. the offset and the calibration are already LB-validated and deployed; what is asked here is whether they still pay on top of the features."
+}

@@ -1,0 +1,1227 @@
+{
+ "exp_id": "exp_113",
+ "title": "투수 in-season 분해 확장 → 딥 팔 입력 (94 → 94+13열)",
+ "면": "exp_102 sA_mix.py / exp_097 sB1_rebase.py (고친 f64 OOT 입력, S134)",
+ "사전등록": {
+  "판정량": "argmax_{w,steps} gain(실제) − argmax_{w,steps} gain(N1 개수맞춤 무작위)",
+  "왜_N1_기준선": "열을 더하는 것 자체에 고정 대가가 있다 (S183: 3열에 약 −4점)",
+  "min_pts": 2.4390243902439024,
+  "min_t": 2.0,
+  "전이비": 0.574,
+  "LB_검출한계": 1.4,
+  "sigma": "sqrt(부트스트랩 se² + 적합간 sd²), 적합간 sd 는 서로소 5시드 묶음 3개로 직접 재되 exp_107 실측 2.1571 보다 작으면 그것을 쓴다",
+  "귀무_셋": [
+   "N1(기준선)",
+   "N2 (season,pitcher_id) 순열",
+   "N2b pitcher_id 순열"
+  ]
+ },
+ "🔴결론": {
+  "판정": "기각 — 13열 전부, 세 묶음 전부에서 개수맞춤 무작위 열보다 나쁘다",
+  "판정량_PR_vs_N1s_PR_pts": -6.760727504562245,
+  "묶음별": [
+   -8.466234975001953,
+   -5.430714773912996,
+   -6.385232764771786
+  ],
+  "묶음_3개_t": -7.5440532990272,
+  "사전등록_문턱": "+2.4390 pts AND t>=2.0 — 통과 0/3",
+  "핵심": "귀무(무작위·순열·가우시안 13열)는 94열 기준선과 같은 자리(23.5~28.0 vs 25.49)에 떨어지는데, 실제 13열만 19.5~21.9 로 내려간다. 열을 더한 대가가 아니라 이 열들의 내용이 손해다.",
+  "기준선_94열": {
+   "gain_bundle_mean": 25.4866,
+   "sd": 1.5253,
+   "alone_recentred": 864.84,
+   "rho_vs_z_mate": 0.89304
+  }
+ },
+ "🔴판정": {
+  "best_variant": "P",
+  "delta_vs_N1_pts": -3.807343263306848,
+  "t_combined": -0.7538227720401878,
+  "lb_equivalent": -2.1854150331381303,
+  "PASS": false,
+  "primary_null": "N1s_* (season 안 순열) — 1차 N1 은 결함이라 판정에서 뺐다",
+  "null_flip_check": {
+   "P": {
+    "N1s_P": -3.807343263306848,
+    "N2s_P": -3.0637327752991723,
+    "N1_P": -16.208133580619688,
+    "N2_P": -0.39975764147823156
+   },
+   "R": {
+    "N1s_R": -5.032618618361312,
+    "N2s_R": -3.9565376395711382,
+    "N1_R": -11.585674602687618,
+    "N2_R": -71.34591424082782
+   },
+   "PR": {
+    "N1s_PR": -8.466234975001953,
+    "N2s_PR": -4.037006238766253,
+    "N1g_PR": -6.222660657773076,
+    "N1_PR": -19.741696042940816,
+    "N2_PR": -64.82805414967936,
+    "N2b_PR": -13.688999740035797
+   }
+  },
+  "결함_귀무_기록": "(season, pitcher_id) 안 순열이 라벨 상관을 보존한다 — 귀무가 아니었다"
+ },
+ "게이트": {
+  "행독립성_규칙2-4": {
+   "G_replace": {
+    "max_abs_diff": 0.0,
+    "n_keep_rows_moved": 0,
+    "nan_pattern_identical": true,
+    "PASS": true
+   },
+   "G_degen": {
+    "max_abs_diff": 0.0,
+    "n_keep_rows_moved": 0,
+    "nan_pattern_identical": true,
+    "PASS": true
+   },
+   "G_position": {
+    "max_abs_diff": 0.0,
+    "n_rows_moved": 0,
+    "nan_pattern_identical": true,
+    "PASS": true
+   },
+   "G_single_row": {
+    "n_tested": 40,
+    "max_abs_diff": 0.0,
+    "PASS": true
+   }
+  },
+  "시간축": {
+   "T_label_randomize_all": {
+    "무엇": "control_success 를 전량 난수화",
+    "table_identical": true,
+    "feature_max_abs_diff": 0.0,
+    "nan_pattern_identical": true,
+    "PASS": true,
+    "해석": "라벨 경로가 0 이다 — 이 열들은 asof_* 와 동결표만의 함수"
+   },
+   "T_neg_randomize_future": {
+    "무엇": "season >= 2024 행을 통째로 난수화 → 동결표 재구축",
+    "n_rows_randomized": 253507,
+    "table_bitwise_identical": true,
+    "PASS": true
+   },
+   "T_pos_randomize_past": {
+    "무엇": "season < 2024 행을 난수화 → 동결표가 달라져야 한다",
+    "table_bitwise_identical": false,
+    "feature_max_abs_diff": 1886.0,
+    "share_rows_moved": 1.0,
+    "PASS": true
+   }
+  },
+  "ALL_PASS": true,
+  "94열_재현": {
+   "무엇": "EXTRA 없이 seed42·1632 재적합 → exp_097 z_F1632_f64o_s42 와 비트 동일",
+   "bitwise": true,
+   "sha16": "b1da6808c7f16dea"
+  },
+  "배포_fold_비트동일": {
+   "n_checked": 2,
+   "max": 0.0
+  },
+  "면_재현": {
+   "w0_rc": 928.501461058684,
+   "expected": 928.501461058684,
+   "abs_diff": 0.0,
+   "PASS": true
+  },
+  "기준선_94열_묶음": {
+   "gains": {
+    "0": 26.269817382706947,
+    "1": 25.285709994282684,
+    "2": 24.474735939861148,
+    "3": 23.760152740637295,
+    "4": 27.642426053253757
+   },
+   "argmax_w": {
+    "0": 0.43,
+    "1": 0.44,
+    "2": 0.4,
+    "3": 0.4,
+    "4": 0.38
+   },
+   "mean": 25.486568422148366,
+   "sd_ddof1": 1.5252754870379128,
+   "bundle0_expected": 26.269817382706947,
+   "abs_diff_bundle0": 0.0,
+   "PASS": true
+  }
+ },
+ "열_인벤토리": {
+  "prep.json_NUM": 94,
+  "prep.json_CAT": 5,
+  "출하_투수_in-season_블록": [
+   "ins_p_n",
+   "ins_p_success",
+   "ins_p_success_dev",
+   "ins_p_reverse",
+   "ins_p_reverse_dev",
+   "ins_p_middle",
+   "ins_p_middle_dev",
+   "ins_p_ball",
+   "ins_p_ball_dev",
+   "ins_p_strike",
+   "ins_p_strike_dev"
+  ],
+  "출하_타자_in-season_블록": [
+   "ins_b_n",
+   "ins_b_success",
+   "ins_b_success_dev",
+   "ins_b_middle",
+   "ins_b_middle_dev"
+  ],
+  "미출하_원열": "asof_pitcher_pitchmix_n — test 에 있는데 NUM 94열에 없다",
+  "후보_14열": [
+   "insp_fb_dev",
+   "insp_br_dev",
+   "insp_os_dev",
+   "insp_mix_l1",
+   "insp_fb_lvl",
+   "insp_w",
+   "insp_share",
+   "insp_suc_z",
+   "insp_ball_z",
+   "insp_mid_z",
+   "insp_rev_z",
+   "insp_suc_raw",
+   "insp_suc_cnt",
+   "insp_miss"
+  ],
+  "생존_13열": [
+   "insp_fb_dev",
+   "insp_br_dev",
+   "insp_os_dev",
+   "insp_mix_l1",
+   "insp_fb_lvl",
+   "insp_w",
+   "insp_share",
+   "insp_suc_z",
+   "insp_ball_z",
+   "insp_mid_z",
+   "insp_rev_z",
+   "insp_suc_raw",
+   "insp_miss"
+  ],
+  "탈락": {
+   "insp_suc_cnt": {
+    "max_abs_rho": 0.9008430216874552,
+    "vs": "ins_p_n",
+    "span_resid_frac_2024": 0.038728442690385584
+   }
+  }
+ },
+ "열_선별": {
+  "insp_fb_dev": {
+   "group": "P",
+   "max_abs_rho": 0.23096354347967965,
+   "vs": "asof_pitcher_fastball_rate",
+   "span_resid_frac_2024": 0.8611629030427445,
+   "KEEP_stage12": true
+  },
+  "insp_br_dev": {
+   "group": "P",
+   "max_abs_rho": 0.28163665357208106,
+   "vs": "asof_pitcher_breaking_rate",
+   "span_resid_frac_2024": 0.8151366179857034,
+   "KEEP_stage12": true
+  },
+  "insp_os_dev": {
+   "group": "P",
+   "max_abs_rho": 0.21815357679012454,
+   "vs": "asof_pitcher_offspeed_rate",
+   "span_resid_frac_2024": 0.8983949277312693,
+   "KEEP_stage12": true
+  },
+  "insp_mix_l1": {
+   "group": "P",
+   "max_abs_rho": 0.1014772029478586,
+   "vs": "r2_vs_cnt",
+   "span_resid_frac_2024": 1.0202292681567289,
+   "KEEP_stage12": true
+  },
+  "insp_fb_lvl": {
+   "group": "P",
+   "max_abs_rho": 0.7710742153143533,
+   "vs": "asof_pitcher_fastball_rate",
+   "span_resid_frac_2024": 0.3494713818642392,
+   "KEEP_stage12": true
+  },
+  "insp_w": {
+   "group": "R",
+   "max_abs_rho": 0.5537297915962824,
+   "vs": "ins_p_n",
+   "span_resid_frac_2024": 0.5559443091773895,
+   "KEEP_stage12": true
+  },
+  "insp_share": {
+   "group": "R",
+   "max_abs_rho": 0.4721544691928313,
+   "vs": "asof_pitcher_n",
+   "span_resid_frac_2024": 0.3866148855796864,
+   "KEEP_stage12": true
+  },
+  "insp_suc_z": {
+   "group": "R",
+   "max_abs_rho": 0.6136160896726255,
+   "vs": "r2_sitsc",
+   "span_resid_frac_2024": 0.18102656922882931,
+   "KEEP_stage12": true
+  },
+  "insp_ball_z": {
+   "group": "R",
+   "max_abs_rho": 0.2988585191095996,
+   "vs": "ins_p_ball",
+   "span_resid_frac_2024": 0.2372197259931962,
+   "KEEP_stage12": true
+  },
+  "insp_mid_z": {
+   "group": "R",
+   "max_abs_rho": 0.5355641031414786,
+   "vs": "ins_p_middle_dev",
+   "span_resid_frac_2024": 0.22965878086876898,
+   "KEEP_stage12": true
+  },
+  "insp_rev_z": {
+   "group": "R",
+   "max_abs_rho": 0.6168824789239604,
+   "vs": "ins_p_reverse_dev",
+   "span_resid_frac_2024": 0.20802240531089886,
+   "KEEP_stage12": true
+  },
+  "insp_suc_raw": {
+   "group": "R",
+   "max_abs_rho": 0.6416262521540068,
+   "vs": "r2_vs_cnt",
+   "span_resid_frac_2024": 0.27293540631873925,
+   "KEEP_stage12": true
+  },
+  "insp_suc_cnt": {
+   "group": "R",
+   "max_abs_rho": 0.9008430216874552,
+   "vs": "ins_p_n",
+   "span_resid_frac_2024": 0.038728442690385584,
+   "KEEP_stage12": false
+  },
+  "insp_miss": {
+   "group": "R",
+   "max_abs_rho": 0.6303728892256042,
+   "vs": "ins_p_ball_dev",
+   "span_resid_frac_2024": 0.5927217986183436,
+   "KEEP_stage12": true
+  }
+ },
+ "🔴_귀무_결함_발견": {
+  "무엇": "(season, pitcher_id) 안 순열은 귀무가 아니다 — 라벨 상관이 거의 그대로 남고 때로 원본보다 강해진다",
+  "실측_2024_corr_원본→순열": {
+   "ins_p_ball": [
+    -0.04431,
+    -0.0441
+   ],
+   "ins_p_strike": [
+    0.03281,
+    0.03327
+   ],
+   "sp_pit_bhand_all": [
+    0.02891,
+    0.02891
+   ],
+   "r2_lg_form": [
+    0.02126,
+    0.02662
+   ],
+   "asof_pitcher_prev1_game_success_rate": [
+    0.03607,
+    0.0364
+   ]
+  },
+  "season_안_순열은_죽인다": "전부 |corr| <= 0.0043",
+  "기전": "① 투수-시즌 집계가 신호의 담지자라 그 안에서 섞어도 안 없어진다 ② 누적 asof 열은 시즌 뒷부분 값이 그 투수의 시즌 전체 수준에 더 가까워 섞으면 덜 시끄러운(그리고 미래를 엿본) 추정치가 된다",
+  "영향": "1차 N1 은 귀무가 아니라 강한 팔이었다 — 정직면 이득 39.25 로 94열 기준선 26.27 을 크게 웃돈다. 판정에서 뺐고 N1s(season 안 순열)로 다시 지었다.",
+  "⚠️_다른_실험에도": "exp_103b 의 null3s·rand3 이 (season, batter_id) 안 순열로 같은 계열이다",
+  "새_귀무_라벨상관": {
+   "N2s_P": 0.003727661259414626,
+   "N1s_P": 0.0024272388228945463,
+   "N2s_R": 0.004448332941365409,
+   "N1s_R": 0.00500379205451583,
+   "N2s_PR": 0.004448332941365409,
+   "N1s_PR": 0.00476842208430047,
+   "N1g_PR": 0.0043132723741174436
+  }
+ },
+ "판본": {
+  "P": {
+   "per_step": {
+    "1088": {
+     "argmax": {
+      "w": 0.41,
+      "gain": 21.137516157532218
+     },
+     "alone_recentred_score": 871.3174377901978,
+     "z_sd": 0.22405615010704352,
+     "rho_vs_z_mate": 0.910598125144667,
+     "rho_vs_base94": 0.9739669639420689,
+     "gain_sd_matched": 22.395401212038678,
+     "gain_at_w0.43": 21.07674024418577
+    },
+    "1632": {
+     "argmax": {
+      "w": 0.33,
+      "gain": 18.815045415965187
+     },
+     "alone_recentred_score": 801.6681726246477,
+     "z_sd": 0.2254640665810276,
+     "rho_vs_z_mate": 0.8721489481930321,
+     "rho_vs_base94": 0.9815057910101895,
+     "gain_sd_matched": 19.253272625852105,
+     "gain_at_w0.43": 17.03922866809205
+    },
+    "2176": {
+     "argmax": {
+      "w": 0.25,
+      "gain": 13.970293805209963
+     },
+     "alone_recentred_score": 715.8717689327299,
+     "z_sd": 0.22894929484827062,
+     "rho_vs_z_mate": 0.8383028730546006,
+     "rho_vs_base94": 0.9517628603228624,
+     "gain_sd_matched": 14.13248410716551,
+     "gain_at_w0.43": 6.9787942242771805
+    },
+    "2720": {
+     "argmax": {
+      "w": 0.22,
+      "gain": 15.083634565726811
+     },
+     "alone_recentred_score": 599.867228450679,
+     "z_sd": 0.2486348371347305,
+     "rho_vs_z_mate": 0.8037488197196493,
+     "rho_vs_base94": 0.9299408369019976,
+     "gain_sd_matched": 15.394296494375453,
+     "gain_at_w0.43": 1.4043218593106985
+    }
+   },
+   "own_argmax_step": 1088,
+   "own_argmax": {
+    "w": 0.41,
+    "gain": 21.137516157532218
+   }
+  },
+  "R": {
+   "per_step": {
+    "1088": {
+     "argmax": {
+      "w": 0.44,
+      "gain": 20.054317479745123
+     },
+     "alone_recentred_score": 893.4764923834604,
+     "z_sd": 0.22197967534839055,
+     "rho_vs_z_mate": 0.926799125933418,
+     "rho_vs_base94": 0.9596729653999184,
+     "gain_sd_matched": 21.71789461172807,
+     "gain_at_w0.43": 20.053408165365795
+    },
+    "1632": {
+     "argmax": {
+      "w": 0.38,
+      "gain": 21.908095590561516
+     },
+     "alone_recentred_score": 843.6561580023039,
+     "z_sd": 0.2287418500660625,
+     "rho_vs_z_mate": 0.8949871482118931,
+     "rho_vs_base94": 0.9740264890805108,
+     "gain_sd_matched": 23.069129518438217,
+     "gain_at_w0.43": 21.49169675712551
+    },
+    "2176": {
+     "argmax": {
+      "w": 0.28,
+      "gain": 14.940105947880397
+     },
+     "alone_recentred_score": 771.3288446016709,
+     "z_sd": 0.23548037627993404,
+     "rho_vs_z_mate": 0.8747951788414006,
+     "rho_vs_base94": 0.9523701580546123,
+     "gain_sd_matched": 15.732609296270653,
+     "gain_at_w0.43": 10.647779770878174
+    },
+    "2720": {
+     "argmax": {
+      "w": 0.26,
+      "gain": 17.102355307896346
+     },
+     "alone_recentred_score": 696.5954233812078,
+     "z_sd": 0.24567221197316716,
+     "rho_vs_z_mate": 0.8428739184292523,
+     "rho_vs_base94": 0.9371845970703481,
+     "gain_sd_matched": 17.818745337627774,
+     "gain_at_w0.43": 9.772318226952734
+    }
+   },
+   "own_argmax_step": 1632,
+   "own_argmax": {
+    "w": 0.38,
+    "gain": 21.908095590561516
+   }
+  },
+  "PR": {
+   "per_step": {
+    "1088": {
+     "argmax": {
+      "w": 0.43,
+      "gain": 18.67172773482025
+     },
+     "alone_recentred_score": 890.0140922710631,
+     "z_sd": 0.2138449022474343,
+     "rho_vs_z_mate": 0.9226390846434706,
+     "rho_vs_base94": 0.9537423643473445,
+     "gain_sd_matched": 19.398901684042357,
+     "gain_at_w0.43": 18.67172773482025
+    },
+    "1632": {
+     "argmax": {
+      "w": 0.35,
+      "gain": 19.509785975457817
+     },
+     "alone_recentred_score": 818.9518430718357,
+     "z_sd": 0.22514720767646146,
+     "rho_vs_z_mate": 0.8809313072850132,
+     "rho_vs_base94": 0.9631615075330887,
+     "gain_sd_matched": 20.103935616799845,
+     "gain_at_w0.43": 18.351738564381662
+    },
+    "2176": {
+     "argmax": {
+      "w": 0.26,
+      "gain": 13.173266515997852
+     },
+     "alone_recentred_score": 755.4745412429953,
+     "z_sd": 0.2267487183616337,
+     "rho_vs_z_mate": 0.8604486796543851,
+     "rho_vs_base94": 0.9444318977796404,
+     "gain_sd_matched": 13.436269165134604,
+     "gain_at_w0.43": 7.926023948401394
+    },
+    "2720": {
+     "argmax": {
+      "w": 0.26,
+      "gain": 15.464351242777639
+     },
+     "alone_recentred_score": 707.7244905513203,
+     "z_sd": 0.23745688895653902,
+     "rho_vs_z_mate": 0.8403263021312559,
+     "rho_vs_base94": 0.9323880900523114,
+     "gain_sd_matched": 15.8873865590881,
+     "gain_at_w0.43": 8.315460138663639
+    }
+   },
+   "own_argmax_step": 1632,
+   "own_argmax": {
+    "w": 0.35,
+    "gain": 19.509785975457817
+   }
+  },
+  "N1s_P": {
+   "per_step": {
+    "1088": {
+     "argmax": {
+      "w": 0.49,
+      "gain": 24.875439167992795
+     },
+     "alone_recentred_score": 903.1699946491556,
+     "z_sd": 0.2153961268762474,
+     "rho_vs_z_mate": 0.9182832761625932,
+     "rho_vs_base94": 0.9786652343805463,
+     "gain_sd_matched": 25.82515493778635,
+     "gain_at_w0.43": 24.544835818085517
+    },
+    "1632": {
+     "argmax": {
+      "w": 0.41,
+      "gain": 24.944859420839066
+     },
+     "alone_recentred_score": 849.4693209616711,
+     "z_sd": 0.2180752393518123,
+     "rho_vs_z_mate": 0.8808045077709882,
+     "rho_vs_base94": 0.9899765064305205,
+     "gain_sd_matched": 25.244161966853085,
+     "gain_at_w0.43": 24.867370130576774
+    },
+    "2176": {
+     "argmax": {
+      "w": 0.31,
+      "gain": 19.182615667356913
+     },
+     "alone_recentred_score": 768.6118945733899,
+     "z_sd": 0.22654419516952415,
+     "rho_vs_z_mate": 0.8506067757695944,
+     "rho_vs_base94": 0.9641695745309644,
+     "gain_sd_matched": 19.42103473857594,
+     "gain_at_w0.43": 16.2679866964055
+    }
+   },
+   "own_argmax_step": 1632,
+   "own_argmax": {
+    "w": 0.41,
+    "gain": 24.944859420839066
+   }
+  },
+  "N1s_R": {
+   "per_step": {
+    "1088": {
+     "argmax": {
+      "w": 0.47,
+      "gain": 22.903037895960438
+     },
+     "alone_recentred_score": 900.6303438336083,
+     "z_sd": 0.21761175920898482,
+     "rho_vs_z_mate": 0.92277656378564,
+     "rho_vs_base94": 0.975367096083951,
+     "gain_sd_matched": 24.107491930369633,
+     "gain_at_w0.43": 22.7356421855784
+    },
+    "1632": {
+     "argmax": {
+      "w": 0.42,
+      "gain": 26.940714208922827
+     },
+     "alone_recentred_score": 851.8764707078574,
+     "z_sd": 0.22284158624275666,
+     "rho_vs_z_mate": 0.8837967973041326,
+     "rho_vs_base94": 0.9893171382780778,
+     "gain_sd_matched": 27.54573680255885,
+     "gain_at_w0.43": 26.91399943361978
+    },
+    "2176": {
+     "argmax": {
+      "w": 0.34,
+      "gain": 21.85442071800378
+     },
+     "alone_recentred_score": 789.8912525442059,
+     "z_sd": 0.22977388178564234,
+     "rho_vs_z_mate": 0.8618839291774624,
+     "rho_vs_base94": 0.9688758846332634,
+     "gain_sd_matched": 22.39133329520189,
+     "gain_at_w0.43": 20.119963078346586
+    }
+   },
+   "own_argmax_step": 1632,
+   "own_argmax": {
+    "w": 0.42,
+    "gain": 26.940714208922827
+   }
+  },
+  "N1s_PR": {
+   "per_step": {
+    "1088": {
+     "argmax": {
+      "w": 0.48,
+      "gain": 22.258143778042268
+     },
+     "alone_recentred_score": 902.3131268454554,
+     "z_sd": 0.21400945194559082,
+     "rho_vs_z_mate": 0.9238032561142427,
+     "rho_vs_base94": 0.9739341129963694,
+     "gain_sd_matched": 23.185926998159403,
+     "gain_at_w0.43": 22.04511355718978
+    },
+    "1632": {
+     "argmax": {
+      "w": 0.42,
+      "gain": 27.97602095045977
+     },
+     "alone_recentred_score": 854.3835661024013,
+     "z_sd": 0.22389342730309272,
+     "rho_vs_z_mate": 0.8838909315724527,
+     "rho_vs_base94": 0.9892575464876727,
+     "gain_sd_matched": 28.64802198214727,
+     "gain_at_w0.43": 27.966194841744255
+    },
+    "2176": {
+     "argmax": {
+      "w": 0.31,
+      "gain": 19.526203390363207
+     },
+     "alone_recentred_score": 769.1670322669153,
+     "z_sd": 0.22508783709951577,
+     "rho_vs_z_mate": 0.8489512564736986,
+     "rho_vs_base94": 0.9639984738822497,
+     "gain_sd_matched": 19.70080246556097,
+     "gain_at_w0.43": 16.769354400258976
+    }
+   },
+   "own_argmax_step": 1632,
+   "own_argmax": {
+    "w": 0.42,
+    "gain": 27.97602095045977
+   }
+  },
+  "N2s_P": {
+   "per_step": {
+    "1632": {
+     "argmax": {
+      "w": 0.4,
+      "gain": 24.20124893283139
+     },
+     "alone_recentred_score": 845.821262597679,
+     "z_sd": 0.21929644937777845,
+     "rho_vs_z_mate": 0.8814702574640947,
+     "rho_vs_base94": 0.9899152587193304,
+     "gain_sd_matched": 24.54437652309457,
+     "gain_at_w0.43": 24.055335768691293
+    }
+   },
+   "own_argmax_step": 1632,
+   "own_argmax": {
+    "w": 0.4,
+    "gain": 24.20124893283139
+   }
+  },
+  "N2s_R": {
+   "per_step": {
+    "1632": {
+     "argmax": {
+      "w": 0.41,
+      "gain": 25.864633230132654
+     },
+     "alone_recentred_score": 845.1647001140539,
+     "z_sd": 0.2209609807602272,
+     "rho_vs_z_mate": 0.8793017474732086,
+     "rho_vs_base94": 0.98747622196652,
+     "gain_sd_matched": 26.27613815766597,
+     "gain_at_w0.43": 25.773806724738165
+    }
+   },
+   "own_argmax_step": 1632,
+   "own_argmax": {
+    "w": 0.41,
+    "gain": 25.864633230132654
+   }
+  },
+  "N2s_PR": {
+   "per_step": {
+    "1632": {
+     "argmax": {
+      "w": 0.39,
+      "gain": 23.54679221422407
+     },
+     "alone_recentred_score": 844.4779495059729,
+     "z_sd": 0.22069508119964615,
+     "rho_vs_z_mate": 0.8831491135556109,
+     "rho_vs_base94": 0.9859720714066644,
+     "gain_sd_matched": 23.982889447882144,
+     "gain_at_w0.43": 23.33624657826499
+    }
+   },
+   "own_argmax_step": 1632,
+   "own_argmax": {
+    "w": 0.39,
+    "gain": 23.54679221422407
+   }
+  },
+  "N1g_PR": {
+   "per_step": {
+    "1632": {
+     "argmax": {
+      "w": 0.42,
+      "gain": 25.732446633230893
+     },
+     "alone_recentred_score": 858.6873680443418,
+     "z_sd": 0.2202457770948676,
+     "rho_vs_z_mate": 0.8883048821418025,
+     "rho_vs_base94": 0.9897223900707875,
+     "gain_sd_matched": 26.25661633455229,
+     "gain_at_w0.43": 25.717934899094303
+    }
+   },
+   "own_argmax_step": 1632,
+   "own_argmax": {
+    "w": 0.42,
+    "gain": 25.732446633230893
+   }
+  },
+  "N1_P": {
+   "per_step": {
+    "1632": {
+     "argmax": {
+      "w": 0.46,
+      "gain": 37.345649738151906
+     },
+     "alone_recentred_score": 862.5606840597322,
+     "z_sd": 0.22672344702620942,
+     "rho_vs_z_mate": 0.8725403333244661,
+     "rho_vs_base94": 0.98278682436989,
+     "gain_sd_matched": 37.98960473779812,
+     "gain_at_w0.43": 37.16864001628301
+    },
+    "2176": {
+     "argmax": {
+      "w": 0.37,
+      "gain": 32.0660670369399
+     },
+     "alone_recentred_score": 786.1341276704903,
+     "z_sd": 0.2363629717026611,
+     "rho_vs_z_mate": 0.8437847720552683,
+     "rho_vs_base94": 0.9549778761803821,
+     "gain_sd_matched": 32.663176854563744,
+     "gain_at_w0.43": 31.336330805653574
+    },
+    "2720": {
+     "argmax": {
+      "w": 0.31,
+      "gain": 29.32798301952255
+     },
+     "alone_recentred_score": 681.7044140545624,
+     "z_sd": 0.24932458120734258,
+     "rho_vs_z_mate": 0.8094940685821965,
+     "rho_vs_base94": 0.9340366342762136,
+     "gain_sd_matched": 29.87336265343197,
+     "gain_at_w0.43": 24.947713286782573
+    }
+   },
+   "own_argmax_step": 1632,
+   "own_argmax": {
+    "w": 0.46,
+    "gain": 37.345649738151906
+   }
+  },
+  "N1_R": {
+   "per_step": {
+    "1632": {
+     "argmax": {
+      "w": 0.45,
+      "gain": 33.493770193249134
+     },
+     "alone_recentred_score": 861.1876934554452,
+     "z_sd": 0.2274995899230562,
+     "rho_vs_z_mate": 0.8814224009424213,
+     "rho_vs_base94": 0.9822055344266398,
+     "gain_sd_matched": 34.409794116296894,
+     "gain_at_w0.43": 33.43685512489094
+    },
+    "2176": {
+     "argmax": {
+      "w": 0.37,
+      "gain": 27.74355573840205
+     },
+     "alone_recentred_score": 799.9323244297085,
+     "z_sd": 0.23379639535429056,
+     "rho_vs_z_mate": 0.8606394618249108,
+     "rho_vs_base94": 0.9587465450733834,
+     "gain_sd_matched": 28.497607827049364,
+     "gain_at_w0.43": 26.977701780128655
+    }
+   },
+   "own_argmax_step": 1632,
+   "own_argmax": {
+    "w": 0.45,
+    "gain": 33.493770193249134
+   }
+  },
+  "N1_PR": {
+   "per_step": {
+    "1632": {
+     "argmax": {
+      "w": 0.53,
+      "gain": 39.25148201839863
+     },
+     "alone_recentred_score": 905.1621229889117,
+     "z_sd": 0.21843801773184365,
+     "rho_vs_z_mate": 0.8932025491282338,
+     "rho_vs_base94": 0.9828621251614537,
+     "gain_sd_matched": 39.842801743739074,
+     "gain_at_w0.43": 37.78416869073544
+    },
+    "2176": {
+     "argmax": {
+      "w": 0.42,
+      "gain": 32.22300340688378
+     },
+     "alone_recentred_score": 837.2733558314583,
+     "z_sd": 0.22518746237820855,
+     "rho_vs_z_mate": 0.8640167677559315,
+     "rho_vs_base94": 0.9650570934585192,
+     "gain_sd_matched": 32.622051364794515,
+     "gain_at_w0.43": 32.20405365479405
+    }
+   },
+   "own_argmax_step": 1632,
+   "own_argmax": {
+    "w": 0.53,
+    "gain": 39.25148201839863
+   }
+  },
+  "N2_P": {
+   "per_step": {
+    "1632": {
+     "argmax": {
+      "w": 0.35,
+      "gain": 21.53727379901045
+     },
+     "alone_recentred_score": 806.8427442995629,
+     "z_sd": 0.22883261949110636,
+     "rho_vs_z_mate": 0.8726141336043208,
+     "rho_vs_base94": 0.9790805757389252,
+     "gain_sd_matched": 22.19050704060919,
+     "gain_at_w0.43": 20.287215820202732
+    },
+    "2176": {
+     "argmax": {
+      "w": 0.27,
+      "gain": 16.549140234289894
+     },
+     "alone_recentred_score": 725.82764332344,
+     "z_sd": 0.23317700642841854,
+     "rho_vs_z_mate": 0.8416150546942318,
+     "rho_vs_base94": 0.950669202892284,
+     "gain_sd_matched": 16.85554068451279,
+     "gain_at_w0.43": 10.84605471929342
+    }
+   },
+   "own_argmax_step": 1632,
+   "own_argmax": {
+    "w": 0.35,
+    "gain": 21.53727379901045
+   }
+  },
+  "N2_R": {
+   "per_step": {
+    "1632": {
+     "argmax": {
+      "w": 0.6,
+      "gain": 93.25400983138934
+     },
+     "alone_recentred_score": 973.432298867627,
+     "z_sd": 0.23484048032296778,
+     "rho_vs_z_mate": 0.8677785912012864,
+     "rho_vs_base94": 0.9490417333093675,
+     "gain_sd_matched": 92.75652643578883,
+     "gain_at_w0.43": 81.31424355839465
+    },
+    "2176": {
+     "argmax": {
+      "w": 0.57,
+      "gain": 80.8288960525316
+     },
+     "alone_recentred_score": 901.8279829051901,
+     "z_sd": 0.24193873775649347,
+     "rho_vs_z_mate": 0.8401020030289025,
+     "rho_vs_base94": 0.9272794847382975,
+     "gain_sd_matched": 81.48388067016344,
+     "gain_at_w0.43": 75.89323258648801
+    }
+   },
+   "own_argmax_step": 1632,
+   "own_argmax": {
+    "w": 0.6,
+    "gain": 93.25400983138934
+   }
+  },
+  "N2_PR": {
+   "per_step": {
+    "1632": {
+     "argmax": {
+      "w": 0.6,
+      "gain": 84.33784012513718
+     },
+     "alone_recentred_score": 966.4251577502614,
+     "z_sd": 0.22635725902751408,
+     "rho_vs_z_mate": 0.8683003721807374,
+     "rho_vs_base94": 0.9427498126181457,
+     "gain_sd_matched": 83.47971643698497,
+     "gain_at_w0.43": 73.64998662893197
+    },
+    "2176": {
+     "argmax": {
+      "w": 0.54,
+      "gain": 74.35515316309704
+     },
+     "alone_recentred_score": 881.2006335733869,
+     "z_sd": 0.24015672817400516,
+     "rho_vs_z_mate": 0.8344396146201897,
+     "rho_vs_base94": 0.920037773736742,
+     "gain_sd_matched": 74.67663097190382,
+     "gain_at_w0.43": 71.07870377367487
+    }
+   },
+   "own_argmax_step": 1632,
+   "own_argmax": {
+    "w": 0.6,
+    "gain": 84.33784012513718
+   }
+  },
+  "N2b_PR": {
+   "per_step": {
+    "1632": {
+     "argmax": {
+      "w": 0.48,
+      "gain": 33.198785715493614
+     },
+     "alone_recentred_score": 879.1590970383845,
+     "z_sd": 0.22006232451947863,
+     "rho_vs_z_mate": 0.8876719230199247,
+     "rho_vs_base94": 0.9824782925905554,
+     "gain_sd_matched": 33.77655536971338,
+     "gain_at_w0.43": 32.893257552801856
+    },
+    "2176": {
+     "argmax": {
+      "w": 0.35,
+      "gain": 23.922717168478584
+     },
+     "alone_recentred_score": 792.2680688892569,
+     "z_sd": 0.22946670417244883,
+     "rho_vs_z_mate": 0.8581749998688002,
+     "rho_vs_base94": 0.9634751796587406,
+     "gain_sd_matched": 24.38223958871606,
+     "gain_at_w0.43": 22.587792600881016
+    }
+   },
+   "own_argmax_step": 1632,
+   "own_argmax": {
+    "w": 0.48,
+    "gain": 33.198785715493614
+   }
+  }
+ },
+ "적합간_sd": {
+  "bundles": {
+   "0": {
+    "PR": 19.509785975457817,
+    "N1s_PR": 27.97602095045977,
+    "diff": -8.466234975001953
+   },
+   "1": {
+    "PR": 17.551442942143012,
+    "N1s_PR": 22.982157716056008,
+    "diff": -5.430714773912996
+   },
+   "2": {
+    "PR": 19.891617945599933,
+    "N1s_PR": 26.27685071037172,
+    "diff": -6.385232764771786
+   }
+  },
+  "diffs": [
+   -8.466234975001953,
+   -5.430714773912996,
+   -6.385232764771786
+  ],
+  "sd_measured_ddof1": 1.5522058328432198,
+  "floor_exp107": 2.1570652801242445,
+  "sigma_fit_used": 2.1570652801242445,
+  "mean_diff_over_bundles": -6.760727504562245
+ },
+ "판정_표": {
+  "P": {
+   "own_argmax": {
+    "w": 0.41,
+    "gain": 21.137516157532218
+   },
+   "own_argmax_step": 1088,
+   "N1s_P": {
+    "delta_pts": -3.807343263306848,
+    "boot_se_pts": 4.5669225695961195,
+    "boot_only_t": -0.8336780852543604,
+    "sigma_combined_pts": 5.05071404648926,
+    "t_combined": -0.7538227720401878,
+    "lb_equivalent": -2.1854150331381303,
+    "결함_귀무": false,
+    "PASS": false
+   },
+   "N2s_P": {
+    "delta_pts": -3.0637327752991723,
+    "boot_se_pts": 4.184357680568528,
+    "boot_only_t": -0.7321871143002194,
+    "sigma_combined_pts": 4.707629958020311,
+    "t_combined": -0.650801529138785,
+    "lb_equivalent": -1.7585826130217248,
+    "결함_귀무": false,
+    "PASS": false
+   },
+   "N1_P": {
+    "delta_pts": -16.208133580619688,
+    "boot_se_pts": 5.134260097383969,
+    "boot_only_t": -3.1568586852315885,
+    "sigma_combined_pts": 5.568981717541074,
+    "t_combined": -2.9104303807584095,
+    "lb_equivalent": -9.3034686752757,
+    "결함_귀무": true,
+    "PASS": false
+   },
+   "N2_P": {
+    "delta_pts": -0.39975764147823156,
+    "boot_se_pts": 3.7616198968570482,
+    "boot_only_t": -0.10627273687365316,
+    "sigma_combined_pts": 4.336209735604162,
+    "t_combined": -0.09219056868856311,
+    "lb_equivalent": -0.2294608862085049,
+    "결함_귀무": true,
+    "PASS": false
+   },
+   "vs_base94_bundle_mean": -4.349052264616148
+  },
+  "R": {
+   "own_argmax": {
+    "w": 0.38,
+    "gain": 21.908095590561516
+   },
+   "own_argmax_step": 1632,
+   "N1s_R": {
+    "delta_pts": -5.032618618361312,
+    "boot_se_pts": 3.5698499898853377,
+    "boot_only_t": -1.4097563294298707,
+    "sigma_combined_pts": 4.170942288380628,
+    "t_combined": -1.206590326694554,
+    "lb_equivalent": -2.8887230869393927,
+    "결함_귀무": false,
+    "PASS": false
+   },
+   "N2s_R": {
+    "delta_pts": -3.9565376395711382,
+    "boot_se_pts": 3.77100744566925,
+    "boot_only_t": -1.049199105692283,
+    "sigma_combined_pts": 4.344355853059278,
+    "t_combined": -0.9107305601554165,
+    "lb_equivalent": -2.2710526051138333,
+    "결함_귀무": false,
+    "PASS": false
+   },
+   "N1_R": {
+    "delta_pts": -11.585674602687618,
+    "boot_se_pts": 4.436063799006077,
+    "boot_only_t": -2.6117015281169356,
+    "sigma_combined_pts": 4.932706422601057,
+    "t_combined": -2.3487460250225873,
+    "lb_equivalent": -6.650177221942692,
+    "결함_귀무": true,
+    "PASS": false
+   },
+   "N2_R": {
+    "delta_pts": -71.34591424082782,
+    "boot_se_pts": 8.34387853354859,
+    "boot_only_t": -8.550689461017965,
+    "sigma_combined_pts": 8.618192362980212,
+    "t_combined": -8.278524223629196,
+    "lb_equivalent": -40.95255477423517,
+    "결함_귀무": true,
+    "PASS": false
+   },
+   "vs_base94_bundle_mean": -3.5784728315868506
+  },
+  "PR": {
+   "own_argmax": {
+    "w": 0.35,
+    "gain": 19.509785975457817
+   },
+   "own_argmax_step": 1632,
+   "N1s_PR": {
+    "delta_pts": -8.466234975001953,
+    "boot_se_pts": 4.63616731621126,
+    "boot_only_t": -1.8261280056460851,
+    "sigma_combined_pts": 5.113411581969811,
+    "t_combined": -1.6556920637592314,
+    "lb_equivalent": -4.859618875651121,
+    "결함_귀무": false,
+    "PASS": false
+   },
+   "N2s_PR": {
+    "delta_pts": -4.037006238766253,
+    "boot_se_pts": 4.453488981780163,
+    "boot_only_t": -0.9064816945254465,
+    "sigma_combined_pts": 4.948383042323502,
+    "t_combined": -0.8158233112185846,
+    "lb_equivalent": -2.317241581051829,
+    "결함_귀무": false,
+    "PASS": false
+   },
+   "N1g_PR": {
+    "delta_pts": -6.222660657773076,
+    "boot_se_pts": 4.623631405375906,
+    "boot_only_t": -1.345838392425369,
+    "sigma_combined_pts": 5.102048411716206,
+    "t_combined": -1.219639673250361,
+    "lb_equivalent": -3.5718072175617457,
+    "결함_귀무": false,
+    "PASS": false
+   },
+   "N1_PR": {
+    "delta_pts": -19.741696042940816,
+    "boot_se_pts": 6.060404393347796,
+    "boot_only_t": -3.2574882403296095,
+    "sigma_combined_pts": 6.432840121876709,
+    "t_combined": -3.0688926926387525,
+    "lb_equivalent": -11.331733528648028,
+    "결함_귀무": true,
+    "PASS": false
+   },
+   "N2_PR": {
+    "delta_pts": -64.82805414967936,
+    "boot_se_pts": 8.0915540379128,
+    "boot_only_t": -8.011817488449358,
+    "sigma_combined_pts": 8.374137410574322,
+    "t_combined": -7.741460519601537,
+    "lb_equivalent": -37.21130308191595,
+    "결함_귀무": true,
+    "PASS": false
+   },
+   "N2b_PR": {
+    "delta_pts": -13.688999740035797,
+    "boot_se_pts": 5.879983027752548,
+    "boot_only_t": -2.328067900101445,
+    "sigma_combined_pts": 6.2631566345873475,
+    "t_combined": -2.185639053706615,
+    "lb_equivalent": -7.857485850780547,
+    "결함_귀무": true,
+    "PASS": false
+   },
+   "vs_base94_bundle_mean": -5.9767824466905495
+  }
+ },
+ "n_fits": 222,
+ "n_cancelled": 55,
+ "cancelled_reason": "결함 귀무(1차 N1_*·N2_*·N2b_PR)의 추가 스텝 지점 — 판정에서 뺐다",
+ "fit_wall_sec_total": 6959.1,
+ "서버_경로": {
+  "work": "/home/<user>/SungjinPark/exp113/work",
+  "preds": "/home/<user>/SungjinPark/exp113/out/preds",
+  "blocks": "/home/<user>/SungjinPark/exp113/work/blk",
+  "src": "/home/<user>/SungjinPark/exp113/src"
+ },
+ "ρ_와_팔단독": {
+  "설명": "미달이어도 반드시 기록한다 — 어디로 움직였는가",
+  "base94": {
+   "alone": 864.84,
+   "rho_mate": 0.89304
+  },
+  "P": {
+   "alone": 871.32,
+   "rho_mate": 0.9106,
+   "Δalone": 6.48,
+   "Δrho": 0.01756
+  },
+  "R": {
+   "alone": 843.66,
+   "rho_mate": 0.89499,
+   "Δalone": -21.18,
+   "Δrho": 0.00195
+  },
+  "PR": {
+   "alone": 818.95,
+   "rho_mate": 0.88093,
+   "Δalone": -45.89,
+   "Δrho": -0.01211
+  },
+  "N1s_PR(귀무)": {
+   "alone": 854.38,
+   "rho_mate": 0.88389,
+   "Δalone": -10.46,
+   "Δrho": -0.00915
+  },
+  "읽기": "PR 은 ρ 를 0.0121 내리지만 귀무도 0.0092 내린다. 초과분 0.0029 는 S103 환율로 약 +4.6점 값어치인데, 팔 단독은 귀무보다 35.4점 낮다 — 순 −8.5 와 맞는다. S103·S72 가 다시 재현됐다: 열을 더해 얻은 탈상관은 품질 손실로 지불된다."
+ }
+}

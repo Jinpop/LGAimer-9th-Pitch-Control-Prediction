@@ -1,0 +1,430 @@
+{
+ "exp_id": "exp_103",
+ "title": "타자 폼 계열 — 구조적 공백을 메운다 (신호 선별)",
+ "date": "2026-08-26",
+ "결론": "🔴 기각. 사전 등록 문턱을 **반대 방향으로** 넘었다(② − ① = −28.942, t −2.029 / ② − ③ = −40.379, t −2.287). 그리고 원인이 확정됐다 — **가설의 전제가 사실과 다르다**: 배포 패키지의 `inseason.py` 가 이미 우리와 **문자 그대로 같은 기전**(round(n·rate) 로 통산 카운트 복원 → train 동결 앵커와 차분 → EB 수축)으로 `ins_b_n`·`ins_b_success`·`ins_b_success_dev`·`ins_b_middle`·`ins_b_middle_dev` 5열을 만들어 출하하고 있다. exp_103 은 그것을 EB 상수만 바꿔(K 50 → 200) 재발명했고, 커버리지는 더 나쁘다(결측 9.3% vs 0%). stage2 는 사전 등록에 따라 진행하지 않았다.",
+ "prereg_threshold": {
+  "rule": "② > ① AND ② > ③(개수 맞춤 귀무), 둘 다 짝지은 투수 블록 부트스트랩 t >= 2.0",
+  "source": "experiments/exp_103/config.yaml — 발사 전 확정, 결과 보고 안 바꿨다 (S8)",
+  "stage2_rule": "혼합 이득 − 26.2698 >= +2.0 AND t >= 2.0 (stage1 미통과로 미실행)"
+ },
+ "stage0_전제_검증": {
+  "판정": "전부 통과. 중단조건 미해당.",
+  "0a_행_순서_시간순": {
+   "방법": "as-of 통산 카운터가 그룹 안에서 단조 비감소인지 — 그리고 더 강하게, 정확히 +1 씩 오르는지",
+   "pitcher_career": {
+    "n_pairs": 1474300,
+    "n_groups": 792,
+    "n_decrease": 0,
+    "n_step_ne_1": 0,
+    "frac_violation": 0.0
+   },
+   "batter_career": {
+    "n_pairs": 1474262,
+    "n_groups": 830,
+    "n_decrease": 0,
+    "n_step_ne_1": 0,
+    "frac_violation": 0.0
+   },
+   "row_id_is_sequential": true,
+   "season_blocks_contiguous": true,
+   "season_order": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+   ],
+   "위반_비율": "0.0000% — 중단 문턱 5% 대비 아득히 아래",
+   "⚠️_유일한_비단조": {
+    "game_month_decrease_within_season": {
+     "2019": 1,
+     "2020": 2,
+     "2021": 1,
+     "2022": 2,
+     "2023": 0,
+     "2024": 0
+    },
+    "해석": "2019·2021 각 1건, 2020·2022 각 2건. as-of 카운터는 그 지점에서도 +1 을 유지하므로 운영진 자신이 이 순서를 시간순으로 취급했다. 창 집계 전제는 무너지지 않는다."
+   }
+  },
+  "0b_운영진_집계_역설계": {
+   "asof_batter_n": {
+    "정의": "**통산** 누적 (시즌 리셋 없음)",
+    "frac_match": 1.0,
+    "시즌내_가설_대조": 0.24498200790188002
+   },
+   "asof_batter_success_rate": {
+    "정의": "**통산** shift(1) control_success 평균",
+    "max_abs_diff": 5.000000000143778e-07,
+    "nan_pattern_match": 1.0,
+    "해석": "max|Δ| 5.0e-07 = 소수점 6자리 반올림 반폭. 정의를 정확히 맞혔다는 뜻이고, 남은 차이는 저장 정밀도뿐이다."
+   },
+   "중복_판정": "완전 중복 아님 — 통산 평균 투구 수 3271(중앙값 2263)라 운영진 열은 거의 안 움직인다. 창을 달리할 여지는 실재했다.",
+   "🔑_파생": "round(n·r) 로 통산 누적 성공 개수가 정확히 복원된다(잔차 max 0.0069 → 반올림이 항상 정확). 이것이 stage1 차분 기전의 근거다."
+  },
+  "0c_리크_설계": {
+   "측정": "≤2023 동결표 → 2024 행",
+   "배포_대응": "≤2024 동결표 → 2025 행 (lookup_d 와 같은 기전)",
+   "학습행_처리": "학습 행에도 각자의 시즌 시작 동결표를 붙였다 — 배포(2025 행에 2024말 표)와 같은 관계를 학습 분포에서도 유지하기 위해서다. 행별 실시간 창을 학습에 쓰면 배포에서 낡은 값이 들어와 분포가 어긋난다."
+  }
+ },
+ "규칙_2_4_행_독립성_게이트": {
+  "🔴_설계_정정": "창(prevK·prev_season) 계열은 폐기했다. 남긴 것은 **① 행 자신의 열 + ② train 동결표를 키로 조회한 값** 뿐이다. 코드도 build_table(season<S 만 본다) / apply_table(행별 조회만) 로 구조 분리했다.",
+  "KEEP_행": {
+   "n": 262,
+   "동결표_적중": 218,
+   "미적중": 44,
+   "근거": "S61 — KEEP 행이 바꾼 계산을 실제로 타야 게이트가 무엇이라도 시험한다. 두 경로 다 발동시켰다."
+  },
+  "G_replace_내용분리": {
+   "max_abs_diff": 0.0,
+   "n_rows_moved": 0,
+   "nan_pattern_identical": true,
+   "PASS": true
+  },
+  "G_degen_축퇴프레임": {
+   "max_abs_diff": 0.0,
+   "n_rows_moved": 0,
+   "nan_pattern_identical": true,
+   "PASS": true
+  },
+  "G_position_위치분리": {
+   "max_abs_diff": 0.0,
+   "n_rows_moved": 0,
+   "PASS": true
+  },
+  "G_single_row_단행추론": {
+   "n_tested": 40,
+   "max_abs_diff": 0.0,
+   "PASS": true
+  },
+  "ALL_PASS": true,
+  "판정": "네 게이트 전부 max|Δ| = 0.0. 단행 프레임(행 1개)만으로도 같은 값이 나오므로 이 설계는 test 다른 행을 원리적으로 참조하지 않는다."
+ },
+ "stage1_신호_선별": {
+  "면": "GPU CatBoost, ≤2023(1,116,277행) 학습 → 2024(253,507행) 평가. 3000 iters · depth 6 · lr 0.05 · subsample 0.8 · 3시드(42/7/2024) 확률평균. 네 판본 전부 같은 하이퍼파라미터.",
+  "새_열": {
+   "n": 17,
+   "cols": [
+    "bat_cs_n",
+    "bat_n_growth",
+    "bat_cs_rate",
+    "bat_cs_rate_eb",
+    "bat_cs_dev",
+    "bat_cs_dev_eb",
+    "bat_form_dev",
+    "bat_cs_mid_rate",
+    "bat_cs_mid_dev",
+    "bat_form_dev_mid",
+    "bat_frozen_n0",
+    "bat_frozen_rate",
+    "bat_phand_dev",
+    "bat_count_dev",
+    "bat_base_dev",
+    "bat_form_miss",
+    "bat_cs_short"
+   ],
+   "eb_k": 200.0,
+   "폐기": "bat_prevK_* 창 계열·bat_prevseason_* — 배포에서 다른 test 행을 훑지 않고는 못 만든다"
+  },
+  "arms_score": {
+   "base": 727.97910236293,
+   "form": 699.0370453062611,
+   "null_row": 739.4161679717292,
+   "null_bat": 729.3506633548108
+  },
+  "arms_per_seed": {
+   "base": [
+    625.328539799197,
+    631.9748773282118,
+    638.8102603189227
+   ],
+   "form": [
+    588.2756031431846,
+    585.0850456440959,
+    611.4469929149546
+   ],
+   "null_row": [
+    640.1280453266711,
+    623.0245496356868,
+    639.6308716125732
+   ],
+   "null_bat": [
+    631.08782383412,
+    628.3723430590693,
+    643.1221209045268
+   ]
+  },
+  "contrasts": {
+   "form_minus_base": {
+    "delta_score": -28.942057056689872,
+    "boot_sd": 14.264163329111794,
+    "t": -2.0290048837019343,
+    "boot_mean": -29.818325229049456,
+    "frac_positive": 0.0145
+   },
+   "form_minus_null_row": {
+    "delta_score": -40.379122665486705,
+    "boot_sd": 17.656534206738524,
+    "t": -2.286922347992633,
+    "boot_mean": -40.41009077579916,
+    "frac_positive": 0.009
+   },
+   "form_minus_null_bat": {
+    "delta_score": -30.31361804856261,
+    "boot_sd": 16.17296967112249,
+    "t": -1.8743383970285206,
+    "boot_mean": -30.551537911329238,
+    "frac_positive": 0.0285
+   },
+   "null_row_minus_base": {
+    "delta_score": 11.437065608796829,
+    "boot_sd": 14.892254740356817,
+    "t": 0.7679875081510188,
+    "boot_mean": 10.591765546749702,
+    "frac_positive": 0.7605
+   },
+   "null_bat_minus_base": {
+    "delta_score": 1.3715609918727378,
+    "boot_sd": 14.336550627358532,
+    "t": 0.09566882770639258,
+    "boot_mean": 0.7332126822797819,
+    "frac_positive": 0.52
+   }
+  },
+  "VERDICT": {
+   "pass": false,
+   "form_minus_base": [
+    -28.942057056689872,
+    -2.0290048837019343
+   ],
+   "form_minus_null_row": [
+    -40.379122665486705,
+    -2.286922347992633
+   ]
+  },
+  "🔴_귀무_대조가_결정적이었다": {
+   "null_row_minus_base": [
+    11.437065608796829,
+    0.7679875081510188
+   ],
+   "null_bat_minus_base": [
+    1.3715609918727378,
+    0.09566882770639258
+   ],
+   "해석": "같은 개수(17)를 **시즌 안 행 단위로 순열**한 판본은 기준선을 안 깎는다(+11.44, t +0.77). batter_id 안 순열도 마찬가지(+1.37, t +0.10). 그런데 **이름 붙인 17열은 −28.94** 다. 즉 손해는 '열을 더 넣은 대가'가 아니라 **그 열들의 내용** 때문이다. S104 가 잡아낸 것과 정확히 반대 부호의 사례 — ③ 없이 ①만 봤으면 '열 추가 비용'으로 오독했을 것이다."
+  },
+  "⚠️_이_화면의_검출한계": {
+   "boot_sd_pts": [
+    14.264163329111794,
+    17.656534206738524
+   ],
+   "함의": "부트스트랩 1σ 가 약 14~18점이라 t≥2.0 은 약 30점 효과를 요구한다. **작은 양의 신호였다면 이 화면은 못 봤을 것이다.** 이번엔 손해가 그 문턱을 넘어 판정이 성립했다."
+  }
+ },
+ "🔴🔴_원인_확정__가설의_전제가_틀렸다": {
+  "발견": "배포 패키지 `inseason.py` 가 exp_103 과 **같은 기전**을 이미 출하하고 있다.",
+  "기전_대조": {
+   "운영진_카운트_복원": "inseason._counts(n, rate) = round(n·rate)  ==  exp_103 Sc = round(n·r)",
+   "동결_앵커": "inseason.build_anchor(df_hist: 대상 시즌보다 앞선 train 행)  ==  exp_103 build_table(season < S)",
+   "행별_적용": "inseason.apply(df, A)  ==  exp_103 apply_table(rows, T)",
+   "시즌내_투구수": "ins_b_n = max(bn − abn, 0)  ==  exp_103 bat_cs_n",
+   "시즌내_성공률": "ins_b_success = (k + K·prior)/(ins_bn + K), **K = 50**  ==  exp_103 bat_cs_rate_eb, EB_K = 200",
+   "폼_편차": "ins_b_success_dev = ins_b_success − prior  ==  exp_103 bat_cs_dev_eb",
+   "규칙_논증": "inseason.py docstring 의 규칙 4항 준수 논증까지 exp_103 의 것과 같다"
+  },
+  "실측_중복도(2024 valid)": {
+   "bat_cs_n vs ins_b_n": {
+    "rho": 1.0,
+    "max_abs_diff": 1.0,
+    "해석": "동일한 양. 차이 1 은 우리 동결 정의가 한 투구 뒤진 것뿐이다."
+   },
+   "bat_cs_dev_eb vs ins_b_success_dev": {
+    "rho": 0.951984
+   },
+   "bat_cs_rate_eb vs ins_b_success": {
+    "rho": 0.868856
+   },
+   "bat_cs_mid_dev vs ins_b_middle_dev": {
+    "rho": 0.823294
+   },
+   "bat_cs_mid_rate vs ins_b_middle": {
+    "rho": 0.815403
+   },
+   "bat_frozen_n0 vs asof_batter_n": {
+    "rho": 0.9887
+   },
+   "bat_frozen_rate vs sp_bat_phand_all": {
+    "rho": 0.9157
+   },
+   "bat_phand_dev vs sp_bat_phand": {
+    "rho": 0.8999
+   }
+  },
+  "커버리지_역전": "ins_b_* 는 2024 valid 에서 결측 **0.0000%**, exp_103 열은 **9.30%**. 이미 있는 것이 우리 것보다 낫다.",
+  "🔴_config_전제_정정": "config 는 '우리 98열이 보탠 타자 열도 2개(sp_bat_phand 계열)뿐' 이라 했는데, 실제 94열의 타자 열은 **10개**다 — asof_batter_* 3 + sp_bat_phand/sp_bat_phand_all 2 + **ins_b_* 5**. 그중 ins_b_* 5열이 정확히 '타자가 최근(시즌 내) 어떤 상태인가' 다. **공백은 없었다.**"
+ },
+ "열별_중요도_진단": {
+  "방법": "1시드 CatBoost(116열) 의 LossFunctionChange, 라벨 있는 2024 Pool. 판정에는 쓰지 않는다(판정은 3판본 대조).",
+  "score_1seed": 620.9266245602474,
+  "🔴_17열_중_16열이_음의_중요도": "양수는 `bat_cs_short`(+1.2e-05, 116개 중 25위) 하나뿐. 나머지는 전부 음수 = 빼면 손실이 준다.",
+  "new_cols_ranked": [
+   [
+    "bat_cs_short",
+    1.1936930253697575e-05
+   ],
+   [
+    "bat_form_miss",
+    -2.3037282497195832e-06
+   ],
+   [
+    "bat_count_dev",
+    -3.0980287991644317e-06
+   ],
+   [
+    "bat_cs_rate_eb",
+    -3.2728076888588475e-06
+   ],
+   [
+    "bat_frozen_rate",
+    -6.1690120636281875e-06
+   ],
+   [
+    "bat_form_dev",
+    -8.115312499112903e-06
+   ],
+   [
+    "bat_phand_dev",
+    -8.925747515320381e-06
+   ],
+   [
+    "bat_cs_dev_eb",
+    -9.9464960117146e-06
+   ],
+   [
+    "bat_cs_n",
+    -1.0017498470960007e-05
+   ],
+   [
+    "bat_cs_dev",
+    -1.50699868076698e-05
+   ],
+   [
+    "bat_form_dev_mid",
+    -1.7493786971245484e-05
+   ],
+   [
+    "bat_cs_rate",
+    -1.8560212437401802e-05
+   ],
+   [
+    "bat_cs_mid_dev",
+    -2.415047038017981e-05
+   ],
+   [
+    "bat_base_dev",
+    -4.025419356679105e-05
+   ],
+   [
+    "bat_n_growth",
+    -4.377536076560773e-05
+   ],
+   [
+    "bat_cs_mid_rate",
+    -4.394822742459503e-05
+   ],
+   [
+    "bat_frozen_n0",
+    -5.8888295370151944e-05
+   ]
+  ],
+  "new_cols_rank_positions": {
+   "bat_cs_n": 61,
+   "bat_n_growth": 100,
+   "bat_cs_rate": 77,
+   "bat_cs_rate_eb": 42,
+   "bat_cs_dev": 68,
+   "bat_cs_dev_eb": 60,
+   "bat_form_dev": 54,
+   "bat_cs_mid_rate": 101,
+   "bat_cs_mid_dev": 89,
+   "bat_form_dev_mid": 74,
+   "bat_frozen_n0": 106,
+   "bat_frozen_rate": 49,
+   "bat_phand_dev": 55,
+   "bat_count_dev": 40,
+   "bat_base_dev": 99,
+   "bat_form_miss": 38,
+   "bat_cs_short": 25
+  },
+  "대조": "같은 표의 상위 12위 안에 **ins_b_middle** 이 들어 있다(+5.1e-05). 기존 타자 시즌내 열은 실제로 쓰이고 있고, 우리 복제본만 안 쓰인다."
+ },
+ "stage2_출하형_측정": {
+  "실행": "미실행 — stage1 사전 등록 문턱 미통과(S8). 결과를 보고 문턱을 낮추지 않았다.",
+  "준비된_것": {
+   "입력": "work/X111_f64o.npy (94 + 17열, f64 표준화, mu/sd 는 trm_oot23 행에서만)",
+   "🔴_게이트_통과": "앞 94열이 exp_097 X_f64o 와 **비트 동일**(max|Δ| = 0.0) — 변인이 뒤 17열뿐임이 증명됨",
+   "미사용_코드": "src/s2_train.py · src/s2_eval.py (정직면 재현 게이트 2종 내장: w=0 재중심 928.501461058684, 옛 딥 1632 argmax 26.269817382706947)"
+  },
+  "⭐_S101_정정": {
+   "기존_단서": "`mate/deep_infer.py` 가 `W0.reshape(256, 99, 96)` 로 입력 차원 99 를 하드코딩해 열을 늘리려면 그 파일을 고쳐야 한다",
+   "정정": "그 reshape 은 **원본 아티팩트 경로(`_fold`) 전용**이다. 배포는 **접힌 아티팩트**(A·c0·T0~T4)를 쓰고 `_one` 은 `if 'A' in W` 로 곧장 `X @ A` 를 한다 — **99 도 94 도 안 나온다**. `predict_deep` 도 `P['NUM']` 길이를 따라간다.",
+   "따라서_출하_비용": "`mate/deep_infer.py` 수정 **0줄**. 바꿀 것은 ① `mate/model/deep/prep.json` 의 NUM·mu·sd ② `deepf_s*.npz` 의 A 형상 (n_num, 256) ③ `mate/script.py:122` 에서 `_dd` 에 새 열을 붙이는 약 5줄 ④ 동결표 JSON 1개. **딥 팔에 열을 더하는 것은 형상 때문에 막혀 있지 않다.**",
+   "⚠️": "이번 실험에서 실제로 출하해 검증한 것은 아니다 — 코드 경로를 읽어 확인한 것이고, 앞 94열 비트 동일 게이트까지만 실행했다."
+  }
+ },
+ "자원_규율_준수": {
+  "파일_삭제": 0,
+  "외부_프로세스_kill": 0,
+  "CPU": "CatBoost thread_count 3~4, 동시 최대 2 레인. 같은 서버의 CR 빌드와 공존.",
+  "GPU": "2장 사용(레인당 1장). 단독 추론 시간 측정은 하지 않았다(stage2 미실행).",
+  "디스크": "exp103 산출물 합계 20GB 미만"
+ },
+ "wall_clock": {
+  "stage0": "약 10분",
+  "stage1": "약 75분 (화면 2회 — 폐기판 + 정정판을 GPU 2장에 나눠 병렬)",
+  "stage2": "미실행",
+  "합계": "약 1시간 50분 (ETA stage0·1 1.5시간 대비 +20분, 초과분은 규칙 2-4 정정에 따른 피처 재작성·게이트·재화면)"
+ },
+ "산출물": {
+  "metrics": "<PROJECT_ROOT>/experiments/exp_103/metrics.json",
+  "out": "<PROJECT_ROOT>/experiments/exp_103/out/{s0_premise,s1_feats,s1_feats2,s1_rowindep,s1_screen,s1_screen2,s1_imp,s2_prep}.json",
+  "src": "<PROJECT_ROOT>/experiments/exp_103/src/",
+  "server": "a5000:~/SungjinPark/exp103/ (work/batform2.npy · work/X111_f64o.npy · logs/)"
+ },
+ "폐기된_1차_화면": {
+  "무엇": "규칙 2-4 정정 **이전**의 19열판(직전 K개 투구 창 bat_prevK_* · bat_prevseason_* 포함). 창 계열은 배포에서 다른 test 행을 훑지 않고는 못 만들어 폐기했다.",
+  "그래도_기록하는_이유": "같은 결론을 독립적으로 한 번 더 준다 — arms base 728.892 / form 718.244 / null_row 722.843 / null_bat 722.615, form−base −10.647(t −0.730), form−null_row −4.598(t −0.279). 판정 동일(기각).",
+  "파일": "out/s1_screen.json · out/s1_feats.json"
+ },
+ "다음_제안": [
+  "🔴 이 축은 닫는다. 타자 시즌내 폼은 `ins_b_*` 5열로 이미 출하돼 있고, 그 복제·확장은 −29점이다.",
+  "⭐ 17열 중 진짜 안 겹치는 것은 `bat_base_dev`(ρ 0.048)·`bat_count_dev`(ρ 0.269) 둘뿐이고, 이 화면은 2열 효과를 분해할 힘이 없다(1σ 14~18점). 살릴 거면 정직면 혼합 화면에서 재라 — 다만 자릿수가 작다.",
+  "⚠️ 그러나 그 전에 **투수 쪽 ins_p_* 가 상위 2위·6위**(ins_p_success +6.5e-04, ins_p_reverse +3.1e-04, ins_p_success_dev +9.4e-05)이고 타자 쪽 ins_b_* 는 12위(+5.1e-05)다 — 이 계열의 값은 투수 쪽에 실려 있다. 타자 세분보다 **투수 쪽 in-season 분해를 더 파는 쪽**이 자릿수가 크다.",
+  "🔑 방법론: **새 피처 계열을 설계하기 전에 `prep.json` 의 NUM 94열 목록을 전수 읽어라.** exp_103 은 그것을 안 읽어서 이미 출하된 열을 재발명했다. 비용 10분."
+ ],
+ "중복되지_않은_잔여_열_진단": {
+  "질문": "17열 전부가 중복은 아니다 — inseason.py 에 없는 것이 셋 있다(타자 × 투수손/카운트/주자상태 세분). 거기에 뭐라도 남았나?",
+  "94열_전체_대비_max_abs_rho": {
+   "bat_base_dev": {
+    "rho": 0.0479,
+    "vs": "asof_batter_middle_rate",
+    "판정": "🟢 사실상 직교 — 94열 어느 것과도 안 겹친다"
+   },
+   "bat_count_dev": {
+    "rho": 0.269,
+    "vs": "idea_cnt_te",
+    "판정": "🟢 대체로 새롭다"
+   },
+   "bat_phand_dev": {
+    "rho": 0.8999,
+    "vs": "sp_bat_phand",
+    "판정": "🔴 중복 — 기존 sp_bat_phand 가 이미 이것이다"
+   }
+  },
+  "🔴_그런데_측정하지_않았다": "이 화면의 부트스트랩 1σ 가 14~18점이라 **2열짜리 효과는 어느 방향이든 잡음 안에 들어간다.** 3판본을 더 돌려도 답이 안 나오므로 GPU 18분을 쓰지 않았다. S8 상 사후 부분집합을 골라 판정하는 것도 금지다.",
+  "다음_실험에_넘길_것": "`bat_base_dev`·`bat_count_dev` 2열만으로 **정직면 혼합 화면**(stage2 가 쓰려던 면, 기준선 26.2698)에서 재라. 그 면은 이 CatBoost 단독 화면보다 훨씬 예민하다. 단 열 2개의 기대 크기가 작아 **자릿수가 맞는지부터** 판단할 것 — exp_103 전체 결론은 이 축이 얇다는 쪽이다."
+ }
+}

@@ -1,0 +1,1102 @@
+{
+ "exp_id": "exp_107",
+ "title": "타깃 스무딩 / 자기 증류 — 딥 팔 슬롯 (장부의 마지막 미착수 축)",
+ "면": "exp_104 sA_mix104.py 면 그대로 (고친 f64 OOT 입력, S134)",
+ "🔴결론": "전 지점 미달. 사다리 맨 아래 무변형 항등 복제본(N3, 26.2698)을 **이긴 지점이 하나도 없다**. 축 A 최선(e=0.10)이 −0.145 (t −0.068), 축 B 최선(e=0.10)이 −1.657, 축 C 가 −4.325. 🔑 그런데 이 축은 **우리 손잡이 중 처음으로 ρ 를 공짜로 내렸다** — A e=0.10 이 Δρ −0.00648 과 Δalone +10.43 을 동시에 냈다(단가가 음수). 그러고도 혼합 이득이 0 이었다.",
+ "🔴판정": {
+  "prereg": {
+   "rule": "gain - 26.2698 >= +9.31 AND paired pitcher-block bootstrap t >= 2.0",
+   "baseline_gain": 26.2698,
+   "delta_min": 9.31,
+   "t_min": 2.0,
+   "combined_1sigma_used": 4.654,
+   "source": "exp_107 config.yaml (exp_104 실측 S187) — 발사 전 확정, 결과 보고 안 바꿨다 (S8)"
+  },
+  "VERDICT": {
+   "rule": "gain - 26.2698 >= +9.31 AND paired pitcher-block bootstrap t >= 2.0",
+   "n_points_read": 14,
+   "qualifying": [],
+   "PASS": false,
+   "closest_points": [
+    {
+     "point": "N3_identity",
+     "delta": 1.7382706946733606e-05,
+     "t": null,
+     "step": 1632,
+     "w": 0.43,
+     "rho": 0.8930378055187094,
+     "alone": 864.8370207566702
+    },
+    {
+     "point": "A0p1",
+     "delta": -0.1450278034770598,
+     "t": -0.06820958537110286,
+     "step": 1632,
+     "w": 0.46,
+     "rho": 0.8865615872471053,
+     "alone": 875.2696700775165
+    },
+    {
+     "point": "A0p05",
+     "delta": -1.0003736051083614,
+     "t": -0.7904096946558538,
+     "step": 1632,
+     "w": 0.44,
+     "rho": 0.8897997203945704,
+     "alone": 868.6374951009545
+    },
+    {
+     "point": "N2_B0p1",
+     "delta": -1.131169598821966,
+     "t": -0.46161023016134656,
+     "step": 1632,
+     "w": 0.48,
+     "rho": 0.8948810771148902,
+     "alone": 884.2667538145998
+    },
+    {
+     "point": "A0p02",
+     "delta": -1.209899964160254,
+     "t": -1.490019822392829,
+     "step": 1632,
+     "w": 0.43,
+     "rho": 0.8902834647391842,
+     "alone": 862.7722873074672
+    },
+    {
+     "point": "B0p1",
+     "delta": -1.6566483297170542,
+     "t": -0.8588615181028726,
+     "step": 1632,
+     "w": 0.46,
+     "rho": 0.9000687503137604,
+     "alone": 883.4259105722552
+    },
+    {
+     "point": "N2_B0p2",
+     "delta": -4.2917488941579585,
+     "t": -0.9420858642545357,
+     "step": 1632,
+     "w": 0.48,
+     "rho": 0.8935956426974387,
+     "alone": 877.6073878853597
+    },
+    {
+     "point": "A0p2",
+     "delta": -4.311163766334598,
+     "t": -0.9868388313432074,
+     "step": 1632,
+     "w": 0.48,
+     "rho": 0.8945519285295173,
+     "alone": 878.0116236467018
+    }
+   ],
+   "🔴": "산출물 전량 존재"
+  },
+  "검출한계": {
+   "boot_se_pts_median": 3.4922186313341186,
+   "적합간_sd_pts_한_점": 1.5252754870379128,
+   "결합_1sigma_pts_재측정": 4.104695066841705,
+   "사전등록_1sigma": 4.654,
+   "요구_효과크기_사전등록": 9.31
+  }
+ },
+ "🔴기준선_재추첨": {
+  "왜": "사전 등록 기준선 26.2698 은 서로소 5시드 묶음 중 **한 뽑기**다. 평균을 함께 쓴다.",
+  "groups": [
+   [
+    42,
+    777,
+    2024,
+    101,
+    7
+   ],
+   [
+    11,
+    13,
+    17,
+    19,
+    23
+   ],
+   [
+    29,
+    31,
+    37,
+    41,
+    43
+   ],
+   [
+    47,
+    53,
+    59,
+    61,
+    67
+   ],
+   [
+    71,
+    73,
+    79,
+    83,
+    89
+   ]
+  ],
+  "gains_1632": [
+   26.269817382706947,
+   25.285709994282684,
+   24.474735939861148,
+   23.760152740637295,
+   27.642426053253757
+  ],
+  "mean": 25.486568422148366,
+  "sd_ddof1": 1.5252754870379128,
+  "prereg_draw_minus_mean": 0.7832489605585806,
+  "적합간_sd_한_점": 1.5252754870379128,
+  "적합간_sd_두_점_차": 2.1570652801242445
+ },
+ "게이트": {
+  "재현_G1_G2_바이트동일": {
+   "GATE_default_s42": {
+    "sha_match_vs_exp097_z_F1632_f64o_s42": true,
+    "max_abs_diff": 0.0
+   },
+   "GATE_ident_s42": {
+    "sha_match_vs_exp097_z_F1632_f64o_s42": true,
+    "max_abs_diff": 0.0
+   },
+   "ALL_PASS": true
+  },
+  "면_재현": {
+   "baseline_w0_rc": 928.501461058684,
+   "expected": 928.501461058684,
+   "gate_1632_reproduces_26.2698": {
+    "got": 26.269817382706947,
+    "expected": 26.2698,
+    "abs_diff": 1.7382706946733606e-05,
+    "PASS": true
+   }
+  },
+  "축B_리크_게이트": {
+   "1차_s1_leak107": {
+    "무엇": "control_success 를 시즌 대역째 난수화",
+    "결과": "결정성 대조 통과(A==D). 🔴 양성 대조 실패(0.0 이동) — 그리고 그 실패가 사실을 가르쳤다: OOF 라벨은 control_success 가 아니라 labels.recover() 가 asof_*_rate 에서 복원한 5셀이다(labels.py:51 — control_success 는 검산 전용).",
+    "GATES": {
+     "D_determinism_A_equals_A2": true,
+     "N_negative_randomize_season_ge_S__pred_identical": true,
+     "N_masks_identical": true,
+     "N_fit_labels_identical": true,
+     "N_feature_frames_identical": true,
+     "P_positive_randomize_season_lt_S__pred_moves": false,
+     "P_max_abs_move": 0.0,
+     "P_share_rows_moved": 0.0,
+     "P_n_fit_rows": 211500
+    }
+   },
+   "2차_s1b_leak107_PART1": {
+    "무엇": "asof_*_rate 5열을 대역째 난수화 → recover 재실행",
+    "결과": "🔴 조작 자체가 불가능 — recover 가 `AssertionError: the five cells are not a partition` 로 죽는다. 이 파이프라인에 그 형태의 난수화는 존재하지 않는다.",
+    "runs": {
+     "A": {
+      "agree_pct": 100.0,
+      "n_fit_rows": 211500,
+      "fit_rows_sha16": "9eb817e6e250b024",
+      "fit_labels_sha16": {
+       "is_mid_only": "bd2121648667a81b",
+       "is_rev_only": "8cd9d25a5deb99bf",
+       "is_both": "57fe69cf9c647a61",
+       "is_wayoff_true": "e581e044f9e17fd7"
+      },
+      "n_recov_ok": 1474300
+     },
+     "N_rand_asof_season_ge_S": {
+      "recover_assert": "AssertionError('the five cells are not a partition -- everything downstream assumes they are')"
+     },
+     "P_rand_asof_season_lt_S": {
+      "recover_assert": "AssertionError('the five cells are not a partition -- everything downstream assumes they are')"
+     }
+    }
+   },
+   "2차_s1b_leak107_PART2_종단": {
+    "무엇": "4셀 라벨을 대역째 난수화하고 mk_oof 의 시즌 고리를 그대로 돌린다",
+    "n_fit_rows": 211500,
+    "n_pred_rows": 220874,
+    "fit_label_sha16": {
+     "A": {
+      "is_mid_only": "bd2121648667a81b",
+      "is_rev_only": "8cd9d25a5deb99bf",
+      "is_both": "57fe69cf9c647a61",
+      "is_wayoff_true": "e581e044f9e17fd7"
+     },
+     "N": {
+      "is_mid_only": "bd2121648667a81b",
+      "is_rev_only": "8cd9d25a5deb99bf",
+      "is_both": "57fe69cf9c647a61",
+      "is_wayoff_true": "e581e044f9e17fd7"
+     },
+     "P": {
+      "is_mid_only": "6bf61fe79c79418e",
+      "is_rev_only": "1172a311b32fe555",
+      "is_both": "a5342fd1b602eeda",
+      "is_wayoff_true": "fbabae5463360b19"
+     }
+    },
+    "pred_sha16": {
+     "A": "1b67d93f88a252cb",
+     "N": "1b67d93f88a252cb",
+     "P": "f5c8db31b2bba764"
+    },
+    "NEG_identical": true,
+    "POS_moves": true,
+    "P_max_abs_move": 1.911204562853436,
+    "P_share_rows_moved": 1.0,
+    "D_determinism": "1차에서 통과 (A == D, sha 1b67d93f88a252cb)"
+   },
+   "3차_s1c_leak107_마스크수준": {
+    "무엇": "복원 창이 시즌 경계 안에 있는지를 정확한 기계 검사로 닫는다(전 예측 시즌)",
+    "G3_n_next_equals_n_plus_1": {
+     "all_rows_with_next": true,
+     "n_rows_checked": 1474300,
+     "뜻": "t+1 의 as-of 누적값은 t 까지만 담는다 = t+1 자신의 결과를 안 담는다"
+    },
+    "per_season": {
+     "2020": {
+      "n_fit_rows": 211500,
+      "n_pred_rows": 220874,
+      "G1_fit_rows_with_season_ge_s": 0,
+      "G2_fit_rows_with_succ_season_ge_s": 0,
+      "G2_fit_rows_without_succ_season_lt_s": 0,
+      "max_season_in_fit_rows": 2019.0,
+      "max_succ_season_in_fit_rows": 2019.0,
+      "PASS": true
+     },
+     "2021": {
+      "n_fit_rows": 432317,
+      "n_pred_rows": 221227,
+      "G1_fit_rows_with_season_ge_s": 0,
+      "G2_fit_rows_with_succ_season_ge_s": 0,
+      "G2_fit_rows_without_succ_season_lt_s": 0,
+      "max_season_in_fit_rows": 2020.0,
+      "max_succ_season_in_fit_rows": 2020.0,
+      "PASS": true
+     },
+     "2022": {
+      "n_fit_rows": 653545,
+      "n_pred_rows": 217024,
+      "G1_fit_rows_with_season_ge_s": 0,
+      "G2_fit_rows_with_succ_season_ge_s": 0,
+      "G2_fit_rows_without_succ_season_lt_s": 0,
+      "max_season_in_fit_rows": 2021.0,
+      "max_succ_season_in_fit_rows": 2021.0,
+      "PASS": true
+     },
+     "2023": {
+      "n_fit_rows": 870542,
+      "n_pred_rows": 245525,
+      "G1_fit_rows_with_season_ge_s": 0,
+      "G2_fit_rows_with_succ_season_ge_s": 0,
+      "G2_fit_rows_without_succ_season_lt_s": 0,
+      "max_season_in_fit_rows": 2022.0,
+      "max_succ_season_in_fit_rows": 2022.0,
+      "PASS": true
+     }
+    },
+    "succ_season_항이_실제로_거르는_행": {
+     "2020": {
+      "n_rows_dropped_by_succ_season_guard": 108,
+      "share_of_naive": 0.0005103776794828172
+     },
+     "2021": {
+      "n_rows_dropped_by_succ_season_guard": 148,
+      "share_of_naive": 0.00034222422623796144
+     },
+     "2022": {
+      "n_rows_dropped_by_succ_season_guard": 119,
+      "share_of_naive": 0.00018205071718803545
+     },
+     "2023": {
+      "n_rows_dropped_by_succ_season_guard": 122,
+      "share_of_naive": 0.0001401229406521919
+     }
+    },
+    "PASS": true
+   },
+   "🟢종합": "축 B 의 p_self 는 그 행보다 **엄격히 앞선 시즌**의 결과만 본다. 근거 셋 — ① 마스크 수준: 4개 예측 시즌 전부에서 fit_rows 의 max season 과 max succ_season 이 s 보다 작고(G1=G2=0), n_next==n+1 이 1,474,300행 전부 참 ② 종단 실행: season>=s 셀 라벨을 전량 난수화해도 예측 비트 동일 (sha 1b67d93f88a252cb), season<s 난수화하면 max|Δ| 1.911 · 100% 행 이동 ③ 결정성 대조 통과."
+  },
+  "출하가능성": {
+   "mate/deep_infer.py_수정_줄수": 0,
+   "확인": {
+    "파일_줄수": 65,
+    "sha256": "923c6665056d72b8d38ac9eae45d9ac223adbb5996193c1748888581ae60411b",
+    "정의된_것": [
+     "_gelu",
+     "_ln",
+     "_fold",
+     "_one",
+     "predict_deep"
+    ],
+    "label/target/loss/fit_등장": 0,
+    "전_적합_foldable_by_mate_deep_infer": true,
+    "n_fits_checked": 212,
+    "hid_전부_동일": [
+     [
+      256,
+      128,
+      64
+     ]
+    ],
+    "n_params_전부_동일": [
+     2499265
+    ]
+   },
+   "근거": "타깃 변경은 **학습에만** 닿고 가중치 형상을 안 바꾼다. 교체되는 것은 `deepf_s*.npz` 의 값뿐이고 `prep.json` 도 그대로다.",
+   "배포_재학습_시": "≤2024 학습판이면 p_self 가 2020~2024 를 덮어야 한다. 전진 연쇄 OOF 가 2020~2023 을, stash 폴드(≤2023 적합 → 2024 예측)가 2024 를 덮어 가능하고 2019 만 hard 로 남는다."
+  }
+ },
+ "타깃_구성": {
+  "grids": {
+   "A_eps": [
+    0.02,
+    0.05,
+    0.1,
+    0.2
+   ],
+   "B_eps": [
+    0.1,
+    0.2,
+    0.4
+   ]
+  },
+  "coverage": {
+   "n_train_rows": 1116277,
+   "n_train_rows_covered": 904650,
+   "covered_share": 0.8104171276484242,
+   "uncovered_share_🔴": 0.18958287235157578,
+   "per_season": {
+    "2019": {
+     "n": 211627,
+     "covered_share": 0.0
+    },
+    "2020": {
+     "n": 220874,
+     "covered_share": 1.0
+    },
+    "2021": {
+     "n": 221227,
+     "covered_share": 1.0
+    },
+    "2022": {
+     "n": 217024,
+     "covered_share": 1.0
+    },
+    "2023": {
+     "n": 245525,
+     "covered_share": 1.0
+    }
+   },
+   "🔴": "미커버 행(연쇄 첫 시즌 2019)은 hard label 로 둔다 — 축 B 의 e 는 커버 행에만 닿는다",
+   "valid_untouched": true
+  },
+  "N1_permute": {
+   "n_groups_(season,pitcher)": 1511,
+   "n_train_rows_permuted": 1116277,
+   "share_labels_actually_moved": 0.4936014985527786,
+   "group_mean_preserved_max_abs_err": 0.0,
+   "🔴": "이것은 기댓값이 같은 귀무가 아니라 **바닥 대조**다. 쓸모는 쌍 (N1b − N1a) 이고, 그것이 '신호 없는 팔 위에서 스무딩만의 몫' 이다"
+  },
+  "N2_shuffle": {
+   "n_permuted": 904650,
+   "rho_shuffled_vs_orig": 0.0020700491731728736,
+   "mean_preserved": true
+  },
+  "phase2_eps": {
+   "eA_star": 0.1,
+   "eB_star": 0.1
+  },
+  "targets": {
+   "N3_identity": {
+    "note": "무변형 — y 그대로. train107 기본 경로와 바이트 동일해야 한다",
+    "n_train_rows_changed": 0,
+    "share_train_rows_changed": 0.0,
+    "mean_abs_shift_train": 0.0,
+    "target_mean_train": 0.5179476061945198,
+    "hard_mean_train": 0.5179476061945198,
+    "n_distinct_values_train": 2,
+    "sha16_train_slice": "53757faf92e97e78"
+   },
+   "A0p02": {
+    "note": "라벨 스무딩 e=0.02 — 전 학습 행",
+    "n_train_rows_changed": 1116277,
+    "share_train_rows_changed": 1.0,
+    "mean_abs_shift_train": 0.009999994952719601,
+    "target_mean_train": 0.5175886589024156,
+    "hard_mean_train": 0.5179476061945198,
+    "n_distinct_values_train": 2,
+    "sha16_train_slice": "96493399fbe37fa5"
+   },
+   "A0p05": {
+    "note": "라벨 스무딩 e=0.05 — 전 학습 행",
+    "n_train_rows_changed": 1116277,
+    "share_train_rows_changed": 1.0,
+    "mean_abs_shift_train": 0.02499998783074528,
+    "target_mean_train": 0.5170502384132055,
+    "hard_mean_train": 0.5179476061945198,
+    "n_distinct_values_train": 2,
+    "sha16_train_slice": "b2df4daa0a641e7a"
+   },
+   "A0p1": {
+    "note": "라벨 스무딩 e=0.1 — 전 학습 행",
+    "n_train_rows_changed": 1116277,
+    "share_train_rows_changed": 1.0,
+    "mean_abs_shift_train": 0.050000006533573636,
+    "target_mean_train": 0.5161528397598082,
+    "hard_mean_train": 0.5179476061945198,
+    "n_distinct_values_train": 2,
+    "sha16_train_slice": "a9fac622022e64f4"
+   },
+   "A0p2": {
+    "note": "라벨 스무딩 e=0.2 — 전 학습 행",
+    "n_train_rows_changed": 1116277,
+    "share_train_rows_changed": 1.0,
+    "mean_abs_shift_train": 0.10000001306714727,
+    "target_mean_train": 0.5143580733250966,
+    "hard_mean_train": 0.5179476061945198,
+    "n_distinct_values_train": 2,
+    "sha16_train_slice": "52445e0cbc9bae5e"
+   },
+   "B0p1": {
+    "note": "자기 증류 e=0.1 — 커버 행만 (시즌 전진 연쇄 OOF p_self), 미커버는 hard",
+    "n_train_rows_changed": 904650,
+    "share_train_rows_changed": 0.8104171276484242,
+    "mean_abs_shift_train": 0.040183471422675594,
+    "target_mean_train": 0.5185745242934786,
+    "hard_mean_train": 0.5179476061945198,
+    "n_distinct_values_train": 670958,
+    "sha16_train_slice": "f4e6f4dd2ea5804f"
+   },
+   "B0p2": {
+    "note": "자기 증류 e=0.2 — 커버 행만 (시즌 전진 연쇄 OOF p_self), 미커버는 hard",
+    "n_train_rows_changed": 904650,
+    "share_train_rows_changed": 0.8104171276484242,
+    "mean_abs_shift_train": 0.08036694283050712,
+    "target_mean_train": 0.5192014424072815,
+    "hard_mean_train": 0.5179476061945198,
+    "n_distinct_values_train": 749378,
+    "sha16_train_slice": "8f7e7dad2535a6b8"
+   },
+   "B0p4": {
+    "note": "자기 증류 e=0.4 — 커버 행만 (시즌 전진 연쇄 OOF p_self), 미커버는 hard",
+    "n_train_rows_changed": 904650,
+    "share_train_rows_changed": 0.8104171276484242,
+    "mean_abs_shift_train": 0.16073388562507876,
+    "target_mean_train": 0.5204552786559786,
+    "hard_mean_train": 0.5179476061945198,
+    "n_distinct_values_train": 807240,
+    "sha16_train_slice": "1eeedc4cfc180567"
+   },
+   "N2_B0p1": {
+    "note": "귀무 N2 — p_self 를 커버 행 안에서 무작위 치환, e=0.1. 타깃 잡음의 크기는 같고 정보는 0",
+    "n_train_rows_changed": 904650,
+    "share_train_rows_changed": 0.8104171276484242,
+    "mean_abs_shift_train": 0.04049225577353843,
+    "target_mean_train": 0.518574524281044,
+    "hard_mean_train": 0.5179476061945198,
+    "n_distinct_values_train": 670284,
+    "sha16_train_slice": "8bf4a38d1d67d9cc"
+   },
+   "N2_B0p2": {
+    "note": "귀무 N2 — p_self 를 커버 행 안에서 무작위 치환, e=0.2. 타깃 잡음의 크기는 같고 정보는 0",
+    "n_train_rows_changed": 904650,
+    "share_train_rows_changed": 0.8104171276484242,
+    "mean_abs_shift_train": 0.08098451149357415,
+    "target_mean_train": 0.519201442421071,
+    "hard_mean_train": 0.5179476061945198,
+    "n_distinct_values_train": 749100,
+    "sha16_train_slice": "0cc9ac3be0fed961"
+   },
+   "N2_B0p4": {
+    "note": "귀무 N2 — p_self 를 커버 행 안에서 무작위 치환, e=0.4. 타깃 잡음의 크기는 같고 정보는 0",
+    "n_train_rows_changed": 904650,
+    "share_train_rows_changed": 0.8104171276484242,
+    "mean_abs_shift_train": 0.16196902297865834,
+    "target_mean_train": 0.5204552786561121,
+    "hard_mean_train": 0.5179476061945198,
+    "n_distinct_values_train": 806836,
+    "sha16_train_slice": "1a44bca635b2b979"
+   },
+   "N1a_perm_e0": {
+    "note": "귀무 N1a — (season,pitcher) 안 라벨 순열, 스무딩 없음",
+    "n_train_rows_changed": 550996,
+    "share_train_rows_changed": 0.4936014985527786,
+    "mean_abs_shift_train": 0.4936014985527786,
+    "target_mean_train": 0.5179476061945198,
+    "hard_mean_train": 0.5179476061945198,
+    "n_distinct_values_train": 2,
+    "sha16_train_slice": "3177a81168bde18d"
+   },
+   "C_mix": {
+    "note": "축 C — 라벨 스무딩 eA=0.1 × 자기 증류 eB=0.1 (커버 행), 미커버는 A 만",
+    "n_train_rows_changed": 1116277,
+    "share_train_rows_changed": 1.0,
+    "mean_abs_shift_train": 0.09018347272052667,
+    "target_mean_train": 0.5167797625013977,
+    "n_distinct_values_train": 652548,
+    "sha16_train_slice": "1ef4501f57f0cbc4"
+   },
+   "N1b_perm_eA": {
+    "note": "귀무 N1b — N1a 와 같은 순열 라벨 + eA=0.1 스무딩. 쌍 (N1b − N1a) 이 스무딩만의 몫이다",
+    "n_train_rows_changed": 1116277,
+    "share_train_rows_changed": 1.0,
+    "mean_abs_shift_train": 0.4942413489791242,
+    "target_mean_train": 0.5161528397598082,
+    "n_distinct_values_train": 2,
+    "sha16_train_slice": "1563a8bb3ada9daa"
+   }
+  },
+  "p_self_source": {
+   "path": "/home/<user>/SungjinPark/exp092/work/offF_all.npy",
+   "what": "exp_092 s0_offF — oof_new/stack_fold2024_seed{1,13,42,101}.npz 4시드 평균, p_succ = 1 - sum(4 실패셀), offset = logit(clip(p_succ,1e-6,1-1e-6))",
+   "off_sha16": "fc034ac8afe24951",
+   "p_self_train_mean": 0.518304474313527,
+   "p_self_train_sd": 0.05264835540333278
+  }
+ },
+ "지점표": [
+  {
+   "point": "N3_identity",
+   "axis": "N3_항등복제본",
+   "desc": "무변형 — 사다리 맨 아래(S135)",
+   "own_argmax_step": 1632,
+   "own_argmax_w_deep": 0.43,
+   "mix_gain": 26.269817382706947,
+   "delta_vs_prereg_baseline_26.2698": 1.7382706946733606e-05,
+   "delta_vs_redrawn_baseline_mean_25.4866": 0.7832489605585806,
+   "boot_t_vs_base94_1632": null,
+   "boot_se_pts": 0.0,
+   "t_combined_1sigma_4.654": 3.735003641326516e-06,
+   "alone_recentred_pts": 864.8370207566702,
+   "rho_vs_z_mate": 0.8930378055187094,
+   "d_rho_vs_base_1632": 0.0,
+   "d_alone_vs_base_1632": 0.0,
+   "rho_unit_price_pts_per_0.01": null,
+   "S103_pred_dgain": 0.0,
+   "S103_pred_dgain_fixedfit": 0.0,
+   "S103_obs_dgain_1632": 1.7382706946733606e-05,
+   "PASS": false
+  },
+  {
+   "point": "A0p1",
+   "axis": "A_라벨스무딩",
+   "desc": "y -> (1-e)y + e*0.5, e=0.1",
+   "own_argmax_step": 1632,
+   "own_argmax_w_deep": 0.46,
+   "mix_gain": 26.12477219652294,
+   "delta_vs_prereg_baseline_26.2698": -0.1450278034770598,
+   "delta_vs_redrawn_baseline_mean_25.4866": 0.6382037743745741,
+   "boot_t_vs_base94_1632": -0.06820958537110286,
+   "boot_se_pts": 2.126463390746804,
+   "t_combined_1sigma_4.654": -0.031161968946510483,
+   "alone_recentred_pts": 875.2696700775165,
+   "rho_vs_z_mate": 0.8865615872471053,
+   "d_rho_vs_base_1632": -0.006476218271604051,
+   "d_alone_vs_base_1632": 10.43264932084628,
+   "rho_unit_price_pts_per_0.01": -16.10916878232748,
+   "S103_pred_dgain": 4.038442740304827,
+   "S103_pred_dgain_fixedfit": 3.81715130442283,
+   "S103_obs_dgain_1632": -0.1450278034770598,
+   "PASS": false
+  },
+  {
+   "point": "A0p05",
+   "axis": "A_라벨스무딩",
+   "desc": "y -> (1-e)y + e*0.5, e=0.05",
+   "own_argmax_step": 1632,
+   "own_argmax_w_deep": 0.44,
+   "mix_gain": 25.26942639489164,
+   "delta_vs_prereg_baseline_26.2698": -1.0003736051083614,
+   "delta_vs_redrawn_baseline_mean_25.4866": -0.2171420272567275,
+   "boot_t_vs_base94_1632": -0.7904096946558538,
+   "boot_se_pts": 1.2656613330562625,
+   "t_combined_1sigma_4.654": -0.21494920608258733,
+   "alone_recentred_pts": 868.6374951009545,
+   "rho_vs_z_mate": 0.8897997203945704,
+   "d_rho_vs_base_1632": -0.003238085124138923,
+   "d_alone_vs_base_1632": 3.800474344284339,
+   "rho_unit_price_pts_per_0.01": -11.736795663440033,
+   "S103_pred_dgain": 1.742655910218056,
+   "S103_pred_dgain_fixedfit": 1.6452205353098641,
+   "S103_obs_dgain_1632": -1.0003736051083614,
+   "PASS": false
+  },
+  {
+   "point": "N2_B0p1",
+   "axis": "N2_귀무_p_self치환",
+   "desc": "p_self 무작위 치환, e=0.1",
+   "own_argmax_step": 1632,
+   "own_argmax_w_deep": 0.48,
+   "mix_gain": 25.138630401178034,
+   "delta_vs_prereg_baseline_26.2698": -1.131169598821966,
+   "delta_vs_redrawn_baseline_mean_25.4866": -0.3479380209703322,
+   "boot_t_vs_base94_1632": -0.46161023016134656,
+   "boot_se_pts": 2.4505240734558,
+   "t_combined_1sigma_4.654": -0.24305320129393343,
+   "alone_recentred_pts": 884.2667538145998,
+   "rho_vs_z_mate": 0.8948810771148902,
+   "d_rho_vs_base_1632": 0.0018432715961808066,
+   "d_alone_vs_base_1632": 19.42973305792964,
+   "rho_unit_price_pts_per_0.01": 105.40895383071793,
+   "S103_pred_dgain": 3.225786296713222,
+   "S103_pred_dgain_fixedfit": 3.0797871056336388,
+   "S103_obs_dgain_1632": -1.131169598821966,
+   "PASS": false
+  },
+  {
+   "point": "A0p02",
+   "axis": "A_라벨스무딩",
+   "desc": "y -> (1-e)y + e*0.5, e=0.02",
+   "own_argmax_step": 1632,
+   "own_argmax_w_deep": 0.43,
+   "mix_gain": 25.059900035839746,
+   "delta_vs_prereg_baseline_26.2698": -1.209899964160254,
+   "delta_vs_redrawn_baseline_mean_25.4866": -0.42666838630862003,
+   "boot_t_vs_base94_1632": -1.490019822392829,
+   "boot_se_pts": 0.8120142622832704,
+   "t_combined_1sigma_4.654": -0.25996991064895875,
+   "alone_recentred_pts": 862.7722873074672,
+   "rho_vs_z_mate": 0.8902834647391842,
+   "d_rho_vs_base_1632": -0.0027543407795251884,
+   "d_alone_vs_base_1632": -2.064733449203004,
+   "rho_unit_price_pts_per_0.01": 7.49628900153356,
+   "S103_pred_dgain": 0.44756656897809843,
+   "S103_pred_dgain_fixedfit": 0.41411244953905024,
+   "S103_obs_dgain_1632": -1.209899964160254,
+   "PASS": false
+  },
+  {
+   "point": "B0p1",
+   "axis": "B_자기증류",
+   "desc": "y -> (1-e)y + e*p_self, e=0.1 (커버 행만)",
+   "own_argmax_step": 1632,
+   "own_argmax_w_deep": 0.46,
+   "mix_gain": 24.613151670282946,
+   "delta_vs_prereg_baseline_26.2698": -1.6566483297170542,
+   "delta_vs_redrawn_baseline_mean_25.4866": -0.8734167518654203,
+   "boot_t_vs_base94_1632": -0.8588615181028726,
+   "boot_se_pts": 1.9289090004929885,
+   "t_combined_1sigma_4.654": -0.35596225391427894,
+   "alone_recentred_pts": 883.4259105722552,
+   "rho_vs_z_mate": 0.9000687503137604,
+   "d_rho_vs_base_1632": 0.007030944795051064,
+   "d_alone_vs_base_1632": 18.58888981558505,
+   "rho_unit_price_pts_per_0.01": 26.438679803985067,
+   "S103_pred_dgain": 1.458968381591053,
+   "S103_pred_dgain_fixedfit": 1.420106322988922,
+   "S103_obs_dgain_1632": -1.6566483297170542,
+   "PASS": false
+  },
+  {
+   "point": "N2_B0p2",
+   "axis": "N2_귀무_p_self치환",
+   "desc": "p_self 무작위 치환, e=0.2",
+   "own_argmax_step": 1632,
+   "own_argmax_w_deep": 0.48,
+   "mix_gain": 21.97805110584204,
+   "delta_vs_prereg_baseline_26.2698": -4.2917488941579585,
+   "delta_vs_redrawn_baseline_mean_25.4866": -3.5085173163063246,
+   "boot_t_vs_base94_1632": -0.9420858642545357,
+   "boot_se_pts": 4.555599908390985,
+   "t_combined_1sigma_4.654": -0.9221634925135278,
+   "alone_recentred_pts": 877.6073878853597,
+   "rho_vs_z_mate": 0.8935956426974387,
+   "d_rho_vs_base_1632": 0.0005578371787293701,
+   "d_alone_vs_base_1632": 12.770367128689486,
+   "rho_unit_price_pts_per_0.01": 228.92642540924865,
+   "S103_pred_dgain": 2.3221087499938404,
+   "S103_pred_dgain_fixedfit": 2.213638228284047,
+   "S103_obs_dgain_1632": -4.2917488941579585,
+   "PASS": false
+  },
+  {
+   "point": "A0p2",
+   "axis": "A_라벨스무딩",
+   "desc": "y -> (1-e)y + e*0.5, e=0.2",
+   "own_argmax_step": 1632,
+   "own_argmax_w_deep": 0.48,
+   "mix_gain": 21.958636233665402,
+   "delta_vs_prereg_baseline_26.2698": -4.311163766334598,
+   "delta_vs_redrawn_baseline_mean_25.4866": -3.527932188482964,
+   "boot_t_vs_base94_1632": -0.9868388313432074,
+   "boot_se_pts": 4.368678057755804,
+   "t_combined_1sigma_4.654": -0.9263351453232914,
+   "alone_recentred_pts": 878.0116236467018,
+   "rho_vs_z_mate": 0.8945519285295173,
+   "d_rho_vs_base_1632": 0.0015141230108078885,
+   "d_alone_vs_base_1632": 13.174602890031565,
+   "rho_unit_price_pts_per_0.01": 87.01144356165626,
+   "S103_pred_dgain": 2.1056523020110927,
+   "S103_pred_dgain_fixedfit": 2.0117135714739613,
+   "S103_obs_dgain_1632": -4.311163766334598,
+   "PASS": false
+  },
+  {
+   "point": "C_mix",
+   "axis": "C_혼합",
+   "desc": "eA=0.1 x eB=0.1",
+   "own_argmax_step": 1632,
+   "own_argmax_w_deep": 0.5,
+   "mix_gain": 21.94463161740987,
+   "delta_vs_prereg_baseline_26.2698": -4.325168382590132,
+   "delta_vs_redrawn_baseline_mean_25.4866": -3.541936804738498,
+   "boot_t_vs_base94_1632": -1.1970391299539875,
+   "boot_se_pts": 3.613236741446684,
+   "t_combined_1sigma_4.654": -0.9293443022325165,
+   "alone_recentred_pts": 894.9842572317679,
+   "rho_vs_z_mate": 0.9085771678274113,
+   "d_rho_vs_base_1632": 0.015539362308701898,
+   "d_alone_vs_base_1632": 30.147236475097657,
+   "rho_unit_price_pts_per_0.01": 19.400562182796577,
+   "S103_pred_dgain": 1.088239896276634,
+   "S103_pred_dgain_fixedfit": 1.1043895745525276,
+   "S103_obs_dgain_1632": -4.325168382590132,
+   "PASS": false
+  },
+  {
+   "point": "B0p2",
+   "axis": "B_자기증류",
+   "desc": "y -> (1-e)y + e*p_self, e=0.2 (커버 행만)",
+   "own_argmax_step": 1632,
+   "own_argmax_w_deep": 0.47,
+   "mix_gain": 20.53154093342164,
+   "delta_vs_prereg_baseline_26.2698": -5.738259066578362,
+   "delta_vs_redrawn_baseline_mean_25.4866": -4.955027488726728,
+   "boot_t_vs_base94_1632": -1.7021462868154114,
+   "boot_se_pts": 3.3712005212215526,
+   "t_combined_1sigma_4.654": -1.2329735854272372,
+   "alone_recentred_pts": 896.2056754420189,
+   "rho_vs_z_mate": 0.9149407125893071,
+   "d_rho_vs_base_1632": 0.02190290707059772,
+   "d_alone_vs_base_1632": 31.3686546853487,
+   "rho_unit_price_pts_per_0.01": 14.321685511535462,
+   "S103_pred_dgain": -0.6390067325598867,
+   "S103_pred_dgain_fixedfit": -0.5124546394429483,
+   "S103_obs_dgain_1632": -5.738259066578362,
+   "PASS": false
+  },
+  {
+   "point": "N2_B0p4",
+   "axis": "N2_귀무_p_self치환",
+   "desc": "p_self 무작위 치환, e=0.4",
+   "own_argmax_step": 2720,
+   "own_argmax_w_deep": 0.28,
+   "mix_gain": 8.845149270875254,
+   "delta_vs_prereg_baseline_26.2698": -17.424650729124746,
+   "delta_vs_redrawn_baseline_mean_25.4866": -16.641419151273112,
+   "boot_t_vs_base94_1632": -2.3213239728968595,
+   "boot_se_pts": 7.506349098743604,
+   "t_combined_1sigma_4.654": -3.7440160569670704,
+   "alone_recentred_pts": 786.6605490509215,
+   "rho_vs_z_mate": 0.8762305452142678,
+   "d_rho_vs_base_1632": 0.019155513138239155,
+   "d_alone_vs_base_1632": -63.54643302017848,
+   "rho_unit_price_pts_per_0.01": -33.173965407026365,
+   "S103_pred_dgain": -18.330045880496304,
+   "S103_pred_dgain_fixedfit": -17.37052113895214,
+   "S103_obs_dgain_1632": -18.341800368947784,
+   "PASS": false
+  },
+  {
+   "point": "B0p4",
+   "axis": "B_자기증류",
+   "desc": "y -> (1-e)y + e*p_self, e=0.4 (커버 행만)",
+   "own_argmax_step": 1632,
+   "own_argmax_w_deep": 0.29,
+   "mix_gain": 5.405473680963951,
+   "delta_vs_prereg_baseline_26.2698": -20.86432631903605,
+   "delta_vs_redrawn_baseline_mean_25.4866": -20.081094741184415,
+   "boot_t_vs_base94_1632": -2.768131418189663,
+   "boot_se_pts": 7.537338568769594,
+   "t_combined_1sigma_4.654": -4.483095470355834,
+   "alone_recentred_pts": 869.2771154630741,
+   "rho_vs_z_mate": 0.9319700466006094,
+   "d_rho_vs_base_1632": 0.038932241081900076,
+   "d_alone_vs_base_1632": 4.440094706403897,
+   "rho_unit_price_pts_per_0.01": 1.140467279308032,
+   "S103_pred_dgain": -11.1596642160187,
+   "S103_pred_dgain_fixedfit": -10.455927205321878,
+   "S103_obs_dgain_1632": -20.86432631903605,
+   "PASS": false
+  },
+  {
+   "point": "N1a_perm_e0",
+   "axis": "N1_바닥대조",
+   "desc": "(season,pitcher) 안 라벨 순열, 스무딩 없음",
+   "own_argmax_step": 816,
+   "own_argmax_w_deep": 0.0,
+   "mix_gain": 0.0,
+   "delta_vs_prereg_baseline_26.2698": -26.2698,
+   "delta_vs_redrawn_baseline_mean_25.4866": -25.486568422148366,
+   "boot_t_vs_base94_1632": -2.8450368435214184,
+   "boot_se_pts": 9.233559643539243,
+   "t_combined_1sigma_4.654": -5.644563816072196,
+   "alone_recentred_pts": 602.4953903727148,
+   "rho_vs_z_mate": 0.8455557259639579,
+   "d_rho_vs_base_1632": -0.05577237267220869,
+   "d_alone_vs_base_1632": -254.15185898584048,
+   "rho_unit_price_pts_per_0.01": 45.56949019895008,
+   "S103_pred_dgain": -32.41428124980551,
+   "S103_pred_dgain_fixedfit": -31.110527618413695,
+   "S103_obs_dgain_1632": -26.2698,
+   "PASS": false
+  },
+  {
+   "point": "N1b_perm_eA",
+   "axis": "N1_바닥대조",
+   "desc": "순열 라벨 + eA=0.1 스무딩",
+   "own_argmax_step": 816,
+   "own_argmax_w_deep": 0.0,
+   "mix_gain": 0.0,
+   "delta_vs_prereg_baseline_26.2698": -26.2698,
+   "delta_vs_redrawn_baseline_mean_25.4866": -25.486568422148366,
+   "boot_t_vs_base94_1632": -2.8450368435214184,
+   "boot_se_pts": 9.233559643539243,
+   "t_combined_1sigma_4.654": -5.644563816072196,
+   "alone_recentred_pts": 620.7071095985284,
+   "rho_vs_z_mate": 0.8472132223228823,
+   "d_rho_vs_base_1632": -0.05492052870331432,
+   "d_alone_vs_base_1632": -241.69890985002996,
+   "rho_unit_price_pts_per_0.01": 44.008846155817146,
+   "S103_pred_dgain": -30.24499833397849,
+   "S103_pred_dgain_fixedfit": -29.04112642445915,
+   "S103_obs_dgain_1632": -26.2698,
+   "PASS": false
+  }
+ ],
+ "귀무_대조": {
+  "왜": "N2 는 축 B 의 개수·크기 맞춤 귀무(타깃 잡음만 남고 정보는 0). N3 는 무변형 항등 복제본이라 축 A 의 귀무이자 사다리 맨 아래(S135). N1 쌍(b−a)은 신호 없는 팔 위에서 스무딩만의 몫이다 — 바닥 대조이지 등기댓값 귀무가 아니다.",
+  "표": {
+   "B0p1_minus_N2_B0p1": {
+    "step": 1632,
+    "a_gain": 24.613151670282946,
+    "b_gain": 25.138630401178034,
+    "a_minus_b": -0.5254787308950881,
+    "paired": {
+     "gain_pts": -0.525478730881851,
+     "boot_se_pts": 1.6614614114460622,
+     "t": -0.31627501382923945,
+     "ci95_pts": [
+      -3.6691434587423566,
+      2.692975809590315
+     ]
+    }
+   },
+   "B0p2_minus_N2_B0p2": {
+    "step": 1632,
+    "a_gain": 20.53154093342164,
+    "b_gain": 21.97805110584204,
+    "a_minus_b": -1.4465101724204033,
+    "paired": {
+     "gain_pts": -1.4465101724130376,
+     "boot_se_pts": 3.2524692894108864,
+     "t": -0.4447421462586788,
+     "ci95_pts": [
+      -7.52590670450077,
+      4.911169575416583
+     ]
+    }
+   },
+   "B0p4_minus_N2_B0p4": {
+    "step": 1632,
+    "a_gain": 5.405473680963951,
+    "b_gain": 7.9279996310522165,
+    "a_minus_b": -2.5225259500882657,
+    "paired": {
+     "gain_pts": -2.522525950093317,
+     "boot_se_pts": 3.7044826473445256,
+     "t": -0.6809387950302676,
+     "ci95_pts": [
+      -9.619886620202378,
+      4.889371890712951
+     ]
+    }
+   },
+   "A0p02_minus_N3": {
+    "step": 1632,
+    "a_gain": 25.059900035839746,
+    "b_gain": 26.269817382706947,
+    "a_minus_b": -1.2099173468672006,
+    "paired": {
+     "gain_pts": -1.2099173468677626,
+     "boot_se_pts": 0.8120142622832704,
+     "t": -1.490019822392829,
+     "ci95_pts": [
+      -2.733846568552024,
+      0.450693487189252
+     ]
+    }
+   },
+   "A0p05_minus_N3": {
+    "step": 1632,
+    "a_gain": 25.26942639489164,
+    "b_gain": 26.269817382706947,
+    "a_minus_b": -1.000390987815308,
+    "paired": {
+     "gain_pts": -1.0003909877987214,
+     "boot_se_pts": 1.2656613330562625,
+     "t": -0.7904096946558538,
+     "ci95_pts": [
+      -3.3548000350530836,
+      1.477542305411107
+     ]
+    }
+   },
+   "A0p1_minus_N3": {
+    "step": 1632,
+    "a_gain": 26.12477219652294,
+    "b_gain": 26.269817382706947,
+    "a_minus_b": -0.14504518618400652,
+    "paired": {
+     "gain_pts": -0.145045186189669,
+     "boot_se_pts": 2.126463390746804,
+     "t": -0.06820958537110286,
+     "ci95_pts": [
+      -4.2657030998235825,
+      3.7837033260415542
+     ]
+    }
+   },
+   "A0p2_minus_N3": {
+    "step": 1632,
+    "a_gain": 21.958636233665402,
+    "b_gain": 26.269817382706947,
+    "a_minus_b": -4.311181149041545,
+    "paired": {
+     "gain_pts": -4.31118114903045,
+     "boot_se_pts": 4.368678057755804,
+     "t": -0.9868388313432074,
+     "ci95_pts": [
+      -12.541533330119984,
+      4.2430008577795775
+     ]
+    }
+   },
+   "N1b_minus_N1a": {
+    "step": 1632,
+    "a_gain": 0.0,
+    "b_gain": 0.0,
+    "a_minus_b": 0.0,
+    "paired": {
+     "gain_pts": -0.0,
+     "boot_se_pts": 0.0,
+     "t": null,
+     "ci95_pts": [
+      -0.0,
+      -0.0
+     ]
+    }
+   },
+   "C_minus_N3": {
+    "step": 1632,
+    "a_gain": 21.94463161740987,
+    "b_gain": 26.269817382706947,
+    "a_minus_b": -4.325185765297078,
+    "paired": {
+     "gain_pts": -4.3251857652991195,
+     "boot_se_pts": 3.613236741446684,
+     "t": -1.1970391299539875,
+     "ci95_pts": [
+      -11.364815401735898,
+      2.54267413156379
+     ]
+    }
+   }
+  }
+ },
+ "🔑_S103_교환율_검산": {
+  "n_live_points": 11,
+  "rho_pred_vs_obs": 0.9298974565956194,
+  "mean_pred_minus_obs": 4.483299101449228,
+  "sd_of_residual": 2.6413991496638296,
+  "rmse": 5.142245475577395,
+  "읽는_법": "S103 회귀는 이 계열에서 **순서와 기울기는 맞고 수준이 치우친다** — 예측이 일정하게 높다. 편의를 빼면 최선 지점의 예측도 0 근처가 된다."
+ },
+ "🔑_ρ_단가": {
+  "문턱": "S103 교환율 — ρ 를 0.01 내리는 것은 팔 단독 15.82점의 값어치다. 그보다 싸게 내려야 이 축이 값을 한다.",
+  "이_실험의_답": "축 A 는 **음의 단가**로 ρ 를 내렸다 — e=0.10 에서 ρ −0.00648 이면서 단독이 +10.43 올랐다(공짜보다 낫다). e=0.05 도 −11.74. 축 B 는 반대로 ρ 를 **올린다**(+0.007 / +0.022 / +0.039). 🔴 그런데 공짜로 산 ρ 하락이 혼합 이득으로 **안 바뀌었다**(−0.145).",
+  "축A_ρ하락_지점": {
+   "A0p1": {
+    "d_rho": -0.006476218271604051,
+    "d_alone": 10.43264932084628,
+    "price": -16.10916878232748,
+    "obs_delta": -0.1450278034770598
+   },
+   "A0p05": {
+    "d_rho": -0.003238085124138923,
+    "d_alone": 3.800474344284339,
+    "price": -11.736795663440033,
+    "obs_delta": -1.0003736051083614
+   },
+   "A0p02": {
+    "d_rho": -0.0027543407795251884,
+    "d_alone": -2.064733449203004,
+    "price": 7.49628900153356,
+    "obs_delta": -1.209899964160254
+   },
+   "A0p2": {
+    "d_rho": 0.0015141230108078885,
+    "d_alone": 13.174602890031565,
+    "price": 87.01144356165626,
+    "obs_delta": -4.311163766334598
+   }
+  },
+  "🔴_N1_쌍은_퇴화했다": "N1a·N1b 는 팔이 망가져 세 스텝 전부에서 argmax w_deep = 0.00 이다 (혼합이 그 팔을 아예 안 쓴다). 그래서 N1b − N1a = 정확히 0.0000 이고 '신호 없는 팔 위에서 스무딩만의 몫'은 **측정되지 않았다**. 바닥 대조로서는 유효하다 — 라벨 순열이 팔 단독을 864.84 → 602.50 으로 떨어뜨린다."
+ },
+ "baseline_arm": {
+  "per_step": {
+   "816": {
+    "argmax": {
+     "w": 0.51,
+     "gain": 21.69644791828466
+    },
+    "alone_recentred": 904.7338607281686,
+    "z_sd": 0.20203966473560298,
+    "rho_vs_z_mate": 0.9238515983535535
+   },
+   "1632": {
+    "argmax": {
+     "w": 0.43,
+     "gain": 26.269817382706947
+    },
+    "alone_recentred": 864.8370207566702,
+    "z_sd": 0.22155867348471148,
+    "rho_vs_z_mate": 0.8930378055187094
+   },
+   "2720": {
+    "argmax": {
+     "w": 0.23,
+     "gain": 14.872754657580003
+    },
+    "alone_recentred": 649.4991418290019,
+    "z_sd": 0.24414654709248249,
+    "rho_vs_z_mate": 0.8216015895791544
+   }
+  },
+  "own_argmax_step": 1632,
+  "own_argmax_gain": 26.269817382706947,
+  "gate_1632_reproduces_26.2698": {
+   "got": 26.269817382706947,
+   "expected": 26.2698,
+   "abs_diff": 1.7382706946733606e-05,
+   "PASS": true
+  }
+ },
+ "missing_artifacts": [],
+ "n_fits": 212,
+ "wall": {
+  "grid_phase1": "2026-08-26T09:58:41Z → 10:32:35Z (180 fits, 3 레인)",
+  "grid_phase2": "→ 10:40:40Z (30 fits)",
+  "mix_eval_sec": 87.4,
+  "leak_gates_sec": {
+   "s1": 567.7,
+   "s1b": 407.5
+  }
+ },
+ "서버_경로": "a5000:~/SungjinPark/exp107/"
+}

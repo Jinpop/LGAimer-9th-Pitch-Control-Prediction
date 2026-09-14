@@ -1,0 +1,1337 @@
+{
+ "exp_id": "exp_077",
+ "date": "2026-08-21",
+ "type": "시드 확장 측정.  CatBoost 적합 13건 · 제출물 없음 · 상수 변경 0.",
+ "base": "BN (LB 1115.9165956458) 의 배포 산술을 팀원 OOT 정직면(<=2023 학습 -> 2024 예측 253,507행) 위에서 적용.",
+ "질문": "v6 내부 CatBoost 를 4시드 -> 12시드로 늘리면 정직면에서 얼마를 버는가.",
+ "report": {
+  "한줄": "🔴 사전 등록 문턱 +1.0 을 두 판정이 **양쪽으로 갈라 밟는다** — 우리 4시드 출발 +0.95354(미달) · 팀원 배포 4시드 출발 +1.02529(충족). 그리고 짝지은 Δ 의 산포(sd 1.408)가 Δ 자체보다 커서 **이 문턱은 데이터로 결정되지 않는다.**",
+  "🔴_가장_큰_발견": {
+   "제목": "CatBoost 의 `thread_count` 는 시드와 같은 급의 모델 변수다",
+   "실측": "같은 시드 42 · 같은 마스크 · 같은 프레임 · 같은 코드에서 threads 2 vs 6 만 바꿨을 때 ρ(예측 로짓) 0.973547 · rms 로짓차 0.04303 · max|Δp| 0.08501 · 점수 904.012 vs 907.313 (**3.301점 차**)",
+   "대조": "우리 12시드가 서로 다를 때의 ρ 대역(같은 코드·같은 프레임·OOT) 은 0.969923~0.974322. **스레드만 바꾼 ρ 0.973547 이 이 대역 안이다.**",
+   "함의_1": "스레드 수를 바꾸는 것이 시드를 바꾸는 것과 같은 크기의 교란이다.  S17 은 '재학습으로 바이트 재현이 안 된다'였는데, 여기서는 **모델이 시드 하나만큼 실제로 달라진다**는 강한 형태다.",
+   "함의_2": "🔴 Phase 3 재현 제출에서 배포 `.cbm` 을 재생성하려면 **학습에 쓴 스레드 수까지 알아야 한다.**  파라미터·시드·데이터가 다 같아도 스레드가 다르면 다른 모델이 나온다.  현재 `mate/model/cat_*.cbm` 을 만든 스레드 수는 기록돼 있지 않다.",
+   "함의_3": "config 의 G0d 게이트(배포 시드 하나를 재적합해 대조)는 **스레드 수가 다른 한 통과할 수 없는 게이트**였다.  통과 실패를 계열 불일치로 읽으면 안 된다."
+  },
+  "stage0_게이트": {
+   "G0a_하이퍼": "PASS.  4시드 전부 354트리 · lr/depth/l2/subsample/border_count/Plain/has_time/one_hot 전부 1차 README 와 일치.  `get_all_params()` 차이는 `random_seed` 하나뿐.",
+   "🔴_float32_함정": "불일치로 보였던 `learning_rate 0.05999999866` · `subsample 0.8000000119` 은 **`.cbm` 이 실수 하이퍼를 float32 로 저장**한 결과다.  각각 float32(0.06)·float32(0.8) 과 1e-9 안에서 같다.  이 사실을 모르면 하이퍼 대조가 무조건 실패한다.",
+   "G0b_피처": "PASS.  배포 모델 `feature_names_` 가 `features_sp.txt` 99열과 원소·순서까지 일치.  cat 인덱스 [4,10,13,14,45] 일치.",
+   "G0c_범주형": "PASS(음성 대조로).  전 범주를 미지로 만들면 291.66점, 한 열만 미지로 해도 53.33점 떨어진다 — 규약이 실제로 물려 있다.  ⚠️ 팀원 README 의 '인샘플 1617~1965' 대역에는 안 들어간다(우리 실측 1338~1357).  그 대역은 단일 cat 팔의 기대값이 아니라 'OOT 가 아님'을 잡는 경보선으로 읽어야 한다.",
+   "G0c_dtype": "`game_type`·`base_state` object · `pitcher/batter_team_id` int64 · **`idea_matchup_pitch` float32**.  `lgb_cats.json` 어휘 기준 미매핑 1,449행 / 1,475,092행 (0.098%).",
+   "G0d_동일성": "🔴 **대역 밖(아래).**  ρ(우리 배포마스크 재적합 seed42, 배포 cat_42) = 0.9789030.  배포 시드쌍 대역 0.9849987~0.9862007.  게다가 우리 재적합은 배포 42(0.97890) 와 배포 777/2024/101(0.97836/0.97827/0.97811) 에 **거의 등거리** — 시드가 기여하는 몫이 +0.0006 뿐이다.  D1 이 원인을 지목한다: 스레드 수.",
+   "G0d_잎값": "🔴 **잎값 상관은 이 계열에서 판정 근거가 될 수 없다.**  배포 형제 모델끼리의 잎값 ρ 가 0.0008 · 0.0148 · 0.0211 로 사실상 0 이다(독립적으로 자란 트리는 배열 원소가 서로 다른 분기를 가리킨다).  우리 재적합의 −0.0087 도 같은 뜻.  config 가 요구한 '잎값 상관' 항목은 예측 상관으로 대체했다.",
+   "G0d_버전": "배포 4개와 우리 재적합 모두 `.cbm` 메타에 catboost **v1.2.10 · commit b1bd2a6d77219e82a1acfcedfccb8e6f6c1ee084** — 버전 드리프트는 원인이 아니다.",
+   "G0e_대역": "배포 시드쌍 예측로짓 ρ 0.9849987~0.9862007 (2024 인샘플 영역).  우리 12시드 OOT 시드쌍 ρ 0.969923~0.974322 — **두 대역은 체제가 다르다**(전자는 2024 가 학습에 포함, 후자는 제외).  섞어 비교하면 안 된다.",
+   "G0f_시드루프": "🔴 `mate/v6_infer.py` 의 `CAT_SEEDS = [42, 777, 2024, 101]` 은 **모듈 수준 하드코딩 리스트**다.  `glob`·`listdir`·`scandir` 은 파일 전체에 없다.  → 시드를 늘리면 `mate/model/cat_*.cbm` 8개 + **`mate/v6_infer.py` 자체**가 부모와 달라진다.  '파트너 패키지 바이트 그대로 출하' 가 코드 수준에서 깨진다.",
+   "🔴_절차_고백": "G0d 는 배포마스크 적합이 끝나야 계산되는데, 그 적합을 나머지 12건과 **같은 큐에 함께 발사**했다.  결과적으로 G0d 판정은 모든 적합이 끝난 뒤에 나왔고, config 가 의도한 '정지점' 이 실제로는 작동할 수 없었다.  이후 추가 학습은 하지 않았다(진단 2건 제외: threads 2 재적합 1건)."
+  },
+  "눈금_게이트": {
+   "단일팔": "8개 팔 전부 exp_070 실측과 4자리 일치 (p_lgb 892.2037 · p_cat 921.9975 · p_leaf 734.3269 · p_q 894.626 · p_v6 926.4687 · p_ebm 687.988 · AA81 875.5823 · T70 824.3331)",
+   "시작자격": "내부 3축 (0.5,−0.10,0.03) 재센터링 933.879134169 — exp_070 값과 동일",
+   "6상수": "928.183549535 — exp_070 값과 동일",
+   "v6_조립_항등": "팀원 cat4 를 넣어 조립한 우리 v6 가 `p_v6_3arm_renorm_oot2024.npy` 와 **max|Δp| 1.11e-16**.  조립 산술·가중·재정규화(0.85)가 같다.  로짓 클립행 0."
+  },
+  "cat4_재현": {
+   "ρ": 0.9933685,
+   "점수": "우리 920.3382 vs 팀원 921.9975 → −1.6594점",
+   "판정": "🟢 계열 동일로 읽는다.  근거 둘 — ① 겹치지 않는 4시드 평균 두 개의 ρ 대역(우리 새 8시드로 만든 35쌍) 이 0.992488~0.993337 인데 ρ(우리4, 팀원4)=0.993368 로 **그 대역 위**다. ② 점수차 −1.659 는 4시드 평균 점수 분포(70조합, sd 2.765) 의 **−0.60 sd** 이고 백분위 45.7 vs 62.9 — 시드 뽑기 산포 안이다.",
+   "⚠️": "단일 시드쌍 대역(0.9699~0.9743) 과 비교하면 안 된다.  둘 다 4개를 평균한 벡터라 상관이 자동으로 높아진다."
+  },
+  "시드곡선": {
+   "블렌드": "n=1 931.115 · 2 933.679 · 4 934.962 · 6 935.390 · 8 935.603 · 10 935.724 · 12 935.817 (n<12 는 부분집합 평균)",
+   "팔": "n=1 902.874 · 4 920.679 · 8 923.848 · 12 924.501",
+   "1/n_적합_블렌드": "score(n) = 936.338 − 5.190/n, R² 0.968, 최대잔차 0.298",
+   "1/n_적합_팔": "score(n) = 926.644 − 23.536/n, R² 0.9935, 최대잔차 0.607",
+   "구간별": "1→2 +2.564 · 2→4 +1.283 · 4→6 +0.428 · 6→8 +0.214 · 8→12 +0.214 — 교과서적 1/n",
+   "🔴_외삽_대조": "지휘자 모형 `887.58 − 35.99/n` 은 4→12 **팔 눈금 +5.998** 을 예측했다.  v6-Cat 의 실제 1/n 계수는 **23.536** 이고 팔 눈금 실측은 **+3.935** — 예측이 **52% 과대**했다.  AA81 에서 읽은 계수를 다른 팔에 그대로 옮기면 틀린다.",
+   "🔴_팔→블렌드_희석": "같은 면 안에서 팔 이득의 **0.2173** 만 블렌드 점수로 옮겨진다(+3.935 → +0.855).  이것은 LB 전이비가 아니라 면 안쪽 희석률이다(S4 와 같은 성격)."
+  },
+  "주지표": {
+   "정의": "Δ = score(v6_12) − score(v6_4), 정직면 재센터링, REF=0.2498069 눈금",
+   "A_우리12_vs_우리4": "+0.95354  (935.81709 − 934.86354, Brier 0.2474205 → 0.2474181)",
+   "B_팀원배포4+우리8_vs_팀원배포4": "+1.02529",
+   "팔_눈금": "A +4.16270 · B +3.22019",
+   "🔴_짝지은_Δ_의_산포": "12시드를 고정하고 출발 4시드를 495가지로 바꾸면 Δ 는 평균 +0.855 · sd **1.408** · 범위 −2.618~+4.582 · 양수 71.7% · **+1.0 이상 46.3%** · p05 −1.346 · p95 +3.189.  즉 **'4→12 의 이득' 은 하나의 수가 아니라 이 분포이고, 어느 4개에서 출발했느냐가 이득만큼 크게 움직인다.**",
+   "두_출발점의_위치": "우리 배포4 재현 Δ +0.9535 = 495분포의 52.5백분위(정중앙).  팀원 납품 4 Δ +1.0253.",
+   "예측차": "v6_12 vs v6_4 최종 예측의 max|Δp| 와 mean|Δp| 는 metrics.json 참조.  🔴 S9 — 이것은 후보 간 예측 차이이지 보정 이동폭이 아니고 점수로 환산되지 않는다."
+  },
+  "전이": {
+   "적용": "exp_072 실측 대역 0.3929~0.5463 (단일 배율 금지, S2)",
+   "A_LB투영": "+0.3746 ~ +0.5210점",
+   "B_LB투영": "+0.4028 ~ +0.5601점",
+   "🔴": "S1 — 정직면은 LB 눈금이 아니다.  그리고 이 축의 전이비는 한 번도 산 적이 없어 대역 자체가 다른 축에서 빌려온 것이다."
+  },
+  "사전등록_판정": {
+   "규칙": "정직면 Δ ≥ +1.0 이면 배포 시드를 추가 학습해 후보로 간다. 미만이면 축을 닫는다.",
+   "A_판정": "미달 (+0.95354 < 1.0)",
+   "B_판정": "충족 (+1.02529 ≥ 1.0)",
+   "🔴_문턱이_결정되지_않는_이유": "① config §stage1 의 'cat12 = 배포 4 + 새 8' 에서 '배포 4' 가 **팀원 납품본인지 우리 재현본인지** 명시돼 있지 않고, 두 읽기가 문턱의 양쪽에 떨어진다. ② 두 값의 차이 0.0718 은 짝지은 Δ 의 sd 1.408 의 **5%** 다 — 측정이 문턱을 가르지 못한다. **결과를 보고 문턱을 옮기지 않았고(S8), 유리한 쪽을 고르지도 않았다.** 판정은 지휘자 몫이다.",
+   "판정_금지": "이 실험은 채택·제출을 결정하지 않는다."
+  },
+  "출하했을_때의_비용_재확인": {
+   "상이_파일": "`mate/model/cat_*.cbm` 8개 + **`mate/v6_infer.py` 1개**(하드코딩 시드 리스트) = 9개",
+   "재학습_필요": "배포용은 ≤2024 마스크(1,369,784행, stage0 에서 실측 일치)로 따로 적합해야 한다.  시드당 3.84분(threads 6) → 8시드 약 31분 계산, 동시 3이면 벽시계 약 11분.",
+   "🔴_새로_생긴_비용": "D1 때문에 **스레드 수가 출하 변인이 된다.**  새 8시드를 threads 6 으로 적합하면 배포 4시드(스레드 수 미상)와 다른 조건에서 만든 모델을 섞는 것이다.  앙상블에는 해가 없지만(다양성이 오히려 는다) **Phase 3 재현 소명에서는 스레드 수를 명시해야 하고, 기존 4개는 그 값을 모른다.**",
+   "감사_등급": "C단 (코드 파일 변경 포함)"
+  },
+  "편향_명시": {
+   "p_q": "1시드 (배포는 3시드) — Q 팔이 배포보다 약하다",
+   "p_v6": "NN 자리(지분 0.15)가 비어 있다.  v6_4·v6_12 **양쪽 다** 비웠으므로 Δ 에서는 상쇄되지만, 재정규화(÷0.85) 때문에 cat 의 v6 내부 몫이 0.68 → 0.80 으로 커져 있다 — **Δ 가 실제 배포보다 위로 부풀 여지가 있다.**",
+   "off": "팀원 납품 in-season 오프셋, season<2024 앵커",
+   "면_자체": "≤2023 학습 → 2024 예측.  배포는 ≤2024 재적합이므로 같은 모델이 아니다(S1)."
+  },
+  "다음_제안": [
+   "🔴 지휘자 판단이 필요한 것 하나 — config 의 'cat12 = 배포 4 + 새 8' 에서 '배포 4' 의 정의.  이것이 문턱 판정을 가른다.",
+   "만약 진행한다면: 새 8시드를 **≤2024 마스크·threads 6** 으로 적합(벽시계 약 11분) → `mate/v6_infer.py` 의 CAT_SEEDS 를 12개로 → C단 감사.  항등 앵커는 CAT_SEEDS 를 4개로 되돌려 부모 출력 sha 재현.",
+   "이 축을 닫는다면: 같은 1/n 논리가 **더 싼 곳**에 남아 있다 — p_q 는 정직면에서 1시드뿐이고(배포 3), 팔 눈금 1→3 구간은 곡선상 가장 가파른 구간이다.  단 Q 는 1시드 약 100분(팀원 코어 2개 기준)이라 우리 서버에서 재시간해야 한다.",
+   "🔴 장부 등재 후보: 'CatBoost/LightGBM 의 스레드 수는 시드와 같은 급의 모델 변수' — 이건 이 실험이 처음 정량화했고, 앞으로 모든 재현 게이트 설계와 Phase 3 소명에 걸린다."
+  ]
+ },
+ "fold_2022": null,
+ "fold_2023": null,
+ "fold_2024": {
+  "대상": "정직면 전체 블렌드, v6 내부 cat 시드 수만 변수",
+  "brier_v6_4": 0.2474715463694838,
+  "brier_v6_12": 0.24746916434986196,
+  "bss_v6_4": 934.8635408053974,
+  "bss_v6_12": 935.8170851717973,
+  "delta_pts": 0.9535443663999104,
+  "n": 253507,
+  "환산": "점수 = 100000 × (1 − Brier / 0.2498069).  🔴 S1 — LB 눈금이 아니다."
+ },
+ "stage0_gates": {
+  "G0a_hyper_PASS": true,
+  "G0a_float32_note": {
+   "seen": {
+    "learning_rate": {
+     "readme": 0.06,
+     "artifact": 0.05999999866,
+     "float32(readme)": 0.05999999865889549
+    },
+    "subsample": {
+     "readme": 0.8,
+     "artifact": 0.8000000119,
+     "float32(readme)": 0.800000011920929
+    }
+   },
+   "해설": "🔴 `.cbm` 은 실수 하이퍼를 float32 로 저장한다.  1차 README 의 lr 0.06 / subsample 0.8 은 아티팩트에서 각각 0.05999999866 / 0.8000000119 로 읽힌다 — 이는 float32(0.06)·float32(0.8) 과 1e-9 안에서 같다.  하이퍼가 다른 것이 아니라 저장 정밀도다. 적합에 넘기는 값은 README 대로 0.06·0.8 이며, CatBoost 가 다시 같은 float32 로 내림한다."
+  },
+  "G0a_per_seed": {
+   "42": {
+    "sha256": "07a1a76d75b7a2678db7259319e9680cfa9c55b804e34cb87f1413175f9e35f4",
+    "tree_count": 354,
+    "random_seed": 42,
+    "iterations": 354,
+    "learning_rate": 0.05999999866,
+    "depth": 6,
+    "l2_leaf_reg": 10,
+    "subsample": 0.8000000119,
+    "border_count": 64,
+    "one_hot_max_size": 2,
+    "boosting_type": "Plain",
+    "has_time": false,
+    "cat_feature_indices": [
+     4,
+     10,
+     13,
+     14,
+     45
+    ],
+    "feature_names_match_FE_SP": true
+   },
+   "777": {
+    "sha256": "79b0e0d0762170d62b6cfc042efb9be4c15089e256563aa350f9e4ebd95b2559",
+    "tree_count": 354,
+    "random_seed": 777,
+    "iterations": 354,
+    "learning_rate": 0.05999999866,
+    "depth": 6,
+    "l2_leaf_reg": 10,
+    "subsample": 0.8000000119,
+    "border_count": 64,
+    "one_hot_max_size": 2,
+    "boosting_type": "Plain",
+    "has_time": false,
+    "cat_feature_indices": [
+     4,
+     10,
+     13,
+     14,
+     45
+    ],
+    "feature_names_match_FE_SP": true
+   },
+   "2024": {
+    "sha256": "1099f6115ccf9647c856ffbb07b3794c2d8553f40d5a0025bd8734831116c7c9",
+    "tree_count": 354,
+    "random_seed": 2024,
+    "iterations": 354,
+    "learning_rate": 0.05999999866,
+    "depth": 6,
+    "l2_leaf_reg": 10,
+    "subsample": 0.8000000119,
+    "border_count": 64,
+    "one_hot_max_size": 2,
+    "boosting_type": "Plain",
+    "has_time": false,
+    "cat_feature_indices": [
+     4,
+     10,
+     13,
+     14,
+     45
+    ],
+    "feature_names_match_FE_SP": true
+   },
+   "101": {
+    "sha256": "b32fe920eafafe51182612c5da5657caa36bdd444fda351666a996587d5acfd5",
+    "tree_count": 354,
+    "random_seed": 101,
+    "iterations": 354,
+    "learning_rate": 0.05999999866,
+    "depth": 6,
+    "l2_leaf_reg": 10,
+    "subsample": 0.8000000119,
+    "border_count": 64,
+    "one_hot_max_size": 2,
+    "boosting_type": "Plain",
+    "has_time": false,
+    "cat_feature_indices": [
+     4,
+     10,
+     13,
+     14,
+     45
+    ],
+    "feature_names_match_FE_SP": true
+   }
+  },
+  "G0a_param_diff_vs_seed42": {
+   "777": {
+    "random_seed": [
+     "42",
+     "777"
+    ]
+   },
+   "2024": {
+    "random_seed": [
+     "42",
+     "2024"
+    ]
+   },
+   "101": {
+    "random_seed": [
+     "42",
+     "101"
+    ]
+   }
+  },
+  "G0b_features": {
+   "features_sp_len": 99,
+   "features_len": 77,
+   "cat_index_in_FE_SP": [
+    4,
+    10,
+    13,
+    14,
+    45
+   ],
+   "cat_index_matches_readme": true,
+   "sha256_features_sp": "783c650c6dd78cdcd641d0f18e35469ced247544b5d1ebf8d138171e04498924"
+  },
+  "G0c_categorical": {
+   "dtypes": {
+    "game_type": "object",
+    "base_state": "object",
+    "pitcher_team_id": "int64",
+    "batter_team_id": "int64",
+    "idea_matchup_pitch": "float32"
+   },
+   "unmapped": {
+    "game_type": {
+     "n_rows_not_in_lgb_cats": 0,
+     "n_unique_here": 2,
+     "n_unique_vocab": 2,
+     "sample_bad": []
+    },
+    "base_state": {
+     "n_rows_not_in_lgb_cats": 0,
+     "n_unique_here": 8,
+     "n_unique_vocab": 8,
+     "sample_bad": []
+    },
+    "pitcher_team_id": {
+     "n_rows_not_in_lgb_cats": 676,
+     "n_unique_here": 13,
+     "n_unique_vocab": 12,
+     "sample_bad": [
+      "22"
+     ]
+    },
+    "batter_team_id": {
+     "n_rows_not_in_lgb_cats": 773,
+     "n_unique_here": 13,
+     "n_unique_vocab": 12,
+     "sample_bad": [
+      "22"
+     ]
+    },
+    "idea_matchup_pitch": {
+     "n_rows_not_in_lgb_cats": 0,
+     "n_unique_here": 24,
+     "n_unique_vocab": 24,
+     "sample_bad": []
+    }
+   },
+   "sample_values": {
+    "game_type": [
+     "R"
+    ],
+    "base_state": [
+     "123",
+     "12_",
+     "1_3",
+     "1__",
+     "_23",
+     "_2_"
+    ],
+    "pitcher_team_id": [
+     "12",
+     "13",
+     "14",
+     "15",
+     "16",
+     "17"
+    ],
+    "batter_team_id": [
+     "12",
+     "13",
+     "14",
+     "15",
+     "16",
+     "17"
+    ],
+    "idea_matchup_pitch": [
+     "1.0",
+     "10.0",
+     "11.0",
+     "13.0",
+     "15.0",
+     "16.0"
+    ]
+   },
+   "total_unmapped_rows": 1449
+  },
+  "G0c2_deploy_insample_2024": {
+   "per_seed": {
+    "42": {
+     "brier": 0.24644662868761594,
+     "score_REF": 1345.1475168956729,
+     "score_ref_local": 1345.158083804343,
+     "pred_mean": 0.48800536216129187
+    },
+    "777": {
+     "brier": 0.24645463752134625,
+     "score_REF": 1341.9415070815676,
+     "score_ref_local": 1341.95207433363,
+     "pred_mean": 0.48820312893352136
+    },
+    "2024": {
+     "brier": 0.24641689696077218,
+     "score_REF": 1357.0494006481915,
+     "score_ref_local": 1357.0599662820482,
+     "pred_mean": 0.487948390643146
+    },
+    "101": {
+     "brier": 0.2464620980699484,
+     "score_REF": 1338.9549808478507,
+     "score_ref_local": 1338.9655484197904,
+     "pred_mean": 0.4884482030920755
+    },
+    "logit_mean_4seed": {
+     "brier": 0.2464183253823168,
+     "score_REF": 1356.477590364069,
+     "score_ref_local": 1356.4881560591768
+    }
+   },
+   "readme_band_1617_1965_hit": false,
+   "negative_controls": {
+    "all_categories_unseen": {
+     "brier": 0.247175222968211,
+     "score_ref_local": 1053.4951223107103,
+     "drop_vs_correct": 291.6629614936328
+    },
+    "one_column_unseen_pitcher_team_id": {
+     "brier": 0.2465798418682852,
+     "score_ref_local": 1291.8316278894727,
+     "drop_vs_correct": 53.326455914870394
+    }
+   },
+   "해설": "배포 cat 은 <=2024 학습이라 2024 는 인샘플이다.  팀원 README 의 1617~1965 는 'OOT 가 아님'을 잡는 경보 대역이지 단일 cat 팔의 기대값이 아니다 — 그 대역은 블렌드/다른 팔에서 나온 수치일 수 있다. 규약 판정은 대역표가 아니라 아래 음성 대조로 한다: 범주를 미지로 만들면 점수가 크게 떨어져야 하고, 떨어진다면 우리 규약이 배포 어휘에 실제로 맞물려 있다는 뜻이다.",
+   "PASS_by_negative_control": true
+  },
+  "G0e_deploy_seed_pair_band": {
+   "pairs": {
+    "42_777": {
+     "rho_logit_pred_2024": 0.9849986864403156,
+     "max_abs_prob_diff": 0.06418243660093148,
+     "rms_logit_diff": 0.03451997249542294,
+     "n_leaf_a": 22656,
+     "n_leaf_b": 22624,
+     "rho_leaf": null
+    },
+    "42_2024": {
+     "rho_logit_pred_2024": 0.9853045218970381,
+     "max_abs_prob_diff": 0.06651689372653041,
+     "rms_logit_diff": 0.034214079296132356,
+     "n_leaf_a": 22656,
+     "n_leaf_b": 22656,
+     "rho_leaf": 0.014832913230989996
+    },
+    "42_101": {
+     "rho_logit_pred_2024": 0.9862006621387136,
+     "max_abs_prob_diff": 0.07617890433079993,
+     "rms_logit_diff": 0.03318443572684979,
+     "n_leaf_a": 22656,
+     "n_leaf_b": 22656,
+     "rho_leaf": 0.02105705802347055
+    },
+    "777_2024": {
+     "rho_logit_pred_2024": 0.9854588924820655,
+     "max_abs_prob_diff": 0.06718535475590481,
+     "rms_logit_diff": 0.033916726775345934,
+     "n_leaf_a": 22624,
+     "n_leaf_b": 22656,
+     "rho_leaf": null
+    },
+    "777_101": {
+     "rho_logit_pred_2024": 0.9851233793166437,
+     "max_abs_prob_diff": 0.0789305747183266,
+     "rms_logit_diff": 0.03427101921624148,
+     "n_leaf_a": 22624,
+     "n_leaf_b": 22656,
+     "rho_leaf": null
+    },
+    "2024_101": {
+     "rho_logit_pred_2024": 0.9851399715593508,
+     "max_abs_prob_diff": 0.06625660195287009,
+     "rms_logit_diff": 0.034380229648338256,
+     "n_leaf_a": 22656,
+     "n_leaf_b": 22656,
+     "rho_leaf": 0.0008051318525670401
+    }
+   },
+   "leaf_array_sizes": {
+    "42": 22656,
+    "777": 22624,
+    "2024": 22656,
+    "101": 22656
+   },
+   "leaf_size_note": "354 트리 × 2^6 = 22656 이 상한이고 그보다 작은 모델이 있다 — 일부 트리가 깊이 6 까지 자라지 않았다는 뜻.  잎값 상관은 길이가 같은 쌍에서만 낼 수 있다.",
+   "rho_leaf_band": [
+    0.0008051318525670401,
+    0.02105705802347055
+   ],
+   "rho_logit_pred_band": [
+    0.9849986864403156,
+    0.9862006621387136
+   ],
+   "해설": "같은 계열·다른 시드가 서로 얼마나 닮는가.  G0d 재적합 판정의 기준자."
+  },
+  "G0f_seed_loop": {
+   "file": "mate/v6_infer.py",
+   "CAT_SEEDS_line": "CAT_SEEDS = [42, 777, 2024, 101]",
+   "form": "hardcoded_module_level_list",
+   "uses_glob_or_listdir": false,
+   "sha256": "a4174269828c82f406a86a63d26b256249488bf728279eb94902620a764b6190",
+   "출하_함의": "파일 목록 기반이 아니라 하드코딩 리스트다.  시드를 늘리면 mate/v6_infer.py 자체가 부모와 달라진다 — 상이 파일이 mate/model/cat_*.cbm 8개 + mate/v6_infer.py 1개."
+  },
+  "mask_counts": {
+   "oot_train": 1116277,
+   "predict_2024": 253507,
+   "deploy_train_le2024": 1369784,
+   "deploy_expected": 1369784,
+   "deploy_match": true,
+   "frame_rows": 1475092
+  },
+  "alignment": {
+   "row_id_order_identical_to_mate": true,
+   "sorted_ascending": true,
+   "y_mean_2024": 0.4861049201797189,
+   "ref_local_2024": 0.24980692675678806
+  },
+  "ALL_PASS": true
+ },
+ "G0d_identity": {
+  "our_refit": "deploy 마스크(<=2024, 1,369,784행) · seed 42 · threads 6",
+  "tree_count_ours": 354,
+  "tree_count_deploy": 354,
+  "leaf_array_size_ours": 22656,
+  "leaf_array_size_deploy": 22656,
+  "rho_leaf": -0.00867760490155481,
+  "rho_logit_pred_2024": 0.9789030222885232,
+  "rms_logit_diff": 0.0408546883479607,
+  "max_abs_prob_diff": 0.08130291961906988,
+  "deploy_seed_pair_band": [
+   0.9849986864403156,
+   0.9862006621387136
+  ],
+  "rho_vs_other_deploy_seeds": {
+   "777": 0.9783609282057673,
+   "2024": 0.9782703979665329,
+   "101": 0.9781140004720213
+  },
+  "판정": "같은 시드 재적합이 다른 시드쌍 대역보다 위면 같은 계열이고 시드도 재현된다.  대역 안이면 계열은 같으나 시드 재현은 안 된 것 — S17(재학습 바이트 재현 불가) 이 예고한 결과.",
+  "above_band": false,
+  "within_or_above_band": false
+ },
+ "scale_gates": {
+  "single_arms": {
+   "p_lgb": {
+    "brier": 0.2475781135730551,
+    "score_REF": 892.2037089227341,
+    "score_ref_local": 892.2143243461522,
+    "recenter_c": -0.034107930203154065,
+    "exp070_4dp": 892.2037,
+    "abs_diff_vs_exp070": 8.92273408226174e-06,
+    "match_4dp": true
+   },
+   "p_cat": {
+    "brier": 0.24750368656815358,
+    "score_REF": 921.997523625817,
+    "score_ref_local": 922.0081358580212,
+    "recenter_c": -0.030396354690382155,
+    "exp070_4dp": 921.9975,
+    "abs_diff_vs_exp070": 2.3625817107131297e-05,
+    "match_4dp": true
+   },
+   "p_leaf": {
+    "brier": 0.247972500761259,
+    "score_REF": 734.3268895859123,
+    "score_ref_local": 734.3375219194925,
+    "recenter_c": -0.03506089906878652,
+    "exp070_4dp": 734.3269,
+    "abs_diff_vs_exp070": 1.0414087682875106e-05,
+    "match_4dp": true
+   },
+   "p_q": {
+    "brier": 0.2475720624021916,
+    "score_REF": 894.6260482830537,
+    "score_ref_local": 894.6366634470237,
+    "recenter_c": -0.03762464499930084,
+    "exp070_4dp": 894.626,
+    "abs_diff_vs_exp070": 4.828305372939212e-05,
+    "match_4dp": true
+   },
+   "p_v6": {
+    "brier": 0.2474925173626336,
+    "score_REF": 926.4686593390303,
+    "score_ref_local": 926.4792710923286,
+    "recenter_c": -0.03124684712138144,
+    "exp070_4dp": 926.4687,
+    "abs_diff_vs_exp070": 4.066096971655497e-05,
+    "match_4dp": true
+   },
+   "p_ebm": {
+    "brier": 0.24808825845545124,
+    "score_REF": 687.9880197659727,
+    "score_ref_local": 687.9986570629048,
+    "recenter_c": -0.04259618045457185,
+    "exp070_4dp": 687.988,
+    "abs_diff_vs_exp070": 1.9765972638197127e-05,
+    "match_4dp": true
+   },
+   "AA81": {
+    "brier": 0.24761963504671425,
+    "score_REF": 875.582281068199,
+    "score_ref_local": 875.5928982719374,
+    "recenter_c": -0.038815440180172925,
+    "exp070_4dp": 875.5823,
+    "abs_diff_vs_exp070": 1.8931801037069818e-05,
+    "match_4dp": true
+   },
+   "T70": {
+    "brier": 0.24774765908000937,
+    "score_REF": 824.3330828694551,
+    "score_ref_local": 824.3437055624913,
+    "recenter_c": -0.0343974193459262,
+    "exp070_4dp": 824.3331,
+    "abs_diff_vs_exp070": 1.7130544847532292e-05,
+    "match_4dp": true
+   }
+  },
+  "single_arms_PASS": true,
+  "start_qualification": {
+   "score_REF": 933.879134169302,
+   "exp070": 933.879134169302,
+   "abs_diff": 0.0,
+   "PASS": true
+  },
+  "deployment_full6_no_quadratic": {
+   "score_REF": 928.1835495351443,
+   "exp070": 928.1835495351443,
+   "abs_diff": 0.0,
+   "PASS": true
+  }
+ },
+ "v6_assembly_identity": {
+  "max_abs_prob_diff_vs_mate_renorm": 1.1102230246251565e-16,
+  "renorm_denominator": 0.8500000000000001,
+  "PASS": true,
+  "해설": "팀원 cat4 를 넣어 조립한 우리 v6 가 팀원의 p_v6_3arm_renorm_oot2024.npy 와 같은 벡터인가.  통과하면 조립 산술·가중·재정규화가 전부 같다는 뜻이다.",
+  "logit_clip_rows": 0
+ },
+ "cat4_reproduction": {
+  "rho_logit": 0.9933684863744724,
+  "rms_logit_diff": 0.021264743952251194,
+  "max_abs_prob_diff": 0.04501045336709769,
+  "mean_abs_prob_diff": 0.004033139349413753,
+  "score_REF_mate": 921.997523625817,
+  "score_REF_ours": 920.3381683581702,
+  "score_ref_local_mate": 922.0081358580212,
+  "score_ref_local_ours": 920.3487807681099,
+  "delta_pts_ours_minus_mate": -1.6593552676469017,
+  "per_seed_ours": {
+   "42": {
+    "score_REF": 907.3131907298193,
+    "score_ref_local": 907.3238045348653,
+    "rho_logit_vs_mate_mean": 0.9821261896477416
+   },
+   "777": {
+    "score_REF": 912.0800439519016,
+    "score_ref_local": 912.0906572463672,
+    "rho_logit_vs_mate_mean": 0.9829695425013838
+   },
+   "2024": {
+    "score_REF": 900.085047551591,
+    "score_ref_local": 900.0956621308399,
+    "rho_logit_vs_mate_mean": 0.9833040939475919
+   },
+   "101": {
+    "score_REF": 891.4380692008339,
+    "score_ref_local": 891.4486847062642,
+    "rho_logit_vs_mate_mean": 0.9830473965626556
+   }
+  },
+  "🔴변인": "팀원 thread_count=2 · 스냅샷 저장 사용 · 자기 feat6.parquet. 우리 thread_count=6 · 스냅샷 없음 · exp071/cache/frame071.parquet. 따라서 바이트 동일은 기대 대상이 아니다(S17)."
+ },
+ "seed_curve": {
+  "1": {
+   "n_subsets": 12,
+   "blend_score_mean": 931.1149975048329,
+   "blend_score_sd": 3.462528779357851,
+   "blend_score_min": 924.8044213578721,
+   "blend_score_max": 935.7873188692633,
+   "arm_score_mean": 902.8742687652533,
+   "arm_score_sd": 7.655946555831544
+  },
+  "2": {
+   "n_subsets": 40,
+   "blend_score_mean": 933.6610096822824,
+   "blend_score_sd": 2.159700596582265,
+   "blend_score_min": 927.8042763571914,
+   "blend_score_max": 937.9230244526582,
+   "arm_score_mean": 914.6609099294194,
+   "arm_score_sd": 4.695003372165829
+  },
+  "3": {
+   "n_subsets": 40,
+   "blend_score_mean": 934.6557965563825,
+   "blend_score_sd": 1.8081133363807411,
+   "blend_score_min": 930.196786967552,
+   "blend_score_max": 938.6059666431689,
+   "arm_score_mean": 918.9302470396455,
+   "arm_score_sd": 3.9679415789917285
+  },
+  "4": {
+   "n_subsets": 40,
+   "blend_score_mean": 934.9609312576052,
+   "blend_score_sd": 1.5207169651526462,
+   "blend_score_min": 931.8073405472416,
+   "blend_score_max": 937.1302093800216,
+   "arm_score_mean": 920.6794025987936,
+   "arm_score_sd": 3.341587234426473
+  },
+  "5": {
+   "n_subsets": 40,
+   "blend_score_mean": 935.5979195943182,
+   "blend_score_sd": 1.199304497481882,
+   "blend_score_min": 932.3694775668966,
+   "blend_score_max": 938.2525135920639,
+   "arm_score_mean": 922.5431765776109,
+   "arm_score_sd": 2.6439136706817936
+  },
+  "6": {
+   "n_subsets": 40,
+   "blend_score_mean": 935.5089502780429,
+   "blend_score_sd": 0.9207899703106136,
+   "blend_score_min": 933.3028264218557,
+   "blend_score_max": 937.7357593461034,
+   "arm_score_mean": 922.7514567058757,
+   "arm_score_sd": 2.162975212993917
+  },
+  "7": {
+   "n_subsets": 40,
+   "blend_score_mean": 935.52355810073,
+   "blend_score_sd": 0.8028054612107335,
+   "blend_score_min": 933.7690159133216,
+   "blend_score_max": 936.9947617850149,
+   "arm_score_mean": 923.1699263754115,
+   "arm_score_sd": 1.781000318437
+  },
+  "8": {
+   "n_subsets": 40,
+   "blend_score_mean": 935.7796843422478,
+   "blend_score_sd": 0.7887109577699063,
+   "blend_score_min": 934.5954345115981,
+   "blend_score_max": 937.4605307755024,
+   "arm_score_mean": 923.8475529055986,
+   "arm_score_sd": 1.7545889325332842
+  },
+  "9": {
+   "n_subsets": 40,
+   "blend_score_mean": 935.7990247388476,
+   "blend_score_sd": 0.634106604678877,
+   "blend_score_min": 934.5097249537359,
+   "blend_score_max": 937.1058679581213,
+   "arm_score_mean": 924.0907906234476,
+   "arm_score_sd": 1.4358575960927644
+  },
+  "10": {
+   "n_subsets": 40,
+   "blend_score_mean": 935.7240555986743,
+   "blend_score_sd": 0.4563461567402556,
+   "blend_score_min": 934.862008346693,
+   "blend_score_max": 936.4726564553449,
+   "arm_score_mean": 924.0807078748712,
+   "arm_score_sd": 1.0132388209213417
+  },
+  "11": {
+   "n_subsets": 12,
+   "blend_score_mean": 935.778214591517,
+   "blend_score_sd": 0.3130254882230017,
+   "blend_score_min": 935.3803752898293,
+   "blend_score_max": 936.3422386539644,
+   "arm_score_mean": 924.3219929981802,
+   "arm_score_sd": 0.6894201213887017
+  },
+  "12": {
+   "n_subsets": 1,
+   "blend_score_mean": 935.8170851717973,
+   "blend_score_sd": 0.0,
+   "blend_score_min": 935.8170851717973,
+   "blend_score_max": 935.8170851717973,
+   "arm_score_mean": 924.5008692425727,
+   "arm_score_sd": 0.0
+  },
+  "model_blend": {
+   "form": "score(n) = a - b/n",
+   "a": 936.3382618239332,
+   "b": 5.18951822749025,
+   "R2": 0.9680191270219868,
+   "resid_max_abs": 0.29756141588313767,
+   "pred_4": 935.0408822670606,
+   "pred_12": 935.9058019716423,
+   "pred_delta_4_to_12": 0.8649197045817085,
+   "pred_infinity": 936.3382618239332
+  },
+  "model_arm": {
+   "form": "score(n) = a - b/n",
+   "a": 926.6435021044202,
+   "b": 23.536153933620035,
+   "R2": 0.9935405866403045,
+   "resid_max_abs": 0.6069052599146971,
+   "pred_4": 920.7594636210152,
+   "pred_12": 924.6821559432852,
+   "pred_delta_4_to_12": 3.9226923222700063,
+   "pred_infinity": 926.6435021044202
+  }
+ },
+ "sequential_ours": {
+  "4": {
+   "seeds": [
+    42,
+    777,
+    2024,
+    101
+   ],
+   "blend_score_REF": 934.8635408053974,
+   "blend_brier": 0.2474715463694838,
+   "blend_score_ref_local": 934.8741516595371,
+   "arm_score_REF": 920.3381683581702
+  },
+  "5": {
+   "seeds": [
+    42,
+    777,
+    2024,
+    101,
+    1
+   ],
+   "blend_score_REF": 934.7243238492786,
+   "blend_brier": 0.24747189414304616,
+   "blend_score_ref_local": 934.7349347183176,
+   "arm_score_REF": 920.7692471895234
+  },
+  "6": {
+   "seeds": [
+    42,
+    777,
+    2024,
+    101,
+    1,
+    7
+   ],
+   "blend_score_REF": 935.1952640201056,
+   "blend_brier": 0.24747071770200454,
+   "blend_score_ref_local": 935.2058748387071,
+   "arm_score_REF": 922.5566652208528
+  },
+  "7": {
+   "seeds": [
+    42,
+    777,
+    2024,
+    101,
+    1,
+    7,
+    13
+   ],
+   "blend_score_REF": 935.4873500233451,
+   "blend_brier": 0.24746998805101453,
+   "blend_score_ref_local": 935.4979608106606,
+   "arm_score_REF": 923.381357310693
+  },
+  "8": {
+   "seeds": [
+    42,
+    777,
+    2024,
+    101,
+    1,
+    7,
+    13,
+    77
+   ],
+   "blend_score_REF": 935.4226013873479,
+   "blend_brier": 0.2474701497975749,
+   "blend_score_ref_local": 935.4332121816022,
+   "arm_score_REF": 923.2373586656073
+  },
+  "9": {
+   "seeds": [
+    42,
+    777,
+    2024,
+    101,
+    1,
+    7,
+    13,
+    77,
+    202
+   ],
+   "blend_score_REF": 935.9020549779107,
+   "blend_brier": 0.24746895208942338,
+   "blend_score_ref_local": 935.9126657208061,
+   "arm_score_REF": 924.5609796211806
+  },
+  "10": {
+   "seeds": [
+    42,
+    777,
+    2024,
+    101,
+    1,
+    7,
+    13,
+    77,
+    202,
+    404
+   ],
+   "blend_score_REF": 936.3737702083652,
+   "blend_brier": 0.24746777371222936,
+   "blend_score_ref_local": 936.3843809007344,
+   "arm_score_REF": 925.6097936163887
+  },
+  "11": {
+   "seeds": [
+    42,
+    777,
+    2024,
+    101,
+    1,
+    7,
+    13,
+    77,
+    202,
+    404,
+    808
+   ],
+   "blend_score_REF": 936.3422386539644,
+   "blend_brier": 0.24746785248022793,
+   "blend_score_ref_local": 936.3528493497087,
+   "arm_score_REF": 925.6665439814738
+  },
+  "12": {
+   "seeds": [
+    42,
+    777,
+    2024,
+    101,
+    1,
+    7,
+    13,
+    77,
+    202,
+    404,
+    808,
+    1234
+   ],
+   "blend_score_REF": 935.8170851717973,
+   "blend_brier": 0.24746916434986196,
+   "blend_score_ref_local": 935.8276959237966,
+   "arm_score_REF": 924.5008692425727
+  }
+ },
+ "primary": {
+  "정의": "Δ = score(v6_12) − score(v6_4), 정직면 재센터링, REF 눈금",
+  "우리12_vs_우리4": {
+   "brier_v6_4": 0.2474715463694838,
+   "brier_v6_12": 0.24746916434986196,
+   "score_v6_4": 934.8635408053974,
+   "score_v6_12": 935.8170851717973,
+   "delta_pts": 0.9535443663999104,
+   "score_ref_local_v6_4": 934.8741516595371,
+   "score_ref_local_v6_12": 935.8276959237966,
+   "arm_score_cat4": 920.3381683581702,
+   "arm_score_cat12": 924.5008692425727,
+   "arm_delta_pts": 4.162700884402511,
+   "note": "한 코드 경로 — cat 시드 수만 다르다.  주지표."
+  },
+  "팀원4+우리8_vs_팀원4": {
+   "score_v6_4": 934.8109771490476,
+   "score_v6_12": 935.8362643027251,
+   "delta_pts": 1.025287153677482,
+   "arm_score_cat4": 921.997523625817,
+   "arm_score_cat12": 925.2177123369565,
+   "arm_delta_pts": 3.2201887111394853,
+   "note": "배포가 실제로 밟을 경로(배포 4시드는 그대로 두고 8개를 더한다)."
+  },
+  "pred_diff_v6_12_vs_v6_4": {
+   "max_abs": 0.010651172364594008,
+   "mean_abs": 0.001107247937317616,
+   "🔴": "S9 — 이것은 후보 간 예측 차이지 보정 이동폭이 아니고, 점수로 환산되지 않는다."
+  }
+ },
+ "transfer": {
+  "exp_072_measured_range": [
+   0.3929,
+   0.5463
+  ],
+  "🔴": "S2 — 전이비는 축마다 다르고 부호까지 갈렸다(−8.27~2.03). 범위로만 쓴다.",
+  "primary_delta_pts": 0.9535443663999104,
+  "lb_projection_range": [
+   0.3746475815585248,
+   0.520921287364271
+  ],
+  "secondary_delta_pts": 1.025287153677482,
+  "lb_projection_range_secondary": [
+   0.40283532267988265,
+   0.5601143720540084
+  ]
+ },
+ "preregistered_verdict": {
+  "rule": "정직면 Δ >= +1.0 -> 배포 시드 추가 학습해 후보로. 미만이면 축을 닫는다.",
+  "threshold": 1.0,
+  "primary_delta": 0.9535443663999104,
+  "secondary_delta": 1.025287153677482,
+  "PASS_primary": false,
+  "PASS_secondary": true
+ },
+ "fits": {
+  "deploy_s42_t6": {
+   "n_train": 1369784,
+   "sec_fit": 230.25738406181335,
+   "sec_total": 233.87419199943542,
+   "tree_count": 354,
+   "learn_logloss": 0.6852085032781168,
+   "pred_mean": 0.4878453916102915
+  },
+  "oot_s101_t6": {
+   "n_train": 1116277,
+   "sec_fit": 175.58395957946777,
+   "sec_total": 179.54404425621033,
+   "tree_count": 354,
+   "learn_logloss": 0.6846601645482057,
+   "pred_mean": 0.493141861756619
+  },
+  "oot_s1234_t6": {
+   "n_train": 1116277,
+   "sec_fit": 158.247633934021,
+   "sec_total": 162.02300715446472,
+   "tree_count": 354,
+   "learn_logloss": 0.6847190457126319,
+   "pred_mean": 0.49421041540427296
+  },
+  "oot_s13_t6": {
+   "n_train": 1116277,
+   "sec_fit": 161.62182760238647,
+   "sec_total": 165.3442566394806,
+   "tree_count": 354,
+   "learn_logloss": 0.6846646344968567,
+   "pred_mean": 0.4930227709824444
+  },
+  "oot_s1_t6": {
+   "n_train": 1116277,
+   "sec_fit": 161.00988030433655,
+   "sec_total": 164.72537541389465,
+   "tree_count": 354,
+   "learn_logloss": 0.6846483146554596,
+   "pred_mean": 0.49382145304100844
+  },
+  "oot_s2024_t6": {
+   "n_train": 1116277,
+   "sec_fit": 189.9987609386444,
+   "sec_total": 193.77812910079956,
+   "tree_count": 354,
+   "learn_logloss": 0.6846754585412707,
+   "pred_mean": 0.4939804543630305
+  },
+  "oot_s202_t6": {
+   "n_train": 1116277,
+   "sec_fit": 165.12166094779968,
+   "sec_total": 168.97757840156555,
+   "tree_count": 354,
+   "learn_logloss": 0.684626775320182,
+   "pred_mean": 0.4940282219640281
+  },
+  "oot_s404_t6": {
+   "n_train": 1116277,
+   "sec_fit": 189.6112778186798,
+   "sec_total": 193.5008978843689,
+   "tree_count": 354,
+   "learn_logloss": 0.6846641843966024,
+   "pred_mean": 0.4940027360024651
+  },
+  "oot_s42_t2": {
+   "n_train": 1116277,
+   "sec_fit": 349.639666557312,
+   "sec_total": 353.06592202186584,
+   "tree_count": 354,
+   "learn_logloss": 0.68466011105142,
+   "pred_mean": 0.49395551518231373
+  },
+  "oot_s42_t6": {
+   "n_train": 1116277,
+   "sec_fit": 159.09620881080627,
+   "sec_total": 162.51727294921875,
+   "tree_count": 354,
+   "learn_logloss": 0.6846357020634847,
+   "pred_mean": 0.4939067204154136
+  },
+  "oot_s777_t6": {
+   "n_train": 1116277,
+   "sec_fit": 179.7300157546997,
+   "sec_total": 183.39156985282898,
+   "tree_count": 354,
+   "learn_logloss": 0.6846827045299996,
+   "pred_mean": 0.49412448496683065
+  },
+  "oot_s77_t6": {
+   "n_train": 1116277,
+   "sec_fit": 173.14637756347656,
+   "sec_total": 176.88061022758484,
+   "tree_count": 354,
+   "learn_logloss": 0.6846471624506298,
+   "pred_mean": 0.4941817393094173
+  },
+  "oot_s7_t6": {
+   "n_train": 1116277,
+   "sec_fit": 190.6097128391266,
+   "sec_total": 194.5041434764862,
+   "tree_count": 354,
+   "learn_logloss": 0.6846258751095473,
+   "pred_mean": 0.4941815119852787
+  },
+  "oot_s808_t6": {
+   "n_train": 1116277,
+   "sec_fit": 169.2887988090515,
+   "sec_total": 172.9977035522461,
+   "tree_count": 354,
+   "learn_logloss": 0.6846604620197551,
+   "pred_mean": 0.4938963212363433
+  }
+ },
+ "train_time_min": 44.2160527586937,
+ "inference_time_sec": null,
+ "wall_clock_min": 44.0,
+ "wall_clock_breakdown": {
+  "total_min": 44.0,
+  "code_and_gates_min": 12.0,
+  "fits_wall_min": 14.42,
+  "analysis_min": 6.0,
+  "artifacts_min": 4.0,
+  "note": "로컬 08:52 착수 ~ 09:36 metrics.json.  서버 적합 큐 00:05:37~00:20:02 (13건, 동시 3).  ETA 60~80분 대비 하회."
+ },
+ "env": {
+  "python": "3.11.15",
+  "catboost": "1.2.10",
+  "numpy": "1.26.4",
+  "pandas": "2.0.3",
+  "sklearn": "1.8.0",
+  "scipy": "1.15.3",
+  "threads_per_fit": 6,
+  "concurrent_fits": 3,
+  "cpu_quota_cores": 20,
+  "note": "컨테이너 CPU 쿼터가 20코어라 thread_count 6 × 동시 3 = 18 로 잡았다.  thread_count 는 실험 내내 6 고정."
+ },
+ "변인_전부": {
+  "vs_대조군(v6_4)": "cat 시드 수 4 -> 12.  그 외 전부 동일.",
+  "vs_팀원_납품_경로": [
+   "thread_count 2(팀원) -> 6(우리)",
+   "save_snapshot 사용(팀원) -> 미사용(우리)",
+   "feat6.parquet(팀원 환경) -> exp071/cache/frame071.parquet(우리)",
+   "allow_writing_files True -> False"
+  ],
+  "🔴": "팀원 대비 넷이 다르므로 우리 4시드 재현본은 바이트 동일이 기대 대상이 아니다(S17).  주지표는 우리 12 vs 우리 4 — 그 쌍은 시드 수 하나만 다르다."
+ },
+ "편향_명시": {
+  "p_q": "1시드 (배포는 3시드) — Q 팔이 배포보다 약하다",
+  "p_v6": "NN 자리가 비었다 (배포 지분 0.15).  v6_4·v6_12 양쪽 다 비웠다",
+  "off": "팀원 납품 in-season 오프셋, season<2024 앵커",
+  "방향": "두 편향은 v6_4·v6_12 양쪽에 똑같이 걸려 있어 Δ 에서는 상당 부분 상쇄된다.  그러나 cat 지분이 실제 배포보다 크게 잡히는 쪽(NN 이 빠져 재정규화로 0.68/0.85=0.80)이므로 Δ 는 위로 부풀 수 있다."
+ },
+ "판정_금지": "채택·제출을 결정하지 않는다.  산출은 게이트 + 시드 곡선 + 정직면 Δ.",
+ "산출물": {
+  "서버": "/home/<user>/SungjinPark/exp077/out/",
+  "벡터": {
+   "p_cat4_oot2024.npy": "142510ec36e29b9b1b929c3cfa7a1e65fcc7a49d2e3bff34eceed66d23c012f0",
+   "p_cat12_oot2024.npy": "479b8187cc69dc07538ce0662404d00a0b00685e2158776202e1e70c7ff360a0",
+   "p_cat12_mate4plus8_oot2024.npy": "cdf316563564534b6517aff6a259d12740110b1eea32e28fe521bdc40d15f21d",
+   "p_v6_12_oot2024.npy": "ebf5b72ccdf671eed64c203e69d535c0118e70d1e24cc81059e019cde63ac692",
+   "p_v6_4_oot2024.npy": "616b2afc042d58b3f52fbcee9a4cae5dee151c915ba7a21bcc1d0af44d4a191f"
+  }
+ },
+ "generated": "2026-08-21 00:35:49",
+ "diagnostics": {
+  "D1_threads": {
+   "rho_logit_t2_vs_t6_same_seed42": 0.973547237088168,
+   "rms_logit_diff": 0.043029027412541554,
+   "max_abs_prob_diff": 0.08501157355107475,
+   "score_t2": 904.0119494517218,
+   "score_t6": 907.3131907298193,
+   "sec_fit_t2": 349.639666557312,
+   "sec_fit_t6": 159.09620881080627,
+   "learn_logloss_t2": 0.68466011105142,
+   "learn_logloss_t6": 0.6846357020634847,
+   "해설": "같은 시드·같은 마스크·같은 프레임.  달라진 것은 스레드 수뿐이다. 여기서 나오는 ρ 가 '스레드만 바뀌었을 때의 재현 상한' 이다."
+  },
+  "D2_our_seed_pair_band": {
+   "n_pairs": 66,
+   "min": 0.9699225593628452,
+   "max": 0.9743215668542808,
+   "mean": 0.9721755170163134,
+   "sd": 0.0009205412870614693,
+   "해설": "같은 코드·같은 프레임에서 시드만 다를 때 예측 로짓이 얼마나 닮는가."
+  },
+  "D3_disjoint_4mean_band": {
+   "n_pairs": 35,
+   "min": 0.9924881994324554,
+   "max": 0.9933365076505458,
+   "mean": 0.9928972337908905,
+   "sd": 0.00018790837423622063,
+   "해설": "서로 겹치지 않는 4시드 평균 둘 사이의 ρ.  '우리 cat4 재현 vs 팀원 cat4' 를 재는 올바른 기준자다 — 둘 다 4개를 평균한 벡터이므로 단일 시드쌍 대역과 비교하면 틀린다.",
+   "rho_ours4_vs_mate4": 0.9933684863744724,
+   "repro_inside_band": false,
+   "repro_above_band": true
+  },
+  "D4_artifact_metadata": {
+   "42": {
+    "train_finish_time": "2026-08-13T02:11:34Z",
+    "catboost_version_info": "Git info:\n    Commit: b1bd2a6d77219e82a1acfcedfccb8e6f6c1ee084\n    Branch: tags/v1.2.10\n    Author: akhropov <akhropov@yandex-team.com>\n    Summary: CatBoost release 1.2.10. commit_hash:f8e0038b19555d36a9ba7b81b6730254b352960d\n    git-svn info:\n    Last Changed Rev: 9293085\n\nOther info:\n    Build by: Unknown user\n    Top src dir: /src/catboost\n",
+    "class_params": "{\"classes_count\":0,\"class_names\":[0,1],\"class_to_label\":[0,1],\"class_label_type\":\"Integer\"}",
+    "output_options": "{\"name\":\"experiment\",\"verbose\":0,\"test_error_log\":\"test_error.tsv\",\"json_log\":\"catboost_training.json\",\"result_model_file\":\"model\",\"roc_file\":\"\",\"eval_file_name\":\"\",\"use_best_model\":false,\"allow_writing_files\":false,\"prediction_type\":[\"RawFormulaVal\"],\"fstr_internal_file\":\"\",\"output_columns\":[\"SampleId\",\"RawFormulaVal\",\"Label\"],\"snapshot_interval\":600,\"time_left_log\":\"time_left.tsv\",\"fstr_type\":\"F",
+    "training": "{\"metrics\":{\"learn_best_error\":{\"Logloss\":0.6820723307027136},\"test_metrics_history\":[],\"learn_metrics_history\":[{\"Logloss\":0.6923516311818859},{\"Logloss\":0.6916129977902393},{\"Logloss\":0.6909625062116233},{\"Logloss\":0.6903986347723284},{\"Logloss\":0.6899054342568025},{\"Logloss\":0.6894552061340427},{\"Logloss\":0.6891087600535483},{\"Logloss\":0.6887155664293235},{\"Logloss\":0.6883757798025042},{\"Loglos",
+    "model_guid": "8e1794c2-14cce458-10d4a3b8-cb4ac35b",
+    "params": "{\"detailed_profile\":false,\"boosting_options\":{\"model_shrink_mode\":\"Constant\",\"approx_on_full_history\":false,\"fold_len_multiplier\":2,\"fold_permutation_block\":0,\"posterior_sampling\":false,\"boosting_type\":\"Plain\",\"iterations\":354,\"model_shrink_rate\":0,\"boost_from_average\":false,\"od_config\":{\"wait_iterations\":20,\"type\":\"None\",\"stop_pvalue\":0},\"permutation_count\":4,\"learning_rate\":0.05999999866},\"pool_"
+   },
+   "777": {
+    "train_finish_time": "2026-08-13T02:17:11Z",
+    "catboost_version_info": "Git info:\n    Commit: b1bd2a6d77219e82a1acfcedfccb8e6f6c1ee084\n    Branch: tags/v1.2.10\n    Author: akhropov <akhropov@yandex-team.com>\n    Summary: CatBoost release 1.2.10. commit_hash:f8e0038b19555d36a9ba7b81b6730254b352960d\n    git-svn info:\n    Last Changed Rev: 9293085\n\nOther info:\n    Build by: Unknown user\n    Top src dir: /src/catboost\n",
+    "class_params": "{\"classes_count\":0,\"class_names\":[0,1],\"class_to_label\":[0,1],\"class_label_type\":\"Integer\"}",
+    "output_options": "{\"name\":\"experiment\",\"verbose\":0,\"test_error_log\":\"test_error.tsv\",\"json_log\":\"catboost_training.json\",\"result_model_file\":\"model\",\"roc_file\":\"\",\"eval_file_name\":\"\",\"use_best_model\":false,\"allow_writing_files\":false,\"prediction_type\":[\"RawFormulaVal\"],\"fstr_internal_file\":\"\",\"output_columns\":[\"SampleId\",\"RawFormulaVal\",\"Label\"],\"snapshot_interval\":600,\"time_left_log\":\"time_left.tsv\",\"fstr_type\":\"F",
+    "training": "{\"metrics\":{\"learn_best_error\":{\"Logloss\":0.6820714943390154},\"test_metrics_history\":[],\"learn_metrics_history\":[{\"Logloss\":0.6923463228687786},{\"Logloss\":0.6916504687576246},{\"Logloss\":0.6909936140595256},{\"Logloss\":0.6904282399849249},{\"Logloss\":0.6899141806646191},{\"Logloss\":0.6895091521825666},{\"Logloss\":0.6891169759091207},{\"Logloss\":0.6887514521953764},{\"Logloss\":0.6883716655337768},{\"Loglos",
+    "model_guid": "67c2a44d-ff687cc3-5f45356b-bf2a0e05",
+    "params": "{\"detailed_profile\":false,\"boosting_options\":{\"model_shrink_mode\":\"Constant\",\"approx_on_full_history\":false,\"fold_len_multiplier\":2,\"fold_permutation_block\":0,\"posterior_sampling\":false,\"boosting_type\":\"Plain\",\"iterations\":354,\"model_shrink_rate\":0,\"boost_from_average\":false,\"od_config\":{\"wait_iterations\":20,\"type\":\"None\",\"stop_pvalue\":0},\"permutation_count\":4,\"learning_rate\":0.05999999866},\"pool_"
+   },
+   "2024": {
+    "train_finish_time": "2026-08-13T02:23:06Z",
+    "catboost_version_info": "Git info:\n    Commit: b1bd2a6d77219e82a1acfcedfccb8e6f6c1ee084\n    Branch: tags/v1.2.10\n    Author: akhropov <akhropov@yandex-team.com>\n    Summary: CatBoost release 1.2.10. commit_hash:f8e0038b19555d36a9ba7b81b6730254b352960d\n    git-svn info:\n    Last Changed Rev: 9293085\n\nOther info:\n    Build by: Unknown user\n    Top src dir: /src/catboost\n",
+    "class_params": "{\"classes_count\":0,\"class_names\":[0,1],\"class_to_label\":[0,1],\"class_label_type\":\"Integer\"}",
+    "output_options": "{\"name\":\"experiment\",\"verbose\":0,\"test_error_log\":\"test_error.tsv\",\"json_log\":\"catboost_training.json\",\"result_model_file\":\"model\",\"roc_file\":\"\",\"eval_file_name\":\"\",\"use_best_model\":false,\"allow_writing_files\":false,\"prediction_type\":[\"RawFormulaVal\"],\"fstr_internal_file\":\"\",\"output_columns\":[\"SampleId\",\"RawFormulaVal\",\"Label\"],\"snapshot_interval\":600,\"time_left_log\":\"time_left.tsv\",\"fstr_type\":\"F",
+    "training": "{\"metrics\":{\"learn_best_error\":{\"Logloss\":0.6820220867415077},\"test_metrics_history\":[],\"learn_metrics_history\":[{\"Logloss\":0.6923041626399545},{\"Logloss\":0.6916017056979313},{\"Logloss\":0.6909458055411151},{\"Logloss\":0.6903721054756128},{\"Logloss\":0.6898520576100236},{\"Logloss\":0.6893713168459261},{\"Logloss\":0.6889616054812007},{\"Logloss\":0.6886283336951198},{\"Logloss\":0.6883546803758459},{\"Loglos",
+    "model_guid": "f8c2d2ab-93dce7e5-a2be4829-2ce9c7fb",
+    "params": "{\"detailed_profile\":false,\"boosting_options\":{\"model_shrink_mode\":\"Constant\",\"approx_on_full_history\":false,\"fold_len_multiplier\":2,\"fold_permutation_block\":0,\"posterior_sampling\":false,\"boosting_type\":\"Plain\",\"iterations\":354,\"model_shrink_rate\":0,\"boost_from_average\":false,\"od_config\":{\"wait_iterations\":20,\"type\":\"None\",\"stop_pvalue\":0},\"permutation_count\":4,\"learning_rate\":0.05999999866},\"pool_"
+   },
+   "101": {
+    "train_finish_time": "2026-08-13T02:28:44Z",
+    "catboost_version_info": "Git info:\n    Commit: b1bd2a6d77219e82a1acfcedfccb8e6f6c1ee084\n    Branch: tags/v1.2.10\n    Author: akhropov <akhropov@yandex-team.com>\n    Summary: CatBoost release 1.2.10. commit_hash:f8e0038b19555d36a9ba7b81b6730254b352960d\n    git-svn info:\n    Last Changed Rev: 9293085\n\nOther info:\n    Build by: Unknown user\n    Top src dir: /src/catboost\n",
+    "class_params": "{\"classes_count\":0,\"class_names\":[0,1],\"class_to_label\":[0,1],\"class_label_type\":\"Integer\"}",
+    "output_options": "{\"name\":\"experiment\",\"verbose\":0,\"test_error_log\":\"test_error.tsv\",\"json_log\":\"catboost_training.json\",\"result_model_file\":\"model\",\"roc_file\":\"\",\"eval_file_name\":\"\",\"use_best_model\":false,\"allow_writing_files\":false,\"prediction_type\":[\"RawFormulaVal\"],\"fstr_internal_file\":\"\",\"output_columns\":[\"SampleId\",\"RawFormulaVal\",\"Label\"],\"snapshot_interval\":600,\"time_left_log\":\"time_left.tsv\",\"fstr_type\":\"F",
+    "training": "{\"metrics\":{\"learn_best_error\":{\"Logloss\":0.6820108391498875},\"test_metrics_history\":[],\"learn_metrics_history\":[{\"Logloss\":0.6923581293437912},{\"Logloss\":0.6916108173918434},{\"Logloss\":0.6909829526999521},{\"Logloss\":0.6903656215538116},{\"Logloss\":0.6898317752264593},{\"Logloss\":0.6893891914426453},{\"Logloss\":0.6889625793568088},{\"Logloss\":0.6886032732572073},{\"Logloss\":0.6882644437600646},{\"Loglos",
+    "model_guid": "560b0717-fec27b62-f7c1ecc4-8d812c71",
+    "params": "{\"detailed_profile\":false,\"boosting_options\":{\"model_shrink_mode\":\"Constant\",\"approx_on_full_history\":false,\"fold_len_multiplier\":2,\"fold_permutation_block\":0,\"posterior_sampling\":false,\"boosting_type\":\"Plain\",\"iterations\":354,\"model_shrink_rate\":0,\"boost_from_average\":false,\"od_config\":{\"wait_iterations\":20,\"type\":\"None\",\"stop_pvalue\":0},\"permutation_count\":4,\"learning_rate\":0.05999999866},\"pool_"
+   },
+   "ours_deploy_s42_t6": {
+    "train_finish_time": "2026-08-21T00:09:31Z",
+    "catboost_version_info": "Git info:\n    Commit: b1bd2a6d77219e82a1acfcedfccb8e6f6c1ee084\n    Branch: tags/v1.2.10\n    Author: akhropov <akhropov@yandex-team.com>\n    Summary: CatBoost release 1.2.10. commit_hash:f8e0038b19555d36a9ba7b81b6730254b352960d\n    git-svn info:\n    Last Changed Rev: 9293085\n\nOther info:\n    Build by: Unknown user\n    Top src dir: /src/catboost\n",
+    "class_params": "{\"classes_count\":0,\"class_names\":[0,1],\"class_to_label\":[0,1],\"class_label_type\":\"Float\"}",
+    "output_options": "{\"name\":\"experiment\",\"verbose\":100,\"test_error_log\":\"test_error.tsv\",\"json_log\":\"catboost_training.json\",\"result_model_file\":\"model\",\"roc_file\":\"\",\"eval_file_name\":\"\",\"use_best_model\":false,\"allow_writing_files\":false,\"prediction_type\":[\"RawFormulaVal\"],\"fstr_internal_file\":\"\",\"output_columns\":[\"SampleId\",\"RawFormulaVal\",\"Label\"],\"snapshot_interval\":600,\"time_left_log\":\"time_left.tsv\",\"fstr_type\":",
+    "training": "{\"metrics\":{\"learn_best_error\":{\"Logloss\":0.6852085032781168},\"test_metrics_history\":[],\"learn_metrics_history\":[{\"Logloss\":0.6926943877569425},{\"Logloss\":0.692298235578904},{\"Logloss\":0.6919373968014799},{\"Logloss\":0.6915911640568924},{\"Logloss\":0.6912743137163387},{\"Logloss\":0.6909975110178678},{\"Logloss\":0.6907507572823077},{\"Logloss\":0.6905261225575217},{\"Logloss\":0.6903250505358347},{\"Logloss",
+    "model_guid": "e55ab29e-f9bd6e0b-b256c697-b8a05ab9",
+    "params": "{\"detailed_profile\":false,\"boosting_options\":{\"model_shrink_mode\":\"Constant\",\"approx_on_full_history\":false,\"fold_len_multiplier\":2,\"fold_permutation_block\":0,\"posterior_sampling\":false,\"boosting_type\":\"Plain\",\"iterations\":354,\"model_shrink_rate\":0,\"boost_from_average\":false,\"od_config\":{\"wait_iterations\":20,\"type\":\"None\",\"stop_pvalue\":0},\"permutation_count\":4,\"learning_rate\":0.05999999866},\"pool_"
+   }
+  },
+  "D5_4seed_mean_score_distribution": {
+   "n_subsets_from_our_8_new": 70,
+   "min": 915.0449358165002,
+   "max": 926.4503630049715,
+   "mean": 920.7336137826981,
+   "sd": 2.764855438893552,
+   "our_deploy4_repro": 920.3381683581702,
+   "mate_deploy4_delivered": 921.997523625817,
+   "gap_pts": -1.6593552676469017,
+   "gap_in_sd_units": -0.6001598652517426,
+   "percentile_of_ours4": 45.714285714285715,
+   "percentile_of_mate4": 62.857142857142854,
+   "해설": "우리 새 8시드에서 만든 4시드 평균 70개의 점수 분포.  우리 재현본과 팀원 납품본의 차이를 이 분포의 산포로 재면 '시드 뽑기 운' 인지 '체계적 차이' 인지 가늠할 수 있다."
+  },
+  "D6_leaf_correlation_is_uninformative": {
+   "deploy_sibling_rho_leaf": [
+    0.014832913230989996,
+    0.02105705802347055,
+    0.0008051318525670401
+   ],
+   "our_refit_vs_deploy42_rho_leaf": -0.00867760490155481,
+   "판정": "🔴 배포 형제 모델끼리도 잎값 상관이 0.0008~0.0211 로 사실상 0 이다. 독립적으로 자란 트리의 잎값 배열은 원소 위치가 서로 다른 분기를 가리키므로 상관이 의미를 갖지 않는다.  config 가 요구한 '잎값 상관' 은 이 모델 계열에서 판정 근거가 될 수 없고, 예측 상관만 쓸 수 있다."
+  },
+  "wall_min": 0.03877682288487752
+ },
+ "paired_delta_analysis": {
+  "paired_delta_4_to_12_all_495_subsets": {
+   "n_subsets": 495,
+   "blend": {
+    "mean": 0.8551146863886812,
+    "sd": 1.4082707665228489,
+    "min": -2.6184354961710596,
+    "max": 4.582479342851798,
+    "pct_positive": 71.71717171717171,
+    "pct_above_1.0": 46.26262626262626,
+    "p05": -1.3456391604305395,
+    "p50": 0.8521051283461247,
+    "p95": 3.1888405586933337
+   },
+   "arm": {
+    "mean": 3.9347588213274847,
+    "sd": 3.101906151340178,
+    "min": -3.5447673724210063,
+    "max": 12.242038320253641,
+    "pct_positive": 89.8989898989899
+   },
+   "해설": "12시드 고정 · 출발 4시드를 495가지로 바꿔가며 잰 이득.  🔴 '4 -> 12 의 이득' 은 하나의 수가 아니라 이 분포다. 어느 4개에서 출발했느냐가 이득만큼 크게 움직인다."
+  },
+  "two_actual_starting_points": {
+   "우리_배포4_재현": {
+    "delta_blend": 0.9535443663999104,
+    "percentile_in_495": 52.52525252525253
+   },
+   "팀원_배포4_납품": {
+    "delta_blend": 1.025287153677482,
+    "note": "출발점이 우리 495 분포 밖(다른 코드 경로)이라 백분위 없음"
+   }
+  },
+  "segment_gains_blend_subset_means": {
+   "1->2": {
+    "mean_from": 931.1149975048329,
+    "mean_to": 933.6794518616878,
+    "delta_of_means": 2.564454356854867
+   },
+   "2->4": {
+    "mean_from": 933.6794518616878,
+    "mean_to": 934.9619704854086,
+    "delta_of_means": 1.2825186237208754
+   },
+   "4->6": {
+    "mean_from": 934.9619704854086,
+    "mean_to": 935.3895178083001,
+    "delta_of_means": 0.42754732289142794
+   },
+   "6->8": {
+    "mean_from": 935.3895178083001,
+    "mean_to": 935.6032990043724,
+    "delta_of_means": 0.21378119607231838
+   },
+   "8->12": {
+    "mean_from": 935.6032990043724,
+    "mean_to": 935.8170851717973,
+    "delta_of_means": 0.21378616742492795
+   },
+   "4->8": {
+    "mean_from": 934.9619704854086,
+    "mean_to": 935.6032990043724,
+    "delta_of_means": 0.6413285189637463
+   },
+   "4->12": {
+    "mean_from": 934.9619704854086,
+    "mean_to": 935.8170851717973,
+    "delta_of_means": 0.8551146863886743
+   },
+   "6->12": {
+    "mean_from": 935.3895178083001,
+    "mean_to": 935.8170851717973,
+    "delta_of_means": 0.42756736349724633
+   }
+  },
+  "one_over_n_model": {
+   "blend": {
+    "form": "score(n) = a - b/n",
+    "a": 936.3382618239332,
+    "b": 5.18951822749025,
+    "R2": 0.9680191270219868,
+    "resid_max_abs": 0.29756141588313767,
+    "pred_4": 935.0408822670606,
+    "pred_12": 935.9058019716423,
+    "pred_delta_4_to_12": 0.8649197045817085,
+    "pred_infinity": 936.3382618239332
+   },
+   "arm": {
+    "form": "score(n) = a - b/n",
+    "a": 926.6435021044202,
+    "b": 23.536153933620035,
+    "R2": 0.9935405866403045,
+    "resid_max_abs": 0.6069052599146971,
+    "pred_4": 920.7594636210152,
+    "pred_12": 924.6821559432852,
+    "pred_delta_4_to_12": 3.9226923222700063,
+    "pred_infinity": 926.6435021044202
+   }
+  },
+  "orchestrator_extrapolation_check": {
+   "지휘자_모형": "score(n) = 887.58 − 35.99/n (AA81 3시드에서 실측)",
+   "지휘자_예측_4to12_팔눈금": 5.998333333333334,
+   "우리_팔_b계수": 23.536153933620035,
+   "우리_팔_예측_4to12": 3.9226923222700063,
+   "우리_팔_실측_4to12": 3.9347588213274847,
+   "우리_블렌드_실측_4to12": 0.8551146863886812,
+   "판정": "🔴 외삽이 과대했다.  v6-Cat 의 1/n 계수는 AA81 에서 읽은 35.99 가 아니라 그보다 작다.  그리고 팔 눈금 이득이 블렌드로 전달되는 몫은 1 이 아니다(S4)."
+  },
+  "arm_to_blend_transfer_within_surface": {
+   "arm_delta_mean": 3.9347588213274847,
+   "blend_delta_mean": 0.8551146863886812,
+   "ratio": 0.21732327830456147,
+   "해설": "같은 정직면 안에서 팔 눈금 이득이 블렌드 점수로 얼마나 옮겨지는가. 이것은 LB 전이비가 아니다(S1·S2) — 면 안쪽의 희석률이다."
+  }
+ }
+}

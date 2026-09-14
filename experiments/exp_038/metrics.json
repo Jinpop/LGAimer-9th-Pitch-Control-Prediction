@@ -1,0 +1,601 @@
+{
+ "exp_id": "exp_038",
+ "title": "`idea`'s two columns put on R0 alone, and split — a MEASUREMENT, not a verdict",
+ "what_this_experiment_is": "exp_037 measured the `idea` block twice, both times with other blocks in the matrix: +17.53141 as a ladder rung on top of p6+sit, +12.28771 as a leave-one-out from all 22 columns. Neither is its value on our 47 columns alone, and neither says which of the two columns does the work. The success criterion here is whether that separation was achieved, NOT whether the adoption bar was cleared. The config's honest_prior predicted roughly a third of the bar before anything ran.",
+ "conversion": {
+  "formula": "100000 * (1 - brier / 0.2498069)",
+  "reference_brier": 0.2498069,
+  "sensitivity": "Brier 1e-6 = 0.4003 points, so a 6-digit Brier carries +/-0.2 of slack and the trailing digits of a converted value are a machine transform of a rounded input, not a measurement",
+  "fold_2023_levels_not_converted": "the reference is the 2025 test base rate; a 2023 validation LEVEL run through it has no referent. On fold_2023 only DELTAS are converted."
+ },
+ "changed_vs_exp_037": [
+  "1. arm column sets: 22-column combinations -> the `idea` block and its two halves alone (49 / 48 / 48 columns)",
+  "2. the R0 control is INHERITED by sha, not refitted (fold_2023 seed 42 and fold_2024 seeds 42/7/2024)",
+  "3. featgen.py:209 nan_to_num(P, nan=-1) -> assert not np.isnan(P).any() (exp_037 audit finding N4)",
+  "4. the two iteration scales are READ from the result jsons instead of a hardcoded rounded constant (audit finding N1)",
+  "5. the promoted arm was fixed BEFORE stage A ran, so there is no selection over arms and therefore no selection cost",
+  "carried-along, not intended: the feature parquet is not regenerated, so featgen.py never executes in this experiment and change 3 has no numerical effect here; b3_feat.py is inherited byte-identical and still carries EXP_ID='exp_037' inside the result jsons it writes"
+ ],
+ "inheritance": {
+  "PASS": true,
+  "feat_parquet_sha256": "312d0ccb0d293d0193256d2067404c4b11a93505a6d28d72d8a09b532475acd4",
+  "feat_parquet_pinned_matches": true,
+  "exp037_leak_gates": {
+   "verify_asof": true,
+   "verify_groupconst": true,
+   "gate_2024": true
+  },
+  "R0_units": {
+   "R0_u2023_seed42_st1": {
+    "PASS": true,
+    "sha_match": true,
+    "brier_recomputed_from_npy": 0.24867962923638576,
+    "abs_diff_vs_exp037": 0.0
+   },
+   "R0_u2024_seed42_st2": {
+    "PASS": true,
+    "sha_match": true,
+    "brier_recomputed_from_npy": 0.2480393607892575,
+    "abs_diff_vs_exp037": 0.0
+   },
+   "R0_u2024_seed7_st2": {
+    "PASS": true,
+    "sha_match": true,
+    "brier_recomputed_from_npy": 0.2479833583326968,
+    "abs_diff_vs_exp037": 0.0
+   },
+   "R0_u2024_seed2024_st2": {
+    "PASS": true,
+    "sha_match": true,
+    "brier_recomputed_from_npy": 0.2479648004372976,
+    "abs_diff_vs_exp037": 0.0
+   }
+  },
+  "why_no_new_audit": "no new feature source, join, target encoding or time aggregation; the parquet is byte-identical to the one exp_037's audit cleared. A submission built on this would still require the pre-submission audit, without exception."
+ },
+ "src_sha256": {
+  "aggregate038.py": "58367349522db9f6e761410be78cfd2e52e8960ac523475950d07ef6383ce304",
+  "arms.py": "21b021e5e74c1806efc630545a419bc60050e8f0f72badd45697bc69c1619513",
+  "b3_cat.py": "0984c57e5af66600f9fca5532a984ddd6d4c22996c9e0105d3e798bc7bfa76ca",
+  "b3_feat.py": "e3dc34a54e8c744732bfe2d36d48a77f7bb97fb6523ce9738aa42b2e1fdbdd13",
+  "exp016_ref.py": "4f24deb71d9eef3d626900f34a71aecd2d6acbae646eb9c92c51189a38a3ece1",
+  "featgen.py": "31c2a9b87d0622ee09b9226b90f1e870dff47edaaaa33deaa782d682ee4a7e40",
+  "gain_probe.py": "2db59a624b1c7d3aba6711f1d8846978b026e2aef08a0a341c34e4ad75262078",
+  "gate_compare.py": "7b10a7ae09e9fb0de02b6fe79b883bc34cac1173ba813669bc6d1552b8260105",
+  "inherit_gate.py": "5f829859e691f163430a146d769b28682f54f78993159e6af78052ed5aa799c1",
+  "labels.py": "439cd504478b4bc8162e9dedc32be27bfadd5d1178472d6b384b60f46ed7a9f2",
+  "mapgen.py": "60fa940731dcc2bc8e31c9758116162855d30ac5018315f91de196637f8d142c",
+  "mate_pipeline_ORIGINAL.py": "e9ccfb66646d516cf79be3be0660c61db1f17cd54fc056284c9f696fe0416890",
+  "verify_asof.py": "1965f3599f6850a749918b75788f1d94695cdda5c583dd43b1e5374a86506644",
+  "verify_groupconst.py": "f53ef86813d0efe38b9a426f23a88ebdd8ff1929daca95308be0a7871674aab9",
+  "driver.sh": "3234fb1dc7e2fd396aee1e90b90befda70f604ec933c706142cc7ac0b18bd354"
+ },
+ "arms": {
+  "A_idea": {
+   "n_feats": 49,
+   "extra_cols": [
+    "idea_matchup_pitch",
+    "idea_cnt_te"
+   ]
+  },
+  "A_cnt": {
+   "n_feats": 48,
+   "extra_cols": [
+    "idea_cnt_te"
+   ]
+  },
+  "A_match": {
+   "n_feats": 48,
+   "extra_cols": [
+    "idea_matchup_pitch"
+   ]
+  }
+ },
+ "stage_A_decompose": {
+  "fold": "fold_2023 (train <= 2022 -> valid 2023), seed 42, self-stopping under a cap",
+  "control": {
+   "arm": "R0",
+   "n_feats": 47,
+   "brier_fold2023": 0.24867962923638576,
+   "source": "INHERITED from exp_037 by sha; not refitted"
+  },
+  "cap": {
+   "A_idea": 1650,
+   "A_cnt": 1650,
+   "A_match": 1650
+  },
+  "arms": {
+   "A_idea": {
+    "n_feats": 49,
+    "extra_cols": [
+     "idea_matchup_pitch",
+     "idea_cnt_te"
+    ],
+    "brier_fold2023": 0.2486138015774718,
+    "score_fold2023": null,
+    "score_fold2023_note": "levels are not converted on fold_2023",
+    "delta_vs_R0_brier": -6.582765891396947e-05,
+    "delta_vs_R0_score": 26.35142,
+    "stack_argmin": 270,
+    "cell_argmin": {
+     "is_mid_only": 110,
+     "is_rev_only": 725,
+     "is_both": 500,
+     "is_wayoff_true": 625
+    },
+    "any_argmin_at_cap": false,
+    "cap": 1650,
+    "minutes": 25.14,
+    "extra_nan_rate_train": {
+     "idea_matchup_pitch": 0.243039,
+     "idea_cnt_te": 0.243039
+    },
+    "extra_nan_rate_valid": {
+     "idea_matchup_pitch": 0.0,
+     "idea_cnt_te": 0.0
+    },
+    "valid_R_brier": 0.24859,
+    "valid_F_brier": 0.24882
+   },
+   "A_cnt": {
+    "n_feats": 48,
+    "extra_cols": [
+     "idea_cnt_te"
+    ],
+    "brier_fold2023": 0.24864302404976507,
+    "score_fold2023": null,
+    "score_fold2023_note": "levels are not converted on fold_2023",
+    "delta_vs_R0_brier": -3.6605186620686236e-05,
+    "delta_vs_R0_score": 14.65339,
+    "stack_argmin": 280,
+    "cell_argmin": {
+     "is_mid_only": 110,
+     "is_rev_only": 975,
+     "is_both": 550,
+     "is_wayoff_true": 625
+    },
+    "any_argmin_at_cap": false,
+    "cap": 1650,
+    "minutes": 29.02,
+    "extra_nan_rate_train": {
+     "idea_cnt_te": 0.243039
+    },
+    "extra_nan_rate_valid": {
+     "idea_cnt_te": 0.0
+    },
+    "valid_R_brier": 0.248608,
+    "valid_F_brier": 0.248941
+   },
+   "A_match": {
+    "n_feats": 48,
+    "extra_cols": [
+     "idea_matchup_pitch"
+    ],
+    "brier_fold2023": 0.24858866451160838,
+    "score_fold2023": null,
+    "score_fold2023_note": "levels are not converted on fold_2023",
+    "delta_vs_R0_brier": -9.096472477737594e-05,
+    "delta_vs_R0_score": 36.41402,
+    "stack_argmin": 220,
+    "cell_argmin": {
+     "is_mid_only": 425,
+     "is_rev_only": 800,
+     "is_both": 575,
+     "is_wayoff_true": 725
+    },
+    "any_argmin_at_cap": false,
+    "cap": 1650,
+    "minutes": 30.38,
+    "extra_nan_rate_train": {
+     "idea_matchup_pitch": 0.243039
+    },
+    "extra_nan_rate_valid": {
+     "idea_matchup_pitch": 0.0
+    },
+    "valid_R_brier": 0.248548,
+    "valid_F_brier": 0.248936
+   }
+  },
+  "additivity": {
+   "note": "there is no reason for the two single-column deltas to add up to the pair's delta, and the gap between them is the interaction between the two columns inside the stack. All three are reported; none is derived.",
+   "delta_A_cnt_score": 14.65339,
+   "delta_A_match_score": 36.41402,
+   "sum_of_singles_score": 51.06741,
+   "delta_A_idea_score": 26.35142,
+   "interaction_brier": 6.174225248409271e-05,
+   "interaction_score": -24.71599,
+   "interaction_reading": "positive interaction_score means the pair is worth more than its two halves added; negative means the two columns overlap and the pair is worth less."
+  },
+  "feat_parquet_sha_in_every_unit": [
+   "312d0ccb0d293d0193256d2067404c4b11a93505a6d28d72d8a09b532475acd4"
+  ],
+  "feat_parquet_sha_matches_pin": true
+ },
+ "stage_B_promotion": {
+  "fold": "fold_2024 (train <= 2023 -> valid 2024), seeds 42/7/2024",
+  "arm": "A_idea",
+  "arm_was_fixed_before_stage_A": true,
+  "selection_cost": 0.0,
+  "selection_cost_note": "one candidate means no choice, and no choice means no winner's curse to pay. exp_037 chose the best of nine on fold_2023 and gave back 4.56965 points on fold_2024; that price is not paid here. What remains between the folds is season difference, not selection.",
+  "control": {
+   "arm": "R0",
+   "source": "INHERITED from exp_037 by sha",
+   "seeds": {
+    "42": 0.2480393607892575,
+    "7": 0.2479833583326968,
+    "2024": 0.2479648004372976
+   },
+   "mean_brier": 0.24799583985308396,
+   "mean_score": 724.98404,
+   "std_brier_ddof1": 3.881562551959927e-05
+  },
+  "seeds": {
+   "42": {
+    "brier_fold2024": 0.24793819117593732,
+    "score_fold2024": 748.06133,
+    "stack_round": 346,
+    "cell_round": {
+     "is_mid_only": 141,
+     "is_rev_only": 929,
+     "is_both": 641,
+     "is_wayoff_true": 801
+    },
+    "valid_R": {
+     "n": 223497,
+     "brier": 0.248025,
+     "bss": 0.007481,
+     "score": 748.109,
+     "base_rate": 0.489707,
+     "pred_mean": 0.496725,
+     "auc": 0.549293,
+     "logloss": 0.689182
+    },
+    "valid_F": {
+     "n": 30010,
+     "brier": 0.247295,
+     "bss": 0.004216,
+     "score": 421.598,
+     "base_rate": 0.45928,
+     "pred_mean": 0.459632,
+     "auc": 0.537256,
+     "logloss": 0.68771
+    },
+    "minutes": 38.54
+   },
+   "7": {
+    "brier_fold2024": 0.24801089300385715,
+    "score_fold2024": 718.95812,
+    "stack_round": 346,
+    "cell_round": {
+     "is_mid_only": 141,
+     "is_rev_only": 929,
+     "is_both": 641,
+     "is_wayoff_true": 801
+    },
+    "valid_R": {
+     "n": 223497,
+     "brier": 0.248113,
+     "bss": 0.007126,
+     "score": 712.557,
+     "base_rate": 0.489707,
+     "pred_mean": 0.498465,
+     "auc": 0.548478,
+     "logloss": 0.689361
+    },
+    "valid_F": {
+     "n": 30010,
+     "brier": 0.247247,
+     "bss": 0.004407,
+     "score": 440.726,
+     "base_rate": 0.45928,
+     "pred_mean": 0.459696,
+     "auc": 0.538952,
+     "logloss": 0.687617
+    },
+    "minutes": 38.61
+   },
+   "2024": {
+    "brier_fold2024": 0.2480119862267951,
+    "score_fold2024": 718.52049,
+    "stack_round": 346,
+    "cell_round": {
+     "is_mid_only": 141,
+     "is_rev_only": 929,
+     "is_both": 641,
+     "is_wayoff_true": 801
+    },
+    "valid_R": {
+     "n": 223497,
+     "brier": 0.248118,
+     "bss": 0.007109,
+     "score": 710.852,
+     "base_rate": 0.489707,
+     "pred_mean": 0.498988,
+     "auc": 0.548652,
+     "logloss": 0.689369
+    },
+    "valid_F": {
+     "n": 30010,
+     "brier": 0.247225,
+     "bss": 0.004498,
+     "score": 449.786,
+     "base_rate": 0.45928,
+     "pred_mean": 0.45857,
+     "auc": 0.539682,
+     "logloss": 0.687572
+    },
+    "minutes": 38.67
+   }
+  },
+  "mean_brier": 0.24798702346886317,
+  "mean_score": 728.51332,
+  "std_brier_ddof1": 4.2293538612846127e-05,
+  "n_seeds": 3,
+  "n_feats": 49,
+  "iteration_policy": {
+   "rule": "stage-2 rounds = the arm's OWN fold_2023 argmin x the training-row ratio. The fold_2024 validation curve selected nothing.",
+   "scale_mode": 1.2817279350106026,
+   "scale_full": 1.281968918819595,
+   "scales_are_two_different_numbers": true,
+   "n1_note": "exp_037's aggregate wrote 'stacker x1.281957' for both; the cell scale and the stacker scale are not the same number and neither equals that constant. These two values are read from the result jsons.",
+   "base_stack_argmin": 270,
+   "base_cell_argmin": {
+    "is_mid_only": 110,
+    "is_rev_only": 725,
+    "is_both": 500,
+    "is_wayoff_true": 625
+   }
+  },
+  "adoption": {
+   "rule": "three seeds agree in sign AND |mean delta| >= 3 x std(R0 seeds, ddof=1) AND the mean delta lowers Brier. Pre-registered; not relaxed.",
+   "per_seed_delta_brier": {
+    "42": -0.00010116961332018448,
+    "7": 2.7534671160345248e-05,
+    "2024": 4.71857894975003e-05
+   },
+   "per_seed_delta_score": {
+    "42": 40.49913,
+    "7": -11.02238,
+    "2024": -18.88891
+   },
+   "mean_delta_brier": -8.816384220779646e-06,
+   "mean_delta_score": 3.52928,
+   "R0_seed_sigma_brier_ddof1": 3.881562551959927e-05,
+   "R0_seed_sigma_score_equiv": 15.53825,
+   "adoption_bar_score_equiv": 46.61476,
+   "ddof": 1,
+   "adoption_threshold_sigma_multiplier": 3,
+   "observed_delta_in_R0_sigma_units": 0.2271,
+   "naming_warning": "adoption_threshold_sigma_multiplier is the RULE, a constant 3. observed_delta_in_R0_sigma_units is the DATUM. They share a unit and are not the same kind of quantity; neither may be compared across experiments that used a different ddof.",
+   "signs_agree": false,
+   "ADOPTED": false
+  },
+  "transfer": {
+   "fold2023_delta_score": 26.35142,
+   "fold2024_mean_delta_score": 3.52928,
+   "transfer_ratio": 0.1339,
+   "note": "with the arm fixed in advance this ratio contains no winner's curse; what it contains is the difference between the two seasons plus seed noise."
+  },
+  "segments": {
+   "valid_R": {
+    "n": 223497,
+    "R0_mean_brier": 0.24806399999999998,
+    "A_idea_mean_brier": 0.24808533333333335,
+    "mean_delta_brier": 2.1333333333373172e-05,
+    "mean_delta_score_equiv": -8.53993,
+    "per_seed_delta_score_equiv": {
+     "42": 32.02474,
+     "7": -25.61979,
+     "2024": -32.02474
+    },
+    "R0_mean_auc": 0.5489809999999999,
+    "A_idea_mean_auc": 0.5488076666666667,
+    "conversion_caveat": "a segment delta converted at the full-test reference answers 'what would this be worth if the whole test looked like this segment'. The real test is roughly 89% R and 11% F, so these two numbers do not add up to the all-rows number."
+   },
+   "valid_F": {
+    "n": 30010,
+    "R0_mean_brier": 0.2474886666666667,
+    "A_idea_mean_brier": 0.24725566666666665,
+    "mean_delta_brier": -0.00023300000000003873,
+    "mean_delta_score_equiv": 93.27204,
+    "per_seed_delta_score_equiv": {
+     "42": 102.07885,
+     "7": 100.0773,
+     "2024": 77.65998
+    },
+    "R0_mean_auc": 0.5341723333333334,
+    "A_idea_mean_auc": 0.5386299999999999,
+    "conversion_caveat": "a segment delta converted at the full-test reference answers 'what would this be worth if the whole test looked like this segment'. The real test is roughly 89% R and 11% F, so these two numbers do not add up to the all-rows number."
+   }
+  }
+ },
+ "diagnostics": {
+  "paired_delta_std": {
+   "brier": 8.058151653320124e-05,
+   "score_equiv": 32.25752,
+   "what": "the spread of the per-seed (candidate - control) differences, i.e. how much the two arms move apart when the seed changes",
+   "NOT_A_DENOMINATOR": "the adoption test divides by the R0 seed std and by nothing else. This number is a diagnostic: exp_033 found it far smaller than the control std, meaning candidate and control swing together. It is deliberately kept out of the adoption block so no table can put the two side by side."
+  },
+  "column_importance_probe": {
+   "what": "flat C5 CatBoost on the promoted unit's stacker training pool and target, WITHOUT the four p_* stack columns. Ranks the two idea columns among the arm's 49; it is NOT the stacker's own importance and no decision uses it.",
+   "arm": "A_idea",
+   "seed": 42,
+   "n_train": 1116277,
+   "n_feats": 49,
+   "unit_probed": 2024,
+   "train_upto": 2023,
+   "n_round": 346,
+   "n_round_source": "stage-1 stacker argmin 270 x 1116277/870752",
+   "importance_type": "PredictionValuesChange",
+   "importance_sum": 100.00000000000006,
+   "extra_cols": [
+    "idea_matchup_pitch",
+    "idea_cnt_te"
+   ],
+   "extra_col_importance": {
+    "idea_matchup_pitch": 6.20312398624633,
+    "idea_cnt_te": 1.8238370349804642
+   },
+   "extra_col_rank_of_49": {
+    "idea_matchup_pitch": 3,
+    "idea_cnt_te": 18
+   },
+   "extra_col_share_pct": {
+    "idea_matchup_pitch": 6.203123986246326,
+    "idea_cnt_te": 1.8238370349804633
+   },
+   "top15": [
+    {
+     "feat": "asof_pitcher_success_rate",
+     "importance": 13.849144856550536,
+     "rank": 1
+    },
+    {
+     "feat": "asof_pitcher_reverse_rate",
+     "importance": 10.070850237690044,
+     "rank": 2
+    },
+    {
+     "feat": "idea_matchup_pitch",
+     "importance": 6.20312398624633,
+     "rank": 3
+    },
+    {
+     "feat": "asof_pitcher_ball_rate",
+     "importance": 6.061440029761819,
+     "rank": 4
+    },
+    {
+     "feat": "batter_team_id",
+     "importance": 5.431777896220591,
+     "rank": 5
+    },
+    {
+     "feat": "season",
+     "importance": 5.35576581799778,
+     "rank": 6
+    },
+    {
+     "feat": "pitcher_team_id",
+     "importance": 4.709902600513257,
+     "rank": 7
+    },
+    {
+     "feat": "asof_pitcher_prev5_game_success_rate",
+     "importance": 4.658343377387359,
+     "rank": 8
+    },
+    {
+     "feat": "asof_batter_success_rate",
+     "importance": 4.0067644875312824,
+     "rank": 9
+    },
+    {
+     "feat": "balls_before",
+     "importance": 2.62532743104734,
+     "rank": 10
+    },
+    {
+     "feat": "asof_pitcher_prev1_game_success_rate",
+     "importance": 2.335020491989127,
+     "rank": 11
+    },
+    {
+     "feat": "batter_hand",
+     "importance": 2.3289847524224996,
+     "rank": 12
+    },
+    {
+     "feat": "pitcher_id",
+     "importance": 2.2020888632050823,
+     "rank": 13
+    },
+    {
+     "feat": "asof_pitcher_offspeed_rate",
+     "importance": 2.0833332093054695,
+     "rank": 14
+    },
+    {
+     "feat": "asof_pitcher_prev3_game_success_rate",
+     "importance": 2.042122999479104,
+     "rank": 15
+    }
+   ],
+   "params": {
+    "loss_function": "Logloss",
+    "task_type": "CPU",
+    "thread_count": 6,
+    "boosting_type": "Plain",
+    "bootstrap_type": "Bernoulli",
+    "subsample": 0.8,
+    "learning_rate": 0.03,
+    "depth": 6,
+    "l2_leaf_reg": 10,
+    "one_hot_max_size": 10,
+    "has_time": true,
+    "allow_writing_files": false,
+    "verbose": false,
+    "random_seed": 42,
+    "iterations": 346
+   },
+   "minutes": 1.07
+  }
+ },
+ "fold_2023": {
+  "note": "levels are not point-converted on this fold; deltas are",
+  "R0_brier_inherited": 0.24867962923638576,
+  "A_idea_brier": 0.2486138015774718,
+  "A_cnt_brier": 0.24864302404976507,
+  "A_match_brier": 0.24858866451160838,
+  "A_idea_delta_score": 26.35142,
+  "A_cnt_delta_score": 14.65339,
+  "A_match_delta_score": 36.41402
+ },
+ "fold_2024": {
+  "arm": "A_idea",
+  "brier": 0.24798702346886317,
+  "score": 728.51332,
+  "bss": 0.007285333333333334,
+  "auc": 0.5484233333333334,
+  "R0_brier_inherited": 0.24799583985308396,
+  "R0_score_inherited": 724.98404,
+  "mean_delta_score": 3.52928,
+  "ADOPTED": false
+ },
+ "train_time_min_sum_of_units": 200.36,
+ "n_units_completed": 6,
+ "units_reused_not_refitted": 4,
+ "failures": [],
+ "n_progress_events": 21,
+ "wall_clock": {
+  "driver_start_utc": "2026-08-09T03:08:32Z",
+  "driver_end_utc": "2026-08-09T04:18:47Z",
+  "wall_minutes": 70.25,
+  "eta_minutes": "70-110, centre 90",
+  "eta_verdict": "inside the range, at its lower edge",
+  "stage_A_wall_minutes": 30.43,
+  "stage_B_wall_minutes": 39.72,
+  "unit_minutes": {
+   "A_idea_2023": 25.14,
+   "A_cnt_2023": 29.02,
+   "A_match_2023": 30.38,
+   "A_idea_2024_s42": 38.54,
+   "A_idea_2024_s7": 38.61,
+   "A_idea_2024_s2024": 38.67,
+   "gain_probe": 1.07
+  },
+  "contention_note": "exp_039 and exp_040 were launched onto the same 40-core box partway through. Our own concurrency stayed at 3 fits x 6 threads throughout, but the fold_2024 units took 38.5-38.7 min against exp_037's 17.85-23.68 min for the same shape of unit on an otherwise idle box: roughly 1.6x inflation. Wall time is affected; the numbers are not, because thread_count is fixed at 6 and the fits are deterministic."
+ },
+ "caveats": {
+  "measured_with_corrections_OFF": "every delta here is the raw C5_B3 scale, no offset and no calibration, the same scale as exp_037. exp_040 has since shown on 3/3 seeds that the feature axis and the post-processing axes are NOT independent: the offset gain fell from +38.28802 on R0 to +27.44645 on L_no_sit (-10.84157) and the calibration gain from +21.42743 to +9.47602 (-11.95141), because the team-mate's columns had already closed 33.6% of the prediction-level gap. With corrections on, exp_037's feature advantage shrank from +30.96222 to +7.93002 and its seed signs split. So a positive delta measured here is an upper bound on what the same columns would be worth inside a corrected pipeline, and exp_038's fold_2024 delta is already too small and too sign-unstable to survive that. Re-measuring exp_038 with corrections applied is a separate experiment and was NOT run.",
+  "segment_delta_precision": "valid_R and valid_F Brier values are stored to 6 decimals by seg_metrics, so a segment delta between two of them is quantised at about 1e-6 = 0.4 points. The segment point figures carry that much slack per seed; only their direction and rough size should be read, not their trailing digits. The all-rows Brier is full precision and is unaffected.",
+  "fold_2023_is_one_seed": "stage A is seed 42 only, by design: it is a decomposition, not a verdict. The three fold_2023 deltas have no seed spread attached and must not be compared with the 3-sigma bar, which is a fold_2024 rule.",
+  "single_untuned_setting": "C5 is a first, untuned CatBoost setting. Every number here is valid on that setting only."
+ },
+ "decomposition_headline": {
+  "question": "which of the two `idea` columns does the work, on R0 alone",
+  "answer": "idea_matchup_pitch, the expensive one. Alone it is worth +36.41402 on fold_2023; idea_cnt_te alone is worth +14.65339; the pair is worth +26.35142, which is LESS than either sum and less than idea_matchup_pitch alone. The interaction is -24.71599.",
+  "cost_consequence": "the config's hope was that the cheap column carried the block, which would have let us drop the pitch-type model and the 22-column pipeline. It does not. The column that carries the block is the one that needs the per-season pitch-type model, i.e. the whole pipeline.",
+  "supporting_but_not_deciding": "the flat importance probe ranks idea_matchup_pitch 3rd of 49 (6.20% of total) and idea_cnt_te 18th (1.82%), the same ordering. It is a different model from the stacker and decides nothing."
+ }
+}

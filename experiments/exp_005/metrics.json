@@ -1,0 +1,331 @@
+{
+  "exp_id": "exp_005",
+  "base_exp": "exp_001",
+  "seed": 42,
+  "task": "postprocess (no training; exp_001 saved models reused)",
+  "num_threads": 4,
+  "sha256": {
+    "train.csv": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+    "postprocess.py": "ac8c28a32f716aa228062ab71032c63158a27aa1cbc334d8f12302de72e528d6",
+    "model_fold_2023.txt": "d25f10ddde8013e1d2f6fe6b35704b2c4fa2056fece8caee61556bcdb671757b",
+    "model_fold_2024.txt": "f25489e14606f28a429c6d106b9b62e51e3a86b0c975e3bc36a42e6fe97022b6"
+  },
+  "versions": {
+    "python": "3.11.15",
+    "numpy": "1.26.4",
+    "pandas": "2.0.3",
+    "lightgbm": "4.7.0"
+  },
+  "reproduction_check": {
+    "fold_2023_valid_R_brier": {
+      "regenerated": 0.250527,
+      "exp_001": 0.250527,
+      "match": true
+    },
+    "fold_2024_valid_R_brier": {
+      "regenerated": 0.249337,
+      "exp_001": 0.249337,
+      "match": true
+    }
+  },
+  "fold_2024_valid_R": {
+    "original": {
+      "n": 223497,
+      "brier": 0.249337,
+      "bss": 0.002227,
+      "base_rate": 0.489707,
+      "pred_mean": 0.506371,
+      "auc": 0.534062
+    },
+    "A_logit_offset": {
+      "n": 223497,
+      "brier": 0.249234,
+      "bss": 0.002643,
+      "base_rate": 0.489707,
+      "pred_mean": 0.476388,
+      "auc": 0.534062,
+      "fit": {
+        "fit_on": "fold_2023 valid-R (fold_2023 model preds)",
+        "delta": -0.120724,
+        "fold_2023_valid_R_brier_after_fit_insample": 0.249618,
+        "fold_2023_valid_R_brier_before": 0.250527
+      }
+    },
+    "B_isotonic": {
+      "n": 223497,
+      "brier": 0.251532,
+      "bss": -0.006553,
+      "base_rate": 0.489707,
+      "pred_mean": 0.469802,
+      "auc": 0.531005,
+      "fit": {
+        "fit_on": "fold_2023 valid-R (fold_2023 model preds)",
+        "n_thresholds": 65,
+        "fold_2023_valid_R_brier_after_fit_insample": 0.249333
+      }
+    },
+    "C_trend_anchor": {
+      "n": 223497,
+      "brier": 0.249104,
+      "bss": 0.00316,
+      "base_rate": 0.489707,
+      "pred_mean": 0.482865,
+      "auc": 0.534062,
+      "fit": {
+        "fit_on": "train-only: R yearly rates 2019..2023 + fold_2024 model pred mean on season==2023 R train rows",
+        "r_history": {
+          "2019": 0.54949,
+          "2020": 0.526925,
+          "2021": 0.512763,
+          "2022": 0.503691,
+          "2023": 0.503118
+        },
+        "trend_slope_per_year": -0.011598,
+        "r_hat_2024": 0.484404,
+        "anchor_pred_mean_2023R_train": 0.508053,
+        "delta": -0.094618
+      }
+    },
+    "reference_oracle_offset_IN_SAMPLE": {
+      "n": 223497,
+      "brier": 0.249058,
+      "bss": 0.003344,
+      "base_rate": 0.489707,
+      "pred_mean": 0.489644,
+      "auc": 0.534062,
+      "fit": {
+        "fit_on": "fold_2024 valid-R ITSELF — in-sample upper bound, not a valid candidate metric",
+        "delta": -0.067317
+      }
+    }
+  },
+  "calibration_deciles_fold_2024_valid_R": {
+    "original": [
+      {
+        "bin": 0,
+        "n": 22348,
+        "pred_mean": 0.43862,
+        "actual_rate": 0.4459
+      },
+      {
+        "bin": 1,
+        "n": 22351,
+        "pred_mean": 0.46689,
+        "actual_rate": 0.4653
+      },
+      {
+        "bin": 2,
+        "n": 22350,
+        "pred_mean": 0.48123,
+        "actual_rate": 0.4664
+      },
+      {
+        "bin": 3,
+        "n": 22350,
+        "pred_mean": 0.49275,
+        "actual_rate": 0.46711
+      },
+      {
+        "bin": 4,
+        "n": 22349,
+        "pred_mean": 0.50201,
+        "actual_rate": 0.48123
+      },
+      {
+        "bin": 5,
+        "n": 22350,
+        "pred_mean": 0.51026,
+        "actual_rate": 0.48412
+      },
+      {
+        "bin": 6,
+        "n": 22350,
+        "pred_mean": 0.51931,
+        "actual_rate": 0.50188
+      },
+      {
+        "bin": 7,
+        "n": 22348,
+        "pred_mean": 0.53008,
+        "actual_rate": 0.50993
+      },
+      {
+        "bin": 8,
+        "n": 22351,
+        "pred_mean": 0.54478,
+        "actual_rate": 0.52821
+      },
+      {
+        "bin": 9,
+        "n": 22350,
+        "pred_mean": 0.57778,
+        "actual_rate": 0.54698
+      }
+    ],
+    "A_logit_offset": [
+      {
+        "bin": 0,
+        "n": 22348,
+        "pred_mean": 0.40918,
+        "actual_rate": 0.4459
+      },
+      {
+        "bin": 1,
+        "n": 22351,
+        "pred_mean": 0.437,
+        "actual_rate": 0.4653
+      },
+      {
+        "bin": 2,
+        "n": 22350,
+        "pred_mean": 0.4512,
+        "actual_rate": 0.4664
+      },
+      {
+        "bin": 3,
+        "n": 22350,
+        "pred_mean": 0.46264,
+        "actual_rate": 0.46711
+      },
+      {
+        "bin": 4,
+        "n": 22349,
+        "pred_mean": 0.47186,
+        "actual_rate": 0.48123
+      },
+      {
+        "bin": 5,
+        "n": 22350,
+        "pred_mean": 0.48009,
+        "actual_rate": 0.48412
+      },
+      {
+        "bin": 6,
+        "n": 22350,
+        "pred_mean": 0.48914,
+        "actual_rate": 0.50188
+      },
+      {
+        "bin": 7,
+        "n": 22348,
+        "pred_mean": 0.49993,
+        "actual_rate": 0.50993
+      },
+      {
+        "bin": 8,
+        "n": 22351,
+        "pred_mean": 0.51471,
+        "actual_rate": 0.52821
+      },
+      {
+        "bin": 9,
+        "n": 22350,
+        "pred_mean": 0.54812,
+        "actual_rate": 0.54698
+      }
+    ],
+    "B_isotonic": [
+      {
+        "bin": 4,
+        "n": 111307,
+        "pred_mean": 0.42032,
+        "actual_rate": 0.4651
+      },
+      {
+        "bin": 5,
+        "n": 20467,
+        "pred_mean": 0.44494,
+        "actual_rate": 0.4839
+      },
+      {
+        "bin": 6,
+        "n": 23912,
+        "pred_mean": 0.46558,
+        "actual_rate": 0.50033
+      },
+      {
+        "bin": 7,
+        "n": 22147,
+        "pred_mean": 0.49707,
+        "actual_rate": 0.50914
+      },
+      {
+        "bin": 8,
+        "n": 22135,
+        "pred_mean": 0.5288,
+        "actual_rate": 0.52735
+      },
+      {
+        "bin": 9,
+        "n": 23529,
+        "pred_mean": 0.64863,
+        "actual_rate": 0.54664
+      }
+    ],
+    "C_trend_anchor": [
+      {
+        "bin": 0,
+        "n": 22348,
+        "pred_mean": 0.4155,
+        "actual_rate": 0.4459
+      },
+      {
+        "bin": 1,
+        "n": 22351,
+        "pred_mean": 0.44343,
+        "actual_rate": 0.4653
+      },
+      {
+        "bin": 2,
+        "n": 22350,
+        "pred_mean": 0.45767,
+        "actual_rate": 0.4664
+      },
+      {
+        "bin": 3,
+        "n": 22350,
+        "pred_mean": 0.46913,
+        "actual_rate": 0.46711
+      },
+      {
+        "bin": 4,
+        "n": 22349,
+        "pred_mean": 0.47837,
+        "actual_rate": 0.48123
+      },
+      {
+        "bin": 5,
+        "n": 22350,
+        "pred_mean": 0.48661,
+        "actual_rate": 0.48412
+      },
+      {
+        "bin": 6,
+        "n": 22350,
+        "pred_mean": 0.49567,
+        "actual_rate": 0.50188
+      },
+      {
+        "bin": 7,
+        "n": 22348,
+        "pred_mean": 0.50646,
+        "actual_rate": 0.50993
+      },
+      {
+        "bin": 8,
+        "n": 22351,
+        "pred_mean": 0.52123,
+        "actual_rate": 0.52821
+      },
+      {
+        "bin": 9,
+        "n": 22350,
+        "pred_mean": 0.55457,
+        "actual_rate": 0.54698
+      }
+    ]
+  },
+  "train_time_min": 0.0,
+  "inference_time_sec": 0.95,
+  "total_time_min": 0.19
+}

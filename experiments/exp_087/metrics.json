@@ -1,0 +1,361 @@
+{
+ "exp_id": "exp_087",
+ "status": "G1·G2·G4 전부 통과. F 시드 3 -> 5 완료(신규 1·3). 나머지 13시드 미발사 — 지휘자 판단 대기",
+ "title": "AA 팔 F 브랜치 시드 확장 3 -> 18",
+ "🔴_config_premise_corrected": {
+  "config_assumed": "F 브랜치는 F 행(약 18만행)만 학습 -> fit 당 1~3분, 75 fit 벽시계 40~90분",
+  "measured_truth": "branches.F 는 63열 팔(후보 S)이고 R 브랜치와 같은 전체 풀에서 학습한다 — 셀 1,369,186행 / 스태커 1,369,784행.  'F' 는 추론에서 섞이는 세그먼트 이름이지 학습 행이 아니다.",
+  "original_build_minutes_per_seed": {
+   "42": 90.8,
+   "7": 90.7,
+   "2024": 90.64
+  },
+  "of_which_oof_minutes": {
+   "42": 60.19,
+   "7": 60.61,
+   "2024": 60.33
+  },
+  "container_cpu_quota_cores": 20.0,
+  "max_concurrency_at_6_threads_per_fit": 3,
+  "revised_eta_minutes_15_seeds": 453,
+  "revised_eta_hours_15_seeds": 7.6
+ },
+ "recipe_restoration": "RECIPE_RESTORED.json — 트레이너가 sha 로 막는 입력 7개가 8월 빌드 기록과 전부 일치",
+ "axis_reach": "REACH_OF_THE_AXIS.json — F 브랜치는 game_type=='F' 행에서만, 가중 0.5 로, 그 위에 바깥 블렌드 0.3 을 타고 최종에 닿는다",
+ "gates": {
+  "G1_repro": {
+   "PASS": true,
+   "n_models": 5,
+   "leaf_values_max_abs_diff": {
+    "cell_is_both.cbm": 0.0,
+    "cell_is_mid_only.cbm": 0.0,
+    "cell_is_rev_only.cbm": 0.0,
+    "cell_is_wayoff_true.cbm": 0.0,
+    "stacker.cbm": 0.0
+   },
+   "leaf_weights_max_abs_diff": {
+    "cell_is_both.cbm": 0.0,
+    "cell_is_mid_only.cbm": 0.0,
+    "cell_is_rev_only.cbm": 0.0,
+    "cell_is_wayoff_true.cbm": 0.0,
+    "stacker.cbm": 0.0
+   },
+   "trees_with_differing_splits": {
+    "cell_is_both.cbm": 0,
+    "cell_is_mid_only.cbm": 0,
+    "cell_is_rev_only.cbm": 0,
+    "cell_is_wayoff_true.cbm": 0,
+    "stacker.cbm": 0
+   },
+   "model_info_keys_differing": [
+    "model_guid",
+    "train_finish_time"
+   ],
+   "bytes_equal": {
+    "cell_is_both.cbm": false,
+    "cell_is_mid_only.cbm": false,
+    "cell_is_rev_only.cbm": false,
+    "cell_is_wayoff_true.cbm": false,
+    "stacker.cbm": false
+   },
+   "🔑": "5/5 가 모델 동일(잎값·잎가중치 max|Δ| 정확히 0.0)인데 5/5 가 바이트 불일치다 — '.cbm 바이트 비교는 시계를 검사한다'는 CLAUDE.md 규칙의 직접 실증.",
+   "gate_validated_in_advance": {
+    "positive_control_shipped_seed42_vs_itself": {
+     "ALL_PASS": true,
+     "n_models": 5
+    },
+    "negative_control_shipped_seed42_vs_seed7": {
+     "ALL_PASS": false,
+     "n_models": 5,
+     "meta_keys_that_differ": [
+      "model_guid",
+      "params",
+      "train_finish_time",
+      "training"
+     ]
+    },
+    "why": "게이트가 통과시킬 힘과 떨어뜨릴 힘을 둘 다 갖고 있음을 미리 확인"
+   }
+  },
+  "G2_params": {
+   "PASS": true,
+   "n_fits_checked": 10,
+   "seeds": [
+    1,
+    3
+   ],
+   "get_all_params_differs_in": [
+    "random_seed"
+   ],
+   "🔴_check_specification_was_corrected": "첫 실행이 FAIL 을 냈는데 원인은 신규 시드가 아니라 게이트였다. `model_info.params` 안에 `flat_params` 라는 **같은 파라미터의 직렬화 사본**이 있어서, random_seed 가 바뀌면 그것도 따라 바뀐다 — 첫 판은 변인 하나를 둘로 세었다. 고친 판은 flat_params 안으로 한 단계 내려가 **거기서도 random_seed 말고는 다른 것이 없어야 한다**고 요구한다(실측: 오직 random_seed, 42->1). 이것은 판정 문턱 변경(S8)이 아니라 기계 검사 명세의 오류 수정(S27)이며, 고친 판이 원판보다 더 많은 증거를 요구한다."
+  },
+  "G4_inference_time": {
+   "PASS": true,
+   "CHOSEN_n": 18,
+   "frame": "cov_shuf_al (245,789 rows, shuffled — worst case)",
+   "threads": "OMP/OPENBLAS/MKL/NUMEXPR = 1, OMP_THREAD_LIMIT = 1, runs strictly sequential and alone",
+   "gate_sec": 480.0,
+   "budget_sec": 600.0,
+   "packager_CA2_1thread_reference_sec": 374.1,
+   "table": [
+    {
+     "n_F_seeds": 3,
+     "harness_sec": 434.875107049942,
+     "ratio_to_n3": 0.9953643571121931,
+     "packager_scale_sec": 372.36580599567145,
+     "pct_of_600s_budget": 62.06096766594524,
+     "passes_480s": true,
+     "reconstructed_start_is_exact": false
+    },
+    {
+     "n_F_seeds": 6,
+     "harness_sec": 431.3063509464264,
+     "ratio_to_n3": 0.9871960058612714,
+     "packager_scale_sec": 369.31002579270165,
+     "pct_of_600s_budget": 61.55167096545027,
+     "passes_480s": true,
+     "reconstructed_start_is_exact": true
+    },
+    {
+     "n_F_seeds": 9,
+     "harness_sec": 447.7225751876831,
+     "ratio_to_n3": 1.0247702983954072,
+     "packager_scale_sec": 383.3665686297219,
+     "pct_of_600s_budget": 63.89442810495365,
+     "passes_480s": true,
+     "reconstructed_start_is_exact": true
+    },
+    {
+     "n_F_seeds": 12,
+     "harness_sec": 438.7584447860718,
+     "ratio_to_n3": 1.0042527388717137,
+     "packager_scale_sec": 375.69094961190814,
+     "pct_of_600s_budget": 62.615158268651356,
+     "passes_480s": true,
+     "reconstructed_start_is_exact": true
+    },
+    {
+     "n_F_seeds": 15,
+     "harness_sec": 431.67835569381714,
+     "ratio_to_n3": 0.9880474693279692,
+     "packager_scale_sec": 369.62855827559326,
+     "pct_of_600s_budget": 61.60475971259887,
+     "passes_480s": true,
+     "reconstructed_start_is_exact": true
+    },
+    {
+     "n_F_seeds": 18,
+     "harness_sec": 441.4745008945465,
+     "ratio_to_n3": 1.0104693868206664,
+     "packager_scale_sec": 378.0165976096113,
+     "pct_of_600s_budget": 63.00276626826856,
+     "passes_480s": true,
+     "reconstructed_start_is_exact": true
+    }
+   ],
+   "slope_sec_per_F_seed": 0.14306934674580893,
+   "slope_95pct_upper": 1.7869309124368602,
+   "residual_sd_sec": 7.95665312080749,
+   "headline": "F 시드당 0.143초 — 잔차 sd 7.96초 아래. n=18 이 채점 눈금 378.02초 = 예산 600초의 63.0%, 문턱 480초 안. 추론 시간은 이 축의 문턱이 아니다."
+  },
+  "G3_valid_F_direction": {
+   "result": "방향 확인 (유도)",
+   "branch_level_valid_F_gain_3_to_18_points": 3.710855719363053,
+   "how": "18시드 fold_2024 적합을 15벌 더 돌리지 않고, exp_037 의 3시드 벡터에서 교환가능성 법칙으로 유도했다. 법칙상 V/n 은 n 에 대해 단조 감소이므로 방향은 필연이고, 크기만 추정 대상이다.",
+   "🔴": "S7 — F 쪽 변경을 valid_F 로 판정하지 않는다(부호 4연속 어긋남). 이것은 채택 판정이 아니다."
+  }
+ },
+ "server_paths": {
+  "root": "~/SungjinPark/exp087/",
+  "new_boosters": "~/SungjinPark/exp087/seeds/seed_{1,3}/model/*.cbm  (5 models each)",
+  "g1_refit": "~/SungjinPark/exp087/g1/seed_42/model/*.cbm",
+  "timing_probe_packages": "~/SungjinPark/exp087/pkg/f{3,6,9,12,15,18}  (F seeds beyond the shipped three are BYTE COPIES of seed_42 — timing only, never a submission)",
+  "trainer_used_read_only": "~/SungjinPark/submissions/S_feat63_seed3/build/train_final_c5_feat63.py",
+  "measurement_package_5_F_seeds": "~/SungjinPark/exp087/pkg/real5  (NOT a submission)",
+  "launch_remaining_13_seeds": "ssh a5000 'cd ~/SungjinPark/exp087 && setsid nohup bash src/run_rest.sh 13 17 77 101 123 555 777 999 2019 2025 8191 31337 65537 </dev/null > logs/rest.log 2>&1 &'"
+ },
+ "seed_curve_derived_not_refitted": {
+  "why_derived": "배포 fit(<=2024)은 2024 로 채점할 수 없다. 측정한 곡선을 내려면 63열 팔의 fold_2024 적합이 15벌 더 필요하고 약 6시간이다. exp_037 의 3시드 벡터로 교환가능성 법칙을 풀면 같은 형태의 곡선이 정확히 나온다.",
+  "crosscheck_vs_exp037_recorded_seed42_brier_abs_diff": 0.0,
+  "segments": {
+   "valid_all": {
+    "n": 253507,
+    "V": 2.0760823209802115e-05,
+    "b_points": 8.310748506066933,
+    "brier_avg3_measured": 0.2479046535312108,
+    "gain_3_to_18_points": 2.3085412516943506,
+    "score_curve": {
+     "1": 755.9462608849655,
+     "3": 761.4867598890185,
+     "6": 762.8718846400373,
+     "9": 763.3335928903695,
+     "12": 763.56444701553,
+     "15": 763.7029594906419,
+     "18": 763.7953011407128
+    }
+   },
+   "valid_F": {
+    "n": 30010,
+    "V": 3.3371905089661567e-05,
+    "b_points": 13.35908058971212,
+    "brier_avg3_measured": 0.24722066376633176,
+    "gain_3_to_18_points": 3.710855719363053,
+    "score_curve": {
+     "1": 1026.3881009458853,
+     "3": 1035.2941546723616,
+     "6": 1037.520668103986,
+     "9": 1038.262839247861,
+     "12": 1038.6339248197985,
+     "15": 1038.8565761629498,
+     "18": 1039.0050103917247
+    }
+   },
+   "valid_R": {
+    "n": 223497,
+    "V": 1.9067473557616256e-05,
+    "b_points": 7.632885063469526,
+    "brier_avg3_measured": 0.24799649607426075,
+    "gain_3_to_18_points": 2.120245850967308,
+    "score_curve": {
+     "1": 719.6327550203163,
+     "3": 724.7213450626289,
+     "6": 725.9934925732181,
+     "9": 726.4175417434071,
+     "12": 726.629566328496,
+     "15": 726.7567810795628,
+     "18": 726.8415909135962
+    }
+   }
+  },
+  "config_question_is_b_like_the_R_side_35_99": {
+   "answer": "아니다",
+   "b_valid_F": 13.35908058971212,
+   "ratio_to_35_99": 0.3711886799030875,
+   "note": "exp_077 이 'AA81 계수 35.99 를 다른 팔로 옮기면 틀린다'를 이미 실측으로 적었다"
+  },
+  "frame_level_local": {
+   "damping": 0.02959484353489253,
+   "V_frame": 9.876363095898176e-07,
+   "b_points_frame": 0.39535989982255,
+   "gain_3_to_18_points_frame": 0.10982219439515278,
+   "gain_3_to_12_points_frame": 0.0988399749556375,
+   "gain_3_to_9_points_frame": 0.08785775551612221,
+   "gain_3_to_6_points_frame": 0.06589331663709166
+  }
+ },
+ "axis_value_LB_anchored": {
+  "method": "후보 AV(R 브랜치 시드 9->18, LB +0.8716523199)를 앵커로, 두 브랜치의 fold_2024 시드 분산 비로 이식",
+  "V_F_over_V_R_on_F_rows": 0.24197171651897695,
+  "frame_reach_ratio": 0.011264299174005508,
+  "sigma2_R_LB": 15.6897417582,
+  "sigma2_F_LB": 0.176733945127252,
+  "gains_LB_points": {
+   "3_to_6": 0.029455657521208663,
+   "3_to_9": 0.03927421002827822,
+   "3_to_12": 0.044183486281813,
+   "3_to_15": 0.04712905203393386,
+   "3_to_18": 0.04909276253534778,
+   "3_to_inf": 0.05891131504241733
+  },
+  "sensitivity_using_exp030_C5B3_R_vectors": {
+   "sigma2_F_LB": 0.5502150209927099,
+   "gain_3_to_18": 0.1528375058313083,
+   "why_excluded_as_primary": "exp_030 의 fold_2024 스태커는 481라운드 고정(자체 기록된 검열 결함), 배포는 1400라운드 — 시드 산포를 약 3배 낮게 본다"
+  },
+  "for_scale": {
+   "gap_to_1150": 34.0086135143,
+   "R_branch_axis_remaining_when_the_ledger_CLOSED_it": 0.8716523199,
+   "ledger_threshold_for_keeping_an_axis_open": 3.0
+  },
+  "byproduct_local_to_LB_transfer_ratio": {
+   "value": 0.4470204115454698,
+   "numerator_AV_implied_sigma2_R_LB": 15.6897417582,
+   "denominator_local_K_times_reach_R": 35.09849070192644,
+   "what_it_measures": "fold_2024(<=2023) 대 배포(<=2024)의 시드 분산 차이 x stage-2 에서 최종 점수까지의 전달, 두 가지의 곱",
+   "not_comparable_to": {
+    "S4_0.068": "팔 Δ → 블렌드 Δ",
+    "exp_077_0.2173": "팔 이득 → 블렌드"
+   },
+   "🔴": "분해 지점이 다르면 전달률은 비교되지 않는다 (S2)"
+  },
+  "variances": {
+   "n_valid": 253507,
+   "n_valid_F": 30010,
+   "F_row_share": 0.11837937413957011,
+   "V_F_branch_all_rows": 2.0760823209802115e-05,
+   "V_F_branch_on_F_rows": 3.3371905089661567e-05,
+   "V_R_branch_all_rows": 9.992330799874963e-05,
+   "V_R_branch_on_F_rows": 0.00013791655309865246,
+   "V_R_branch_on_R_rows": 9.482177515737777e-05,
+   "V_F_over_V_R_on_F_rows": 0.24197171651897695
+  }
+ },
+ "side_observation": "blend.json 의 smooth_weights 가 S2=0.0 · S1=0.0 · T70=0.04756 인데 가중치 0 인 두 팔도 매 추론에서 계산되고 버려진다 (3시드 x 1400그루 x 2 = 8,400그루 = F 시드 약 1.9개분의 추론 예산). 점수 이득이 아니라 예산 얘기다.",
+ "fit_times_measured_today": {
+  "concurrency": 3,
+  "threads_per_fit": 6,
+  "minutes": {
+   "42_G1repro": 30.65,
+   "1": 34.75,
+   "3": 31.43
+  },
+  "oof_minutes": {
+   "42_G1repro": 20.47,
+   "1": 23.81,
+   "3": 21.94
+  },
+  "august_reference_minutes": {
+   "42": 90.8,
+   "7": 90.7,
+   "2024": 90.64
+  },
+  "speedup_vs_august": 2.9624796084828713,
+  "🟢": "같은 라운드 수·같은 행수·같은 마스크인데 오늘이 약 2.96배 빠르다 — 일의 양이 아니라 속도가 다르다. 8월 빌드가 상자를 다른 작업과 나눠 썼던 것으로 보이나 원인은 측정하지 않았다.",
+  "revised_eta_remaining_13_seeds_minutes": 160,
+  "revised_eta_all_15_seeds_hours": 2.6666666666666665
+ },
+ "pred_move_3_vs_5_measured": {
+  "measured_3_vs_5_on_the_cov_frame_through_the_shipped_script": {
+   "n_rows": 245789,
+   "n_F": 29100,
+   "n_R": 216689,
+   "F_rows": {
+    "n": 29100,
+    "pearson_r": 0.9999865916520517,
+    "max_abs_diff": 0.002253126405532546,
+    "mean_abs_diff": 0.00021152468214424464,
+    "rms_diff": 0.00027956505098488375,
+    "n_rows_moved": 29100
+   },
+   "R_rows": {
+    "n": 216689,
+    "pearson_r": 1.0,
+    "max_abs_diff": 0.0,
+    "mean_abs_diff": 0.0,
+    "rms_diff": 0.0,
+    "n_rows_moved": 0
+   },
+   "🔑_control": "R 행 216,689개가 max|Δ| 정확히 0.0, pearson r = 1.0 — F 브랜치는 R 행에 가중치가 0이고, 패키지 편집이 다른 곳을 오염시키지 않았다는 뜻이기도 하다"
+  },
+  "derivation_check": {
+   "stage2_sd_after_mix_3_vs_5": 0.0010547022500791642,
+   "measured_final_rms_on_F_rows": 0.00027956505098488375,
+   "implied_damping_stage2_to_submitted": 0.2650653783699618,
+   "expected_damping_from_the_outer_blend": 0.3,
+   "why": "최종 제출값은 stage-2 혼합 확률이 아니다 — stage-3 오프셋·stage-4 감마를 지나 로짓공간에서 우리 AA 팔 지분 0.3 으로 블렌드된다. 확률이 0.5 부근이라 로짓↔확률 기울기가 서로 상쇄되어 감쇠가 거의 0.3 이 된다.",
+   "verdict": "유도와 실측이 0.265 대 0.30 으로 맞는다 — 도달 산술(§6)이 독립적으로 확인됐다"
+  },
+  "extrapolated_3_to_18": {
+   "scale": 1.4433756729740645,
+   "rms_on_F_rows": 0.0004035173936053353,
+   "max_abs_on_F_rows": 0.003252107841881174
+  }
+ },
+ "verdict": "G1·G2·G4 전부 통과. 레시피는 완전히 복원되며 추론 시간은 n=18 에서도 문제가 아니다. 다만 이 축의 LB 앵커 이식가가 3->18 에서 +0.049점이고 남은 13시드가 약 2.7시간이라, 웨이브 1(F 시드 5개)에서 멈추고 나머지는 지휘자 판단에 넘겼다.",
+ "server_disk": {
+  "exp087_total": "1.8 GB",
+  "breakdown": "대부분 G4 탐침 패키지 7벌(pkg/f3,f6,f9,f12,f15,f18,real5 — 각 216 MB)",
+  "🔴": "삭제하지 않았다(승인 없이 파일을 지우지 말라는 지시). G4 측정이 끝났으므로 pkg/f6·f9·f12·f15·f18 은 이제 필요 없다 — 약 1.1 GB. 지울지는 지휘자 판단.",
+  "free_on_volume": "329 GB"
+ }
+}

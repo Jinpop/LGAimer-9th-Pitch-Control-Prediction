@@ -1,0 +1,2568 @@
+{
+ "exp_id": "exp_076",
+ "date": "2026-08-21",
+ "type": "부호 스크린. 학습 0건 · 추론 0회 · 제출물 없음.",
+ "base": "BN (LB 1115.9165956458) · tr2024 보정 프레임 253,507행 (season 2024 단독)",
+ "verdict": "🔴 등록 축 0/9 통과 — 후보 없음.  단 exp_075 와 성격이 정반대다: **검출력은 충분했다.**  같은 스크린 안에서 7개 방향이 |t|>=2 로 켜졌고(최대 6.68), 교정 대조군 ctrl_prev3_suc 는 exp_074 와 **소수 셋째 자리까지 같은 -3.948** 이 나왔다.  그런데 등록 축 9개 중 |t| 최대가 1.10 이다 — 잔차화까지 갈 것도 없이 원 t 에서 전멸했다.  이건 '못 봤다' 가 아니라 '봤는데 없다' 다.",
+ "power_gate": {
+  "ctrl_prev3_suc_t_here": -3.948,
+  "ctrl_prev3_suc_t_exp074": -3.948,
+  "ctrl_asof_psr_t_here": -5.45,
+  "ctrl_asof_psr_t_exp074": -5.45,
+  "calibration_control_lit": true,
+  "verdict": "검출력 있음 — 교정 대조군이 |t|>=2 로 켜졌다",
+  "directions_lit_in_same_screen": {
+   "ctrl_prev3_suc": -3.948,
+   "ctrl_asof_psr": -5.45,
+   "supp_anc_suc": -4.683,
+   "supp_anc_mid": 2.256,
+   "supp_prev1_suc": -2.169,
+   "supp_prev5_suc": -4.128,
+   "supp_ins_p_success": -6.68
+  },
+  "n_directions_lit": 7,
+  "max_abs_t_among_registered_axes": 1.096,
+  "reading": "config 지시대로 확인했다.  ctrl_prev3_suc 가 t -3.948 로 켜져 있으므로 0/9 를 '신호 없음' 으로 읽어도 된다.  exp_075 에서는 이 조건이 깨져 있어 0/7 을 그렇게 읽지 못했다."
+ },
+ "screen_raw_t_pitcher_block": {
+  "rg_prev1_suc_dev": -0.409,
+  "rg_prev3_suc_dev": -0.239,
+  "rg_prev5_suc_dev": 0.459,
+  "rg_prev3_mid_dev": -0.978,
+  "rg_trend": -0.427,
+  "rg_fb_dev": -0.109,
+  "rg_br_dev": 0.838,
+  "rg_off_dev": -1.096,
+  "rg_mix_ent": -0.856
+ },
+ "screen_full": {
+  "rg_prev1_suc_dev": {
+   "M": -2.080481495203596e-06,
+   "se": 5.086576707542716e-06,
+   "t": -0.409,
+   "sign": "-",
+   "n_nonfinite": 50348,
+   "pass_t2": false
+  },
+  "rg_prev3_suc_dev": {
+   "M": -1.0588920421699532e-06,
+   "se": 4.421859155748981e-06,
+   "t": -0.239,
+   "sign": "-",
+   "n_nonfinite": 50348,
+   "pass_t2": false
+  },
+  "rg_prev5_suc_dev": {
+   "M": 2.0434929771250338e-06,
+   "se": 4.451333986139375e-06,
+   "t": 0.459,
+   "sign": "+",
+   "n_nonfinite": 50348,
+   "pass_t2": false
+  },
+  "rg_prev3_mid_dev": {
+   "M": -4.611976351014767e-06,
+   "se": 4.716803774255123e-06,
+   "t": -0.978,
+   "sign": "-",
+   "n_nonfinite": 50348,
+   "pass_t2": false
+  },
+  "rg_trend": {
+   "M": -2.40073604600276e-06,
+   "se": 5.624173990415039e-06,
+   "t": -0.427,
+   "sign": "-",
+   "n_nonfinite": 3638,
+   "pass_t2": false
+  },
+  "rg_fb_dev": {
+   "M": -4.350758107520139e-07,
+   "se": 4.008303297416707e-06,
+   "t": -0.109,
+   "sign": "-",
+   "n_nonfinite": 50348,
+   "pass_t2": false
+  },
+  "rg_br_dev": {
+   "M": 3.2330765660021044e-06,
+   "se": 3.8591185885019646e-06,
+   "t": 0.838,
+   "sign": "+",
+   "n_nonfinite": 50348,
+   "pass_t2": false
+  },
+  "rg_off_dev": {
+   "M": -5.2628573105165e-06,
+   "se": 4.80077853757051e-06,
+   "t": -1.096,
+   "sign": "-",
+   "n_nonfinite": 50348,
+   "pass_t2": false
+  },
+  "rg_mix_ent": {
+   "M": -4.514960630779451e-06,
+   "se": 5.277295444330936e-06,
+   "t": -0.856,
+   "sign": "-",
+   "n_nonfinite": 81,
+   "pass_t2": false
+  },
+  "ctrl_prev3_suc": {
+   "M": -1.7909016211032043e-05,
+   "se": 4.536475362948316e-06,
+   "t": -3.948,
+   "sign": "-",
+   "n_nonfinite": 3638,
+   "pass_t2": true
+  },
+  "ctrl_asof_psr": {
+   "M": -2.422317281986117e-05,
+   "se": 4.44474620630378e-06,
+   "t": -5.45,
+   "sign": "-",
+   "n_nonfinite": 81,
+   "pass_t2": true
+  },
+  "perm_shuffle_missing_preserved": {
+   "M": -6.646816416336527e-06,
+   "se": 4.439700501188818e-06,
+   "t": -1.497,
+   "sign": "-",
+   "n_nonfinite": 50348,
+   "pass_t2": false
+  }
+ },
+ "screen_batter_block": {
+  "rg_prev1_suc_dev": {
+   "M": -2.080481495203596e-06,
+   "se": 4.731381185856303e-06,
+   "t": -0.44,
+   "sign": "-",
+   "n_nonfinite": 50348,
+   "pass_t2": false
+  },
+  "rg_prev3_suc_dev": {
+   "M": -1.0588920421699532e-06,
+   "se": 4.43445132191354e-06,
+   "t": -0.239,
+   "sign": "-",
+   "n_nonfinite": 50348,
+   "pass_t2": false
+  },
+  "rg_prev5_suc_dev": {
+   "M": 2.0434929771250338e-06,
+   "se": 4.425304998741185e-06,
+   "t": 0.462,
+   "sign": "+",
+   "n_nonfinite": 50348,
+   "pass_t2": false
+  },
+  "rg_prev3_mid_dev": {
+   "M": -4.611976351014767e-06,
+   "se": 4.7391485435505076e-06,
+   "t": -0.973,
+   "sign": "-",
+   "n_nonfinite": 50348,
+   "pass_t2": false
+  },
+  "rg_trend": {
+   "M": -2.40073604600276e-06,
+   "se": 5.303420217708943e-06,
+   "t": -0.453,
+   "sign": "-",
+   "n_nonfinite": 3638,
+   "pass_t2": false
+  },
+  "rg_fb_dev": {
+   "M": -4.350758107520139e-07,
+   "se": 4.819861499071522e-06,
+   "t": -0.09,
+   "sign": "-",
+   "n_nonfinite": 50348,
+   "pass_t2": false
+  },
+  "rg_br_dev": {
+   "M": 3.2330765660021044e-06,
+   "se": 4.7240469639623245e-06,
+   "t": 0.684,
+   "sign": "+",
+   "n_nonfinite": 50348,
+   "pass_t2": false
+  },
+  "rg_off_dev": {
+   "M": -5.2628573105165e-06,
+   "se": 4.612764067314553e-06,
+   "t": -1.141,
+   "sign": "-",
+   "n_nonfinite": 50348,
+   "pass_t2": false
+  },
+  "rg_mix_ent": {
+   "M": -4.514960630779451e-06,
+   "se": 4.909868822346925e-06,
+   "t": -0.92,
+   "sign": "-",
+   "n_nonfinite": 81,
+   "pass_t2": false
+  },
+  "ctrl_prev3_suc": {
+   "M": -1.7909016211032043e-05,
+   "se": 4.922564045654502e-06,
+   "t": -3.638,
+   "sign": "-",
+   "n_nonfinite": 3638,
+   "pass_t2": true
+  },
+  "ctrl_asof_psr": {
+   "M": -2.422317281986117e-05,
+   "se": 4.45668382253319e-06,
+   "t": -5.435,
+   "sign": "-",
+   "n_nonfinite": 81,
+   "pass_t2": true
+  },
+  "perm_shuffle_missing_preserved": {
+   "M": -6.646816416336527e-06,
+   "se": 4.586635267722305e-06,
+   "t": -1.449,
+   "sign": "-",
+   "n_nonfinite": 50348,
+   "pass_t2": false
+  }
+ },
+ "supplementary_screen": {
+  "supp_anc_suc": {
+   "M": -1.9114045198396126e-05,
+   "se": 4.081627326056794e-06,
+   "t": -4.683,
+   "sign": "-",
+   "n_nonfinite": 50348,
+   "pass_t2": true,
+   "t_batter_block": -4.311
+  },
+  "supp_anc_mid": {
+   "M": 8.539644892243926e-06,
+   "se": 3.785210937949225e-06,
+   "t": 2.256,
+   "sign": "+",
+   "n_nonfinite": 50348,
+   "pass_t2": true,
+   "t_batter_block": 1.904
+  },
+  "supp_anc_fb": {
+   "M": -2.3779129237079852e-08,
+   "se": 4.403111624346284e-06,
+   "t": -0.005,
+   "sign": "-",
+   "n_nonfinite": 50348,
+   "pass_t2": false,
+   "t_batter_block": -0.006
+  },
+  "supp_anc_br": {
+   "M": -7.857268787428403e-07,
+   "se": 3.919565104162689e-06,
+   "t": -0.2,
+   "sign": "-",
+   "n_nonfinite": 50348,
+   "pass_t2": false,
+   "t_batter_block": -0.184
+  },
+  "supp_anc_off": {
+   "M": 5.942759424224723e-07,
+   "se": 4.455204670429959e-06,
+   "t": 0.133,
+   "sign": "+",
+   "n_nonfinite": 50348,
+   "pass_t2": false,
+   "t_batter_block": 0.137
+  },
+  "supp_prev1_suc": {
+   "M": -1.179601012359822e-05,
+   "se": 5.4392801129177285e-06,
+   "t": -2.169,
+   "sign": "-",
+   "n_nonfinite": 3638,
+   "pass_t2": true,
+   "t_batter_block": -2.267
+  },
+  "supp_prev5_suc": {
+   "M": -1.772868330530832e-05,
+   "se": 4.294555047982826e-06,
+   "t": -4.128,
+   "sign": "-",
+   "n_nonfinite": 3638,
+   "pass_t2": true,
+   "t_batter_block": -3.578
+  },
+  "supp_prev1_mid": {
+   "M": 1.588347157932504e-07,
+   "se": 4.891726112740365e-06,
+   "t": 0.032,
+   "sign": "+",
+   "n_nonfinite": 3638,
+   "pass_t2": false,
+   "t_batter_block": 0.032
+  },
+  "supp_prev3_mid": {
+   "M": -1.023005569903449e-06,
+   "se": 5.010192182268065e-06,
+   "t": -0.204,
+   "sign": "-",
+   "n_nonfinite": 3638,
+   "pass_t2": false,
+   "t_batter_block": -0.199
+  },
+  "supp_prev5_mid": {
+   "M": -3.7099423916759694e-07,
+   "se": 5.0702446166305485e-06,
+   "t": -0.073,
+   "sign": "-",
+   "n_nonfinite": 3638,
+   "pass_t2": false,
+   "t_batter_block": -0.069
+  },
+  "supp_fastball": {
+   "M": 2.9556345303012204e-07,
+   "se": 5.041015497766615e-06,
+   "t": 0.059,
+   "sign": "+",
+   "n_nonfinite": 81,
+   "pass_t2": false,
+   "t_batter_block": 0.057
+  },
+  "supp_breaking": {
+   "M": 4.6019962740772124e-07,
+   "se": 4.36811258904893e-06,
+   "t": 0.105,
+   "sign": "+",
+   "n_nonfinite": 81,
+   "pass_t2": false,
+   "t_batter_block": 0.096
+  },
+  "supp_offspeed": {
+   "M": -9.987344902082732e-07,
+   "se": 4.717788555035988e-06,
+   "t": -0.212,
+   "sign": "-",
+   "n_nonfinite": 81,
+   "pass_t2": false,
+   "t_batter_block": -0.195
+  },
+  "supp_log_pitchmix_n": {
+   "M": -4.955507105420188e-06,
+   "se": 4.52362166672879e-06,
+   "t": -1.095,
+   "sign": "-",
+   "n_nonfinite": 0,
+   "pass_t2": false,
+   "t_batter_block": -1.067
+  },
+  "supp_ins_p_success": {
+   "M": -2.5641926431180703e-05,
+   "se": 3.838607647814497e-06,
+   "t": -6.68,
+   "sign": "-",
+   "n_nonfinite": 0,
+   "pass_t2": true,
+   "t_batter_block": -5.222
+  },
+  "supp_ins_p_success_dev": {
+   "M": -5.410355711021862e-06,
+   "se": 4.340439236685205e-06,
+   "t": -1.246,
+   "sign": "-",
+   "n_nonfinite": 0,
+   "pass_t2": false,
+   "t_batter_block": -1.105
+  }
+ },
+ "residualization": {
+  "rg_prev1_suc_dev": {
+   "t_raw": -0.409,
+   "sign_raw": "-",
+   "t_raw_batter_block": -0.44,
+   "R1_vs_ctrl_prev3_suc": {
+    "t": 1.069,
+    "M": 5.265680847560823e-06,
+    "sign": "+"
+   },
+   "R2_vs_ctrl_asof_psr": {
+    "t": -0.827,
+    "M": -4.204941165153065e-06,
+    "sign": "-"
+   },
+   "R3_vs_ins_6cols": {
+    "t": -0.511,
+    "M": -2.830864581754798e-06,
+    "sign": "-",
+    "controls": [
+     "ins_p_success",
+     "ins_p_success_dev",
+     "ins_p_middle",
+     "ins_p_ball",
+     "ins_p_strike",
+     "ins_p_reverse"
+    ]
+   },
+   "R4_vs_all_plus_passed_others": {
+    "t": -0.462,
+    "M": -2.4268159675095392e-06,
+    "sign": "-",
+    "n_other_axes": 0
+   },
+   "R5_supp_vs_prev6": {
+    "t": 3.72,
+    "M": 1.6075901792424658e-05
+   },
+   "R6_supp_vs_own_frozen_anchor": {
+    "t": -1.531,
+    "M": -7.943290735162831e-06,
+    "anchors": [
+     "anc_suc"
+    ]
+   },
+   "R7_supp_vs_full_ins_prev3_psr": {
+    "t": -0.447,
+    "M": -2.343929306256336e-06
+   },
+   "linear_span_r2": {
+    "on_registered_R4_set": {
+     "r2": 0.4041456514,
+     "max_abs_resid": 0.6861002562391388,
+     "n": 203159
+    },
+    "on_prev6": {
+     "r2": 0.8519251762,
+     "max_abs_resid": 0.3082535595249569,
+     "n": 203159
+    },
+    "on_full_ins_plus_prev3_psr": {
+     "r2": 0.4047165793,
+     "max_abs_resid": 0.6861845692036154,
+     "n": 203159
+    }
+   },
+   "testable_by_linear_screen": true,
+   "raw_passed_t2": false,
+   "survives_registered_residualizations": false,
+   "REGISTERED_VERDICT": false,
+   "supp_also_survives_R5_R7": false
+  },
+  "rg_prev3_suc_dev": {
+   "t_raw": -0.239,
+   "sign_raw": "-",
+   "t_raw_batter_block": -0.239,
+   "R1_vs_ctrl_prev3_suc": {
+    "t": 3.857,
+    "M": 1.614181296848e-05,
+    "sign": "+"
+   },
+   "R2_vs_ctrl_asof_psr": {
+    "t": -0.875,
+    "M": -3.799573442077465e-06,
+    "sign": "-"
+   },
+   "R3_vs_ins_6cols": {
+    "t": -0.309,
+    "M": -1.543737159403976e-06,
+    "sign": "-",
+    "controls": [
+     "ins_p_success",
+     "ins_p_success_dev",
+     "ins_p_middle",
+     "ins_p_ball",
+     "ins_p_strike",
+     "ins_p_reverse"
+    ]
+   },
+   "R4_vs_all_plus_passed_others": {
+    "t": -0.399,
+    "M": -1.6917896091766552e-06,
+    "sign": "-",
+    "n_other_axes": 0
+   },
+   "R5_supp_vs_prev6": {
+    "t": 3.72,
+    "M": 1.607590179242468e-05
+   },
+   "R6_supp_vs_own_frozen_anchor": {
+    "t": -2.268,
+    "M": -9.796226671411413e-06,
+    "anchors": [
+     "anc_suc"
+    ]
+   },
+   "R7_supp_vs_full_ins_prev3_psr": {
+    "t": -0.592,
+    "M": -2.5040871564808804e-06
+   },
+   "linear_span_r2": {
+    "on_registered_R4_set": {
+     "r2": 1.0,
+     "max_abs_resid": 6.375369439107215e-07,
+     "n": 203159
+    },
+    "on_prev6": {
+     "r2": 0.6365318981,
+     "max_abs_resid": 0.30825355952495687,
+     "n": 203159
+    },
+    "on_full_ins_plus_prev3_psr": {
+     "r2": 1.0,
+     "max_abs_resid": 6.911030787648542e-07,
+     "n": 203159
+    }
+   },
+   "testable_by_linear_screen": false,
+   "raw_passed_t2": false,
+   "survives_registered_residualizations": false,
+   "REGISTERED_VERDICT": false,
+   "supp_also_survives_R5_R7": false
+  },
+  "rg_prev5_suc_dev": {
+   "t_raw": 0.459,
+   "sign_raw": "+",
+   "t_raw_batter_block": 0.462,
+   "R1_vs_ctrl_prev3_suc": {
+    "t": 2.765,
+    "M": 1.3125449096353556e-05,
+    "sign": "+"
+   },
+   "R2_vs_ctrl_asof_psr": {
+    "t": -0.209,
+    "M": -9.066869913508388e-07,
+    "sign": "-"
+   },
+   "R3_vs_ins_6cols": {
+    "t": 0.642,
+    "M": 3.0834810410523487e-06,
+    "sign": "+",
+    "controls": [
+     "ins_p_success",
+     "ins_p_success_dev",
+     "ins_p_middle",
+     "ins_p_ball",
+     "ins_p_strike",
+     "ins_p_reverse"
+    ]
+   },
+   "R4_vs_all_plus_passed_others": {
+    "t": 1.171,
+    "M": 5.811330044090217e-06,
+    "sign": "+",
+    "n_other_axes": 0
+   },
+   "R5_supp_vs_prev6": {
+    "t": 3.72,
+    "M": 1.6075901792424675e-05
+   },
+   "R6_supp_vs_own_frozen_anchor": {
+    "t": -1.81,
+    "M": -7.572276700417909e-06,
+    "anchors": [
+     "anc_suc"
+    ]
+   },
+   "R7_supp_vs_full_ins_prev3_psr": {
+    "t": 1.103,
+    "M": 5.488426276272797e-06
+   },
+   "linear_span_r2": {
+    "on_registered_R4_set": {
+     "r2": 0.7981000005,
+     "max_abs_resid": 0.20635312219222107,
+     "n": 203159
+    },
+    "on_prev6": {
+     "r2": 0.5024182248,
+     "max_abs_resid": 0.30825355952495664,
+     "n": 203159
+    },
+    "on_full_ins_plus_prev3_psr": {
+     "r2": 0.7984621067,
+     "max_abs_resid": 0.20613860505985743,
+     "n": 203159
+    }
+   },
+   "testable_by_linear_screen": true,
+   "raw_passed_t2": false,
+   "survives_registered_residualizations": false,
+   "REGISTERED_VERDICT": false,
+   "supp_also_survives_R5_R7": false
+  },
+  "rg_prev3_mid_dev": {
+   "t_raw": -0.978,
+   "sign_raw": "-",
+   "t_raw_batter_block": -0.973,
+   "R1_vs_ctrl_prev3_suc": {
+    "t": -2.415,
+    "M": -1.1352991343612764e-05,
+    "sign": "-"
+   },
+   "R2_vs_ctrl_asof_psr": {
+    "t": -0.889,
+    "M": -4.19034479996881e-06,
+    "sign": "-"
+   },
+   "R3_vs_ins_6cols": {
+    "t": -1.175,
+    "M": -6.31461399155922e-06,
+    "sign": "-",
+    "controls": [
+     "ins_p_success",
+     "ins_p_success_dev",
+     "ins_p_middle",
+     "ins_p_ball",
+     "ins_p_strike",
+     "ins_p_reverse"
+    ]
+   },
+   "R4_vs_all_plus_passed_others": {
+    "t": -1.511,
+    "M": -7.865806098339485e-06,
+    "sign": "-",
+    "n_other_axes": 0
+   },
+   "R5_supp_vs_prev6": {
+    "t": -2.721,
+    "M": -1.1067917195350891e-05
+   },
+   "R6_supp_vs_own_frozen_anchor": {
+    "t": -0.755,
+    "M": -3.543474355139053e-06,
+    "anchors": [
+     "anc_mid"
+    ]
+   },
+   "R7_supp_vs_full_ins_prev3_psr": {
+    "t": -1.461,
+    "M": -7.67764374666718e-06
+   },
+   "linear_span_r2": {
+    "on_registered_R4_set": {
+     "r2": 0.415751881,
+     "max_abs_resid": 0.30613493266648967,
+     "n": 203159
+    },
+    "on_prev6": {
+     "r2": 0.8534849891,
+     "max_abs_resid": 0.1294779162079619,
+     "n": 203159
+    },
+    "on_full_ins_plus_prev3_psr": {
+     "r2": 0.5149748405,
+     "max_abs_resid": 0.29593009573558554,
+     "n": 203159
+    }
+   },
+   "testable_by_linear_screen": true,
+   "raw_passed_t2": false,
+   "survives_registered_residualizations": false,
+   "REGISTERED_VERDICT": false,
+   "supp_also_survives_R5_R7": false
+  },
+  "rg_trend": {
+   "t_raw": -0.427,
+   "sign_raw": "-",
+   "t_raw_batter_block": -0.453,
+   "R1_vs_ctrl_prev3_suc": {
+    "t": 0.117,
+    "M": 6.457503545406696e-07,
+    "sign": "+"
+   },
+   "R2_vs_ctrl_asof_psr": {
+    "t": -0.552,
+    "M": -3.1046943102132325e-06,
+    "sign": "-"
+   },
+   "R3_vs_ins_6cols": {
+    "t": -0.511,
+    "M": -2.8916103204274236e-06,
+    "sign": "-",
+    "controls": [
+     "ins_p_success",
+     "ins_p_success_dev",
+     "ins_p_middle",
+     "ins_p_ball",
+     "ins_p_strike",
+     "ins_p_reverse"
+    ]
+   },
+   "R4_vs_all_plus_passed_others": {
+    "t": -0.48,
+    "M": -2.6215899280158276e-06,
+    "sign": "-",
+    "n_other_axes": 0
+   },
+   "R5_supp_vs_prev6": {
+    "t": 3.589,
+    "M": 1.7846139503961678e-05
+   },
+   "R6_supp_vs_own_frozen_anchor": {
+    "t": null,
+    "anchors": [],
+    "note": "앵커를 안 쓰는 축"
+   },
+   "R7_supp_vs_full_ins_prev3_psr": {
+    "t": -0.464,
+    "M": -2.5297746884732924e-06
+   },
+   "linear_span_r2": {
+    "on_registered_R4_set": {
+     "r2": 0.0518383804,
+     "max_abs_resid": 0.7449919074731741,
+     "n": 249869
+    },
+    "on_prev6": {
+     "r2": 1.0,
+     "max_abs_resid": 8.271161533457416e-15,
+     "n": 249869
+    },
+    "on_full_ins_plus_prev3_psr": {
+     "r2": 0.0533587952,
+     "max_abs_resid": 0.7523669042913894,
+     "n": 249869
+    }
+   },
+   "testable_by_linear_screen": true,
+   "raw_passed_t2": false,
+   "survives_registered_residualizations": false,
+   "REGISTERED_VERDICT": false,
+   "supp_also_survives_R5_R7": false
+  },
+  "rg_fb_dev": {
+   "t_raw": -0.109,
+   "sign_raw": "-",
+   "t_raw_batter_block": -0.09,
+   "R1_vs_ctrl_prev3_suc": {
+    "t": 0.337,
+    "M": 1.3655256993650748e-06,
+    "sign": "+"
+   },
+   "R2_vs_ctrl_asof_psr": {
+    "t": 0.911,
+    "M": 3.6175311633933042e-06,
+    "sign": "+"
+   },
+   "R3_vs_ins_6cols": {
+    "t": -0.164,
+    "M": -7.490577788734914e-07,
+    "sign": "-",
+    "controls": [
+     "ins_p_success",
+     "ins_p_success_dev",
+     "ins_p_middle",
+     "ins_p_ball",
+     "ins_p_strike",
+     "ins_p_reverse"
+    ]
+   },
+   "R4_vs_all_plus_passed_others": {
+    "t": 0.384,
+    "M": 1.66772419133203e-06,
+    "sign": "+",
+    "n_other_axes": 0
+   },
+   "R5_supp_vs_prev6": {
+    "t": 0.602,
+    "M": 2.4570447387607802e-06
+   },
+   "R6_supp_vs_own_frozen_anchor": {
+    "t": -0.094,
+    "M": -4.2606679115224047e-07,
+    "anchors": [
+     "anc_fb"
+    ]
+   },
+   "R7_supp_vs_full_ins_prev3_psr": {
+    "t": 0.545,
+    "M": 2.3560430895390707e-06
+   },
+   "linear_span_r2": {
+    "on_registered_R4_set": {
+     "r2": 0.4336736664,
+     "max_abs_resid": 0.3717393883835779,
+     "n": 203159
+    },
+    "on_prev6": {
+     "r2": 0.0399279665,
+     "max_abs_resid": 0.3603248647197922,
+     "n": 203159
+    },
+    "on_full_ins_plus_prev3_psr": {
+     "r2": 0.4653214647,
+     "max_abs_resid": 0.35610632632138506,
+     "n": 203159
+    }
+   },
+   "testable_by_linear_screen": true,
+   "raw_passed_t2": false,
+   "survives_registered_residualizations": false,
+   "REGISTERED_VERDICT": false,
+   "supp_also_survives_R5_R7": false
+  },
+  "rg_br_dev": {
+   "t_raw": 0.838,
+   "sign_raw": "+",
+   "t_raw_batter_block": 0.684,
+   "R1_vs_ctrl_prev3_suc": {
+    "t": 0.351,
+    "M": 1.3773402079350987e-06,
+    "sign": "+"
+   },
+   "R2_vs_ctrl_asof_psr": {
+    "t": -0.247,
+    "M": -9.455265131010164e-07,
+    "sign": "-"
+   },
+   "R3_vs_ins_6cols": {
+    "t": 0.467,
+    "M": 2.063492122739128e-06,
+    "sign": "+",
+    "controls": [
+     "ins_p_success",
+     "ins_p_success_dev",
+     "ins_p_middle",
+     "ins_p_ball",
+     "ins_p_strike",
+     "ins_p_reverse"
+    ]
+   },
+   "R4_vs_all_plus_passed_others": {
+    "t": 0.153,
+    "M": 6.598237654128083e-07,
+    "sign": "+",
+    "n_other_axes": 0
+   },
+   "R5_supp_vs_prev6": {
+    "t": 0.035,
+    "M": 1.392027864154361e-07
+   },
+   "R6_supp_vs_own_frozen_anchor": {
+    "t": 0.819,
+    "M": 3.1637847114566865e-06,
+    "anchors": [
+     "anc_br"
+    ]
+   },
+   "R7_supp_vs_full_ins_prev3_psr": {
+    "t": -0.262,
+    "M": -1.1250296451233378e-06
+   },
+   "linear_span_r2": {
+    "on_registered_R4_set": {
+     "r2": 0.2810958271,
+     "max_abs_resid": 0.27644861690572786,
+     "n": 203159
+    },
+    "on_prev6": {
+     "r2": 0.0497134032,
+     "max_abs_resid": 0.25880223687019194,
+     "n": 203159
+    },
+    "on_full_ins_plus_prev3_psr": {
+     "r2": 0.3177216827,
+     "max_abs_resid": 0.2460250003191967,
+     "n": 203159
+    }
+   },
+   "testable_by_linear_screen": true,
+   "raw_passed_t2": false,
+   "survives_registered_residualizations": false,
+   "REGISTERED_VERDICT": false,
+   "supp_also_survives_R5_R7": false
+  },
+  "rg_off_dev": {
+   "t_raw": -1.096,
+   "sign_raw": "-",
+   "t_raw_batter_block": -1.141,
+   "R1_vs_ctrl_prev3_suc": {
+    "t": -1.058,
+    "M": -5.084649425006649e-06,
+    "sign": "-"
+   },
+   "R2_vs_ctrl_asof_psr": {
+    "t": -1.013,
+    "M": -4.8650916667568666e-06,
+    "sign": "-"
+   },
+   "R3_vs_ins_6cols": {
+    "t": -0.522,
+    "M": -2.50755933913385e-06,
+    "sign": "-",
+    "controls": [
+     "ins_p_success",
+     "ins_p_success_dev",
+     "ins_p_middle",
+     "ins_p_ball",
+     "ins_p_strike",
+     "ins_p_reverse"
+    ]
+   },
+   "R4_vs_all_plus_passed_others": {
+    "t": -0.736,
+    "M": -3.506851589912978e-06,
+    "sign": "-",
+    "n_other_axes": 0
+   },
+   "R5_supp_vs_prev6": {
+    "t": -0.986,
+    "M": -4.7441062913929454e-06
+   },
+   "R6_supp_vs_own_frozen_anchor": {
+    "t": -1.11,
+    "M": -5.234869036867486e-06,
+    "anchors": [
+     "anc_off"
+    ]
+   },
+   "R7_supp_vs_full_ins_prev3_psr": {
+    "t": -0.344,
+    "M": -1.6621899892163315e-06
+   },
+   "linear_span_r2": {
+    "on_registered_R4_set": {
+     "r2": 0.0860194422,
+     "max_abs_resid": 0.16346645393651904,
+     "n": 203159
+    },
+    "on_prev6": {
+     "r2": 0.0037711718,
+     "max_abs_resid": 0.1801684709705667,
+     "n": 203159
+    },
+    "on_full_ins_plus_prev3_psr": {
+     "r2": 0.1386001127,
+     "max_abs_resid": 0.168917972584336,
+     "n": 203159
+    }
+   },
+   "testable_by_linear_screen": true,
+   "raw_passed_t2": false,
+   "survives_registered_residualizations": false,
+   "REGISTERED_VERDICT": false,
+   "supp_also_survives_R5_R7": false
+  },
+  "rg_mix_ent": {
+   "t_raw": -0.856,
+   "sign_raw": "-",
+   "t_raw_batter_block": -0.92,
+   "R1_vs_ctrl_prev3_suc": {
+    "t": -0.44,
+    "M": -2.3176548372354098e-06,
+    "sign": "-"
+   },
+   "R2_vs_ctrl_asof_psr": {
+    "t": 0.241,
+    "M": 1.3257006905371267e-06,
+    "sign": "+"
+   },
+   "R3_vs_ins_6cols": {
+    "t": -0.253,
+    "M": -1.356580278567356e-06,
+    "sign": "-",
+    "controls": [
+     "ins_p_success",
+     "ins_p_success_dev",
+     "ins_p_middle",
+     "ins_p_ball",
+     "ins_p_strike",
+     "ins_p_reverse"
+    ]
+   },
+   "R4_vs_all_plus_passed_others": {
+    "t": -0.002,
+    "M": -1.295368416282241e-08,
+    "sign": "-",
+    "n_other_axes": 0
+   },
+   "R5_supp_vs_prev6": {
+    "t": -0.074,
+    "M": -3.993496280618095e-07
+   },
+   "R6_supp_vs_own_frozen_anchor": {
+    "t": null,
+    "anchors": [],
+    "note": "앵커를 안 쓰는 축"
+   },
+   "R7_supp_vs_full_ins_prev3_psr": {
+    "t": -0.049,
+    "M": -2.578444740157802e-07
+   },
+   "linear_span_r2": {
+    "on_registered_R4_set": {
+     "r2": 0.1820314691,
+     "max_abs_resid": 0.7636472001321506,
+     "n": 249869
+    },
+    "on_prev6": {
+     "r2": 0.0661997359,
+     "max_abs_resid": 0.9154515327684762,
+     "n": 249869
+    },
+    "on_full_ins_plus_prev3_psr": {
+     "r2": 0.219513845,
+     "max_abs_resid": 0.747340799479037,
+     "n": 249869
+    }
+   },
+   "testable_by_linear_screen": true,
+   "raw_passed_t2": false,
+   "survives_registered_residualizations": false,
+   "REGISTERED_VERDICT": false,
+   "supp_also_survives_R5_R7": false
+  }
+ },
+ "survivors": [],
+ "passed_raw": [],
+ "linear_span": {
+  "rg_prev1_suc_dev": {
+   "on_registered_R4_set": {
+    "r2": 0.4041456514,
+    "max_abs_resid": 0.6861002562391388,
+    "n": 203159
+   },
+   "on_prev6": {
+    "r2": 0.8519251762,
+    "max_abs_resid": 0.3082535595249569,
+    "n": 203159
+   },
+   "on_full_ins_plus_prev3_psr": {
+    "r2": 0.4047165793,
+    "max_abs_resid": 0.6861845692036154,
+    "n": 203159
+   }
+  },
+  "rg_prev3_suc_dev": {
+   "on_registered_R4_set": {
+    "r2": 1.0,
+    "max_abs_resid": 6.375369439107215e-07,
+    "n": 203159
+   },
+   "on_prev6": {
+    "r2": 0.6365318981,
+    "max_abs_resid": 0.30825355952495687,
+    "n": 203159
+   },
+   "on_full_ins_plus_prev3_psr": {
+    "r2": 1.0,
+    "max_abs_resid": 6.911030787648542e-07,
+    "n": 203159
+   }
+  },
+  "rg_prev5_suc_dev": {
+   "on_registered_R4_set": {
+    "r2": 0.7981000005,
+    "max_abs_resid": 0.20635312219222107,
+    "n": 203159
+   },
+   "on_prev6": {
+    "r2": 0.5024182248,
+    "max_abs_resid": 0.30825355952495664,
+    "n": 203159
+   },
+   "on_full_ins_plus_prev3_psr": {
+    "r2": 0.7984621067,
+    "max_abs_resid": 0.20613860505985743,
+    "n": 203159
+   }
+  },
+  "rg_prev3_mid_dev": {
+   "on_registered_R4_set": {
+    "r2": 0.415751881,
+    "max_abs_resid": 0.30613493266648967,
+    "n": 203159
+   },
+   "on_prev6": {
+    "r2": 0.8534849891,
+    "max_abs_resid": 0.1294779162079619,
+    "n": 203159
+   },
+   "on_full_ins_plus_prev3_psr": {
+    "r2": 0.5149748405,
+    "max_abs_resid": 0.29593009573558554,
+    "n": 203159
+   }
+  },
+  "rg_trend": {
+   "on_registered_R4_set": {
+    "r2": 0.0518383804,
+    "max_abs_resid": 0.7449919074731741,
+    "n": 249869
+   },
+   "on_prev6": {
+    "r2": 1.0,
+    "max_abs_resid": 8.271161533457416e-15,
+    "n": 249869
+   },
+   "on_full_ins_plus_prev3_psr": {
+    "r2": 0.0533587952,
+    "max_abs_resid": 0.7523669042913894,
+    "n": 249869
+   }
+  },
+  "rg_fb_dev": {
+   "on_registered_R4_set": {
+    "r2": 0.4336736664,
+    "max_abs_resid": 0.3717393883835779,
+    "n": 203159
+   },
+   "on_prev6": {
+    "r2": 0.0399279665,
+    "max_abs_resid": 0.3603248647197922,
+    "n": 203159
+   },
+   "on_full_ins_plus_prev3_psr": {
+    "r2": 0.4653214647,
+    "max_abs_resid": 0.35610632632138506,
+    "n": 203159
+   }
+  },
+  "rg_br_dev": {
+   "on_registered_R4_set": {
+    "r2": 0.2810958271,
+    "max_abs_resid": 0.27644861690572786,
+    "n": 203159
+   },
+   "on_prev6": {
+    "r2": 0.0497134032,
+    "max_abs_resid": 0.25880223687019194,
+    "n": 203159
+   },
+   "on_full_ins_plus_prev3_psr": {
+    "r2": 0.3177216827,
+    "max_abs_resid": 0.2460250003191967,
+    "n": 203159
+   }
+  },
+  "rg_off_dev": {
+   "on_registered_R4_set": {
+    "r2": 0.0860194422,
+    "max_abs_resid": 0.16346645393651904,
+    "n": 203159
+   },
+   "on_prev6": {
+    "r2": 0.0037711718,
+    "max_abs_resid": 0.1801684709705667,
+    "n": 203159
+   },
+   "on_full_ins_plus_prev3_psr": {
+    "r2": 0.1386001127,
+    "max_abs_resid": 0.168917972584336,
+    "n": 203159
+   }
+  },
+  "rg_mix_ent": {
+   "on_registered_R4_set": {
+    "r2": 0.1820314691,
+    "max_abs_resid": 0.7636472001321506,
+    "n": 249869
+   },
+   "on_prev6": {
+    "r2": 0.0661997359,
+    "max_abs_resid": 0.9154515327684762,
+    "n": 249869
+   },
+   "on_full_ins_plus_prev3_psr": {
+    "r2": 0.219513845,
+    "max_abs_resid": 0.747340799479037,
+    "n": 249869
+   }
+  }
+ },
+ "empirical_null_missing_preserved": {
+  "rg_prev3_suc_dev|perm_anchor_level": {
+   "n_perm": 200,
+   "kind": "perm_anchor_level",
+   "axis": "rg_prev3_suc_dev",
+   "t_mean": -2.33742,
+   "t_sd": 0.7624659436170768,
+   "abs_t_q50": 2.2255000000000003,
+   "abs_t_q95": 3.6091499999999996,
+   "frac_abs_t_ge_2": 0.645,
+   "t_min": -4.306,
+   "t_max": -0.175,
+   "observed_t": -0.239
+  },
+  "rg_fb_dev|perm_anchor_level": {
+   "n_perm": 200,
+   "kind": "perm_anchor_level",
+   "axis": "rg_fb_dev",
+   "t_mean": -0.01121,
+   "t_sd": 0.7651354502216778,
+   "abs_t_q50": 0.5005,
+   "abs_t_q95": 1.5116999999999994,
+   "frac_abs_t_ge_2": 0.015,
+   "t_min": -2.125,
+   "t_max": 2.136,
+   "observed_t": -0.109
+  },
+  "rg_trend|perm_pitcher_mean": {
+   "n_perm": 200,
+   "kind": "perm_pitcher_mean",
+   "axis": "rg_trend",
+   "t_mean": -1.14545,
+   "t_sd": 0.35758564704819235,
+   "abs_t_q50": 1.1275,
+   "abs_t_q95": 1.762,
+   "frac_abs_t_ge_2": 0.015,
+   "t_min": -2.035,
+   "t_max": -0.306,
+   "observed_t": -0.427
+  },
+  "rg_mix_ent|perm_pitcher_mean": {
+   "n_perm": 200,
+   "kind": "perm_pitcher_mean",
+   "axis": "rg_mix_ent",
+   "t_mean": -0.11635000000000001,
+   "t_sd": 0.8864105628486431,
+   "abs_t_q50": 0.6425000000000001,
+   "abs_t_q95": 1.7716499999999997,
+   "frac_abs_t_ge_2": 0.025,
+   "t_min": -2.415,
+   "t_max": 2.143,
+   "observed_t": -0.856
+  },
+  "rg_trend|perm_row_level": {
+   "n_perm": 200,
+   "kind": "perm_row_level",
+   "axis": "rg_trend",
+   "t_mean": 0.05373,
+   "t_sd": 1.002725585641706,
+   "abs_t_q50": 0.6565000000000001,
+   "abs_t_q95": 2.05285,
+   "frac_abs_t_ge_2": 0.06,
+   "t_min": -3.109,
+   "t_max": 2.682,
+   "observed_t": -0.427
+  }
+ },
+ "anchor_freshness_robustness": {
+  "rg_prev1_suc_dev": {
+   "t_original": -0.409,
+   "t_robust": -0.629,
+   "n_nonfinite_original": 50348,
+   "n_nonfinite_robust": 61724,
+   "verdict_same": true
+  },
+  "rg_prev3_suc_dev": {
+   "t_original": -0.239,
+   "t_robust": -0.432,
+   "n_nonfinite_original": 50348,
+   "n_nonfinite_robust": 61724,
+   "verdict_same": true
+  },
+  "rg_prev5_suc_dev": {
+   "t_original": 0.459,
+   "t_robust": 0.1,
+   "n_nonfinite_original": 50348,
+   "n_nonfinite_robust": 61724,
+   "verdict_same": true
+  },
+  "rg_prev3_mid_dev": {
+   "t_original": -0.978,
+   "t_robust": -0.776,
+   "n_nonfinite_original": 50348,
+   "n_nonfinite_robust": 61724,
+   "verdict_same": true
+  },
+  "rg_trend": {
+   "t_original": -0.427,
+   "t_robust": -0.427,
+   "n_nonfinite_original": 3638,
+   "n_nonfinite_robust": 3638,
+   "verdict_same": true
+  },
+  "rg_fb_dev": {
+   "t_original": -0.109,
+   "t_robust": -0.134,
+   "n_nonfinite_original": 50348,
+   "n_nonfinite_robust": 61724,
+   "verdict_same": true
+  },
+  "rg_br_dev": {
+   "t_original": 0.838,
+   "t_robust": 1.091,
+   "n_nonfinite_original": 50348,
+   "n_nonfinite_robust": 61724,
+   "verdict_same": true
+  },
+  "rg_off_dev": {
+   "t_original": -1.096,
+   "t_robust": -1.286,
+   "n_nonfinite_original": 50348,
+   "n_nonfinite_robust": 61724,
+   "verdict_same": true
+  },
+  "rg_mix_ent": {
+   "t_original": -0.856,
+   "t_robust": -0.856,
+   "n_nonfinite_original": 81,
+   "n_nonfinite_robust": 81,
+   "verdict_same": true
+  }
+ },
+ "diagnostics": {
+  "power_M_needed_for_t2": {
+   "rg_prev1_suc_dev": 1.0173153e-05,
+   "rg_prev3_suc_dev": 8.843718e-06,
+   "rg_prev5_suc_dev": 8.902668e-06,
+   "rg_prev3_mid_dev": 9.433608e-06,
+   "rg_trend": 1.1248348e-05,
+   "rg_fb_dev": 8.016607e-06,
+   "rg_br_dev": 7.718237e-06,
+   "rg_off_dev": 9.601557e-06,
+   "rg_mix_ent": 1.0554591e-05
+  },
+  "covered_only": {
+   "rg_prev1_suc_dev": {
+    "n_rows": 203159,
+    "n_blocks": 310,
+    "M": -2.585814319484306e-06,
+    "t": -0.417
+   },
+   "rg_prev3_suc_dev": {
+    "n_rows": 203159,
+    "n_blocks": 310,
+    "M": -1.3127626385654078e-06,
+    "t": -0.236
+   },
+   "rg_prev5_suc_dev": {
+    "n_rows": 203159,
+    "n_blocks": 310,
+    "M": 2.5573627227037247e-06,
+    "t": 0.477
+   },
+   "rg_prev3_mid_dev": {
+    "n_rows": 203159,
+    "n_blocks": 310,
+    "M": -5.75244989586762e-06,
+    "t": -0.992
+   },
+   "rg_trend": {
+    "n_rows": 249869,
+    "n_blocks": 381,
+    "M": -2.4361399336191156e-06,
+    "t": -0.435
+   },
+   "rg_fb_dev": {
+    "n_rows": 203159,
+    "n_blocks": 310,
+    "M": -5.253757299873229e-07,
+    "t": -0.108
+   },
+   "rg_br_dev": {
+    "n_rows": 203159,
+    "n_blocks": 310,
+    "M": 4.026736812077691e-06,
+    "t": 0.832
+   },
+   "rg_off_dev": {
+    "n_rows": 203159,
+    "n_blocks": 310,
+    "M": -6.568617844174441e-06,
+    "t": -1.09
+   },
+   "rg_mix_ent": {
+    "n_rows": 253426,
+    "n_blocks": 391,
+    "M": -4.5167416653469076e-06,
+    "t": -0.856
+   }
+  },
+  "model_free": {
+   "rg_prev1_suc_dev": {
+    "n_finite_rows": 203159,
+    "corr_row_level_u_vs_y": 0.021
+   },
+   "rg_prev3_suc_dev": {
+    "n_finite_rows": 203159,
+    "corr_row_level_u_vs_y": 0.026
+   },
+   "rg_prev5_suc_dev": {
+    "n_finite_rows": 203159,
+    "corr_row_level_u_vs_y": 0.0293
+   },
+   "rg_prev3_mid_dev": {
+    "n_finite_rows": 203159,
+    "corr_row_level_u_vs_y": -0.0158
+   },
+   "rg_trend": {
+    "n_finite_rows": 249869,
+    "corr_row_level_u_vs_y": 0.0057
+   },
+   "rg_fb_dev": {
+    "n_finite_rows": 203159,
+    "corr_row_level_u_vs_y": 0.0221
+   },
+   "rg_br_dev": {
+    "n_finite_rows": 203159,
+    "corr_row_level_u_vs_y": -0.0224
+   },
+   "rg_off_dev": {
+    "n_finite_rows": 203159,
+    "corr_row_level_u_vs_y": 0.0012
+   },
+   "rg_mix_ent": {
+    "n_finite_rows": 253426,
+    "corr_row_level_u_vs_y": 0.029
+   }
+  },
+  "parent_coupling": {
+   "rg_prev1_suc_dev": {
+    "corr_vs_logit_pBN": 0.2062,
+    "corr_vs_logit_v19_mate": 0.2175,
+    "corr_vs_logit_aa": 0.2348
+   },
+   "rg_prev3_suc_dev": {
+    "corr_vs_logit_pBN": 0.2479,
+    "corr_vs_logit_v19_mate": 0.2685,
+    "corr_vs_logit_aa": 0.283
+   },
+   "rg_prev5_suc_dev": {
+    "corr_vs_logit_pBN": 0.2643,
+    "corr_vs_logit_v19_mate": 0.2894,
+    "corr_vs_logit_aa": 0.2991
+   },
+   "rg_prev3_mid_dev": {
+    "corr_vs_logit_pBN": -0.1257,
+    "corr_vs_logit_v19_mate": -0.127,
+    "corr_vs_logit_aa": -0.1551
+   },
+   "rg_trend": {
+    "corr_vs_logit_pBN": 0.0607,
+    "corr_vs_logit_v19_mate": 0.0577,
+    "corr_vs_logit_aa": 0.0718
+   },
+   "rg_fb_dev": {
+    "corr_vs_logit_pBN": 0.2081,
+    "corr_vs_logit_v19_mate": 0.2167,
+    "corr_vs_logit_aa": 0.2037
+   },
+   "rg_br_dev": {
+    "corr_vs_logit_pBN": -0.2262,
+    "corr_vs_logit_v19_mate": -0.2334,
+    "corr_vs_logit_aa": -0.2193
+   },
+   "rg_off_dev": {
+    "corr_vs_logit_pBN": 0.0369,
+    "corr_vs_logit_v19_mate": 0.0346,
+    "corr_vs_logit_aa": 0.0324
+   },
+   "rg_mix_ent": {
+    "corr_vs_logit_pBN": 0.2795,
+    "corr_vs_logit_v19_mate": 0.2745,
+    "corr_vs_logit_aa": 0.2704
+   }
+  }
+ },
+ "pairwise_corr": {
+  "rg_prev1_suc_dev|rg_prev3_suc_dev": 0.634,
+  "rg_prev1_suc_dev|rg_prev5_suc_dev": 0.5423,
+  "rg_prev1_suc_dev|rg_prev3_mid_dev": -0.2993,
+  "rg_prev1_suc_dev|rg_trend": 0.8381,
+  "rg_prev1_suc_dev|rg_fb_dev": 0.1744,
+  "rg_prev1_suc_dev|rg_br_dev": -0.1413,
+  "rg_prev1_suc_dev|rg_off_dev": -0.053,
+  "rg_prev1_suc_dev|rg_mix_ent": 0.0729,
+  "rg_prev1_suc_dev|supp_anc_suc": -0.2907,
+  "rg_prev1_suc_dev|supp_anc_mid": 0.2101,
+  "rg_prev1_suc_dev|supp_anc_fb": -0.1337,
+  "rg_prev1_suc_dev|supp_anc_br": 0.0374,
+  "rg_prev1_suc_dev|supp_anc_off": 0.0799,
+  "rg_prev1_suc_dev|supp_prev1_suc": 0.916,
+  "rg_prev1_suc_dev|supp_prev5_suc": 0.3518,
+  "rg_prev1_suc_dev|supp_prev1_mid": -0.4126,
+  "rg_prev1_suc_dev|supp_prev3_mid": -0.2076,
+  "rg_prev1_suc_dev|supp_prev5_mid": -0.1531,
+  "rg_prev1_suc_dev|supp_fastball": -0.0883,
+  "rg_prev1_suc_dev|supp_breaking": -0.0021,
+  "rg_prev1_suc_dev|supp_offspeed": 0.073,
+  "rg_prev1_suc_dev|supp_log_pitchmix_n": 0.1271,
+  "rg_prev1_suc_dev|supp_ins_p_success": 0.1935,
+  "rg_prev1_suc_dev|supp_ins_p_success_dev": 0.4741,
+  "rg_prev1_suc_dev|ctrl_prev3_suc": 0.4808,
+  "rg_prev1_suc_dev|ctrl_asof_psr": -0.0953,
+  "rg_prev3_suc_dev|rg_prev5_suc_dev": 0.8579,
+  "rg_prev3_suc_dev|rg_prev3_mid_dev": -0.4585,
+  "rg_prev3_suc_dev|rg_trend": 0.1976,
+  "rg_prev3_suc_dev|rg_fb_dev": 0.2568,
+  "rg_prev3_suc_dev|rg_br_dev": -0.2059,
+  "rg_prev3_suc_dev|rg_off_dev": -0.0819,
+  "rg_prev3_suc_dev|rg_mix_ent": 0.1088,
+  "rg_prev3_suc_dev|supp_anc_suc": -0.414,
+  "rg_prev3_suc_dev|supp_anc_mid": 0.3036,
+  "rg_prev3_suc_dev|supp_anc_fb": -0.1921,
+  "rg_prev3_suc_dev|supp_anc_br": 0.0521,
+  "rg_prev3_suc_dev|supp_anc_off": 0.1165,
+  "rg_prev3_suc_dev|supp_prev1_suc": 0.4845,
+  "rg_prev3_suc_dev|supp_prev5_suc": 0.593,
+  "rg_prev3_suc_dev|supp_prev1_mid": -0.1762,
+  "rg_prev3_suc_dev|supp_prev3_mid": -0.3253,
+  "rg_prev3_suc_dev|supp_prev5_mid": -0.2446,
+  "rg_prev3_suc_dev|supp_fastball": -0.1248,
+  "rg_prev3_suc_dev|supp_breaking": -0.0055,
+  "rg_prev3_suc_dev|supp_offspeed": 0.1057,
+  "rg_prev3_suc_dev|supp_log_pitchmix_n": 0.1674,
+  "rg_prev3_suc_dev|supp_ins_p_success": 0.3013,
+  "rg_prev3_suc_dev|supp_ins_p_success_dev": 0.699,
+  "rg_prev3_suc_dev|ctrl_prev3_suc": 0.7883,
+  "rg_prev3_suc_dev|ctrl_asof_psr": -0.1227,
+  "rg_prev5_suc_dev|rg_prev3_mid_dev": -0.3826,
+  "rg_prev5_suc_dev|rg_trend": -0.0038,
+  "rg_prev5_suc_dev|rg_fb_dev": 0.298,
+  "rg_prev5_suc_dev|rg_br_dev": -0.233,
+  "rg_prev5_suc_dev|rg_off_dev": -0.1053,
+  "rg_prev5_suc_dev|rg_mix_ent": 0.1265,
+  "rg_prev5_suc_dev|supp_anc_suc": -0.4617,
+  "rg_prev5_suc_dev|supp_anc_mid": 0.3424,
+  "rg_prev5_suc_dev|supp_anc_fb": -0.2179,
+  "rg_prev5_suc_dev|supp_anc_br": 0.0599,
+  "rg_prev5_suc_dev|supp_anc_off": 0.1313,
+  "rg_prev5_suc_dev|supp_prev1_suc": 0.3693,
+  "rg_prev5_suc_dev|supp_prev5_suc": 0.7079,
+  "rg_prev5_suc_dev|supp_prev1_mid": -0.1322,
+  "rg_prev5_suc_dev|supp_prev3_mid": -0.2363,
+  "rg_prev5_suc_dev|supp_prev5_mid": -0.2889,
+  "rg_prev5_suc_dev|supp_fastball": -0.1393,
+  "rg_prev5_suc_dev|supp_breaking": -0.0053,
+  "rg_prev5_suc_dev|supp_offspeed": 0.1171,
+  "rg_prev5_suc_dev|supp_log_pitchmix_n": 0.1718,
+  "rg_prev5_suc_dev|supp_ins_p_success": 0.3334,
+  "rg_prev5_suc_dev|supp_ins_p_success_dev": 0.7772,
+  "rg_prev5_suc_dev|ctrl_prev3_suc": 0.6043,
+  "rg_prev5_suc_dev|ctrl_asof_psr": -0.1331,
+  "rg_prev3_mid_dev|rg_trend": -0.1078,
+  "rg_prev3_mid_dev|rg_fb_dev": -0.0551,
+  "rg_prev3_mid_dev|rg_br_dev": 0.0103,
+  "rg_prev3_mid_dev|rg_off_dev": 0.0766,
+  "rg_prev3_mid_dev|rg_mix_ent": 0.0206,
+  "rg_prev3_mid_dev|supp_anc_suc": 0.1138,
+  "rg_prev3_mid_dev|supp_anc_mid": -0.1274,
+  "rg_prev3_mid_dev|supp_anc_fb": -0.004,
+  "rg_prev3_mid_dev|supp_anc_br": -0.0215,
+  "rg_prev3_mid_dev|supp_anc_off": 0.0242,
+  "rg_prev3_mid_dev|supp_prev1_suc": -0.2629,
+  "rg_prev3_mid_dev|supp_prev5_suc": -0.321,
+  "rg_prev3_mid_dev|supp_prev1_mid": 0.5394,
+  "rg_prev3_mid_dev|supp_prev3_mid": 0.9203,
+  "rg_prev3_mid_dev|supp_prev5_mid": 0.7348,
+  "rg_prev3_mid_dev|supp_fastball": -0.023,
+  "rg_prev3_mid_dev|supp_breaking": -0.0187,
+  "rg_prev3_mid_dev|supp_offspeed": 0.0368,
+  "rg_prev3_mid_dev|supp_log_pitchmix_n": -0.0043,
+  "rg_prev3_mid_dev|supp_ins_p_success": -0.182,
+  "rg_prev3_mid_dev|supp_ins_p_success_dev": -0.2837,
+  "rg_prev3_mid_dev|ctrl_prev3_suc": -0.4129,
+  "rg_prev3_mid_dev|ctrl_asof_psr": 0.0191,
+  "rg_trend|rg_fb_dev": 0.0141,
+  "rg_trend|rg_br_dev": -0.0169,
+  "rg_trend|rg_off_dev": 0.0052,
+  "rg_trend|rg_mix_ent": 0.0069,
+  "rg_trend|supp_anc_suc": -0.0462,
+  "rg_trend|supp_anc_mid": 0.0278,
+  "rg_trend|supp_anc_fb": -0.0177,
+  "rg_trend|supp_anc_br": 0.0057,
+  "rg_trend|supp_anc_off": 0.0098,
+  "rg_trend|supp_prev1_suc": 0.8348,
+  "rg_trend|supp_prev5_suc": -0.0382,
+  "rg_trend|supp_prev1_mid": -0.4023,
+  "rg_trend|supp_prev3_mid": -0.0947,
+  "rg_trend|supp_prev5_mid": 0.0028,
+  "rg_trend|supp_fastball": -0.0155,
+  "rg_trend|supp_breaking": 0.0082,
+  "rg_trend|supp_offspeed": 0.0053,
+  "rg_trend|supp_log_pitchmix_n": 0.0214,
+  "rg_trend|supp_ins_p_success": 0.0081,
+  "rg_trend|supp_ins_p_success_dev": 0.0472,
+  "rg_trend|ctrl_prev3_suc": 0.17,
+  "rg_trend|ctrl_asof_psr": -0.0266,
+  "rg_fb_dev|rg_br_dev": -0.8323,
+  "rg_fb_dev|rg_off_dev": -0.2655,
+  "rg_fb_dev|rg_mix_ent": 0.2359,
+  "rg_fb_dev|supp_anc_suc": -0.2155,
+  "rg_fb_dev|supp_anc_mid": 0.2629,
+  "rg_fb_dev|supp_anc_fb": -0.4396,
+  "rg_fb_dev|supp_anc_br": 0.1151,
+  "rg_fb_dev|supp_anc_off": 0.2704,
+  "rg_fb_dev|supp_prev1_suc": 0.0907,
+  "rg_fb_dev|supp_prev5_suc": 0.149,
+  "rg_fb_dev|supp_prev1_mid": 0.0192,
+  "rg_fb_dev|supp_prev3_mid": 0.0502,
+  "rg_fb_dev|supp_prev5_mid": 0.0614,
+  "rg_fb_dev|supp_fastball": -0.1463,
+  "rg_fb_dev|supp_breaking": -0.1184,
+  "rg_fb_dev|supp_offspeed": 0.2335,
+  "rg_fb_dev|supp_log_pitchmix_n": 0.2792,
+  "rg_fb_dev|supp_ins_p_success": 0.1643,
+  "rg_fb_dev|supp_ins_p_success_dev": 0.3707,
+  "rg_fb_dev|ctrl_prev3_suc": 0.1287,
+  "rg_fb_dev|ctrl_asof_psr": 0.1804,
+  "rg_br_dev|rg_off_dev": -0.3134,
+  "rg_br_dev|rg_mix_ent": -0.2305,
+  "rg_br_dev|supp_anc_suc": 0.1269,
+  "rg_br_dev|supp_anc_mid": -0.2108,
+  "rg_br_dev|supp_anc_fb": 0.3522,
+  "rg_br_dev|supp_anc_br": -0.1576,
+  "rg_br_dev|supp_anc_off": -0.1534,
+  "rg_br_dev|supp_prev1_suc": -0.0934,
+  "rg_br_dev|supp_prev5_suc": -0.1496,
+  "rg_br_dev|supp_prev1_mid": -0.0338,
+  "rg_br_dev|supp_prev3_mid": -0.0732,
+  "rg_br_dev|supp_prev5_mid": -0.0905,
+  "rg_br_dev|supp_fastball": 0.1066,
+  "rg_br_dev|supp_breaking": 0.1228,
+  "rg_br_dev|supp_offspeed": -0.206,
+  "rg_br_dev|supp_log_pitchmix_n": -0.1833,
+  "rg_br_dev|supp_ins_p_success": -0.1958,
+  "rg_br_dev|supp_ins_p_success_dev": -0.3098,
+  "rg_br_dev|ctrl_prev3_suc": -0.1342,
+  "rg_br_dev|ctrl_asof_psr": -0.1881,
+  "rg_off_dev|rg_mix_ent": -0.0031,
+  "rg_off_dev|supp_anc_suc": 0.1484,
+  "rg_off_dev|supp_anc_mid": -0.0837,
+  "rg_off_dev|supp_anc_fb": 0.1406,
+  "rg_off_dev|supp_anc_br": 0.077,
+  "rg_off_dev|supp_anc_off": -0.1965,
+  "rg_off_dev|supp_prev1_suc": 0.0071,
+  "rg_off_dev|supp_prev5_suc": 0.0049,
+  "rg_off_dev|supp_prev1_mid": 0.0259,
+  "rg_off_dev|supp_prev3_mid": 0.0413,
+  "rg_off_dev|supp_prev5_mid": 0.0522,
+  "rg_off_dev|supp_fastball": 0.0651,
+  "rg_off_dev|supp_breaking": -0.0107,
+  "rg_off_dev|supp_offspeed": -0.0418,
+  "rg_off_dev|supp_log_pitchmix_n": -0.1597,
+  "rg_off_dev|supp_ins_p_success": 0.0592,
+  "rg_off_dev|supp_ins_p_success_dev": -0.0962,
+  "rg_off_dev|ctrl_prev3_suc": 0.0128,
+  "rg_off_dev|ctrl_asof_psr": 0.018,
+  "rg_mix_ent|supp_anc_suc": 0.0262,
+  "rg_mix_ent|supp_anc_mid": 0.1787,
+  "rg_mix_ent|supp_anc_fb": -0.6871,
+  "rg_mix_ent|supp_anc_br": -0.0029,
+  "rg_mix_ent|supp_anc_off": 0.5994,
+  "rg_mix_ent|supp_prev1_suc": 0.1044,
+  "rg_mix_ent|supp_prev5_suc": 0.1789,
+  "rg_mix_ent|supp_prev1_mid": 0.047,
+  "rg_mix_ent|supp_prev3_mid": 0.0837,
+  "rg_mix_ent|supp_prev5_mid": 0.0989,
+  "rg_mix_ent|supp_fastball": -0.7108,
+  "rg_mix_ent|supp_breaking": 0.0625,
+  "rg_mix_ent|supp_offspeed": 0.5847,
+  "rg_mix_ent|supp_log_pitchmix_n": 0.5179,
+  "rg_mix_ent|supp_ins_p_success": 0.1716,
+  "rg_mix_ent|supp_ins_p_success_dev": 0.1584,
+  "rg_mix_ent|ctrl_prev3_suc": 0.156,
+  "rg_mix_ent|ctrl_asof_psr": 0.2403,
+  "supp_anc_suc|supp_anc_mid": -0.5166,
+  "supp_anc_suc|supp_anc_fb": 0.1855,
+  "supp_anc_suc|supp_anc_br": -0.1972,
+  "supp_anc_suc|supp_anc_off": 0.0295,
+  "supp_anc_suc|supp_prev1_suc": 0.1175,
+  "supp_anc_suc|supp_prev5_suc": 0.2996,
+  "supp_anc_suc|supp_prev1_mid": -0.0483,
+  "supp_anc_suc|supp_prev3_mid": -0.0933,
+  "supp_anc_suc|supp_prev5_mid": -0.1072,
+  "supp_anc_suc|supp_fastball": 0.1315,
+  "supp_anc_suc|supp_breaking": -0.1625,
+  "supp_anc_suc|supp_offspeed": 0.0536,
+  "supp_anc_suc|supp_log_pitchmix_n": -0.0902,
+  "supp_anc_suc|supp_ins_p_success": 0.4719,
+  "supp_anc_suc|supp_ins_p_success_dev": -0.5812,
+  "supp_anc_suc|ctrl_prev3_suc": 0.2336,
+  "supp_anc_suc|ctrl_asof_psr": 0.8086,
+  "supp_anc_mid|supp_anc_fb": -0.2728,
+  "supp_anc_mid|supp_anc_br": 0.0574,
+  "supp_anc_mid|supp_anc_off": 0.1814,
+  "supp_anc_mid|supp_prev1_suc": 0.0016,
+  "supp_anc_mid|supp_prev5_suc": -0.0431,
+  "supp_anc_mid|supp_prev1_mid": 0.1485,
+  "supp_anc_mid|supp_prev3_mid": 0.2708,
+  "supp_anc_mid|supp_prev5_mid": 0.3213,
+  "supp_anc_mid|supp_fastball": -0.2117,
+  "supp_anc_mid|supp_breaking": -0.0016,
+  "supp_anc_mid|supp_offspeed": 0.1716,
+  "supp_anc_mid|supp_log_pitchmix_n": 0.2515,
+  "supp_anc_mid|supp_ins_p_success": -0.1114,
+  "supp_anc_mid|supp_ins_p_success_dev": 0.4224,
+  "supp_anc_mid|ctrl_prev3_suc": -0.0249,
+  "supp_anc_mid|ctrl_asof_psr": -0.2982,
+  "supp_anc_fb|supp_anc_br": -0.4097,
+  "supp_anc_fb|supp_anc_off": -0.4723,
+  "supp_anc_fb|supp_prev1_suc": -0.061,
+  "supp_anc_fb|supp_prev5_suc": -0.0867,
+  "supp_anc_fb|supp_prev1_mid": -0.0548,
+  "supp_anc_fb|supp_prev3_mid": -0.1115,
+  "supp_anc_fb|supp_prev5_mid": -0.1365,
+  "supp_anc_fb|supp_fastball": 0.9528,
+  "supp_anc_fb|supp_breaking": -0.3127,
+  "supp_anc_fb|supp_offspeed": -0.459,
+  "supp_anc_fb|supp_log_pitchmix_n": -0.495,
+  "supp_anc_fb|supp_ins_p_success": -0.085,
+  "supp_anc_fb|supp_ins_p_success_dev": -0.267,
+  "supp_anc_fb|ctrl_prev3_suc": -0.0799,
+  "supp_anc_fb|ctrl_asof_psr": -0.0378,
+  "supp_anc_br|supp_anc_off": -0.6106,
+  "supp_anc_br|supp_prev1_suc": -0.0438,
+  "supp_anc_br|supp_prev5_suc": -0.0926,
+  "supp_anc_br|supp_prev1_mid": -0.0033,
+  "supp_anc_br|supp_prev3_mid": 0.0018,
+  "supp_anc_br|supp_prev5_mid": 0.0054,
+  "supp_anc_br|supp_fastball": -0.4123,
+  "supp_anc_br|supp_breaking": 0.9607,
+  "supp_anc_br|supp_offspeed": -0.61,
+  "supp_anc_br|supp_log_pitchmix_n": 0.0252,
+  "supp_anc_br|supp_ins_p_success": -0.0927,
+  "supp_anc_br|supp_ins_p_success_dev": 0.115,
+  "supp_anc_br|ctrl_prev3_suc": -0.0776,
+  "supp_anc_br|ctrl_asof_psr": -0.1494,
+  "supp_anc_off|supp_prev1_suc": 0.0953,
+  "supp_anc_off|supp_prev5_suc": 0.1647,
+  "supp_anc_off|supp_prev1_mid": 0.0508,
+  "supp_anc_off|supp_prev3_mid": 0.095,
+  "supp_anc_off|supp_prev5_mid": 0.1133,
+  "supp_anc_off|supp_fastball": -0.4288,
+  "supp_anc_off|supp_breaking": -0.6568,
+  "supp_anc_off|supp_offspeed": 0.9879,
+  "supp_anc_off|supp_log_pitchmix_n": 0.4054,
+  "supp_anc_off|supp_ins_p_success": 0.1633,
+  "supp_anc_off|supp_ins_p_success_dev": 0.1207,
+  "supp_anc_off|ctrl_prev3_suc": 0.1444,
+  "supp_anc_off|ctrl_asof_psr": 0.1771,
+  "supp_prev1_suc|supp_prev5_suc": 0.5182,
+  "supp_prev1_suc|supp_prev1_mid": -0.4438,
+  "supp_prev1_suc|supp_prev3_mid": -0.2639,
+  "supp_prev1_suc|supp_prev5_mid": -0.2145,
+  "supp_prev1_suc|supp_fastball": -0.033,
+  "supp_prev1_suc|supp_breaking": -0.0717,
+  "supp_prev1_suc|supp_offspeed": 0.1038,
+  "supp_prev1_suc|supp_log_pitchmix_n": 0.0877,
+  "supp_prev1_suc|supp_ins_p_success": 0.4266,
+  "supp_prev1_suc|supp_ins_p_success_dev": 0.2972,
+  "supp_prev1_suc|ctrl_prev3_suc": 0.6159,
+  "supp_prev1_suc|ctrl_asof_psr": 0.3001,
+  "supp_prev5_suc|supp_prev1_mid": -0.1805,
+  "supp_prev5_suc|supp_prev3_mid": -0.3319,
+  "supp_prev5_suc|supp_prev5_mid": -0.3937,
+  "supp_prev5_suc|supp_fastball": -0.0358,
+  "supp_prev5_suc|supp_breaking": -0.1429,
+  "supp_prev5_suc|supp_offspeed": 0.1802,
+  "supp_prev5_suc|supp_log_pitchmix_n": 0.126,
+  "supp_prev5_suc|supp_ins_p_success": 0.7618,
+  "supp_prev5_suc|supp_ins_p_success_dev": 0.4662,
+  "supp_prev5_suc|ctrl_prev3_suc": 0.8538,
+  "supp_prev5_suc|ctrl_asof_psr": 0.5861,
+  "supp_prev1_mid|supp_prev3_mid": 0.5895,
+  "supp_prev1_mid|supp_prev5_mid": 0.508,
+  "supp_prev1_mid|supp_fastball": -0.0516,
+  "supp_prev1_mid|supp_breaking": -0.0095,
+  "supp_prev1_mid|supp_offspeed": 0.0558,
+  "supp_prev1_mid|supp_log_pitchmix_n": 0.0288,
+  "supp_prev1_mid|supp_ins_p_success": -0.1411,
+  "supp_prev1_mid|supp_ins_p_success_dev": -0.0906,
+  "supp_prev1_mid|ctrl_prev3_suc": -0.2215,
+  "supp_prev1_mid|ctrl_asof_psr": -0.0718,
+  "supp_prev3_mid|supp_prev5_mid": 0.8484,
+  "supp_prev3_mid|supp_fastball": -0.1058,
+  "supp_prev3_mid|supp_breaking": -0.0011,
+  "supp_prev3_mid|supp_offspeed": 0.0952,
+  "supp_prev3_mid|supp_log_pitchmix_n": 0.0574,
+  "supp_prev3_mid|supp_ins_p_success": -0.2376,
+  "supp_prev3_mid|supp_ins_p_success_dev": -0.1447,
+  "supp_prev3_mid|ctrl_prev3_suc": -0.4105,
+  "supp_prev3_mid|ctrl_asof_psr": -0.1383,
+  "supp_prev5_mid|supp_fastball": -0.1269,
+  "supp_prev5_mid|supp_breaking": -0.0002,
+  "supp_prev5_mid|supp_offspeed": 0.1131,
+  "supp_prev5_mid|supp_log_pitchmix_n": 0.0652,
+  "supp_prev5_mid|supp_ins_p_success": -0.27,
+  "supp_prev5_mid|supp_ins_p_success_dev": -0.1655,
+  "supp_prev5_mid|ctrl_prev3_suc": -0.3386,
+  "supp_prev5_mid|ctrl_asof_psr": -0.1607,
+  "supp_fastball|supp_breaking": -0.4876,
+  "supp_fastball|supp_offspeed": -0.4039,
+  "supp_fastball|supp_log_pitchmix_n": -0.4686,
+  "supp_fastball|supp_ins_p_success": -0.0134,
+  "supp_fastball|supp_ins_p_success_dev": -0.1338,
+  "supp_fastball|ctrl_prev3_suc": -0.0364,
+  "supp_fastball|ctrl_asof_psr": -0.0576,
+  "supp_breaking|supp_offspeed": -0.6017,
+  "supp_breaking|supp_log_pitchmix_n": 0.0856,
+  "supp_breaking|supp_ins_p_success": -0.162,
+  "supp_breaking|supp_ins_p_success_dev": -0.0086,
+  "supp_breaking|ctrl_prev3_suc": -0.1232,
+  "supp_breaking|ctrl_asof_psr": -0.1426,
+  "supp_offspeed|supp_log_pitchmix_n": 0.339,
+  "supp_offspeed|supp_ins_p_success": 0.182,
+  "supp_offspeed|supp_ins_p_success_dev": 0.1314,
+  "supp_offspeed|ctrl_prev3_suc": 0.1602,
+  "supp_offspeed|ctrl_asof_psr": 0.2021,
+  "supp_log_pitchmix_n|supp_ins_p_success": 0.0954,
+  "supp_log_pitchmix_n|supp_ins_p_success_dev": 0.1925,
+  "supp_log_pitchmix_n|ctrl_prev3_suc": 0.1189,
+  "supp_log_pitchmix_n|ctrl_asof_psr": 0.2839,
+  "supp_ins_p_success|supp_ins_p_success_dev": 0.5507,
+  "supp_ins_p_success|ctrl_prev3_suc": 0.6723,
+  "supp_ins_p_success|ctrl_asof_psr": 0.7079,
+  "supp_ins_p_success_dev|ctrl_prev3_suc": 0.4328,
+  "supp_ins_p_success_dev|ctrl_asof_psr": 0.1385,
+  "ctrl_prev3_suc|ctrl_asof_psr": 0.4978
+ },
+ "row_coverage": {
+  "rg_prev1_suc_dev": {
+   "row_finite": 0.8013940443459155,
+   "row_missing": 50348
+  },
+  "rg_prev3_suc_dev": {
+   "row_finite": 0.8013940443459155,
+   "row_missing": 50348
+  },
+  "rg_prev5_suc_dev": {
+   "row_finite": 0.8013940443459155,
+   "row_missing": 50348
+  },
+  "rg_prev3_mid_dev": {
+   "row_finite": 0.8013940443459155,
+   "row_missing": 50348
+  },
+  "rg_trend": {
+   "row_finite": 0.9856493114588551,
+   "row_missing": 3638
+  },
+  "rg_fb_dev": {
+   "row_finite": 0.8013940443459155,
+   "row_missing": 50348
+  },
+  "rg_br_dev": {
+   "row_finite": 0.8013940443459155,
+   "row_missing": 50348
+  },
+  "rg_off_dev": {
+   "row_finite": 0.8013940443459155,
+   "row_missing": 50348
+  },
+  "rg_mix_ent": {
+   "row_finite": 0.9996804821957579,
+   "row_missing": 81
+  }
+ },
+ "as_of_and_reproduction_gates": {
+  "parent_reconstruction_gap_to_shipped_target": 0.0,
+  "anchor_season_max_used": 2023,
+  "anchor_row_season_max": 2023.0,
+  "anchor_row_season_counts": {
+   "2019": 61,
+   "2020": 63,
+   "2021": 104,
+   "2022": 101,
+   "2023": 382
+  },
+  "Y2024_vs_Y2025_anchor_identical": false,
+  "deployed_anchor_crosscheck": {
+   "anchor_lt2024_sha256": "0e4b586da41cd6e78c5e19d4dd656bc9df088413625945e2a88ae85d100e5eb7",
+   "n_pitchers_deployed": 711,
+   "n_pitchers_mine_Y2024": 711,
+   "n_compared": 711,
+   "max_abs_diff": 4.999999999588667e-07,
+   "n_exceeding_rounding_bound": 0,
+   "pitcher_id_set_equal": true,
+   "note": "배포 inseason.build_anchor 는 rate 를 정수 카운트로 반올림해 저장한다.  따라서 c/n 과 원 rate 의 차이 상한은 0.5/n 이다. 그 상한을 넘는 투수가 0명이면 같은 규약으로 만든 것이다."
+  },
+  "prior_reconstruction_identity": {
+   "n_compared": 203159,
+   "max_abs_diff_vs_our_anchor": 5.269585847678115e-07,
+   "corr": 1.0,
+   "note": "prior = ins_p_success - ins_p_success_dev 로 동결 커리어 앵커가 정확 복원된다 (inseason.py 정의).  float32 저장·카운트 반올림만큼 차이가 남는다.  이것이 사전 등록 단서 (a) 의 근거다."
+  },
+  "labels_py_used": false,
+  "reused_vector_sha256": {
+   "build_AY/work/pcal_aa.npy": "3e7159abd25fbfb7441f69bf3f4022b9aac3dbdaf73af8da2765f9c1b645d5bd",
+   "build_AY/work/pcal_S2.npy": "f99a6240c08c53e3e40fa293a0f9efb0911d067236a8cf359d1855f11fb58b99",
+   "build_AY/work/pcal_S1.npy": "776cb0accc0236823b6b2d71612de92fb3711908254037b564d64c0e1c8c0905",
+   "build_AY/work/pcal_T70.npy": "1bac0abde366df280c28f421527066d8c132eb55a1182efc513c36ba5652ac5c",
+   "build_AC/work/tr2024/test.csv": "4db38113d5355546339c4391fbbf8b2e152a7c248ad9261caa1071f6bb81f5d0",
+   "exp059_screen/directions.npz": "5aea557dff22a18b1943419b7890e74220753cf687821d3513f8a0d0341effe6",
+   "build_AI/src/ins/anchor_lt2024.npz": "0e4b586da41cd6e78c5e19d4dd656bc9df088413625945e2a88ae85d100e5eb7",
+   "build_BN/pkg_BN/inseason.py": "1b4a407d2b53f2cbdbf0d2c837d0cab7c3db5e1e01bfc2e6b639813723303086",
+   "build_BN/work/tr2024_p_v19_BN_wv6_070.npy": "ab38ec13c7bb4c78e1f03f6eb459138dad395c7561b31ea86bec25ba7b1238eb",
+   "build_BN/pkg_BN/blend.json": "7f4c0d6025a5eb2ec6198b0bbe1dd757541fb6ae1d217a4d4911158ec9b6e5a9",
+   "exp076_rg/anchor_Y2024.csv": "ee2898b9da7615c1642790361030130f89acc6575d9aca0262454ceea51b3254",
+   "exp076_rg/anchor_Y2025.csv": "fc9f61d3d037672aab7dcdb50359418cfd0bb896e92a402280cbd11092379e3c",
+   "exp076_rg/anchor_Y2024robust.csv": "0000e48f8c4724068def3d817c7595bef08773e8f3f6a5bd252b1aa83b690e71"
+  },
+  "note": "앵커는 season<=2023 행에서만 읽었고, 뽑힌 앵커 행의 season 최대도 2023 이다.  배포 ins 앵커와 711명 전원이 반올림 상한 안에서 일치해 **같은 규약**임이 기계로 증명됐다.  라벨 복원 코드는 부르지 않았다."
+ },
+ "stage0_shipping_and_coverage": {
+  "Q1_shipping_vehicle": {
+   "existing_axis_names": [
+    "beta_ins_off",
+    "ctrl_asof_psr"
+   ],
+   "script_py_assert_lines": [
+    "_axl = bl.get(\"axis_offsets\") or []",
+    "ax_names = [str(_a.get(\"name\")) for _a in _axl]",
+    "ax_u = [float(_a.get(\"u\", 0.0)) for _a in _axl]",
+    "ax_center = [float(_a.get(\"center\", 0.0)) for _a in _axl]",
+    "ax_scale = [float(_a.get(\"scale\", 1.0)) for _a in _axl]",
+    "assert len(_axl) == 2, \"BL은 축 오프셋을 정확히 2개 쓴다\"",
+    "assert ax_names == [\"beta_ins_off\", \"ctrl_asof_psr\"], \\",
+    "f\"알 수 없는 축 이름 조합: {ax_names}\"",
+    "for _a, _u, _c, _s in zip(_axl, ax_u, ax_center, ax_scale):",
+    "for _k in range(len(_axl)):",
+    "_raw = _rawmap[ax_names[_k]]",
+    "print(f\"축 오프셋 {_k+1}/{len(_axl)} {ax_names[_k]}: u={ax_u[_k]!r} \""
+   ],
+   "row_only_axes_no_table_needed": {
+    "axes": [
+     "rg_trend",
+     "rg_mix_ent"
+    ],
+    "added_files": [],
+    "changed_files": [
+     "blend.json",
+     "script.py"
+    ],
+    "total_differing_vs_parent": 2,
+    "grade": "A/B단 수준 — 새 표 파일이 0개.  주최측이 test 행마다 주는 열의 산술 한 줄이다.  동결 포장 자체가 없다.",
+    "arithmetic": {
+     "rg_trend": "prev1_game_success_rate - prev5_game_success_rate",
+     "rg_mix_ent": "-(f*ln f + b*ln b + o*ln o), 0*ln0=0"
+    }
+   },
+   "anchor_axes_need_table": {
+    "axes": [
+     "rg_prev1_suc_dev",
+     "rg_prev3_suc_dev",
+     "rg_prev5_suc_dev",
+     "rg_prev3_mid_dev",
+     "rg_fb_dev",
+     "rg_br_dev",
+     "rg_off_dev"
+    ],
+    "added_files": [
+     "model_rg/anchor.npz (pitcher_id -> anc_* · train 유래 동결)"
+    ],
+    "changed_files": [
+     "blend.json",
+     "script.py"
+    ],
+    "total_differing_vs_parent": 3,
+    "grade": "C단 (새 표 파일) — packager 전면 검증 대상",
+    "precedent": "build_AI 의 ins 앵커(anchor_lt2024.npz)가 정확히 같은 구조다 — 투수별 동결 스칼라 + 행별 조회.  이미 4번 출하됐다."
+   },
+   "as_stacker_column": {
+    "note": "🔴 config 가 지정한 통과 후 경로는 오프셋이 아니라 **스태커 열**이다.  AA 팔 재학습 → model/ 부스터 교체 → meta.json 의 트리 수 기록도 함께 고쳐야 한다(안 고치면 채점 서버 크래시).",
+    "grade": "C단 + 새 부스터"
+   }
+  },
+  "Q2_coverage": {
+   "tr2024_frame": {
+    "row_finite_rg_prev1_suc_dev": 0.8013940443459155,
+    "row_finite_rg_prev3_suc_dev": 0.8013940443459155,
+    "row_finite_rg_prev5_suc_dev": 0.8013940443459155,
+    "row_finite_rg_prev3_mid_dev": 0.8013940443459155,
+    "row_finite_rg_trend": 0.9856493114588551,
+    "row_finite_rg_fb_dev": 0.8013940443459155,
+    "row_finite_rg_br_dev": 0.8013940443459155,
+    "row_finite_rg_off_dev": 0.8013940443459155,
+    "row_finite_rg_mix_ent": 0.9996804821957579,
+    "row_finite_raw_prev3_suc": 0.9856493114588551,
+    "row_finite_raw_fastball": 0.9996804821957579,
+    "pitcher_in_anchor_table": 0.7928388746803069,
+    "row_pitcher_in_anchor_table": 0.8013940443459155,
+    "table": "Y=2024 앵커(season<=2023) — 스크린 프레임",
+    "n_rows": 253507,
+    "n_pitchers": 391
+   },
+   "cov_frame_standin2025": {
+    "row_finite_rg_prev1_suc_dev": 0.9857479382722579,
+    "row_finite_rg_prev3_suc_dev": 0.9857479382722579,
+    "row_finite_rg_prev5_suc_dev": 0.9857479382722579,
+    "row_finite_rg_prev3_mid_dev": 0.9857479382722579,
+    "row_finite_rg_trend": 0.9857479382722579,
+    "row_finite_rg_fb_dev": 0.9996745175740167,
+    "row_finite_rg_br_dev": 0.9996745175740167,
+    "row_finite_rg_off_dev": 0.9996745175740167,
+    "row_finite_rg_mix_ent": 0.9996745175740167,
+    "row_finite_raw_prev3_suc": 0.9857479382722579,
+    "row_finite_raw_fastball": 0.9996745175740167,
+    "pitcher_in_anchor_table": 1.0,
+    "row_pitcher_in_anchor_table": 1.0,
+    "table": "Y=2025 앵커(season<=2024) — 🔴 대역",
+    "n_rows": 245789,
+    "n_pitchers": 391
+   },
+   "real5_frame": {
+    "row_finite_rg_prev1_suc_dev": 0.4,
+    "row_finite_rg_prev3_suc_dev": 0.4,
+    "row_finite_rg_prev5_suc_dev": 0.4,
+    "row_finite_rg_prev3_mid_dev": 0.4,
+    "row_finite_rg_trend": 0.4,
+    "row_finite_rg_fb_dev": 0.4,
+    "row_finite_rg_br_dev": 0.4,
+    "row_finite_rg_off_dev": 0.4,
+    "row_finite_rg_mix_ent": 0.8,
+    "row_finite_raw_prev3_suc": 0.4,
+    "row_finite_raw_fastball": 0.8,
+    "pitcher_in_anchor_table": 0.5,
+    "row_pitcher_in_anchor_table": 0.4,
+    "table": "Y=2025 앵커 — 🔴 진짜 2025 행 5개",
+    "n_rows": 5,
+    "n_pitchers": 4
+   }
+  },
+  "Q2b_missing_mechanism": {
+   "real5_row_ids": [
+    1,
+    17,
+    213,
+    5332,
+    35185
+   ],
+   "real5_prev1_nan": [
+    false,
+    true,
+    false,
+    true,
+    true
+   ],
+   "real5_asof_pitcher_n": [
+    3465.0,
+    86.0,
+    486.0,
+    0.0,
+    9.0
+   ],
+   "real5_max_row_id": 35185,
+   "train2024_n_rows": 253507,
+   "train2024_prev1_nan_rate_full_season": 0.01435068854114482,
+   "train2024_prev1_nan_rate_first_K_rows": {
+    "250": 0.7,
+    "1000": 0.482,
+    "5000": 0.2006,
+    "35185": 0.04285917294301549,
+    "50000": 0.03708
+   },
+   "train2024_prev1_nan_at_same_ranks": {
+    "1": true,
+    "17": true,
+    "213": false,
+    "5332": false,
+    "35185": false
+   },
+   "interpretation": "prev 열은 시즌 내 경기 집계라 시즌 초반 행에서 NaN 이 몰린다. real5 의 row_id 는 전부 시즌 초반이다.  train 2024 의 같은 위치 구간에서 비슷한 NaN 율이 나오면 real5 의 60% 는 커버리지 결함이 아니라 **표본 위치**다.  5행은 이항 표준오차 ±22%p 라 어차피 정밀도가 없다."
+  },
+  "Q3_missing_policy": "결측 행은 raw = NaN → script.py 의 기존 축 블록이 _delta[_fin] 로 0.0 을 남긴다.  sentinel 충전 없음.",
+  "Q4_inference_cost": {
+   "frame_rows": 245789,
+   "reps": 5,
+   "seconds_anchor_axis_block": {
+    "min": 0.385,
+    "median": 0.397
+   },
+   "seconds_row_only_axis_block": {
+    "min": 0.337,
+    "median": 0.341
+   },
+   "baseline_G6_seconds_BN": 146,
+   "answer": "무시할 수 있는 수준."
+  },
+  "AN_trap_check": {
+   "v6_n_features": 77,
+   "q_n_features": 81,
+   "q_n_base_features": 77,
+   "raw_columns_our_axes_are_built_from": [
+    "asof_pitcher_prev1_game_success_rate",
+    "asof_pitcher_prev3_game_success_rate",
+    "asof_pitcher_prev5_game_success_rate",
+    "asof_pitcher_prev1_game_middle_rate",
+    "asof_pitcher_prev3_game_middle_rate",
+    "asof_pitcher_prev5_game_middle_rate",
+    "asof_pitcher_fastball_rate",
+    "asof_pitcher_breaking_rate",
+    "asof_pitcher_offspeed_rate",
+    "asof_pitcher_pitchmix_n"
+   ],
+   "raw_column_in_v6": {
+    "asof_pitcher_prev1_game_success_rate": true,
+    "asof_pitcher_prev3_game_success_rate": true,
+    "asof_pitcher_prev5_game_success_rate": true,
+    "asof_pitcher_prev1_game_middle_rate": true,
+    "asof_pitcher_prev3_game_middle_rate": true,
+    "asof_pitcher_prev5_game_middle_rate": true,
+    "asof_pitcher_fastball_rate": true,
+    "asof_pitcher_breaking_rate": true,
+    "asof_pitcher_offspeed_rate": true,
+    "asof_pitcher_pitchmix_n": false
+   },
+   "raw_column_in_q": {
+    "asof_pitcher_prev1_game_success_rate": true,
+    "asof_pitcher_prev3_game_success_rate": true,
+    "asof_pitcher_prev5_game_success_rate": true,
+    "asof_pitcher_prev1_game_middle_rate": true,
+    "asof_pitcher_prev3_game_middle_rate": true,
+    "asof_pitcher_prev5_game_middle_rate": true,
+    "asof_pitcher_fastball_rate": true,
+    "asof_pitcher_breaking_rate": true,
+    "asof_pitcher_offspeed_rate": true,
+    "asof_pitcher_pitchmix_n": true
+   },
+   "ins_columns_in_q": [
+    "ins_b_middle",
+    "ins_b_middle_dev",
+    "ins_b_n",
+    "ins_b_success",
+    "ins_b_success_dev",
+    "ins_p_ball",
+    "ins_p_ball_dev",
+    "ins_p_middle",
+    "ins_p_middle_dev",
+    "ins_p_n",
+    "ins_p_reverse",
+    "ins_p_reverse_dev",
+    "ins_p_strike",
+    "ins_p_strike_dev",
+    "ins_p_success",
+    "ins_p_success_dev"
+   ],
+   "ins_columns_in_v6": [],
+   "our_new_axis_names": [
+    "rg_prev1_suc_dev",
+    "rg_prev3_suc_dev",
+    "rg_prev5_suc_dev",
+    "rg_prev3_mid_dev",
+    "rg_trend",
+    "rg_fb_dev",
+    "rg_br_dev",
+    "rg_off_dev",
+    "rg_mix_ent"
+   ],
+   "name_level_collision": [],
+   "verdict_raw_layer": "🔴 raw 열은 두 팔이 전부 갖고 있다 — prev 6열은 v6·Q 둘 다, 구종 3비율도 v6·Q 둘 다, pitchmix_n 은 Q 가 갖고 있다. 따라서 이 실험이 물을 수 있는 것은 'raw 열이 새로운가' 가 아니라 '**차분·엔트로피라는 형태**가 새로운가' 뿐이다.",
+   "what_is_actually_new": [
+    "동결 앵커(직전 시즌 종료 커리어률) 와의 **차분** — 두 팔 어디에도 차분 형태로는 없다.  다만 Q 는 ins_p_r 와 ins_p_r_dev 를 둘 다 갖고 있어 prior = ins_p_r - ins_p_r_dev 로 **앵커를 선형으로 복원할 수 있다**(구종믹스는 제외 — ins 는 구종을 안 담는다).",
+    "구종 3비율의 **엔트로피** — 비선형이고 어느 팔에도 없다.",
+    "prev1 - prev5 **차분** — v6(신경망)는 선형결합을 만들 수 있고 Q(CatBoost)는 축 평행 분기라 한 분기로 못 만든다."
+   ],
+   "structural_note": "🔴 이번 스크린의 잔차 r0 = y - p_BN 은 **BN 블렌드 전체**(v6 를 w_v6=0.70, Q 계열을 S1/S2/T70 으로 포함) 에 대한 것이다. AN 때는 팔 단독 잔차에서 +41.13 이 나왔고 블렌드에 새것이 없어 진 것이었다. 여기서는 v6·Q 가 이미 흡수한 정보면 t 가 애초에 죽는 형태로 드러난다. 다만 이것이 '전이비가 양수다' 를 보장하지는 않는다(S2).",
+   "measured_corr_axis_vs_arm_logit": {
+    "rg_prev1_suc_dev": {
+     "corr_vs_logit_v19_mate": 0.2175,
+     "corr_vs_logit_aa": 0.2348,
+     "n_finite_rows": 203159
+    },
+    "rg_prev3_suc_dev": {
+     "corr_vs_logit_v19_mate": 0.2685,
+     "corr_vs_logit_aa": 0.283,
+     "n_finite_rows": 203159
+    },
+    "rg_prev5_suc_dev": {
+     "corr_vs_logit_v19_mate": 0.2894,
+     "corr_vs_logit_aa": 0.2991,
+     "n_finite_rows": 203159
+    },
+    "rg_prev3_mid_dev": {
+     "corr_vs_logit_v19_mate": -0.127,
+     "corr_vs_logit_aa": -0.1551,
+     "n_finite_rows": 203159
+    },
+    "rg_trend": {
+     "corr_vs_logit_v19_mate": 0.0577,
+     "corr_vs_logit_aa": 0.0718,
+     "n_finite_rows": 249869
+    },
+    "rg_fb_dev": {
+     "corr_vs_logit_v19_mate": 0.2167,
+     "corr_vs_logit_aa": 0.2037,
+     "n_finite_rows": 203159
+    },
+    "rg_br_dev": {
+     "corr_vs_logit_v19_mate": -0.2334,
+     "corr_vs_logit_aa": -0.2193,
+     "n_finite_rows": 203159
+    },
+    "rg_off_dev": {
+     "corr_vs_logit_v19_mate": 0.0346,
+     "corr_vs_logit_aa": 0.0324,
+     "n_finite_rows": 203159
+    },
+    "rg_mix_ent": {
+     "corr_vs_logit_v19_mate": 0.2745,
+     "corr_vs_logit_aa": 0.2704,
+     "n_finite_rows": 253426
+    }
+   }
+  },
+  "wall_s_s0": 8.7
+ },
+ "coverage_headline": {
+  "tr2024_frame_anchor_axes": 0.8013940443459155,
+  "cov_standin2025_anchor_axes": 0.9857479382722579,
+  "real5_anchor_axes": 0.4,
+  "resolution": "🔴 세 값이 갈리는 이유를 **기전으로 규명했다** — prev 열은 시즌 내 경기 집계라 시즌 초반 행에 NaN 이 몰린다.  train 2024 실측: 전 시즌 prev1 NaN 1.44% 인데 앞 250행 70.0% · 앞 1,000행 48.2% · 앞 5,000행 20.1% · 앞 35,185행 4.29%.  real5 의 row_id 는 1·17·213·5,332·35,185 로 전부 시즌 초반이다.  → real5 의 60% 결측은 **커버리지 결함이 아니라 표본 위치**이고, 배포 커버리지 추정치는 40%대가 아니라 98.6% 다.  (5행은 이항 표준오차 ±22%p 라 애초에 정밀도가 없다.)",
+  "tr2024_frame_caveat": "tr2024 프레임의 앵커 축 커버리지가 80.14% 로 낮은 것은 별개 사유다 — 2024 데뷔 투수(season<2024 이력 없음) 46,710행에 앵커가 없다.  Y=2025 앵커에서는 그 투수들도 앵커를 갖게 돼 99.97% 가 된다.  커버행만 재스크린 결과가 전 축에서 같아 판정에는 영향이 없다."
+ },
+ "AN_check": {
+  "v6_n_features": 77,
+  "q_n_features": 81,
+  "raw_column_in_v6": {
+   "asof_pitcher_prev1_game_success_rate": true,
+   "asof_pitcher_prev3_game_success_rate": true,
+   "asof_pitcher_prev5_game_success_rate": true,
+   "asof_pitcher_prev1_game_middle_rate": true,
+   "asof_pitcher_prev3_game_middle_rate": true,
+   "asof_pitcher_prev5_game_middle_rate": true,
+   "asof_pitcher_fastball_rate": true,
+   "asof_pitcher_breaking_rate": true,
+   "asof_pitcher_offspeed_rate": true,
+   "asof_pitcher_pitchmix_n": false
+  },
+  "raw_column_in_q": {
+   "asof_pitcher_prev1_game_success_rate": true,
+   "asof_pitcher_prev3_game_success_rate": true,
+   "asof_pitcher_prev5_game_success_rate": true,
+   "asof_pitcher_prev1_game_middle_rate": true,
+   "asof_pitcher_prev3_game_middle_rate": true,
+   "asof_pitcher_prev5_game_middle_rate": true,
+   "asof_pitcher_fastball_rate": true,
+   "asof_pitcher_breaking_rate": true,
+   "asof_pitcher_offspeed_rate": true,
+   "asof_pitcher_pitchmix_n": true
+  },
+  "n_ins_columns_in_q": 16,
+  "verdict": "🔴 raw 열은 두 팔이 전부 갖고 있다 — prev 6열은 v6·Q 둘 다, 구종 3비율도 v6·Q 둘 다, pitchmix_n 은 Q 가 갖고 있다. 따라서 이 실험이 물을 수 있는 것은 'raw 열이 새로운가' 가 아니라 '**차분·엔트로피라는 형태**가 새로운가' 뿐이다.",
+  "note": "통과 축이 0개라 AN 대조는 무효(moot)다.  다만 확인해 둔다: 🔴 config 경고대로 **구종믹스 4열은 v6 가 쓰고, Q 도 4열 전부 쓴다**. prev 6열도 두 팔 다 쓴다.  Q 는 ins_ 열을 16개 갖고 있다."
+ },
+ "mechanism_finding": {
+  "headline": "🔴 '우리가 만든 순수 동결 스칼라는 죽는다' 는 일반화는 **이 실험에서 반증됐다.**  순수 동결 커리어 성공률 앵커 supp_anc_suc 가 t -4.68 로 살아 있다.",
+  "supp_anc_suc_t": -4.683,
+  "exp074_supp_fm_suc_g5_t": 1.19,
+  "exp075_supp_bt_suc_t": 0.03,
+  "corr_supp_anc_suc_vs_ctrl_asof_psr": 0.8086,
+  "reading": "동결이냐 갱신이냐가 생사를 가르는 축이 아니다.  supp_anc_suc 는 이미 배포된 축 ctrl_asof_psr(t -5.45) 과 r +0.81 이라 **그 축의 거친 판본**이라서 살아 있는 것이고, 그래서 새것이 없다 — R2·R3·R4 에서 전부 죽는다 (-0.88 / -0.31 / -0.40).  exp_074·075 의 동결 스칼라가 죽은 진짜 이유는 '동결이라서' 가 아니라 **그 내용(폼 창·타자 커리어)에 신호가 없어서**다. 🔴 다음 실험 설계에서 '동결/갱신' 을 판정 기준으로 쓰지 마라.",
+  "pitchmix_layer_is_empty": {
+   "raw_columns": {
+    "supp_fastball": 0.059,
+    "supp_breaking": 0.105,
+    "supp_offspeed": -0.212,
+    "supp_log_pitchmix_n": -1.095
+   },
+   "frozen_anchors": {
+    "supp_anc_fb": -0.005,
+    "supp_anc_br": -0.2,
+    "supp_anc_off": 0.133
+   },
+   "our_axes": {
+    "rg_fb_dev": -0.109,
+    "rg_br_dev": 0.838,
+    "rg_off_dev": -1.096,
+    "rg_mix_ent": -0.856
+   },
+   "reading": "🔴 이게 이 실험의 가장 단단한 음성이다.  구종믹스 층은 **원본 열도, 동결 앵커도, 우리 차분도, 엔트로피도 하나도 |t|=1.2 에 못 닿는다** (11개 방향 전부).  그리고 이 층은 사전 등록 단서 (e) 대로 **등록 대조군 선형 span 밖에 온전히 있는 유일한 층**이었다 — 즉 '측정할 수 있었는데 비어 있었다'.  구종 정보를 쓰려면 이 스칼라 층이 아니라 다른 형태여야 한다."
+  },
+  "prev_middle_layer_is_empty": {
+   "supp_prev1_mid": 0.032,
+   "supp_prev3_mid": -0.204,
+   "supp_prev5_mid": -0.073
+  },
+  "prev_success_layer_is_alive_but_already_owned": {
+   "supp_prev1_suc": -2.169,
+   "ctrl_prev3_suc": -3.948,
+   "supp_prev5_suc": -4.128,
+   "reading": "prev 성공률 3열은 전부 살아 있고 **부호가 같다**.  그래서 그 차분인 rg_trend 는 상쇄돼 t -0.43 이 된다.  '최근이 과거보다 좋아졌다' 는 형태에는 정보가 없고, 정보는 **수준**에 있다 — 그런데 수준은 v6·Q 가 이미 raw 열로 갖고 있다."
+  }
+ },
+ "preregistered_clue_proofs": {
+  "clue_a_rg_prev3_suc_dev_in_span": {
+   "r2_on_registered_R4_set": 1.0,
+   "max_abs_resid": 6.375369439107215e-07,
+   "proved": true,
+   "note": "잔차 최대 6.4e-07 = 카운트 반올림 몫.  선형 스크린으로 시험 불가."
+  },
+  "clue_d_rg_trend_in_prev6_span": {
+   "r2_on_prev6": 1.0,
+   "max_abs_resid": 8.271161533457416e-15,
+   "proved": true,
+   "note": "잔차 최대 8.3e-15 = 부동소수점 잡음.  등록 대조군에는 없으므로 등록 판정에는 시험 가능했다."
+  },
+  "clue_e_pitchmix_outside_span": {
+   "r2_on_registered_R4_set": {
+    "rg_fb_dev": 0.4336736664,
+    "rg_br_dev": 0.2810958271,
+    "rg_off_dev": 0.0860194422,
+    "rg_mix_ent": 0.1820314691
+   },
+   "proved": true,
+   "note": "R^2 0.086~0.434 — 온전히 시험 가능했고, 시험했더니 비어 있었다."
+  }
+ },
+ "method_caveats": {
+  "null_misspecification": {
+   "observed": {
+    "rg_prev3_suc_dev|perm_anchor_level": {
+     "n_perm": 200,
+     "kind": "perm_anchor_level",
+     "axis": "rg_prev3_suc_dev",
+     "t_mean": -2.33742,
+     "t_sd": 0.7624659436170768,
+     "abs_t_q50": 2.2255000000000003,
+     "abs_t_q95": 3.6091499999999996,
+     "frac_abs_t_ge_2": 0.645,
+     "t_min": -4.306,
+     "t_max": -0.175,
+     "observed_t": -0.239
+    },
+    "rg_fb_dev|perm_anchor_level": {
+     "n_perm": 200,
+     "kind": "perm_anchor_level",
+     "axis": "rg_fb_dev",
+     "t_mean": -0.01121,
+     "t_sd": 0.7651354502216778,
+     "abs_t_q50": 0.5005,
+     "abs_t_q95": 1.5116999999999994,
+     "frac_abs_t_ge_2": 0.015,
+     "t_min": -2.125,
+     "t_max": 2.136,
+     "observed_t": -0.109
+    },
+    "rg_trend|perm_pitcher_mean": {
+     "n_perm": 200,
+     "kind": "perm_pitcher_mean",
+     "axis": "rg_trend",
+     "t_mean": -1.14545,
+     "t_sd": 0.35758564704819235,
+     "abs_t_q50": 1.1275,
+     "abs_t_q95": 1.762,
+     "frac_abs_t_ge_2": 0.015,
+     "t_min": -2.035,
+     "t_max": -0.306,
+     "observed_t": -0.427
+    },
+    "rg_mix_ent|perm_pitcher_mean": {
+     "n_perm": 200,
+     "kind": "perm_pitcher_mean",
+     "axis": "rg_mix_ent",
+     "t_mean": -0.11635000000000001,
+     "t_sd": 0.8864105628486431,
+     "abs_t_q50": 0.6425000000000001,
+     "abs_t_q95": 1.7716499999999997,
+     "frac_abs_t_ge_2": 0.025,
+     "t_min": -2.415,
+     "t_max": 2.143,
+     "observed_t": -0.856
+    },
+    "rg_trend|perm_row_level": {
+     "n_perm": 200,
+     "kind": "perm_row_level",
+     "axis": "rg_trend",
+     "t_mean": 0.05373,
+     "t_sd": 1.002725585641706,
+     "abs_t_q50": 0.6565000000000001,
+     "abs_t_q95": 2.05285,
+     "frac_abs_t_ge_2": 0.06,
+     "t_min": -3.109,
+     "t_max": 2.682,
+     "observed_t": -0.427
+    }
+   },
+   "finding": "🔴 **차분 축에 앵커만 섞는 순열은 귀무가 아니다.**  rg_prev3_suc_dev 의 앵커 순열 귀무는 t 평균 -2.337 · P(|t|>=2) 0.645 로 나왔다 — 섞이지 않은 prev3 항이 살아 있는 신호(t -3.95)를 그대로 들고 있기 때문이다. row 항이 죽은 rg_fb_dev 에서는 같은 순열이 정상 작동했다(평균 -0.011 · P 0.015).  투수평균 순열(P 0.015~0.025)과 행 순열(sd 1.003 · P 0.060)은 정상이다.  → 사전 등록 대조군 perm_shuffle_missing_preserved 의 t -1.50 도 같은 이유로 부풀려진 값이며, 2 를 안 넘어서 오탐은 안 났다.",
+   "consequence": "이번 판정은 원 t 가 최대 1.10 이라 어느 귀무 눈금으로 봐도 뒤집히지 않는다."
+  },
+  "screen_scope": "이 스크린은 **전역 스칼라 오프셋 형태**만 시험한다.  '축 평행 분기가 못 만드는 형태' 라는 주장 자체는 선형 프로브로 반증되지 않는다 — 그건 스태커 열 실험에서만 시험된다.  다만 rg_trend·rg_mix_ent 를 이루는 raw 열을 v6·Q 가 **이미 전부 피처로 갖고 있으므로**, 스태커 열로 옮겨도 두 팔이 이미 보는 것을 다시 유도하는 셈이다.",
+  "in_sample": "S1 — tr2024 표본내 잔차 스크린이다.  정직면이 아니고 점수로 환산하지 않았다.",
+  "sign": "S15 — 부호를 프레임에서 확정하지 않았다."
+ },
+ "next_suggestion": "🔴 **스태커 열로 승격시킬 축이 없다.**  통과 0개이고, 통과했더라도 raw 열을 두 팔이 이미 갖고 있어 AN 위험이 컸다.  ins_* 레시피('주최측 per-row 값 − 동결 앵커')는 이 두 층에서 소진됐다고 본다 — 커리어 5종(exp_048/AI)에서 +17.63 을 낸 이유는 레시피가 아니라 **그 내용이 새로웠기** 때문이고, 최근경기·구종믹스는 새롭지 않다(두 팔이 raw 로 소유).\n다음은 세 갈래 중 하나로 간다: ① 주최측이 주지 않는 **상호작용 키**(투수×타자, 투수×상황) — exp_075 의 bt_x_psr 계열이 선형 span 밖이었으나 표 축이 죽었으니 행 축만 재설계 ② 팀원 팔이 **못 쓰는 구조**(예: teacher 증류 — 08-14 운영진 명시 허용, 트랙맨 65열은 test 에 없어 teacher 경로뿐) ③ 블렌드 구조 자체 (w_v6·팔 추가).  🔴 목표 +34 는 사후 상수로 못 닿고, 이 스크린 계열(exp_073~076, 축 27개, 생존 0개)이 네 번 연속 빈 것이 그 근거를 보탠다.",
+ "wall_clock": {
+  "s1_anchors_s": 7.0,
+  "s0_ship_s": 8.7,
+  "s2_screen_s": 72.8,
+  "compute_total_s": 88.5,
+  "wall_clock_launch_to_done_min": 2.5,
+  "eta_min": "35~45",
+  "eta_note": "🔴 ETA 를 크게 밑돌았다(2.5분 / 35~45분).  원인은 config 가 라벨 복원을 뺐기 때문 — exp_074·075 는 labels.py 복원(1.47M행 t+1 차분)이 s1 의 대부분이었다.  앵커를 주최측 asof_* 열에서 바로 읽으면 s1 이 7초다.  실측표에 넣을 것.",
+  "threads": "OMP/OPENBLAS/MKL/NUMEXPR/VECLIB = 6 고정"
+ },
+ "changed_variables_vs_exp075": [
+  "부트스트랩 블록 batter_id -> pitcher_id (축이 전부 투수 키 · exp_074 와 동일)",
+  "라벨 복원(labels.py) 미사용 — 앵커를 주최측 asof_* 열에서 읽는다",
+  "축 계열: 타자 커리어 -> 최근경기(prev) · 구종믹스",
+  "잔차화 대조군: {bsr,psr,bmr} -> {prev3, psr, ins 6열}",
+  "귀무 순열: 표 1종 -> 앵커순열·투수평균순열·행순열 3종"
+ ],
+ "protocol": {
+  "frame": "tr2024 보정 프레임 253,507행 (season 2024 단독)",
+  "parent": "BN (LB 1115.9165956458) = expit(alpha*z'+beta_skew*z'^2+d_adj)",
+  "parent_consts": {
+   "alpha": 1.07911,
+   "beta_skew": -0.059151,
+   "d_adj": 0.028610055723290194,
+   "target_rate": 0.4847980356943589,
+   "w_v6": 0.7,
+   "c_aa": 0.25244,
+   "smooth_weights": {
+    "S2": 0.0,
+    "S1": 0.0,
+    "T70": 0.04756
+   },
+   "axis_u": {
+    "beta_ins_off": -0.006534,
+    "ctrl_asof_psr": 0.006544
+   }
+  },
+  "parent_mean": 0.4847980356943589,
+  "parent_mean_gap_to_target": 0.0,
+  "parent_in_sample_brier": 0.24552396647966293,
+  "probe": "z_BN + eps*u, u=(v-mean)/sd on finite, nonfinite->0",
+  "eps": 0.02,
+  "anchor": "mean(p_BN) preserved (brentq)",
+  "stat": "M = mean(delta*r0)",
+  "bootstrap_registered": "pitcher-block, 1000 reps, rng seed 42, shared IDX",
+  "bootstrap_secondary": "batter-block (비교용)",
+  "n_blocks_pitcher": 391,
+  "n_blocks_batter": 424,
+  "changed_variables_vs_exp075": [
+   "부트스트랩 블록 batter_id -> pitcher_id (축이 전부 투수 키 · exp_074 와 동일)",
+   "라벨 복원(labels.py) 미사용 — 앵커를 주최측 asof_* 열에서 읽는다",
+   "축 계열: 타자 커리어 -> 최근경기(prev) · 구종믹스",
+   "잔차화 대조군: {bsr,psr,bmr} -> {prev3, psr, ins 6열}",
+   "귀무 순열: 표 1종 -> 앵커순열·투수평균순열·행순열 3종"
+  ],
+  "threshold_registered": "원 |t| >= 2 AND R1~R4 전부 |t| >= 2 (사전 등록 · S8 · 낮추지 않았다)",
+  "size_use": "none — 부호와 t 만 읽는다 (S1)"
+ },
+ "artifacts": {
+  "server_workdir": "a5000:/home/<user>/SungjinPark/exp076_rg",
+  "local": [
+   "experiments/exp_076/src/{s1_anchors,s0_ship,s2_screen}.py, run.sh",
+   "experiments/exp_076/out/{screen,stage0,anchors_report}.json",
+   "experiments/exp_076/out/anchor_Y{2024,2025,2024robust}.csv",
+   "experiments/exp_076/out/logs/run.log"
+  ],
+  "models": "없음 (학습 0건)"
+ },
+ "report": {
+  "한줄": "등록 축 0/9.  그런데 이번엔 '못 봤다' 가 아니라 '봤는데 없다' 다 — 같은 스크린에서 7개 방향이 |t|>=2 로 켜졌고(최대 6.68), 등록 축 9개는 |t| 최대가 1.10 이다.",
+  "가설": "exp_074·075 가 두 번 잰 기전(순수 동결 스칼라는 죽고 주최측 원본은 산다) 위에서, 값을 한 ins_*(AI +17.63) 의 레시피 = '주최측 per-row 값 − 동결 앵커' 가 아직 안 닿은 두 층 — prev{1,3,5}_game_{success,middle}_rate 6열과 asof_pitcher_{pitchmix_n,fastball,breaking,offspeed} 4열 — 에도 값이 있는가.",
+  "변경점_전부": [
+   "축 계열: 타자 커리어 → 최근경기(prev) 5축 + 구종믹스 4축",
+   "🔴 라벨 복원 labels.py 미사용(config 지시). 앵커를 주최측 asof_* 열에서 직접 읽는다",
+   "부트스트랩 블록: batter_id → pitcher_id (축이 전부 투수 키 · exp_074 와 동일)",
+   "잔차화 대조군: {bsr,psr,bmr} → {prev3, psr, ins 6열} + 보조 R5(prev6)/R6(자기 앵커)/R7(ins 전체)",
+   "귀무 순열: 표 순열 1종 → 앵커순열·투수평균순열·행순열 3종",
+   "프로토콜(ε=0.02 프로브·평균 보존 brentq 앵커·M=mean(δ·r0)·부트스트랩 1000회 seed 42)은 exp_059 이래 불변"
+  ],
+  "결과_1_검출력": {
+   "요지": "🔴 config 가 요구한 확인 — 통과.  7개 방향이 |t|>=2 로 켜졌다. exp_075 의 0/7 은 교정 대조군이 −1.685 로 안 켜져서 읽을 수 없는 0 이었다. 이번 0/9 는 읽어도 되는 0 이다.",
+   "켜진_방향": {
+    "supp_ins_p_success": -6.68,
+    "ctrl_asof_psr": -5.45,
+    "supp_anc_suc": -4.683,
+    "supp_prev5_suc": -4.128,
+    "ctrl_prev3_suc": -3.948,
+    "supp_anc_mid": 2.256,
+    "supp_prev1_suc": -2.169
+   },
+   "핵심": "ctrl_prev3_suc 가 exp_074 와 소수 셋째 자리까지 동일(−3.948) — 스크린 틀이 같음의 증거"
+  },
+  "결과_2_등록축_전멸": {
+   "표(축: 원t/R1prev3/R2psr/R3ins6/R4)": {
+    "rg_prev1_suc_dev": [
+     -0.41,
+     1.07,
+     -0.83,
+     -0.51,
+     -0.46
+    ],
+    "rg_prev3_suc_dev": [
+     -0.24,
+     3.86,
+     -0.88,
+     -0.31,
+     -0.4
+    ],
+    "rg_prev5_suc_dev": [
+     0.46,
+     2.77,
+     -0.21,
+     0.64,
+     1.17
+    ],
+    "rg_prev3_mid_dev": [
+     -0.98,
+     -2.42,
+     -0.89,
+     -1.18,
+     -1.51
+    ],
+    "rg_trend": [
+     -0.43,
+     0.12,
+     -0.55,
+     -0.51,
+     -0.48
+    ],
+    "rg_fb_dev": [
+     -0.11,
+     0.34,
+     0.91,
+     -0.16,
+     0.38
+    ],
+    "rg_br_dev": [
+     0.84,
+     0.35,
+     -0.25,
+     0.47,
+     0.15
+    ],
+    "rg_off_dev": [
+     -1.1,
+     -1.06,
+     -1.01,
+     -0.52,
+     -0.74
+    ],
+    "rg_mix_ent": [
+     -0.86,
+     -0.44,
+     0.24,
+     -0.25,
+     -0.0
+    ]
+   },
+   "R3_바인딩": "🔴 R3(가장 중요한 관문)은 바인딩하지 않았다 — 원 t 가 이미 전부 미달이라 거기까지 가지 못했다.",
+   "부수확인": "커버행만 재스크린 · 앵커 신선도 강건판 · 타자 블록 t 전부 같은 결론"
+  },
+  "결과_3_구종믹스층은_비어있다": "🔴 이 실험의 가장 단단한 음성.  이 층은 사전 등록 단서 (e) 대로 등록 대조군 선형 span 밖에 온전히 있는 유일한 층이었다(R^2 0.086~0.434) — ins_* 는 success·reverse·middle·ball·strike 5종뿐이라 구종을 못 담는다.  측정할 수 있었고, 측정했더니 비어 있었다.  주최측 원본 t: fastball +0.06 · breaking +0.10 · offspeed −0.21 · log(pitchmix_n) −1.09 / 동결 앵커 t: −0.01 · −0.20 · +0.13 / 우리 차분 t: −0.11 · +0.84 · −1.10 / 엔트로피 −0.86.  **11개 방향 전부 |t|=1.2 에 못 닿는다.**",
+  "결과_4_기전_정정": "🔴 '우리가 만든 순수 동결 스칼라는 죽는다' 는 일반화는 반증됐다.  순수 동결 커리어 성공률 앵커 supp_anc_suc 가 t −4.68 로 살아 있다(exp_074 supp_fm_suc_g5 +1.19, exp_075 supp_bt_suc +0.03 과 정반대).  살아 있는 이유는 이미 배포된 ctrl_asof_psr(−5.45) 과 r +0.81 인 그 축의 거친 판본이기 때문이고, 그래서 새것이 없어 R2·R3·R4 에서 전부 죽는다(−0.88 / −0.31 / −0.40).  → 동결이냐 갱신이냐는 생사를 가르는 축이 아니다.  exp_074·075 의 동결 스칼라가 죽은 진짜 이유는 '동결이라서' 가 아니라 그 내용(폼 창·타자 커리어)에 신호가 없어서다.  🔴 다음 설계에서 '동결/갱신' 을 판정 기준으로 쓰면 안 된다.",
+  "결과_5_rg_trend_가_죽은_기전": "prev 성공률 3열은 전부 살아 있고 부호가 같다(−2.17 / −3.95 / −4.13).  그래서 차분인 rg_trend 는 상쇄돼 −0.43 이 된다.  '최근이 과거보다 좋아졌다' 는 형태에는 정보가 없고 정보는 수준에 있다 — 그런데 수준은 v6·Q 가 이미 raw 열로 갖고 있다.",
+  "결과_6_사전등록_단서_기계증명": {
+   "(a) rg_prev3_suc_dev ∈ 등록 R4 집합 span": "R^2 = 1.0, 잔차 최대 6.4e-07 (= 카운트 반올림 몫)",
+   "(d) rg_trend ∈ prev6 span": "R^2 = 1.0, 잔차 최대 8.3e-15 (= 부동소수점 잡음)",
+   "(e) 구종믹스만 span 밖": "R^2 0.086~0.434",
+   "근거_항등": "inseason.py 의 prior = ins_p_r − ins_p_r_dev.  실측 최대차 5.27e-07 · r=1.0 으로 확인."
+  },
+  "결과_7_커버리지_기전으로_종결": "🔴 exp_073·074·075 에서 세 번 갈렸던 문제를 기전으로 끝냈다.  앵커 축 유한율은 tr2024 0.8014 · 대역 0.9857 · real5 0.4000 로 또 갈렸는데, 원인은 prev 열이 시즌 내 경기 집계라 시즌 초반 행에 NaN 이 몰리기 때문이다.  train 2024 실측 — 전 시즌 prev1 NaN 1.44% 인데 앞 250행 70.0% · 앞 1,000행 48.2% · 앞 5,000행 20.1% · 앞 35,185행 4.29%.  real5 의 row_id 는 1·17·213·5,332·35,185 로 전부 시즌 초반이다. → real5 의 60% 는 커버리지 결함이 아니라 표본 위치이고, 배포 커버리지 추정치는 40%대가 아니라 98.6% 다(5행은 이항 표준오차 ±22%p 라 애초에 정밀도가 없다). tr2024 가 80.14% 인 것은 별개 사유 — 2024 데뷔 투수 46,710행에 season<2024 앵커가 없다.  Y=2025 앵커에서는 99.97% 가 된다.",
+  "결과_8_AN점검": "통과 0개라 무효(moot)지만 확인했다.  v6 77피처·Q 81피처가 raw 열을 전부 갖고 있다 — prev 6열 둘 다, 구종 3비율 둘 다, pitchmix_n 은 Q.  Q 는 ins_ 열을 16개 보유. 🔴 config 경고('구종믹스 4열은 v6 가 쓴다')가 맞았고 Q 도 쓴다.  따라서 이 실험이 물을 수 있었던 것은 'raw 열이 새로운가' 가 아니라 '차분·엔트로피라는 형태가 새로운가' 뿐이었다.",
+  "결과_9_as_of_재현_게이트": [
+   "부모 BN 재구성 평균차 0.000e+00 (출하 target 과 정확히 일치)",
+   "앵커 season 최대 2023 · 뽑힌 앵커 행의 season 최대도 2023 (분포 2019:61 2020:63 2021:104 2022:101 2023:382)",
+   "Y2024 ≠ Y2025 앵커 (공통 711명, anc_suc 최대차 0.2917)",
+   "🔴 배포 앵커 anchor_lt2024.npz 와 711/711 일치 — 최대차 5.00e-07, 반올림 상한 초과 0명, id 집합 동일 → 이미 4번 출하된 것과 같은 규약임이 기계 증명",
+   "재사용 벡터 sha 8종 대조 통과 · labels.py 미사용"
+  ],
+  "방법주의_새_함정": "🔴 차분 축에 앵커만 섞는 순열은 귀무가 아니다.  rg_prev3_suc_dev 의 앵커 순열 귀무가 t 평균 −2.337 · P(|t|>=2) 0.645 로 나왔다 — 안 섞인 prev3 항이 살아 있는 신호(−3.95)를 그대로 들고 있기 때문이다.  row 항이 죽은 rg_fb_dev 에서는 같은 순열이 정상 작동(평균 −0.011 · P 0.015).  투수평균 순열(P 0.015~0.025)·행 순열(sd 1.003 · P 0.060)은 정상.  사전 등록 대조군 perm_shuffle_missing_preserved 의 t −1.50 도 같은 이유로 부풀려진 값이다(2 를 안 넘어 오탐은 없었다).  이번 판정은 원 t 최대가 1.10 이라 어느 귀무 눈금으로도 안 뒤집힌다.",
+  "스크린_사정거리": "전역 스칼라 오프셋 형태만 시험한다.  '축 평행 분기가 못 만드는 형태' 라는 주장 자체는 선형 프로브로 반증되지 않는다 — 그건 스태커 열 실험에서만 시험된다.  다만 raw 열을 두 팔이 이미 전부 갖고 있어, 스태커로 옮겨도 이미 보는 것을 다시 유도하는 셈이다. S1: 표본내 잔차 스크린이라 점수로 환산하지 않았다.  S15: 부호를 프레임에서 확정하지 않았다.",
+  "결론": "기각.  등록 축 0/9, 스태커 열로 승격시킬 축이 없다.  ins_* 레시피(주최측 per-row 값 − 동결 앵커)는 이 두 층에서 소진됐다 — 커리어 5종에서 +17.63 을 낸 이유는 레시피가 아니라 그 내용이 새로웠기 때문이고, 최근경기·구종믹스는 새롭지 않다(두 팔이 raw 로 소유).",
+  "다음_제안": [
+   "① 주최측이 주지 않는 상호작용 키 — 투수×타자, 투수×상황.  exp_075 의 bt_x_psr 계열이 선형 span 밖이었으나 표 축이 죽었으니 행 축만 재설계",
+   "② 팀원 팔이 못 쓰는 구조 — teacher 증류(08-14 운영진 명시 허용).  트랙맨 65열은 test 에 없어 배포에 닿는 길이 teacher 경로뿐",
+   "③ 블렌드 구조 자체 — w_v6·팔 추가",
+   "🔴 목표 +34 는 사후 상수로 못 닿는다.  이 스크린 계열이 exp_073~076 네 번 연속, 축 27개에서 생존 0개라는 것이 그 근거를 보탠다 — 오프셋 축을 더 찾는 방향은 수확이 끝났다고 본다."
+  ],
+  "리크감사_메모": "새 앵커 표(새 피처 소스)를 만들었으므로 이 앵커가 제출물에 쓰이게 되면 leak-auditor 독립 감사가 필요하다.  이번 실험은 제출물이 없고 통과 축이 0개라 그 경로가 열리지 않았다.  자체 게이트는 통과했고 배포 앵커와 규약 동일이 기계 증명됐다."
+ }
+}

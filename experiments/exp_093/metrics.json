@@ -1,0 +1,249 @@
+{
+ "exp_id": "exp_093",
+ "title": "4셀 멀티헤드 MLP — stage 0 ρ 프로브 (하드락 G-DIVERSITY)",
+ "verdict": "FAIL (사전 등록 기각) — ρ′ = 0.9365043532585754 >= 0.923. **축 종료. stage 1 미실행.**",
+ "verdict_note": "사전 등록 문턱 0.923 은 제131 이 제126 곡선을 역산해 잡은 재개조건이다. 결과를 보고 문턱을 바꾸지 않았다(S8). stage 1(5시드 확장·혼합 이득·부트스트랩 t)은 config 의 기각 조항대로 **돌리지 않았다.**",
+ "stage": "stage0 only",
+ "surface": "exp_089 정직면(모든 팔 out-of-time) — exp_090/091/092 와 같은 면",
+ "prereg_rule": {
+  "rho_prime_gate": 0.923,
+  "PASS_if": "rho_prime < 0.923 (제131 재개조건)",
+  "definition": "corr(z_new_multihead, z_current_deep) — 둘 다 ≤2023 학습(S86) · 둘 다 1시드(S72) · 둘 다 1632스텝 · 같은 프레임 · 같은 시드 42"
+ },
+ "gates": {
+  "gate1_baseline_point": {
+   "rc": 928.501461058684,
+   "expected": 928.501461058684,
+   "abs_diff": 0.0,
+   "PASS": true
+  },
+  "gate2_code_path_vs_exp090": {
+   "what": "TARGET093=bce · n_out=1 이 exp_090 K1632_oot23_s42 와 바이트 동일한가",
+   "exp090_z_sha256": "8e6acc55dca59a727a155e71aec61c2e84a451381302fd366a9b3b7f67924c11",
+   "ours_z_sha256": "8e6acc55dca59a727a155e71aec61c2e84a451381302fd366a9b3b7f67924c11",
+   "max_abs_diff": 0.0,
+   "PASS": true
+  },
+  "gate3_label_assembly": {
+   "qlab_sha256": "8f2dc19761a5a40c74659dde8c9cf3fa88c0124bd5e157af584a0138a5b1a611",
+   "cells_mutually_exclusive": true,
+   "cellsum1_all_failure": true,
+   "unresolved_failures_total": 329,
+   "unresolved_failures_in_train": 105,
+   "T5_valid_rows_are_nan": true,
+   "T5_sha256": "99d422b4370eecd00cc6fe978b0d43134088e08bd7dfbb6557659c9835a07fad",
+   "marginal_success_target_equals_y": true
+  },
+  "gate4_softmax_identity": {
+   "what": "p_succ == 1 − Σ(4셀) 인가 (config 의 읽기 규약)",
+   "max_abs_diff_multihead": 3.3306690738754696e-16,
+   "max_abs_diff_control": 3.3306690738754696e-16,
+   "PASS": true
+  },
+  "pred_sha_all_match": true,
+  "n_preds_sha_checked": 8
+ },
+ "PREREGISTERED_VERDICT": {
+  "rho_prime": 0.9365043532585754,
+  "gate": 0.923,
+  "PASS": false,
+  "spearman": 0.9384295881276443,
+  "note_S86_span_matched": "둘 다 oot23 (season<=2023, 2022이하 F 제외) 1,116,277행",
+  "note_S72_seeds_matched": "둘 다 시드 42 단독 1 fit"
+ },
+ "🔑floor_a_same_arch_cross_seed": {
+  "what": "exp_090 K1632 5시드끼리의 ρ — 같은 구조·같은 타깃·다른 시드",
+  "pairs": {
+   "s42~s777": 0.9106376432181956,
+   "s42~s2024": 0.933447883600872,
+   "s42~s101": 0.9306804259299534,
+   "s42~s7": 0.925970663004053,
+   "s777~s2024": 0.9226245240346115,
+   "s777~s101": 0.9332916120276797,
+   "s777~s7": 0.925509197217706,
+   "s2024~s101": 0.9391655176763387,
+   "s2024~s7": 0.9393168907206116,
+   "s101~s7": 0.9149772679220275
+  },
+  "mean": 0.9275621625352051,
+  "min": 0.9106376432181956,
+  "max": 0.9393168907206116,
+  "🔑": "ρ′ 가 이 대역 안이면 '새 방향'이 아니라 시드 잡음과 구별이 안 된다는 뜻"
+ },
+ "🔑floor_b_head_only_control": {
+  "what": "collapsed5 = n_out 5 인데 실패 4셀 균등 → **주변 성공확률 타깃이 bce 와 동일**. 파라미터 +260 · 초기화 난수 소비 이동만 다르다",
+  "rho_vs_current_deep": 0.9546648571511965,
+  "rho_vs_multihead": 0.9466718152499783,
+  "🔑": "ρ′ 가 이 대조보다 **뚜렷이 낮아야** 라벨 분해가 방향을 벌린 것이다. 비슷하면 벌어진 것은 초기화 난수뿐이다"
+ },
+ "rho_table": {
+  "current_deep_s42": {
+   "z_mate_oot": 0.8850895941140668,
+   "mate_v6_LV_oot": 0.8817647108088712,
+   "mate_Q_LQ_oot": 0.8555179099776653,
+   "mate_EBM_LE_oot": 0.765532833893066,
+   "AA_deployed_L_aa": 0.8554674272604458,
+   "T70_L_t70": 0.8477377980008133,
+   "z_root_w0": 0.8835787139686233
+  },
+  "multihead5_s42": {
+   "z_mate_oot": 0.8995004523346194,
+   "mate_v6_LV_oot": 0.8936765346816556,
+   "mate_Q_LQ_oot": 0.8758874162559477,
+   "mate_EBM_LE_oot": 0.782886958597044,
+   "AA_deployed_L_aa": 0.879289145495834,
+   "T70_L_t70": 0.8656155405703354,
+   "z_root_w0": 0.900774218357449
+  },
+  "collapsed5_ctrl_s42": {
+   "z_mate_oot": 0.9189718637689341,
+   "mate_v6_LV_oot": 0.9160169017126022,
+   "mate_Q_LQ_oot": 0.8901621509211791,
+   "mate_EBM_LE_oot": 0.801459316178351,
+   "AA_deployed_L_aa": 0.8884691566573817,
+   "T70_L_t70": 0.8871898482641543,
+   "z_root_w0": 0.9177791090173214
+  }
+ },
+ "rho_table_spearman_vs_z_mate": {
+  "current_deep_s42": 0.8865826661816778,
+  "multihead5_s42": 0.8940296487384038,
+  "collapsed5_ctrl_s42": 0.9138571312773227
+ },
+ "arm_quality_on_honest_surface": {
+  "current_deep_s42": {
+   "alone_recentred_score": 824.8773404038179,
+   "alone_raw_score": 824.2820444829047,
+   "z_sd": 0.18990892955672095,
+   "z_mean": -0.051635777574267766
+  },
+  "multihead5_s42": {
+   "alone_recentred_score": 835.7160925633989,
+   "alone_raw_score": 805.5170423800995,
+   "z_sd": 0.18784563209000874,
+   "z_mean": -0.021070935951093453
+  },
+  "collapsed5_ctrl_s42": {
+   "alone_recentred_score": 836.9275234700768,
+   "alone_raw_score": 834.7618444893512,
+   "z_sd": 0.1911587962206887,
+   "z_mean": -0.04657306110121165
+  }
+ },
+ "reference_marks": {
+  "z_mate_alone_recentred": 932.8479386726873,
+  "baseline_w0_root_rc": 928.501461058684
+ },
+ "context": {
+  "exp090_1632_5seed_mix_gain_at_argmax": 13.714309769419287,
+  "exp090_argmax_w": 0.36,
+  "exp092_reference_rho_vs_z_mate_5seedmean": 0.9141957764385082,
+  "🔴": "이 표의 ρ 는 전부 **1시드** 값이다 — 5시드 평균 ρ 와 직접 비교하지 마라(S72)"
+ },
+ "fold_2024": {
+  "note": "검증면 = train<=2023 학습 -> valid 2024 (rolling-origin, out-of-time). R+F 전체 253,507행. brier_recentred 가 면 관례(평균 못박기)이고 score = 100000*(1 - Brier/0.2498069).",
+  "n_rows": 253507,
+  "arms": {
+   "current_deep_s42": {
+    "brier_raw": 0.24774778657742064,
+    "score_raw": 824.2820444829047,
+    "brier_recentred": 0.24774629948713478,
+    "score_recentred": 824.8773404038179,
+    "auc": 0.5513752723479587,
+    "pin_c": -0.004637228605177854
+   },
+   "multihead5_s42": {
+    "brier_raw": 0.24779466284745857,
+    "score_raw": 805.5170423800995,
+    "brier_recentred": 0.24771922353636625,
+    "score_recentred": 835.7160925633989,
+    "auc": 0.551571014924673,
+    "pin_c": -0.03499631000684701
+   },
+   "collapsed5_ctrl_s42": {
+    "brier_raw": 0.24772160731389833,
+    "score_raw": 834.7618444893512,
+    "brier_recentred": 0.24771619729837263,
+    "score_recentred": 836.9275234700768,
+    "auc": 0.5513659603315659,
+    "pin_c": -0.009405272911547411
+   }
+  },
+  "brier": 0.24771922353636625,
+  "bss": 835.7160925633989,
+  "auc": 0.551571014924673
+ },
+ "changed_variables_vs_exp090_baseline": [
+  "① 출력층 nn.Linear(64,1) -> nn.Linear(64,5)  (파라미터 2,499,265 -> 2,499,525 = +260)",
+  "② 목적함수 BCEWithLogitsLoss -> 5분류 소프트 타깃 교차엔트로피",
+  "③ (①이 딸고 오는 것) 초기화 난수 소비 이동 — reset_tokenizer 가 Sequential 생성 뒤라 w/b 토크나이저 초기값이 달라진다",
+  "④ (②가 딸고 오는 것) 스텝당 기울기 크기가 달라져 1632스텝의 **유효 학습량**이 함께 바뀐다 — collapsed5 대조의 raw 점수 834.76 vs bce 824.28 이 그 증거",
+  "⑤ 학습 전용 자산 qlab.parquet 추가 투입 (셀 라벨 4종). 학습 행에만, 예측면은 NaN",
+  "고정: 프레임(exp089/work X_oot23) · 학습 마스크 1,116,277행 · 1632스텝 · lr 1e-3 상수 · batch 4096 · D 96 · init ftt · adamw0.01 · drop 0 · 시드 42 · 폭 256/깊이 3"
+ ],
+ "leak_notes": [
+  "셀 라벨은 그 행 자신의 결과에서 나온 값 — control_success 와 같은 성격이고 학습 행(season<=2023)에만 쓴다.",
+  "T5_oot23.npy 는 예측면(2024) 행이 NaN 이라 학습 코드가 실수로 읽으면 즉시 터진다(기계 게이트).",
+  "trm & valid_mask 가 서로소임을 train093.py 가 assert 한다.",
+  "저장 산출물은 z(성공 로짓)뿐 — 셀 확률·셀 라벨을 어떤 파일에도 안 남겼다.",
+  "규칙 2-4: 모델이 행별 MLP 라 다른 행을 참조하지 않는다. stage1 미실행이므로 순열 왕복 검사는 미수행."
+ ],
+ "deviations_from_config": [
+  "프레임 — config 는 build_CG/kit 의 재구성 정본(S113) 재사용을 허용했으나 **exp089/work/X_oot23.npy 를 썼다.** 이유: ρ′ 는 기준선(exp_090 K1632_oot23_s42)과의 짝지은 비교이고, 프레임을 바꾸면 프레임 차이가 ρ 를 낮추는 쪽으로 실려 **통과 방향으로 편향**된다. 같은 프레임이 유일한 통제다. build_CG/kit/frame 의 feat6.parquet 는 읽지 않았다.",
+  "stage 1 미실행 — 사전 등록 기각 조항.",
+  "추가로 돌린 것 하나: collapsed5 귀무 대조 1 fit. 판정 지표가 아니라 ρ′ 해석용 바닥이다."
+ ],
+ "train_time_min": 1.23,
+ "wall_clock_min_session": null,
+ "inference_time_sec": null,
+ "fits": {
+  "GATE_bce_s42": {
+   "tag": "GATE_bce_s42",
+   "target_spec": "bce",
+   "n_out": 1,
+   "n_params": 2499265,
+   "total_steps": 1632,
+   "n_train": 1116277,
+   "valid_brier_raw": 0.24774778657742064,
+   "valid_score_raw": 824.2820444829047,
+   "z_sd": 0.18990892955672095,
+   "z_mean": -0.051635777574267766,
+   "fit_wall_sec": 27.0,
+   "z_sha256": "8e6acc55dca59a727a155e71aec61c2e84a451381302fd366a9b3b7f67924c11"
+  },
+  "M5_cells_s42": {
+   "tag": "M5_cells_s42",
+   "target_spec": "cells5",
+   "n_out": 5,
+   "n_params": 2499525,
+   "total_steps": 1632,
+   "n_train": 1116277,
+   "valid_brier_raw": 0.24779466284745857,
+   "valid_score_raw": 805.5170423800995,
+   "z_sd": 0.18784563209000874,
+   "z_mean": -0.021070935951093453,
+   "fit_wall_sec": 19.4,
+   "z_sha256": "51db6455ba8ff00c650314a065487dc5bd595d727a434fc65b9fda17052f9c25"
+  },
+  "C5_collap_s42": {
+   "tag": "C5_collap_s42",
+   "target_spec": "collapsed5",
+   "n_out": 5,
+   "n_params": 2499525,
+   "total_steps": 1632,
+   "n_train": 1116277,
+   "valid_brier_raw": 0.24772160731389833,
+   "valid_score_raw": 834.7618444893512,
+   "z_sd": 0.1911587962206887,
+   "z_mean": -0.04657306110121165,
+   "fit_wall_sec": 27.1,
+   "z_sha256": "4462863637b49b8a713459ec0c9bc25337f85a6f7012481581e4ce707a0c6355"
+  }
+ },
+ "artifacts_on_server": {
+  "root": "~/SungjinPark/exp093/",
+  "preds": "~/SungjinPark/exp093/out/preds/z_{GATE_bce_s42,M5_cells_s42,C5_collap_s42}.npy",
+  "label_target": "~/SungjinPark/exp093/work/T5_oot23.npy (🔴 학습 전용 — 회수 안 함)",
+  "src": "~/SungjinPark/exp093/src/"
+ }
+}

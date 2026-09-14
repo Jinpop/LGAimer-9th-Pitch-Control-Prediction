@@ -1,0 +1,13 @@
+# 캠페인 4 — 지휘자 작성 2026-08-05
+exp_id: exp_009
+date: "2026-08-05"
+hypothesis: "마스크 RF(0.248455)를 새 base로 삼고 trackman 프로파일 65피처를 붙이면, 강한 base 위에서도 우리 피처가 값어치를 한다"
+base_exp: "exp_008 R2"        # 변경 1개: 프로파일 조인
+model:
+  type: randomforest          # 운영진 스펙 그대로 (n=100, depth=10, leaf=200, seed 42)
+  params: exp_008 R1과 동일
+features:
+  include: ["제공 47", "+ as-of 프로파일 65 (fold별 컷오프, exp_003 로직)"]
+  notes: "프로파일 결측은 SimpleImputer(median)를 타는 운영진 파이프라인 특성상 sentinel화됨 — has_profile 플래그 컬럼을 반드시 추가해 결측 정보를 보존할 것"
+validation: {primary_metric: brier, note: "fold_2024 valid-R, 대조군 = exp_008 R2 0.248455"}
+runtime: {where: a5000, expected_min: 15}

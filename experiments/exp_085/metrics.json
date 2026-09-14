@@ -1,0 +1,1629 @@
+{
+ "exp_id": "exp_085",
+ "surface": {
+  "fold": "fold_2024",
+  "train_upto": 2023,
+  "valid_season": 2024,
+  "n_valid_all": 253507,
+  "y_mean": 0.4861049201797189
+ },
+ "score_conversion": {
+  "formula": "100000*(1 - Brier/0.2498069)",
+  "sensitivity": "Brier 1e-6 = 0.4003점 (S3)"
+ },
+ "reused_vectors": {
+  "AA67_exp048_A1_s42@1400": {
+   "path": "~/experiments/exp_048/pred/pred_A1_u2024_seed42_at1400.npy",
+   "sha256": "0141db5678de394f56da78804ef6087cc20b30233c323f7e466f23f301f74b7f",
+   "reused": true
+  },
+  "AA81_exp049_A1_s42@1400": {
+   "path": "~/experiments/exp_049/pred/pred_A1_u2024_seed42_at1400.npy",
+   "sha256": "c5bb27c5155071a85c533dc6c511882eec4512ecf0f99575376c09af640c73a8",
+   "reused": true
+  },
+  "S1_exp053_s42@1400": {
+   "path": "~/experiments/exp_053/pred/pred_S1_u2024_seed42_at1400.npy",
+   "sha256": "f1d7e501c2140afd1e1b89f2f8703c3a728ccd982c230f5e1e082d185e5e4c9e",
+   "reused": true
+  },
+  "S2_exp053_s42@1400": {
+   "path": "~/experiments/exp_053/pred/pred_S2_u2024_seed42_at1400.npy",
+   "sha256": "2b2aa59168eaf0603db2c82c4d8cbc8fea8a7df988fdb6b290e5b338a407b4c3",
+   "reused": true
+  },
+  "CE0_exp053_s42@1400": {
+   "path": "~/experiments/exp_053/pred/pred_CE0_u2024_seed42_at1400.npy",
+   "sha256": "0141db5678de394f56da78804ef6087cc20b30233c323f7e466f23f301f74b7f",
+   "reused": true
+  },
+  "T70_exp055_s42@1400": {
+   "path": "~/experiments/exp_055/pred/pred_T70_u2024_seed42_at1400.npy",
+   "sha256": "45b4c14cbace78b990529fab61ecb4ff1e1f84ef9c4ce40d2f08ed8f83c4b8d6",
+   "reused": true
+  },
+  "NN_exp064_A99ship_s42": {
+   "path": "~/exp064/out/preds/A99ship_s42.npy",
+   "sha256": "51b9d4bcc4e9388dfe843531597df9e471db9b07155918947b8db35157c986ff",
+   "reused": true
+  },
+  "NN_exp064_A99ship_seedavg": {
+   "path": "~/exp064/out/preds/A99ship_seedavg.npy",
+   "sha256": "74cc52d8932ab4242ddc1ee25a048dc7bab2871fdf9be40c4e784ae12058667e",
+   "reused": true
+  },
+  "arms/X_arms.npy": {
+   "path": "~/arms/X_arms.npy",
+   "sha256": "f3f410bde229cf3fbd7cc9448856b254ef4925f235671583f0f86d092e658cc9",
+   "reused": true
+  }
+ },
+ "fits": {
+  "F1_FM": {
+   "arm": "F1_FM",
+   "runtag": "r2",
+   "seed": 42,
+   "device": "cuda:0",
+   "n_params": 20848,
+   "dense_width": 157,
+   "n_train": 1116277,
+   "n_valid": 253507,
+   "epochs": 25,
+   "early_stop": false,
+   "take": "best",
+   "best_epoch": 1,
+   "best_valid_brier": 0.248008671014153,
+   "best_valid_score": 719.8476046286206,
+   "last_valid_brier": 0.25401323866210684,
+   "last_valid_score": -1683.8360598153467,
+   "fit_wall_min": 2.269,
+   "row_independence_rule_2_4": {
+    "chunk_65536_vs_4096_max_abs_diff": 0.0,
+    "shuffled_roundtrip_max_abs_diff": 0.0,
+    "bitwise_identical_chunk": true,
+    "bitwise_identical_shuffle": true
+   },
+   "recipe": {
+    "opt": "AdamW",
+    "max_lr": 0.003,
+    "wd": 0.0001,
+    "batch": 4096,
+    "sched": "OneCycleLR total_steps=25*steps, pct_start 0.3, div 25, final_div 1e4",
+    "loss": "BCEWithLogits",
+    "src": "exp_064 nnlib.fit 승계 (epochs 25, take=best, 조기종료 없음)"
+   },
+   "pred_sha256_best": "94c74952d99b29f55309cfa27c3aaac79e3afad809606d0e8be9eb5929eb0ad5",
+   "structure": {
+    "k": 16,
+    "fields": [
+     "pitcher_id",
+     "batter_id",
+     "batter_hand",
+     "dom6"
+    ],
+    "pairs": [
+     [
+      "pitcher_id",
+      "batter_id"
+     ],
+     [
+      "pitcher_id",
+      "batter_hand"
+     ],
+     [
+      "pitcher_id",
+      "dom6"
+     ],
+     [
+      "batter_id",
+      "dom6"
+     ]
+    ],
+    "linear": "수치 157열 Linear + 범주 10필드 레벨별 스칼라 + 절편"
+   }
+  },
+  "F2_EMB": {
+   "arm": "F2_EMB",
+   "runtag": "r2",
+   "seed": 42,
+   "device": "cuda:1",
+   "n_params": 149511,
+   "dense_width": 157,
+   "n_train": 1116277,
+   "n_valid": 253507,
+   "epochs": 25,
+   "early_stop": false,
+   "take": "best",
+   "best_epoch": 4,
+   "best_valid_brier": 0.24783708036928725,
+   "best_valid_score": 788.5369182007107,
+   "last_valid_brier": 0.2516635548172763,
+   "last_valid_score": -743.2360023987839,
+   "fit_wall_min": 2.166,
+   "row_independence_rule_2_4": {
+    "chunk_65536_vs_4096_max_abs_diff": 1.1920928955078125e-07,
+    "shuffled_roundtrip_max_abs_diff": 0.0,
+    "bitwise_identical_chunk": false,
+    "bitwise_identical_shuffle": true
+   },
+   "recipe": {
+    "opt": "AdamW",
+    "max_lr": 0.003,
+    "wd": 0.0001,
+    "batch": 4096,
+    "sched": "OneCycleLR total_steps=25*steps, pct_start 0.3, div 25, final_div 1e4",
+    "loss": "BCEWithLogits",
+    "src": "exp_064 nnlib.fit 승계 (epochs 25, take=best, 조기종료 없음)"
+   },
+   "pred_sha256_best": "cdba762e249bf952ba2eeb725d1ecd28ccd2111f3301bb988c70eec716e87c47",
+   "structure": {
+    "new_id_emb": {
+     "pitcher_id": 32,
+     "batter_id": 32,
+     "dom6": 16
+    },
+    "old_emb": [
+     "base_state",
+     "game_type",
+     "pitcher_team_id",
+     "batter_team_id",
+     "cnt_state"
+    ],
+    "old_dim": 6,
+    "mlp": "256 BN ReLU Drop.3 - 128 BN ReLU Drop.3 - 64 ReLU - 1"
+   }
+  }
+ },
+ "rule_2_4_row_independence": {
+  "F1_FM": {
+   "chunk_65536_vs_4096_max_abs_diff": 0.0,
+   "shuffled_roundtrip_max_abs_diff": 0.0,
+   "bitwise_identical_chunk": true,
+   "bitwise_identical_shuffle": true
+  },
+  "F2_EMB": {
+   "chunk_65536_vs_4096_max_abs_diff": 1.1920928955078125e-07,
+   "shuffled_roundtrip_max_abs_diff": 0.0,
+   "bitwise_identical_chunk": false,
+   "bitwise_identical_shuffle": true
+  }
+ },
+ "run_r1_not_registered": {
+  "F1_FM": {
+   "best_epoch": 1,
+   "epochs_run": 7,
+   "brier": 0.24802445349582702,
+   "score": 713.5297320342127,
+   "note": "구현 오류 실행 — OneCycle 을 60에폭으로 잡고 patience 5 로 warm-up 에서 잘렸다. 판정에 쓰지 않는다"
+  },
+  "F2_EMB": {
+   "best_epoch": 5,
+   "epochs_run": 11,
+   "brier": 0.2477498783790707,
+   "score": 823.4446770402637,
+   "note": "구현 오류 실행 — OneCycle 을 60에폭으로 잡고 patience 5 로 warm-up 에서 잘렸다. 판정에 쓰지 않는다"
+  }
+ },
+ "standalone_out_of_time": {
+  "AA67_exp048_A1_s42@1400": {
+   "brier": 0.2478610966346746,
+   "score": 778.9229862447345,
+   "brier_R": 0.24794706738157826,
+   "n_R": 223497,
+   "brier_F": 0.24722083658733238,
+   "n_F": 30010
+  },
+  "AA81_exp049_A1_s42@1400": {
+   "brier": 0.24770887541402004,
+   "score": 839.8585411291571,
+   "brier_R": 0.24778112034896818,
+   "n_R": 223497,
+   "brier_F": 0.24717083721921523,
+   "n_F": 30010
+  },
+  "S1_exp053_s42@1400": {
+   "brier": 0.24791277448219506,
+   "score": 758.2358685068069,
+   "brier_R": 0.24792067366770174,
+   "n_R": 223497,
+   "brier_F": 0.24785394594959903,
+   "n_F": 30010
+  },
+  "S2_exp053_s42@1400": {
+   "brier": 0.24787980987309108,
+   "score": 771.4319047668062,
+   "brier_R": 0.2479689665662765,
+   "n_R": 223497,
+   "brier_F": 0.24721582275356907,
+   "n_F": 30010
+  },
+  "CE0_exp053_s42@1400": {
+   "brier": 0.2478610966346746,
+   "score": 778.9229862447345,
+   "brier_R": 0.24794706738157826,
+   "n_R": 223497,
+   "brier_F": 0.24722083658733238,
+   "n_F": 30010
+  },
+  "T70_exp055_s42@1400": {
+   "brier": 0.24783713924616857,
+   "score": 788.5133492435248,
+   "brier_R": 0.24792594529028883,
+   "n_R": 223497,
+   "brier_F": 0.24717576355664025,
+   "n_F": 30010
+  },
+  "NN_exp064_A99ship_s42": {
+   "brier": 0.24775345007780714,
+   "score": 822.0148931806337,
+   "brier_R": 0.2478491369338841,
+   "n_R": 223497,
+   "brier_F": 0.2470408301087088,
+   "n_F": 30010
+  },
+  "NN_exp064_A99ship_seedavg": {
+   "brier": 0.24756767168405058,
+   "score": 896.3836931443536,
+   "brier_R": 0.24766574445780287,
+   "n_R": 223497,
+   "brier_F": 0.2468372827898379,
+   "n_F": 30010
+  },
+  "F1_FM_best": {
+   "brier": 0.248008671014153,
+   "score": 719.8476046286206,
+   "brier_R": 0.24802159771396468,
+   "n_R": 223497,
+   "brier_F": 0.24791240048340274,
+   "n_F": 30010
+  },
+  "F1_FM_last": {
+   "brier": 0.25401323866210684,
+   "score": -1683.8360598153467,
+   "brier_R": 0.253476235605134,
+   "n_R": 223497,
+   "brier_F": 0.2580125246409225,
+   "n_F": 30010
+  },
+  "F2_EMB_best": {
+   "brier": 0.24783708036928725,
+   "score": 788.5369182007107,
+   "brier_R": 0.2479123119357048,
+   "n_R": 223497,
+   "brier_F": 0.2472767994829285,
+   "n_F": 30010
+  },
+  "F2_EMB_last": {
+   "brier": 0.2516635548172763,
+   "score": -743.2360023987839,
+   "brier_R": 0.25132379173094344,
+   "n_R": 223497,
+   "brier_F": 0.2541939123816265,
+   "n_F": 30010
+  }
+ },
+ "standalone_tr2024_insample_NOT_COMPARABLE": {
+  "lg_p_v6(tr2024 표본내)": {
+   "brier": 0.24635621129170715,
+   "score": 1381.342432211785,
+   "brier_R": 0.2465193067901309,
+   "n_R": 223497,
+   "brier_F": 0.2451415710180918,
+   "n_F": 30010
+  },
+  "lg_p_Q(tr2024 표본내)": {
+   "brier": 0.24550766203013386,
+   "score": 1721.0245072758812,
+   "brier_R": 0.24576385128865544,
+   "n_R": 223497,
+   "brier_F": 0.24359971365586558,
+   "n_F": 30010
+  },
+  "p_EBM(tr2024 표본내, 이미 로짓 — S14)": {
+   "brier": 0.24773846850591769,
+   "score": 828.0121542208474,
+   "brier_R": 0.24754478896627405,
+   "n_R": 223497,
+   "brier_F": 0.24918088090417678,
+   "n_F": 30010
+  },
+  "lg_p_AA_deployed(tr2024 표본내)": {
+   "brier": 0.2449017912233819,
+   "score": 1963.5601645183076,
+   "brier_R": 0.24504256800465013,
+   "n_R": 223497,
+   "brier_F": 0.2438533677551007,
+   "n_F": 30010
+  }
+ },
+ "G0a_standalone": {
+  "threshold_pts": -500.0,
+  "reference_set": {
+   "AA67_exp048_A1_s42@1400": 778.9229862447345,
+   "AA81_exp049_A1_s42@1400": 839.8585411291571,
+   "S1_exp053_s42@1400": 758.2358685068069,
+   "S2_exp053_s42@1400": 771.4319047668062,
+   "T70_exp055_s42@1400": 788.5133492435248,
+   "NN_exp064_A99ship_s42": 822.0148931806337
+  },
+  "weakest_existing_arm": "S1_exp053_s42@1400",
+  "weakest_score": 758.2358685068069,
+  "floor_score": 258.2358685068069,
+  "arms": {
+   "F1_FM_best": {
+    "score": 719.8476046286206,
+    "delta_vs_weakest_pts": -38.38826387818631,
+    "pass": true
+   },
+   "F1_FM_last": {
+    "score": -1683.8360598153467,
+    "delta_vs_weakest_pts": -2442.071928322154,
+    "pass": false
+   },
+   "F2_EMB_best": {
+    "score": 788.5369182007107,
+    "delta_vs_weakest_pts": 30.301049693903792,
+    "pass": true
+   },
+   "F2_EMB_last": {
+    "score": -743.2360023987839,
+    "delta_vs_weakest_pts": -1501.4718709055908,
+    "pass": false
+   }
+  }
+ },
+ "corr_matrix_logit": {
+  "AA67_exp048_A1_s42@1400": {
+   "AA67_exp048_A1_s42@1400": 1.0,
+   "AA81_exp049_A1_s42@1400": 0.9557179018117027,
+   "S1_exp053_s42@1400": 0.9518865772390254,
+   "S2_exp053_s42@1400": 0.9627403439990535,
+   "CE0_exp053_s42@1400": 1.0,
+   "T70_exp055_s42@1400": 0.9532390299288833,
+   "NN_exp064_A99ship_s42": 0.859124586484838,
+   "NN_exp064_A99ship_seedavg": 0.8857940267432443,
+   "F1_FM_best": 0.8039998240979915,
+   "F1_FM_last": 0.34876967539365883,
+   "F2_EMB_best": 0.8440799108544867,
+   "F2_EMB_last": 0.5459051540703954,
+   "lg_p_v6(tr2024 표본내)": 0.8788692985854265,
+   "lg_p_Q(tr2024 표본내)": 0.8714063708904446,
+   "p_EBM(tr2024 표본내, 이미 로짓 — S14)": 0.7566406872284233,
+   "lg_p_AA_deployed(tr2024 표본내)": 0.8797638726784187
+  },
+  "AA81_exp049_A1_s42@1400": {
+   "AA67_exp048_A1_s42@1400": 0.9557179018117027,
+   "AA81_exp049_A1_s42@1400": 0.9999999999999999,
+   "S1_exp053_s42@1400": 0.9455040326635121,
+   "S2_exp053_s42@1400": 0.9563211516956216,
+   "CE0_exp053_s42@1400": 0.9557179018117027,
+   "T70_exp055_s42@1400": 0.9504592637238186,
+   "NN_exp064_A99ship_s42": 0.8732292784621379,
+   "NN_exp064_A99ship_seedavg": 0.9023860005525004,
+   "F1_FM_best": 0.8188809150334403,
+   "F1_FM_last": 0.35525575559170225,
+   "F2_EMB_best": 0.8630607569315737,
+   "F2_EMB_last": 0.5613061914215277,
+   "lg_p_v6(tr2024 표본내)": 0.8976077243979974,
+   "lg_p_Q(tr2024 표본내)": 0.8927676834266939,
+   "p_EBM(tr2024 표본내, 이미 로짓 — S14)": 0.7703438650233693,
+   "lg_p_AA_deployed(tr2024 표본내)": 0.8939821222229073
+  },
+  "S1_exp053_s42@1400": {
+   "AA67_exp048_A1_s42@1400": 0.9518865772390255,
+   "AA81_exp049_A1_s42@1400": 0.9455040326635121,
+   "S1_exp053_s42@1400": 0.9999999999999999,
+   "S2_exp053_s42@1400": 0.9587632580751642,
+   "CE0_exp053_s42@1400": 0.9518865772390255,
+   "T70_exp055_s42@1400": 0.952640914986057,
+   "NN_exp064_A99ship_s42": 0.8661182388194947,
+   "NN_exp064_A99ship_seedavg": 0.8928742178469423,
+   "F1_FM_best": 0.8135717996236389,
+   "F1_FM_last": 0.3604725784556367,
+   "F2_EMB_best": 0.8458094873885895,
+   "F2_EMB_last": 0.5508194356841568,
+   "lg_p_v6(tr2024 표본내)": 0.8955542866284146,
+   "lg_p_Q(tr2024 표본내)": 0.8857279027522763,
+   "p_EBM(tr2024 표본내, 이미 로짓 — S14)": 0.805617201272507,
+   "lg_p_AA_deployed(tr2024 표본내)": 0.891523964080321
+  },
+  "S2_exp053_s42@1400": {
+   "AA67_exp048_A1_s42@1400": 0.9627403439990536,
+   "AA81_exp049_A1_s42@1400": 0.9563211516956216,
+   "S1_exp053_s42@1400": 0.9587632580751642,
+   "S2_exp053_s42@1400": 1.0,
+   "CE0_exp053_s42@1400": 0.9627403439990536,
+   "T70_exp055_s42@1400": 0.9609809950337618,
+   "NN_exp064_A99ship_s42": 0.8705414205643969,
+   "NN_exp064_A99ship_seedavg": 0.8972445507743461,
+   "F1_FM_best": 0.8234831043505377,
+   "F1_FM_last": 0.3546606315316364,
+   "F2_EMB_best": 0.8556889883847624,
+   "F2_EMB_last": 0.546022088755209,
+   "lg_p_v6(tr2024 표본내)": 0.8967041832387957,
+   "lg_p_Q(tr2024 표본내)": 0.8843343745006534,
+   "p_EBM(tr2024 표본내, 이미 로짓 — S14)": 0.7754437545055605,
+   "lg_p_AA_deployed(tr2024 표본내)": 0.8923552788876138
+  },
+  "CE0_exp053_s42@1400": {
+   "AA67_exp048_A1_s42@1400": 1.0,
+   "AA81_exp049_A1_s42@1400": 0.9557179018117027,
+   "S1_exp053_s42@1400": 0.9518865772390254,
+   "S2_exp053_s42@1400": 0.9627403439990535,
+   "CE0_exp053_s42@1400": 1.0,
+   "T70_exp055_s42@1400": 0.9532390299288833,
+   "NN_exp064_A99ship_s42": 0.859124586484838,
+   "NN_exp064_A99ship_seedavg": 0.8857940267432443,
+   "F1_FM_best": 0.8039998240979915,
+   "F1_FM_last": 0.34876967539365883,
+   "F2_EMB_best": 0.8440799108544867,
+   "F2_EMB_last": 0.5459051540703954,
+   "lg_p_v6(tr2024 표본내)": 0.8788692985854265,
+   "lg_p_Q(tr2024 표본내)": 0.8714063708904446,
+   "p_EBM(tr2024 표본내, 이미 로짓 — S14)": 0.7566406872284233,
+   "lg_p_AA_deployed(tr2024 표본내)": 0.8797638726784187
+  },
+  "T70_exp055_s42@1400": {
+   "AA67_exp048_A1_s42@1400": 0.9532390299288834,
+   "AA81_exp049_A1_s42@1400": 0.9504592637238186,
+   "S1_exp053_s42@1400": 0.9526409149860569,
+   "S2_exp053_s42@1400": 0.9609809950337618,
+   "CE0_exp053_s42@1400": 0.9532390299288834,
+   "T70_exp055_s42@1400": 1.0,
+   "NN_exp064_A99ship_s42": 0.8812498424020028,
+   "NN_exp064_A99ship_seedavg": 0.9039824548028531,
+   "F1_FM_best": 0.8663502665104614,
+   "F1_FM_last": 0.3680690689361137,
+   "F2_EMB_best": 0.8846807388423953,
+   "F2_EMB_last": 0.5438436074673303,
+   "lg_p_v6(tr2024 표본내)": 0.8972631944879126,
+   "lg_p_Q(tr2024 표본내)": 0.8781484272338221,
+   "p_EBM(tr2024 표본내, 이미 로짓 — S14)": 0.7776714646008178,
+   "lg_p_AA_deployed(tr2024 표본내)": 0.8853885529444964
+  },
+  "NN_exp064_A99ship_s42": {
+   "AA67_exp048_A1_s42@1400": 0.859124586484838,
+   "AA81_exp049_A1_s42@1400": 0.8732292784621379,
+   "S1_exp053_s42@1400": 0.8661182388194948,
+   "S2_exp053_s42@1400": 0.870541420564397,
+   "CE0_exp053_s42@1400": 0.859124586484838,
+   "T70_exp055_s42@1400": 0.8812498424020028,
+   "NN_exp064_A99ship_s42": 1.0,
+   "NN_exp064_A99ship_seedavg": 0.9655619994669682,
+   "F1_FM_best": 0.8574653195706865,
+   "F1_FM_last": 0.39031138587744046,
+   "F2_EMB_best": 0.9069181108892086,
+   "F2_EMB_last": 0.5811251611784628,
+   "lg_p_v6(tr2024 표본내)": 0.8972954445130767,
+   "lg_p_Q(tr2024 표본내)": 0.8789793073758285,
+   "p_EBM(tr2024 표본내, 이미 로짓 — S14)": 0.7725701428441255,
+   "lg_p_AA_deployed(tr2024 표본내)": 0.8649335741722256
+  },
+  "NN_exp064_A99ship_seedavg": {
+   "AA67_exp048_A1_s42@1400": 0.8857940267432443,
+   "AA81_exp049_A1_s42@1400": 0.9023860005525003,
+   "S1_exp053_s42@1400": 0.8928742178469423,
+   "S2_exp053_s42@1400": 0.8972445507743461,
+   "CE0_exp053_s42@1400": 0.8857940267432443,
+   "T70_exp055_s42@1400": 0.9039824548028531,
+   "NN_exp064_A99ship_s42": 0.9655619994669682,
+   "NN_exp064_A99ship_seedavg": 1.0,
+   "F1_FM_best": 0.8714300557380558,
+   "F1_FM_last": 0.3911517334649556,
+   "F2_EMB_best": 0.9205848177574144,
+   "F2_EMB_last": 0.6116883822595527,
+   "lg_p_v6(tr2024 표본내)": 0.9262758485252319,
+   "lg_p_Q(tr2024 표본내)": 0.9062449139300401,
+   "p_EBM(tr2024 표본내, 이미 로짓 — S14)": 0.8025934722520941,
+   "lg_p_AA_deployed(tr2024 표본내)": 0.8958661977076657
+  },
+  "F1_FM_best": {
+   "AA67_exp048_A1_s42@1400": 0.8039998240979914,
+   "AA81_exp049_A1_s42@1400": 0.8188809150334404,
+   "S1_exp053_s42@1400": 0.813571799623639,
+   "S2_exp053_s42@1400": 0.8234831043505377,
+   "CE0_exp053_s42@1400": 0.8039998240979914,
+   "T70_exp055_s42@1400": 0.8663502665104614,
+   "NN_exp064_A99ship_s42": 0.8574653195706864,
+   "NN_exp064_A99ship_seedavg": 0.8714300557380557,
+   "F1_FM_best": 1.0,
+   "F1_FM_last": 0.3670112868411906,
+   "F2_EMB_best": 0.90539119279073,
+   "F2_EMB_last": 0.4738463354169442,
+   "lg_p_v6(tr2024 표본내)": 0.8668012496251777,
+   "lg_p_Q(tr2024 표본내)": 0.8224371651189611,
+   "p_EBM(tr2024 표본내, 이미 로짓 — S14)": 0.8061845056074344,
+   "lg_p_AA_deployed(tr2024 표본내)": 0.8186071426656478
+  },
+  "F1_FM_last": {
+   "AA67_exp048_A1_s42@1400": 0.3487696753936588,
+   "AA81_exp049_A1_s42@1400": 0.3552557555917022,
+   "S1_exp053_s42@1400": 0.3604725784556367,
+   "S2_exp053_s42@1400": 0.35466063153163635,
+   "CE0_exp053_s42@1400": 0.3487696753936588,
+   "T70_exp055_s42@1400": 0.3680690689361137,
+   "NN_exp064_A99ship_s42": 0.39031138587744046,
+   "NN_exp064_A99ship_seedavg": 0.3911517334649556,
+   "F1_FM_best": 0.3670112868411906,
+   "F1_FM_last": 1.0,
+   "F2_EMB_best": 0.39311338859687633,
+   "F2_EMB_last": 0.3901866377002192,
+   "lg_p_v6(tr2024 표본내)": 0.35386390848935256,
+   "lg_p_Q(tr2024 표본내)": 0.3556107291762706,
+   "p_EBM(tr2024 표본내, 이미 로짓 — S14)": 0.3003249371323986,
+   "lg_p_AA_deployed(tr2024 표본내)": 0.3473492116697123
+  },
+  "F2_EMB_best": {
+   "AA67_exp048_A1_s42@1400": 0.8440799108544866,
+   "AA81_exp049_A1_s42@1400": 0.8630607569315736,
+   "S1_exp053_s42@1400": 0.8458094873885895,
+   "S2_exp053_s42@1400": 0.8556889883847624,
+   "CE0_exp053_s42@1400": 0.8440799108544866,
+   "T70_exp055_s42@1400": 0.8846807388423953,
+   "NN_exp064_A99ship_s42": 0.9069181108892086,
+   "NN_exp064_A99ship_seedavg": 0.9205848177574144,
+   "F1_FM_best": 0.90539119279073,
+   "F1_FM_last": 0.3931133885968763,
+   "F2_EMB_best": 1.0,
+   "F2_EMB_last": 0.5905598627926387,
+   "lg_p_v6(tr2024 표본내)": 0.8856314439398225,
+   "lg_p_Q(tr2024 표본내)": 0.8596797278604557,
+   "p_EBM(tr2024 표본내, 이미 로짓 — S14)": 0.7572064988238745,
+   "lg_p_AA_deployed(tr2024 표본내)": 0.8520811176761193
+  },
+  "F2_EMB_last": {
+   "AA67_exp048_A1_s42@1400": 0.5459051540703954,
+   "AA81_exp049_A1_s42@1400": 0.5613061914215277,
+   "S1_exp053_s42@1400": 0.5508194356841568,
+   "S2_exp053_s42@1400": 0.5460220887552089,
+   "CE0_exp053_s42@1400": 0.5459051540703954,
+   "T70_exp055_s42@1400": 0.5438436074673303,
+   "NN_exp064_A99ship_s42": 0.5811251611784628,
+   "NN_exp064_A99ship_seedavg": 0.6116883822595526,
+   "F1_FM_best": 0.47384633541694426,
+   "F1_FM_last": 0.3901866377002192,
+   "F2_EMB_best": 0.5905598627926387,
+   "F2_EMB_last": 1.0,
+   "lg_p_v6(tr2024 표본내)": 0.5440210472259026,
+   "lg_p_Q(tr2024 표본내)": 0.5435232937112301,
+   "p_EBM(tr2024 표본내, 이미 로짓 — S14)": 0.42017538985146113,
+   "lg_p_AA_deployed(tr2024 표본내)": 0.5395994982018355
+  },
+  "lg_p_v6(tr2024 표본내)": {
+   "AA67_exp048_A1_s42@1400": 0.8788692985854266,
+   "AA81_exp049_A1_s42@1400": 0.8976077243979973,
+   "S1_exp053_s42@1400": 0.8955542866284147,
+   "S2_exp053_s42@1400": 0.8967041832387959,
+   "CE0_exp053_s42@1400": 0.8788692985854266,
+   "T70_exp055_s42@1400": 0.8972631944879126,
+   "NN_exp064_A99ship_s42": 0.8972954445130766,
+   "NN_exp064_A99ship_seedavg": 0.926275848525232,
+   "F1_FM_best": 0.8668012496251777,
+   "F1_FM_last": 0.3538639084893525,
+   "F2_EMB_best": 0.8856314439398226,
+   "F2_EMB_last": 0.5440210472259026,
+   "lg_p_v6(tr2024 표본내)": 1.0,
+   "lg_p_Q(tr2024 표본내)": 0.9558862860346192,
+   "p_EBM(tr2024 표본내, 이미 로짓 — S14)": 0.8550682295425379,
+   "lg_p_AA_deployed(tr2024 표본내)": 0.9491294821533027
+  },
+  "lg_p_Q(tr2024 표본내)": {
+   "AA67_exp048_A1_s42@1400": 0.8714063708904447,
+   "AA81_exp049_A1_s42@1400": 0.8927676834266939,
+   "S1_exp053_s42@1400": 0.8857279027522762,
+   "S2_exp053_s42@1400": 0.8843343745006534,
+   "CE0_exp053_s42@1400": 0.8714063708904447,
+   "T70_exp055_s42@1400": 0.8781484272338219,
+   "NN_exp064_A99ship_s42": 0.8789793073758286,
+   "NN_exp064_A99ship_seedavg": 0.9062449139300403,
+   "F1_FM_best": 0.822437165118961,
+   "F1_FM_last": 0.35561072917627057,
+   "F2_EMB_best": 0.8596797278604557,
+   "F2_EMB_last": 0.5435232937112301,
+   "lg_p_v6(tr2024 표본내)": 0.9558862860346193,
+   "lg_p_Q(tr2024 표본내)": 0.9999999999999999,
+   "p_EBM(tr2024 표본내, 이미 로짓 — S14)": 0.8184777442245166,
+   "lg_p_AA_deployed(tr2024 표본내)": 0.9775783085999424
+  },
+  "p_EBM(tr2024 표본내, 이미 로짓 — S14)": {
+   "AA67_exp048_A1_s42@1400": 0.7566406872284234,
+   "AA81_exp049_A1_s42@1400": 0.7703438650233692,
+   "S1_exp053_s42@1400": 0.8056172012725069,
+   "S2_exp053_s42@1400": 0.7754437545055606,
+   "CE0_exp053_s42@1400": 0.7566406872284234,
+   "T70_exp055_s42@1400": 0.7776714646008179,
+   "NN_exp064_A99ship_s42": 0.7725701428441255,
+   "NN_exp064_A99ship_seedavg": 0.8025934722520942,
+   "F1_FM_best": 0.8061845056074343,
+   "F1_FM_last": 0.30032493713239866,
+   "F2_EMB_best": 0.7572064988238744,
+   "F2_EMB_last": 0.42017538985146113,
+   "lg_p_v6(tr2024 표본내)": 0.8550682295425379,
+   "lg_p_Q(tr2024 표본내)": 0.8184777442245166,
+   "p_EBM(tr2024 표본내, 이미 로짓 — S14)": 1.0,
+   "lg_p_AA_deployed(tr2024 표본내)": 0.8077765334595912
+  },
+  "lg_p_AA_deployed(tr2024 표본내)": {
+   "AA67_exp048_A1_s42@1400": 0.8797638726784187,
+   "AA81_exp049_A1_s42@1400": 0.8939821222229073,
+   "S1_exp053_s42@1400": 0.891523964080321,
+   "S2_exp053_s42@1400": 0.8923552788876137,
+   "CE0_exp053_s42@1400": 0.8797638726784187,
+   "T70_exp055_s42@1400": 0.8853885529444963,
+   "NN_exp064_A99ship_s42": 0.8649335741722255,
+   "NN_exp064_A99ship_seedavg": 0.8958661977076658,
+   "F1_FM_best": 0.8186071426656478,
+   "F1_FM_last": 0.34734921166971233,
+   "F2_EMB_best": 0.8520811176761192,
+   "F2_EMB_last": 0.5395994982018355,
+   "lg_p_v6(tr2024 표본내)": 0.9491294821533028,
+   "lg_p_Q(tr2024 표본내)": 0.9775783085999424,
+   "p_EBM(tr2024 표본내, 이미 로짓 — S14)": 0.8077765334595913,
+   "lg_p_AA_deployed(tr2024 표본내)": 1.0
+  }
+ },
+ "G0b_diversity": {
+  "threshold_max_abs_rho": 0.93,
+  "space": "로짓",
+  "arms": {
+   "F1_FM_best": {
+    "rho_vs_gate_set": {
+     "AA67_exp048_A1_s42@1400": 0.8039998240979914,
+     "AA81_exp049_A1_s42@1400": 0.8188809150334404,
+     "lg_p_v6(tr2024 표본내)": 0.8668012496251777,
+     "lg_p_Q(tr2024 표본내)": 0.8224371651189611,
+     "T70_exp055_s42@1400": 0.8663502665104614,
+     "S1_exp053_s42@1400": 0.813571799623639,
+     "S2_exp053_s42@1400": 0.8234831043505377
+    },
+    "rho_vs_reference_only": {
+     "NN_exp064_A99ship_s42": 0.8574653195706864,
+     "NN_exp064_A99ship_seedavg": 0.8714300557380557,
+     "CE0_exp053_s42@1400": 0.8039998240979914,
+     "p_EBM(tr2024 표본내, 이미 로짓 — S14)": 0.8061845056074344,
+     "lg_p_AA_deployed(tr2024 표본내)": 0.8186071426656478
+    },
+    "max_abs_rho": 0.8668012496251777,
+    "argmax": "lg_p_v6(tr2024 표본내)",
+    "pass": true
+   },
+   "F1_FM_last": {
+    "rho_vs_gate_set": {
+     "AA67_exp048_A1_s42@1400": 0.3487696753936588,
+     "AA81_exp049_A1_s42@1400": 0.3552557555917022,
+     "lg_p_v6(tr2024 표본내)": 0.35386390848935256,
+     "lg_p_Q(tr2024 표본내)": 0.3556107291762706,
+     "T70_exp055_s42@1400": 0.3680690689361137,
+     "S1_exp053_s42@1400": 0.3604725784556367,
+     "S2_exp053_s42@1400": 0.35466063153163635
+    },
+    "rho_vs_reference_only": {
+     "NN_exp064_A99ship_s42": 0.39031138587744046,
+     "NN_exp064_A99ship_seedavg": 0.3911517334649556,
+     "CE0_exp053_s42@1400": 0.3487696753936588,
+     "p_EBM(tr2024 표본내, 이미 로짓 — S14)": 0.3003249371323986,
+     "lg_p_AA_deployed(tr2024 표본내)": 0.3473492116697123
+    },
+    "max_abs_rho": 0.3680690689361137,
+    "argmax": "T70_exp055_s42@1400",
+    "pass": true
+   },
+   "F2_EMB_best": {
+    "rho_vs_gate_set": {
+     "AA67_exp048_A1_s42@1400": 0.8440799108544866,
+     "AA81_exp049_A1_s42@1400": 0.8630607569315736,
+     "lg_p_v6(tr2024 표본내)": 0.8856314439398225,
+     "lg_p_Q(tr2024 표본내)": 0.8596797278604557,
+     "T70_exp055_s42@1400": 0.8846807388423953,
+     "S1_exp053_s42@1400": 0.8458094873885895,
+     "S2_exp053_s42@1400": 0.8556889883847624
+    },
+    "rho_vs_reference_only": {
+     "NN_exp064_A99ship_s42": 0.9069181108892086,
+     "NN_exp064_A99ship_seedavg": 0.9205848177574144,
+     "CE0_exp053_s42@1400": 0.8440799108544866,
+     "p_EBM(tr2024 표본내, 이미 로짓 — S14)": 0.7572064988238745,
+     "lg_p_AA_deployed(tr2024 표본내)": 0.8520811176761193
+    },
+    "max_abs_rho": 0.8856314439398225,
+    "argmax": "lg_p_v6(tr2024 표본내)",
+    "pass": true
+   },
+   "F2_EMB_last": {
+    "rho_vs_gate_set": {
+     "AA67_exp048_A1_s42@1400": 0.5459051540703954,
+     "AA81_exp049_A1_s42@1400": 0.5613061914215277,
+     "lg_p_v6(tr2024 표본내)": 0.5440210472259026,
+     "lg_p_Q(tr2024 표본내)": 0.5435232937112301,
+     "T70_exp055_s42@1400": 0.5438436074673303,
+     "S1_exp053_s42@1400": 0.5508194356841568,
+     "S2_exp053_s42@1400": 0.5460220887552089
+    },
+    "rho_vs_reference_only": {
+     "NN_exp064_A99ship_s42": 0.5811251611784628,
+     "NN_exp064_A99ship_seedavg": 0.6116883822595526,
+     "CE0_exp053_s42@1400": 0.5459051540703954,
+     "p_EBM(tr2024 표본내, 이미 로짓 — S14)": 0.42017538985146113,
+     "lg_p_AA_deployed(tr2024 표본내)": 0.5395994982018355
+    },
+    "max_abs_rho": 0.5613061914215277,
+    "argmax": "AA81_exp049_A1_s42@1400",
+    "pass": true
+   }
+  }
+ },
+ "verdict": {
+  "F1_FM_best": {
+   "G0a": true,
+   "G0b": true,
+   "both": true
+  },
+  "F1_FM_last": {
+   "G0a": false,
+   "G0b": true,
+   "both": false
+  },
+  "F2_EMB_best": {
+   "G0a": true,
+   "G0b": true,
+   "both": true
+  },
+  "F2_EMB_last": {
+   "G0a": false,
+   "G0b": true,
+   "both": false
+  },
+  "any_arm_passes_both": true
+ },
+ "addendum_blend": {
+  "base_3way": {
+   "weights": {
+    "AA67": 0.5,
+    "S2": 0.28,
+    "S1": 0.22
+   },
+   "src": "exp_053 → 후보 AX 안쪽 3원",
+   "brier": 0.2478183194206695,
+   "score": 796.0470985110879
+  },
+  "base_NN_AA": {
+   "weights": {
+    "NN_seedavg": 0.75,
+    "AA67": 0.25
+   },
+   "src": "exp_065/066 w*=0.75",
+   "brier": 0.24753965367558398,
+   "score": 907.5995596662945
+  },
+  "on_3way": {
+   "F1_FM_best": {
+    "w_star": 0.37,
+    "gain_pts": 38.825411784481915,
+    "se_pts": 11.140822144937609,
+    "t": 3.4849682796636503,
+    "blend_score": 834.8725102955701,
+    "grid": "0..0.6 step 0.005",
+    "w_at_cap": false
+   },
+   "F1_FM_last": {
+    "w_star": 0.015,
+    "gain_pts": 0.6027008816567421,
+    "se_pts": 1.3107116669664693,
+    "t": 0.4598272044466057,
+    "blend_score": 796.6497993927458,
+    "grid": "0..0.6 step 0.005",
+    "w_at_cap": false
+   },
+   "F2_EMB_best": {
+    "w_star": 0.485,
+    "gain_pts": 63.04251464238343,
+    "se_pts": 14.477582806041484,
+    "t": 4.3544917329760215,
+    "blend_score": 859.0896131534743,
+    "grid": "0..0.6 step 0.005",
+    "w_at_cap": false
+   },
+   "F2_EMB_last": {
+    "w_star": 0.085,
+    "gain_pts": 13.19877829348715,
+    "se_pts": 6.461287948100958,
+    "t": 2.0427472664124826,
+    "blend_score": 809.2458768045763,
+    "grid": "0..0.6 step 0.005",
+    "w_at_cap": false
+   }
+  },
+  "on_NN_AA": {
+   "F1_FM_best": {
+    "w_star": 0.045,
+    "gain_pts": 0.42433427955570907,
+    "se_pts": 1.0960720819683714,
+    "t": 0.387140851898784,
+    "blend_score": 908.0238939458529,
+    "grid": "0..0.6 step 0.005",
+    "w_at_cap": false
+   },
+   "F1_FM_last": {
+    "w_star": 0.0,
+    "gain_pts": 0.0,
+    "se_pts": 0.0,
+    "t": 0.0,
+    "blend_score": 907.5995596662945,
+    "grid": "0..0.6 step 0.005",
+    "w_at_cap": false
+   },
+   "F2_EMB_best": {
+    "w_star": 0.11,
+    "gain_pts": 1.9015395460683866,
+    "se_pts": 2.3852822500104836,
+    "t": 0.7971968709615096,
+    "blend_score": 909.501099212362,
+    "grid": "0..0.6 step 0.005",
+    "w_at_cap": false
+   },
+   "F2_EMB_last": {
+    "w_star": 0.025,
+    "gain_pts": 1.08271738518641,
+    "se_pts": 1.7384712888408,
+    "t": 0.6227985426830708,
+    "blend_score": 908.6822770514868,
+    "grid": "0..0.6 step 0.005",
+    "w_at_cap": false
+   }
+  }
+ },
+ "addendum_unseen_ids": {
+  "pitcher_id": {
+   "n_levels_train": 606,
+   "valid_unknown_rows": 54487,
+   "valid_unknown_share": 0.2149329209844304,
+   "valid_unknown_distinct": 97
+  },
+  "batter_id": {
+   "n_levels_train": 595,
+   "valid_unknown_rows": 26598,
+   "valid_unknown_share": 0.10492017971890323,
+   "valid_unknown_distinct": 114
+  },
+  "dom6": {
+   "n_levels_train": 7,
+   "valid_unknown_rows": 0,
+   "valid_unknown_share": 0.0,
+   "valid_unknown_distinct": 0
+  },
+  "pitcher_team_id": {
+   "n_levels_train": 11,
+   "valid_unknown_rows": 292,
+   "valid_unknown_share": 0.0011518419609714919,
+   "valid_unknown_distinct": 1
+  }
+ },
+ "addendum_prep": {
+  "n_train": 1116277,
+  "dense_width": 157,
+  "n_missing_flags": 62,
+  "cache_sha256": {
+   "Xd": "78640bf3e12c42e8dc8bf02ef4edbe5ab0db7f1fb4ef7beceb17bc1e76ceb03b",
+   "codes": "94b62aa82006b6bfe6c11f721bce8ee542f4a4052eade99edc56356fbd2e8bc7",
+   "y": "5d507684a1e12fc7666d52bd5bba1289dc32ebc35260497a4ee3a6404c5feccd"
+  }
+ },
+ "wall_sec": 10.36,
+ "addendum_blend_same_variance_class": {
+  "note": "관문 판정 아님 — 다음 단계 설계용 부가 측정",
+  "base_NN_s42_alone": {
+   "base_score": 822.0148931806337,
+   "FM": {
+    "w_star": 0.275,
+    "gain_pts": 17.208215031151102,
+    "se_pts": 7.062484407234733,
+    "t": 2.4365667998534897,
+    "blend_score": 839.223108211784,
+    "w_at_cap": false
+   },
+   "EMB": {
+    "w_star": 0.41,
+    "gain_pts": 32.26175981024875,
+    "se_pts": 10.935202496451916,
+    "t": 2.950266336697152,
+    "blend_score": 854.2766529908819,
+    "w_at_cap": false
+   }
+  },
+  "base_NN_s42_plus_AA67": {
+   "w_NN": 0.58,
+   "pair_score": 869.3434259748334,
+   "base_score": 869.3434259748334,
+   "FM": {
+    "w_star": 0.14,
+    "gain_pts": 3.965888663089414,
+    "se_pts": 3.6181187366980785,
+    "t": 1.0961189921336614,
+    "blend_score": 873.3093146379267,
+    "w_at_cap": false
+   },
+   "EMB": {
+    "w_star": 0.265,
+    "gain_pts": 11.778285482313667,
+    "se_pts": 6.3570889882428165,
+    "t": 1.8527797084635966,
+    "blend_score": 881.1217114571446,
+    "w_at_cap": false
+   }
+  },
+  "joint_on_3way": {
+   "w_FM": 0.11,
+   "w_EMB": 0.41,
+   "gain_pts": 65.1450359305539,
+   "se_pts": 14.502826816992794,
+   "t": 4.491885392592858,
+   "base_score": 796.0470985110879,
+   "blend_score": 861.1921344416351
+  },
+  "joint_on_NNavg4_AA67": {
+   "w_FM": 0.0,
+   "w_EMB": 0.11,
+   "gain_pts": 1.9015395460683866,
+   "se_pts": 2.3138029440943484,
+   "t": 0.8218243264500094,
+   "base_score": 907.5995596662945,
+   "blend_score": 909.501099212362
+  },
+  "joint_on_NN_s42": {
+   "w_FM": 0.11,
+   "w_EMB": 0.35,
+   "gain_pts": 34.0457894227676,
+   "se_pts": 11.014234193699428,
+   "t": 3.0910718642829584,
+   "base_score": 822.0148931806337,
+   "blend_score": 856.0606826034101
+  },
+  "corr_FM_EMB": 0.90539119279073,
+  "corr_new_vs_all": {
+   "FM": {
+    "AA67": 0.8039998240979914,
+    "AA81": 0.8188809150334404,
+    "S1": 0.813571799623639,
+    "S2": 0.8234831043505377,
+    "T70": 0.8663502665104614,
+    "NN_s42": 0.8574653195706864,
+    "NN_avg4": 0.8714300557380557,
+    "EMB": 0.90539119279073
+   },
+   "EMB": {
+    "AA67": 0.8440799108544866,
+    "AA81": 0.8630607569315736,
+    "S1": 0.8458094873885895,
+    "S2": 0.8556889883847624,
+    "T70": 0.8846807388423953,
+    "NN_s42": 0.9069181108892086,
+    "NN_avg4": 0.9205848177574144,
+    "FM": 0.90539119279073
+   }
+  }
+ },
+ "inference_time": {
+  "n_rows": 253507,
+  "threads": 6,
+  "device": "cpu",
+  "note": "test 는 245,789행 — 여기 잰 253,507행과 3% 차",
+  "F1_FM": {
+   "cpu_infer_sec": 0.092,
+   "max_abs_diff_vs_gpu_pred": 1.1920928955078125e-07
+  },
+  "F2_EMB": {
+   "cpu_infer_sec": 0.783,
+   "max_abs_diff_vs_gpu_pred": 1.1920928955078125e-07
+  }
+ },
+ "prep_full": {
+  "exp_id": "exp_085",
+  "stage": "prep",
+  "alignment": {
+   "n_rows": 1475092,
+   "n_train": 1116277,
+   "n_valid": 253507,
+   "n_masked_out": 105308,
+   "train_mask_rule": "season<=2023 & ~((season<=2022)&(game_type=='F'))  (exp_060 승계)",
+   "valid_order_eq_arms_ids": true,
+   "valid_order_eq_train_csv_natural_2024": true,
+   "y_valid_sha256": "e0483e6a48d9f699ca9c4abf7b4b81aed4d679c359c7e9c3752b3f9e6e27c9d3",
+   "y_valid_mean": 0.48610490560531616,
+   "train_csv_sha256": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+   "frame99_sha256": "f9f0620088f2f1215497119281b07d41f4c486ab6465abb4fa462226d0e1092d",
+   "features_sp_sha256": "783c650c6dd78cdcd641d0f18e35469ced247544b5d1ebf8d138171e04498924"
+  },
+  "dense": {
+   "n_v6_cols": 95,
+   "n_missing_flags": 62,
+   "width": 157,
+   "missing_flag_cols": [
+    "asof_pitcher_success_rate",
+    "asof_pitcher_reverse_rate",
+    "asof_pitcher_middle_rate",
+    "asof_pitcher_ball_rate",
+    "asof_pitcher_strike_rate",
+    "asof_pitcher_prev1_game_success_rate",
+    "asof_pitcher_prev3_game_success_rate",
+    "asof_pitcher_prev5_game_success_rate",
+    "asof_pitcher_prev1_game_middle_rate",
+    "asof_pitcher_prev3_game_middle_rate",
+    "asof_pitcher_prev5_game_middle_rate",
+    "asof_batter_success_rate",
+    "asof_batter_middle_rate",
+    "asof_pitcher_fastball_rate",
+    "asof_pitcher_breaking_rate",
+    "asof_pitcher_offspeed_rate",
+    "p6_curve",
+    "p6_cutter",
+    "p6_fastball",
+    "p6_offspeed",
+    "p6_sinker",
+    "p6_slider",
+    "sit_cnt",
+    "sit_cnt_dev",
+    "sit_run",
+    "sit_run_dev",
+    "sit_sc",
+    "sit_sc_dev",
+    "idea_matchup_pitch",
+    "idea_cnt_te",
+    "i3_anom_curve",
+    "i3_anom_cutter",
+    "i3_anom_fastball",
+    "i3_anom_offspeed",
+    "i3_anom_sinker",
+    "i3_anom_slider",
+    "i3_anom_l1",
+    "i3_te48",
+    "rt_form",
+    "rt_form1",
+    "rt_srev",
+    "rt_ballsuc",
+    "r2_strball",
+    "r2_midball",
+    "r2_pb_rev",
+    "r2_sitrun",
+    "r2_sitsc",
+    "r2_vs_cnt",
+    "r2_vs_te48",
+    "r2_sit_vs_te",
+    "r2_x_pb",
+    "r2_x_prev",
+    "r2_x_revmid",
+    "r2_x_ball_cnt",
+    "r2_lg_srev",
+    "r2_lg_form",
+    "sp_pit_bhand",
+    "sp_bat_phand",
+    "sp_pit_strk2",
+    "sp_pit_ball3",
+    "sp_pit_bhand_all",
+    "sp_bat_phand_all"
+   ],
+   "standardize": "train 분할 nanmean/nanstd, sd<1e-6→1.0, 이후 nan_to_num(0)",
+   "note": "sentinel 대입 아님 — 결측 정보는 플래그 62열이 따로 싣는다"
+  },
+  "categorical": {
+   "fields": [
+    "base_state",
+    "game_type",
+    "pitcher_team_id",
+    "batter_team_id",
+    "cnt_state",
+    "pitcher_id",
+    "batter_id",
+    "pitcher_hand",
+    "batter_hand",
+    "dom6"
+   ],
+   "n_levels": [
+    8,
+    2,
+    11,
+    11,
+    12,
+    606,
+    595,
+    2,
+    2,
+    7
+   ],
+   "unknown_index": 0,
+   "unknown_policy": "train 분할 미등장 레벨 → 학습된 <UNK> 행 0번",
+   "valid_unknown": {
+    "base_state": {
+     "n_levels_train": 8,
+     "valid_unknown_rows": 0,
+     "valid_unknown_share": 0.0,
+     "valid_unknown_distinct": 0
+    },
+    "game_type": {
+     "n_levels_train": 2,
+     "valid_unknown_rows": 0,
+     "valid_unknown_share": 0.0,
+     "valid_unknown_distinct": 0
+    },
+    "pitcher_team_id": {
+     "n_levels_train": 11,
+     "valid_unknown_rows": 292,
+     "valid_unknown_share": 0.0011518419609714919,
+     "valid_unknown_distinct": 1
+    },
+    "batter_team_id": {
+     "n_levels_train": 11,
+     "valid_unknown_rows": 292,
+     "valid_unknown_share": 0.0011518419609714919,
+     "valid_unknown_distinct": 1
+    },
+    "cnt_state": {
+     "n_levels_train": 12,
+     "valid_unknown_rows": 0,
+     "valid_unknown_share": 0.0,
+     "valid_unknown_distinct": 0
+    },
+    "pitcher_id": {
+     "n_levels_train": 606,
+     "valid_unknown_rows": 54487,
+     "valid_unknown_share": 0.2149329209844304,
+     "valid_unknown_distinct": 97
+    },
+    "batter_id": {
+     "n_levels_train": 595,
+     "valid_unknown_rows": 26598,
+     "valid_unknown_share": 0.10492017971890323,
+     "valid_unknown_distinct": 114
+    },
+    "pitcher_hand": {
+     "n_levels_train": 2,
+     "valid_unknown_rows": 0,
+     "valid_unknown_share": 0.0,
+     "valid_unknown_distinct": 0
+    },
+    "batter_hand": {
+     "n_levels_train": 2,
+     "valid_unknown_rows": 0,
+     "valid_unknown_share": 0.0,
+     "valid_unknown_distinct": 0
+    },
+    "dom6": {
+     "n_levels_train": 7,
+     "valid_unknown_rows": 0,
+     "valid_unknown_share": 0.0,
+     "valid_unknown_distinct": 0
+    }
+   },
+   "dom6_def": "argmax(p6_*), 동점은 열 순서, 전부 NaN 이면 'NA' 레벨. p6 는 투구 전 정보만 보는 구종 예측 — 현재 행 TrackMan 아님",
+   "p6_allnan_rows": {
+    "total": 237413,
+    "train": 211627,
+    "valid": 0
+   }
+  },
+  "cache_sha256": {
+   "Xd": "78640bf3e12c42e8dc8bf02ef4edbe5ab0db7f1fb4ef7beceb17bc1e76ceb03b",
+   "codes": "94b62aa82006b6bfe6c11f721bce8ee542f4a4052eade99edc56356fbd2e8bc7",
+   "y": "5d507684a1e12fc7666d52bd5bba1289dc32ebc35260497a4ee3a6404c5feccd"
+  },
+  "wall_sec": 32.31
+ },
+ "fit_curves": {
+  "F1_FM": [
+   {
+    "epoch": 1,
+    "train_logloss": 0.688771573936238,
+    "valid_brier": 0.248008671014153,
+    "score": 719.8476046286206,
+    "lr": 0.0002446148913439693
+   },
+   {
+    "epoch": 2,
+    "train_logloss": 0.6875248305937823,
+    "valid_brier": 0.24809766257564506,
+    "score": 684.2234639455324,
+    "lr": 0.000596891688786059
+   },
+   {
+    "epoch": 3,
+    "train_logloss": 0.6868225945269361,
+    "valid_brier": 0.24840368566828602,
+    "score": 561.7196049084172,
+    "lr": 0.001115859649498148
+   },
+   {
+    "epoch": 4,
+    "train_logloss": 0.68643835033564,
+    "valid_brier": 0.24866645595436995,
+    "score": 456.53024221110616,
+    "lr": 0.0017116977512092097
+   },
+   {
+    "epoch": 5,
+    "train_logloss": 0.6861083895406302,
+    "valid_brier": 0.24888113697996234,
+    "score": 370.5914528532528,
+    "lr": 0.0022812805768312994
+   },
+   {
+    "epoch": 6,
+    "train_logloss": 0.685694551862338,
+    "valid_brier": 0.2489872558358546,
+    "score": 328.11109867076914,
+    "lr": 0.002726026873689017
+   },
+   {
+    "epoch": 7,
+    "train_logloss": 0.6850494897979147,
+    "valid_brier": 0.2499020676867882,
+    "score": -38.096500452233784,
+    "lr": 0.002968961625867699
+   },
+   {
+    "epoch": 8,
+    "train_logloss": 0.6841622711542774,
+    "valid_brier": 0.25043651332362427,
+    "score": -252.0400051496896,
+    "lr": 0.0029938723974182457
+   },
+   {
+    "epoch": 9,
+    "train_logloss": 0.6831159850253778,
+    "valid_brier": 0.2505747757021601,
+    "score": -307.3877071290143,
+    "lr": 0.002945680817554094
+   },
+   {
+    "epoch": 10,
+    "train_logloss": 0.6820839036475209,
+    "valid_brier": 0.25079100051043035,
+    "score": -393.9444868938269,
+    "lr": 0.002851024059548551
+   },
+   {
+    "epoch": 11,
+    "train_logloss": 0.6810006584753009,
+    "valid_brier": 0.2521386024906433,
+    "score": -933.4019559280815,
+    "lr": 0.0027129444694877556
+   },
+   {
+    "epoch": 12,
+    "train_logloss": 0.6801776706295855,
+    "valid_brier": 0.25226666491560706,
+    "score": -984.6665226649343,
+    "lr": 0.002535880039008527
+   },
+   {
+    "epoch": 13,
+    "train_logloss": 0.6794583819368306,
+    "valid_brier": 0.2525671420258269,
+    "score": -1104.9502739223449,
+    "lr": 0.002325521764595566
+   },
+   {
+    "epoch": 14,
+    "train_logloss": 0.6788310599239433,
+    "valid_brier": 0.2527444816617142,
+    "score": -1175.940961484323,
+    "lr": 0.00208863073427187
+   },
+   {
+    "epoch": 15,
+    "train_logloss": 0.6782692184343058,
+    "valid_brier": 0.25340027246629604,
+    "score": -1438.4600530634061,
+    "lr": 0.0018328208206666314
+   },
+   {
+    "epoch": 16,
+    "train_logloss": 0.6778059093391194,
+    "valid_brier": 0.25327370692300133,
+    "score": -1387.7947018282155,
+    "lr": 0.0015663139648842202
+   },
+   {
+    "epoch": 17,
+    "train_logloss": 0.6773143103894066,
+    "valid_brier": 0.25331878532929536,
+    "score": -1405.840002536096,
+    "lr": 0.0012976759165520555
+   },
+   {
+    "epoch": 18,
+    "train_logloss": 0.6769633510095232,
+    "valid_brier": 0.25363254320479034,
+    "score": -1531.4401663005794,
+    "lr": 0.0010355409235796548
+   },
+   {
+    "epoch": 19,
+    "train_logloss": 0.6765719724490362,
+    "valid_brier": 0.2538985600203617,
+    "score": -1637.9291446159793,
+    "lr": 0.0007883342203265415
+   },
+   {
+    "epoch": 20,
+    "train_logloss": 0.6762712503619054,
+    "valid_brier": 0.25405214253477126,
+    "score": -1699.409637912841,
+    "lr": 0.0005640012336376243
+   },
+   {
+    "epoch": 21,
+    "train_logloss": 0.6759953284088303,
+    "valid_brier": 0.2537159185823433,
+    "score": -1564.8160968905645,
+    "lr": 0.00036975221028688084
+   },
+   {
+    "epoch": 22,
+    "train_logloss": 0.6757543220677796,
+    "valid_brier": 0.2538188493035567,
+    "score": -1606.0202114339895,
+    "lr": 0.00021183047371343286
+   },
+   {
+    "epoch": 23,
+    "train_logloss": 0.675594537792837,
+    "valid_brier": 0.25399758852089666,
+    "score": -1677.571164325986,
+    "lr": 9.531175846918891e-05
+   },
+   {
+    "epoch": 24,
+    "train_logloss": 0.6754764758926981,
+    "valid_brier": 0.2539717420587037,
+    "score": -1667.224587753058,
+    "lr": 2.3941071934016652e-05
+   },
+   {
+    "epoch": 25,
+    "train_logloss": 0.6754212640225887,
+    "valid_brier": 0.25401323866210684,
+    "score": -1683.8360598153467,
+    "lr": 1.2326697153490706e-08
+   }
+  ],
+  "F2_EMB": [
+   {
+    "epoch": 1,
+    "train_logloss": 0.6917666378704941,
+    "valid_brier": 0.24816840552543046,
+    "score": 655.9044103944034,
+    "lr": 0.0002446148913439693
+   },
+   {
+    "epoch": 2,
+    "train_logloss": 0.6884684626232175,
+    "valid_brier": 0.2479283837456688,
+    "score": 751.9873367513808,
+    "lr": 0.000596891688786059
+   },
+   {
+    "epoch": 3,
+    "train_logloss": 0.6878103464841843,
+    "valid_brier": 0.24790202306142237,
+    "score": 762.5397611425556,
+    "lr": 0.001115859649498148
+   },
+   {
+    "epoch": 4,
+    "train_logloss": 0.6874217421692961,
+    "valid_brier": 0.24783708036928725,
+    "score": 788.5369182007107,
+    "lr": 0.0017116977512092097
+   },
+   {
+    "epoch": 5,
+    "train_logloss": 0.6871536788256729,
+    "valid_brier": 0.24785168242970873,
+    "score": 782.6915790921985,
+    "lr": 0.0022812805768312994
+   },
+   {
+    "epoch": 6,
+    "train_logloss": 0.6868238348294707,
+    "valid_brier": 0.24786047637364952,
+    "score": 779.1712824387508,
+    "lr": 0.002726026873689017
+   },
+   {
+    "epoch": 7,
+    "train_logloss": 0.6864714164505986,
+    "valid_brier": 0.24822989330809278,
+    "score": 631.2902853793156,
+    "lr": 0.002968961625867699
+   },
+   {
+    "epoch": 8,
+    "train_logloss": 0.686130004332346,
+    "valid_brier": 0.24826042443957422,
+    "score": 619.0683925967555,
+    "lr": 0.0029938723974182457
+   },
+   {
+    "epoch": 9,
+    "train_logloss": 0.6856862080886084,
+    "valid_brier": 0.24831831865109114,
+    "score": 595.8928071677972,
+    "lr": 0.002945680817554094
+   },
+   {
+    "epoch": 10,
+    "train_logloss": 0.6852562979740255,
+    "valid_brier": 0.2481274294136034,
+    "score": 672.3075248908583,
+    "lr": 0.002851024059548551
+   },
+   {
+    "epoch": 11,
+    "train_logloss": 0.6847577064352877,
+    "valid_brier": 0.2481838956510872,
+    "score": 649.7035706030551,
+    "lr": 0.0027129444694877556
+   },
+   {
+    "epoch": 12,
+    "train_logloss": 0.6842822940910563,
+    "valid_brier": 0.24872656918786204,
+    "score": 432.46636187309616,
+    "lr": 0.002535880039008527
+   },
+   {
+    "epoch": 13,
+    "train_logloss": 0.6837000266155776,
+    "valid_brier": 0.2486189179897672,
+    "score": 475.56012673500845,
+    "lr": 0.002325521764595566
+   },
+   {
+    "epoch": 14,
+    "train_logloss": 0.683091921841397,
+    "valid_brier": 0.24896023020422667,
+    "score": 338.92970761549844,
+    "lr": 0.00208863073427187
+   },
+   {
+    "epoch": 15,
+    "train_logloss": 0.6824217708233524,
+    "valid_brier": 0.24947910629918782,
+    "score": 131.21883375206698,
+    "lr": 0.0018328208206666314
+   },
+   {
+    "epoch": 16,
+    "train_logloss": 0.6815019087756381,
+    "valid_brier": 0.24928764076910467,
+    "score": 207.86424670228288,
+    "lr": 0.0015663139648842202
+   },
+   {
+    "epoch": 17,
+    "train_logloss": 0.6807927868383772,
+    "valid_brier": 0.24957271955005614,
+    "score": 93.74458829755072,
+    "lr": 0.0012976759165520555
+   },
+   {
+    "epoch": 18,
+    "train_logloss": 0.6800771666800275,
+    "valid_brier": 0.2500733640813988,
+    "score": -106.66802294043708,
+    "lr": 0.0010355409235796548
+   },
+   {
+    "epoch": 19,
+    "train_logloss": 0.6793447675950387,
+    "valid_brier": 0.2508709811028575,
+    "score": -425.96145376989637,
+    "lr": 0.0007883342203265415
+   },
+   {
+    "epoch": 20,
+    "train_logloss": 0.6784652982126264,
+    "valid_brier": 0.2510135160889111,
+    "score": -483.0195198415543,
+    "lr": 0.0005640012336376243
+   },
+   {
+    "epoch": 21,
+    "train_logloss": 0.6778274529120502,
+    "valid_brier": 0.25102159929943696,
+    "score": -486.2553033711192,
+    "lr": 0.00036975221028688084
+   },
+   {
+    "epoch": 22,
+    "train_logloss": 0.6772394103600698,
+    "valid_brier": 0.25138041093969615,
+    "score": -629.8909036124068,
+    "lr": 0.00021183047371343286
+   },
+   {
+    "epoch": 23,
+    "train_logloss": 0.6766059591489679,
+    "valid_brier": 0.2516241148764648,
+    "score": -727.4478312908172,
+    "lr": 9.531175846918891e-05
+   },
+   {
+    "epoch": 24,
+    "train_logloss": 0.6764568546239067,
+    "valid_brier": 0.25162140182795323,
+    "score": -726.361773014772,
+    "lr": 2.3941071934016652e-05
+   },
+   {
+    "epoch": 25,
+    "train_logloss": 0.6763165996355169,
+    "valid_brier": 0.2516635548172763,
+    "score": -743.2360023987839,
+    "lr": 1.2326697153490706e-08
+   }
+  ]
+ },
+ "fold_2022": null,
+ "fold_2023": null,
+ "fold_2024": {
+  "note": "이 실험의 유일한 면. config 가 fold_2024 단독으로 지정했다",
+  "n_valid_all": 253507,
+  "arms": {
+   "F1_FM": {
+    "brier": 0.248008671014153,
+    "score": 719.8476046286206,
+    "bss_vs_ref_0.2498069": 0.007198476046286206
+   },
+   "F2_EMB": {
+    "brier": 0.24783708036928725,
+    "score": 788.5369182007107,
+    "bss_vs_ref_0.2498069": 0.007885369182007107
+   }
+  },
+  "reference_arms": {
+   "AA67_exp048_A1_s42@1400": {
+    "brier": 0.2478610966346746,
+    "score": 778.9229862447345
+   },
+   "AA81_exp049_A1_s42@1400": {
+    "brier": 0.24770887541402004,
+    "score": 839.8585411291571
+   },
+   "S1_exp053_s42@1400": {
+    "brier": 0.24791277448219506,
+    "score": 758.2358685068069
+   },
+   "S2_exp053_s42@1400": {
+    "brier": 0.24787980987309108,
+    "score": 771.4319047668062
+   },
+   "CE0_exp053_s42@1400": {
+    "brier": 0.2478610966346746,
+    "score": 778.9229862447345
+   },
+   "T70_exp055_s42@1400": {
+    "brier": 0.24783713924616857,
+    "score": 788.5133492435248
+   },
+   "NN_exp064_A99ship_s42": {
+    "brier": 0.24775345007780714,
+    "score": 822.0148931806337
+   },
+   "NN_exp064_A99ship_seedavg": {
+    "brier": 0.24756767168405058,
+    "score": 896.3836931443536
+   }
+  }
+ },
+ "train_time_min": {
+  "F1_FM_r2": 2.269,
+  "F2_EMB_r2": 2.166,
+  "prep": 0.539,
+  "note": "두 팔은 GPU 2장에 동시 실행(경합 계수 미분리). r1(구현 오류 실행) 0.497 / 0.773분"
+ },
+ "inference_time_sec": {
+  "F1_FM": 0.092,
+  "F2_EMB": 0.783,
+  "basis": "CPU threads 6, 253,507행 1회 통과"
+ }
+}

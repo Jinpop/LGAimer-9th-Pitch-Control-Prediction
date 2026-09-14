@@ -1,0 +1,2465 @@
+{
+  "exp_id": "exp_021",
+  "base_exp": "exp_010 D (47 provided columns, strongly regularised LGBM)",
+  "primary_metric": "fold_2024 valid_all (R+F) Brier under P10",
+  "score_formula": "100000 * (1 - brier / 0.2498069)",
+  "arms_run": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "D_NOCAT_DIAG"
+  ],
+  "seeds_run": [
+    7,
+    42,
+    2024
+  ],
+  "sha256": {
+    "train.csv": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+    "train.py": "c10c5d01dfa91105d1272fd61598a2d686c1acc0124637927350428793b46d28"
+  },
+  "versions": {
+    "python": "3.11.15",
+    "numpy": "1.26.4",
+    "pandas": "2.0.3",
+    "lightgbm": "4.7.0"
+  },
+  "lgb_params_seed42": {
+    "objective": "binary",
+    "metric": "binary_logloss",
+    "learning_rate": 0.01,
+    "num_leaves": 15,
+    "min_data_in_leaf": 5000,
+    "feature_fraction": 0.7,
+    "bagging_fraction": 0.8,
+    "bagging_freq": 1,
+    "seed": 42,
+    "num_threads": 6,
+    "deterministic": true,
+    "force_row_wise": true,
+    "verbose": -1
+  },
+  "num_boost_round_cap": 3000,
+  "mask": "training rows with season<=2022 & game_type=='F' dropped (exp_004); validation untouched",
+  "n_rows_masked": 105308,
+  "arm_features": {
+    "A": [
+      "balls_before",
+      "strikes_before",
+      "asof_pitcher_n",
+      "asof_pitcher_success_rate",
+      "asof_pitcher_reverse_rate",
+      "asof_pitcher_middle_rate",
+      "asof_pitcher_ball_rate",
+      "asof_pitcher_strike_rate"
+    ],
+    "B": [
+      "season",
+      "game_type",
+      "balls_before",
+      "strikes_before",
+      "num_runners_on",
+      "base_state",
+      "pitcher_hand",
+      "batter_hand",
+      "asof_pitcher_n",
+      "asof_pitcher_success_rate",
+      "asof_pitcher_reverse_rate",
+      "asof_pitcher_middle_rate",
+      "asof_pitcher_ball_rate",
+      "asof_pitcher_strike_rate",
+      "asof_pitcher_prev1_game_success_rate",
+      "asof_pitcher_prev3_game_success_rate",
+      "asof_pitcher_prev5_game_success_rate",
+      "asof_pitcher_prev1_game_middle_rate",
+      "asof_pitcher_prev3_game_middle_rate",
+      "asof_pitcher_prev5_game_middle_rate",
+      "asof_pitcher_pitchmix_n",
+      "asof_pitcher_fastball_rate",
+      "asof_pitcher_breaking_rate",
+      "asof_pitcher_offspeed_rate"
+    ],
+    "C": [
+      "season",
+      "game_month",
+      "inning",
+      "top_bottom",
+      "game_type",
+      "balls_before",
+      "strikes_before",
+      "outs_before",
+      "run_total_before",
+      "score_diff_pitcher_team",
+      "num_runners_on",
+      "base_state",
+      "li",
+      "pitcher_id",
+      "batter_id",
+      "pitcher_hand",
+      "batter_hand",
+      "asof_pitcher_n",
+      "asof_pitcher_success_rate",
+      "asof_pitcher_reverse_rate",
+      "asof_pitcher_middle_rate",
+      "asof_pitcher_ball_rate",
+      "asof_pitcher_strike_rate",
+      "asof_pitcher_prev1_game_success_rate",
+      "asof_pitcher_prev3_game_success_rate",
+      "asof_pitcher_prev5_game_success_rate",
+      "asof_pitcher_prev1_game_middle_rate",
+      "asof_pitcher_prev3_game_middle_rate",
+      "asof_pitcher_prev5_game_middle_rate",
+      "asof_batter_n",
+      "asof_batter_success_rate",
+      "asof_batter_middle_rate",
+      "asof_pitcher_pitchmix_n",
+      "asof_pitcher_fastball_rate",
+      "asof_pitcher_breaking_rate",
+      "asof_pitcher_offspeed_rate"
+    ],
+    "D": [
+      "season",
+      "game_month",
+      "game_dayofweek",
+      "inning",
+      "top_bottom",
+      "game_type",
+      "balls_before",
+      "strikes_before",
+      "outs_before",
+      "run_top_before",
+      "run_bot_before",
+      "run_total_before",
+      "score_diff_home",
+      "score_diff_pitcher_team",
+      "runner_on_1b",
+      "runner_on_2b",
+      "runner_on_3b",
+      "num_runners_on",
+      "base_state",
+      "home_win_expectancy",
+      "away_win_expectancy",
+      "li",
+      "pitcher_id",
+      "batter_id",
+      "pitcher_hand",
+      "batter_hand",
+      "pitcher_team_id",
+      "batter_team_id",
+      "asof_pitcher_n",
+      "asof_pitcher_success_rate",
+      "asof_pitcher_reverse_rate",
+      "asof_pitcher_middle_rate",
+      "asof_pitcher_ball_rate",
+      "asof_pitcher_strike_rate",
+      "asof_pitcher_prev1_game_success_rate",
+      "asof_pitcher_prev3_game_success_rate",
+      "asof_pitcher_prev5_game_success_rate",
+      "asof_pitcher_prev1_game_middle_rate",
+      "asof_pitcher_prev3_game_middle_rate",
+      "asof_pitcher_prev5_game_middle_rate",
+      "asof_batter_n",
+      "asof_batter_success_rate",
+      "asof_batter_middle_rate",
+      "asof_pitcher_pitchmix_n",
+      "asof_pitcher_fastball_rate",
+      "asof_pitcher_breaking_rate",
+      "asof_pitcher_offspeed_rate"
+    ],
+    "D_NOCAT_DIAG": [
+      "season",
+      "game_month",
+      "game_dayofweek",
+      "inning",
+      "top_bottom",
+      "game_type",
+      "balls_before",
+      "strikes_before",
+      "outs_before",
+      "run_top_before",
+      "run_bot_before",
+      "run_total_before",
+      "score_diff_home",
+      "score_diff_pitcher_team",
+      "runner_on_1b",
+      "runner_on_2b",
+      "runner_on_3b",
+      "num_runners_on",
+      "base_state",
+      "home_win_expectancy",
+      "away_win_expectancy",
+      "li",
+      "pitcher_id",
+      "batter_id",
+      "pitcher_hand",
+      "batter_hand",
+      "pitcher_team_id",
+      "batter_team_id",
+      "asof_pitcher_n",
+      "asof_pitcher_success_rate",
+      "asof_pitcher_reverse_rate",
+      "asof_pitcher_middle_rate",
+      "asof_pitcher_ball_rate",
+      "asof_pitcher_strike_rate",
+      "asof_pitcher_prev1_game_success_rate",
+      "asof_pitcher_prev3_game_success_rate",
+      "asof_pitcher_prev5_game_success_rate",
+      "asof_pitcher_prev1_game_middle_rate",
+      "asof_pitcher_prev3_game_middle_rate",
+      "asof_pitcher_prev5_game_middle_rate",
+      "asof_batter_n",
+      "asof_batter_success_rate",
+      "asof_batter_middle_rate",
+      "asof_pitcher_pitchmix_n",
+      "asof_pitcher_fastball_rate",
+      "asof_pitcher_breaking_rate",
+      "asof_pitcher_offspeed_rate"
+    ]
+  },
+  "arm_n_features": {
+    "A": 8,
+    "B": 24,
+    "C": 36,
+    "D": 47,
+    "D_NOCAT_DIAG": 47
+  },
+  "categorical_declared": {
+    "A": [],
+    "B": [
+      "game_type",
+      "base_state"
+    ],
+    "C": [
+      "top_bottom",
+      "game_type",
+      "base_state"
+    ],
+    "D": [
+      "top_bottom",
+      "game_type",
+      "base_state"
+    ],
+    "D_NOCAT_DIAG": []
+  },
+  "reproduction_gate": {
+    "expected": 0.248261,
+    "got": 0.248261,
+    "abs_diff": 0.0,
+    "expected_iter": 750,
+    "got_iter": 750,
+    "expected_argmins": {
+      "fold_2022": 300,
+      "fold_2023": 750,
+      "fold_2024": 1550
+    },
+    "got_argmins": {
+      "fold_2022": 300,
+      "fold_2023": 750,
+      "fold_2024": 1550
+    },
+    "policy": "P4 (unscaled carry) — the policy the reference was measured under",
+    "passed": true
+  },
+  "per_arm_seed": {
+    "A_seed42": {
+      "n_features": 8,
+      "elapsed_min": 2.93,
+      "num_boost_round_cap": 3000,
+      "categorical_declared": [],
+      "oracle_iters": {
+        "fold_2022": 270,
+        "fold_2023": 475,
+        "fold_2024": 1400
+      },
+      "argmin_at_cap": {
+        "fold_2022": false,
+        "fold_2023": false,
+        "fold_2024": false
+      },
+      "any_argmin_at_cap": false,
+      "unseen_category_rows": {
+        "fold_2022": {},
+        "fold_2023": {},
+        "fold_2024": {}
+      },
+      "constant_in_train_cols": {
+        "fold_2022": [],
+        "fold_2023": [],
+        "fold_2024": []
+      },
+      "pred_files": {
+        "P10": "pred/pred_A_seed42_fold_2024_P10.npy",
+        "P4": "pred/pred_A_seed42_fold_2024_P4.npy"
+      },
+      "fold_2022": {
+        "iter_used": 270,
+        "iter_source": "own argmin (no predecessor; ORACLE, feeder only)",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": true,
+        "n_train": 653728,
+        "fit_min": 0.57,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.247004,
+        "valid_all_bss": 0.008666,
+        "valid_all_auc": 0.553202,
+        "valid_all_score": 1122.03,
+        "valid_R_brier": 0.248986,
+        "valid_R_auc": 0.538067,
+        "valid_F_brier": 0.232876,
+        "valid_F_auc": 0.506591,
+        "policy_cost_vs_oracle": 0.0
+      },
+      "fold_2022_P4": {
+        "iter_used": 270,
+        "iter_source": "own argmin (ORACLE, feeder only)",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": true,
+        "n_train": 653728,
+        "fit_min": 0.57,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.247004,
+        "valid_all_bss": 0.008666,
+        "valid_all_auc": 0.553202,
+        "valid_all_score": 1122.03,
+        "valid_R_brier": 0.248986,
+        "valid_R_auc": 0.538067,
+        "valid_F_brier": 0.232876,
+        "valid_F_auc": 0.506591,
+        "policy_cost_vs_oracle": 0.0
+      },
+      "fold_2023": {
+        "iter_used": 750,
+        "iter_source": "P10: 270 (own fold_2022 valid_all argmin) x 2.75",
+        "iter_requested": 742,
+        "iter_capped_by_num_boost_round": false,
+        "oracle_flag": false,
+        "n_train": 870752,
+        "fit_min": 0.82,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.249027,
+        "valid_all_bss": 0.003892,
+        "valid_all_auc": 0.536986,
+        "valid_all_score": 312.2,
+        "valid_R_brier": 0.248694,
+        "valid_R_auc": 0.540784,
+        "valid_F_brier": 0.251875,
+        "valid_F_auc": 0.514981,
+        "policy_cost_vs_oracle": 5e-06
+      },
+      "fold_2023_P4": {
+        "iter_used": 270,
+        "iter_source": "P4: 270 (own fold_2022 argmin), no scaling",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": false,
+        "n_train": 870752,
+        "fit_min": 0.82,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.249051,
+        "valid_all_bss": 0.003797,
+        "valid_all_auc": 0.536755,
+        "valid_all_score": 302.59,
+        "valid_R_brier": 0.248708,
+        "valid_R_auc": 0.540675,
+        "valid_F_brier": 0.251979,
+        "valid_F_auc": 0.514537,
+        "policy_cost_vs_oracle": 2.9e-05
+      },
+      "fold_2024": {
+        "iter_used": 1300,
+        "iter_source": "P10: 475 (own fold_2023 valid_all argmin) x 2.75",
+        "iter_requested": 1306,
+        "iter_capped_by_num_boost_round": false,
+        "oracle_flag": false,
+        "n_train": 1116277,
+        "fit_min": 0.94,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248647,
+        "valid_all_bss": 0.004642,
+        "valid_all_auc": 0.540025,
+        "valid_all_score": 464.32,
+        "valid_R_brier": 0.24856,
+        "valid_R_auc": 0.54207,
+        "valid_F_brier": 0.249297,
+        "valid_F_auc": 0.515895,
+        "policy_cost_vs_oracle": 1e-06
+      },
+      "fold_2024_P4": {
+        "iter_used": 475,
+        "iter_source": "P4: 475 (own fold_2023 argmin), no scaling",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": false,
+        "n_train": 1116277,
+        "fit_min": 0.94,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248681,
+        "valid_all_bss": 0.004509,
+        "valid_all_auc": 0.539537,
+        "valid_all_score": 450.71,
+        "valid_R_brier": 0.248584,
+        "valid_R_auc": 0.541694,
+        "valid_F_brier": 0.2494,
+        "valid_F_auc": 0.515905,
+        "policy_cost_vs_oracle": 3.4e-05
+      }
+    },
+    "B_seed2024": {
+      "n_features": 24,
+      "elapsed_min": 4.18,
+      "num_boost_round_cap": 3000,
+      "categorical_declared": [
+        "game_type",
+        "base_state"
+      ],
+      "oracle_iters": {
+        "fold_2022": 250,
+        "fold_2023": 825,
+        "fold_2024": 2300
+      },
+      "argmin_at_cap": {
+        "fold_2022": false,
+        "fold_2023": false,
+        "fold_2024": false
+      },
+      "any_argmin_at_cap": false,
+      "unseen_category_rows": {
+        "fold_2022": {
+          "game_type": 30448,
+          "base_state": 0
+        },
+        "fold_2023": {
+          "game_type": 25686,
+          "base_state": 0
+        },
+        "fold_2024": {
+          "game_type": 0,
+          "base_state": 0
+        }
+      },
+      "constant_in_train_cols": {
+        "fold_2022": [
+          "game_type"
+        ],
+        "fold_2023": [
+          "game_type"
+        ],
+        "fold_2024": []
+      },
+      "pred_files": {
+        "P10": "pred/pred_B_seed2024_fold_2024_P10.npy",
+        "P4": "pred/pred_B_seed2024_fold_2024_P4.npy"
+      },
+      "fold_2022": {
+        "iter_used": 250,
+        "iter_source": "own argmin (no predecessor; ORACLE, feeder only)",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": true,
+        "n_train": 653728,
+        "fit_min": 0.89,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.24728,
+        "valid_all_bss": 0.007562,
+        "valid_all_auc": 0.55351,
+        "valid_all_score": 1011.54,
+        "valid_R_brier": 0.248849,
+        "valid_R_auc": 0.539948,
+        "valid_F_brier": 0.236095,
+        "valid_F_auc": 0.506929,
+        "policy_cost_vs_oracle": 0.0
+      },
+      "fold_2022_P4": {
+        "iter_used": 250,
+        "iter_source": "own argmin (ORACLE, feeder only)",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": true,
+        "n_train": 653728,
+        "fit_min": 0.89,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.24728,
+        "valid_all_bss": 0.007562,
+        "valid_all_auc": 0.55351,
+        "valid_all_score": 1011.54,
+        "valid_R_brier": 0.248849,
+        "valid_R_auc": 0.539948,
+        "valid_F_brier": 0.236095,
+        "valid_F_auc": 0.506929,
+        "policy_cost_vs_oracle": 0.0
+      },
+      "fold_2023": {
+        "iter_used": 700,
+        "iter_source": "P10: 250 (own fold_2022 valid_all argmin) x 2.75",
+        "iter_requested": 688,
+        "iter_capped_by_num_boost_round": false,
+        "oracle_flag": false,
+        "n_train": 870752,
+        "fit_min": 1.41,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248537,
+        "valid_all_bss": 0.005852,
+        "valid_all_auc": 0.542959,
+        "valid_all_score": 508.35,
+        "valid_R_brier": 0.248417,
+        "valid_R_auc": 0.544868,
+        "valid_F_brier": 0.249568,
+        "valid_F_auc": 0.521857,
+        "policy_cost_vs_oracle": 9e-06
+      },
+      "fold_2023_P4": {
+        "iter_used": 250,
+        "iter_source": "P4: 250 (own fold_2022 argmin), no scaling",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": false,
+        "n_train": 870752,
+        "fit_min": 1.41,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248735,
+        "valid_all_bss": 0.00506,
+        "valid_all_auc": 0.540949,
+        "valid_all_score": 429.09,
+        "valid_R_brier": 0.248557,
+        "valid_R_auc": 0.543625,
+        "valid_F_brier": 0.250256,
+        "valid_F_auc": 0.518756,
+        "policy_cost_vs_oracle": 0.000207
+      },
+      "fold_2024": {
+        "iter_used": 2250,
+        "iter_source": "P10: 825 (own fold_2023 valid_all argmin) x 2.75",
+        "iter_requested": 2269,
+        "iter_capped_by_num_boost_round": false,
+        "oracle_flag": false,
+        "n_train": 1116277,
+        "fit_min": 1.31,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248238,
+        "valid_all_bss": 0.006281,
+        "valid_all_auc": 0.544586,
+        "valid_all_score": 628.05,
+        "valid_R_brier": 0.248299,
+        "valid_R_auc": 0.545294,
+        "valid_F_brier": 0.247785,
+        "valid_F_auc": 0.527608,
+        "policy_cost_vs_oracle": 1e-06
+      },
+      "fold_2024_P4": {
+        "iter_used": 825,
+        "iter_source": "P4: 825 (own fold_2023 argmin), no scaling",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": false,
+        "n_train": 1116277,
+        "fit_min": 1.31,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248263,
+        "valid_all_bss": 0.006181,
+        "valid_all_auc": 0.544383,
+        "valid_all_score": 618.04,
+        "valid_R_brier": 0.248315,
+        "valid_R_auc": 0.545114,
+        "valid_F_brier": 0.247872,
+        "valid_F_auc": 0.5268,
+        "policy_cost_vs_oracle": 2.6e-05
+      }
+    },
+    "B_seed42": {
+      "n_features": 24,
+      "elapsed_min": 3.73,
+      "num_boost_round_cap": 3000,
+      "categorical_declared": [
+        "game_type",
+        "base_state"
+      ],
+      "oracle_iters": {
+        "fold_2022": 220,
+        "fold_2023": 825,
+        "fold_2024": 1650
+      },
+      "argmin_at_cap": {
+        "fold_2022": false,
+        "fold_2023": false,
+        "fold_2024": false
+      },
+      "any_argmin_at_cap": false,
+      "unseen_category_rows": {
+        "fold_2022": {
+          "game_type": 30448,
+          "base_state": 0
+        },
+        "fold_2023": {
+          "game_type": 25686,
+          "base_state": 0
+        },
+        "fold_2024": {
+          "game_type": 0,
+          "base_state": 0
+        }
+      },
+      "constant_in_train_cols": {
+        "fold_2022": [
+          "game_type"
+        ],
+        "fold_2023": [
+          "game_type"
+        ],
+        "fold_2024": []
+      },
+      "pred_files": {
+        "P10": "pred/pred_B_seed42_fold_2024_P10.npy",
+        "P4": "pred/pred_B_seed42_fold_2024_P4.npy"
+      },
+      "fold_2022": {
+        "iter_used": 220,
+        "iter_source": "own argmin (no predecessor; ORACLE, feeder only)",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": true,
+        "n_train": 653728,
+        "fit_min": 0.72,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.247245,
+        "valid_all_bss": 0.007699,
+        "valid_all_auc": 0.553906,
+        "valid_all_score": 1025.55,
+        "valid_R_brier": 0.248865,
+        "valid_R_auc": 0.540052,
+        "valid_F_brier": 0.235702,
+        "valid_F_auc": 0.506425,
+        "policy_cost_vs_oracle": 0.0
+      },
+      "fold_2022_P4": {
+        "iter_used": 220,
+        "iter_source": "own argmin (ORACLE, feeder only)",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": true,
+        "n_train": 653728,
+        "fit_min": 0.72,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.247245,
+        "valid_all_bss": 0.007699,
+        "valid_all_auc": 0.553906,
+        "valid_all_score": 1025.55,
+        "valid_R_brier": 0.248865,
+        "valid_R_auc": 0.540052,
+        "valid_F_brier": 0.235702,
+        "valid_F_auc": 0.506425,
+        "policy_cost_vs_oracle": 0.0
+      },
+      "fold_2023": {
+        "iter_used": 600,
+        "iter_source": "P10: 220 (own fold_2022 valid_all argmin) x 2.75",
+        "iter_requested": 605,
+        "iter_capped_by_num_boost_round": false,
+        "oracle_flag": false,
+        "n_train": 870752,
+        "fit_min": 1.1,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248537,
+        "valid_all_bss": 0.00585,
+        "valid_all_auc": 0.542975,
+        "valid_all_score": 508.35,
+        "valid_R_brier": 0.248412,
+        "valid_R_auc": 0.544937,
+        "valid_F_brier": 0.249615,
+        "valid_F_auc": 0.521827,
+        "policy_cost_vs_oracle": 7e-06
+      },
+      "fold_2023_P4": {
+        "iter_used": 220,
+        "iter_source": "P4: 220 (own fold_2022 argmin), no scaling",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": false,
+        "n_train": 870752,
+        "fit_min": 1.1,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248772,
+        "valid_all_bss": 0.00491,
+        "valid_all_auc": 0.540719,
+        "valid_all_score": 414.28,
+        "valid_R_brier": 0.248584,
+        "valid_R_auc": 0.543576,
+        "valid_F_brier": 0.250382,
+        "valid_F_auc": 0.5181,
+        "policy_cost_vs_oracle": 0.000242
+      },
+      "fold_2024": {
+        "iter_used": 2250,
+        "iter_source": "P10: 825 (own fold_2023 valid_all argmin) x 2.75",
+        "iter_requested": 2269,
+        "iter_capped_by_num_boost_round": false,
+        "oracle_flag": false,
+        "n_train": 1116277,
+        "fit_min": 1.33,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248231,
+        "valid_all_bss": 0.00631,
+        "valid_all_auc": 0.544778,
+        "valid_all_score": 630.85,
+        "valid_R_brier": 0.248291,
+        "valid_R_auc": 0.545462,
+        "valid_F_brier": 0.247779,
+        "valid_F_auc": 0.527839,
+        "policy_cost_vs_oracle": 4e-06
+      },
+      "fold_2024_P4": {
+        "iter_used": 825,
+        "iter_source": "P4: 825 (own fold_2023 argmin), no scaling",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": false,
+        "n_train": 1116277,
+        "fit_min": 1.33,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248256,
+        "valid_all_bss": 0.006207,
+        "valid_all_auc": 0.544481,
+        "valid_all_score": 620.84,
+        "valid_R_brier": 0.24831,
+        "valid_R_auc": 0.545181,
+        "valid_F_brier": 0.247858,
+        "valid_F_auc": 0.527423,
+        "policy_cost_vs_oracle": 3e-05
+      }
+    },
+    "B_seed7": {
+      "n_features": 24,
+      "elapsed_min": 4.26,
+      "num_boost_round_cap": 3000,
+      "categorical_declared": [
+        "game_type",
+        "base_state"
+      ],
+      "oracle_iters": {
+        "fold_2022": 250,
+        "fold_2023": 825,
+        "fold_2024": 1250
+      },
+      "argmin_at_cap": {
+        "fold_2022": false,
+        "fold_2023": false,
+        "fold_2024": false
+      },
+      "any_argmin_at_cap": false,
+      "unseen_category_rows": {
+        "fold_2022": {
+          "game_type": 30448,
+          "base_state": 0
+        },
+        "fold_2023": {
+          "game_type": 25686,
+          "base_state": 0
+        },
+        "fold_2024": {
+          "game_type": 0,
+          "base_state": 0
+        }
+      },
+      "constant_in_train_cols": {
+        "fold_2022": [
+          "game_type"
+        ],
+        "fold_2023": [
+          "game_type"
+        ],
+        "fold_2024": []
+      },
+      "pred_files": {
+        "P10": "pred/pred_B_seed7_fold_2024_P10.npy",
+        "P4": "pred/pred_B_seed7_fold_2024_P4.npy"
+      },
+      "fold_2022": {
+        "iter_used": 250,
+        "iter_source": "own argmin (no predecessor; ORACLE, feeder only)",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": true,
+        "n_train": 653728,
+        "fit_min": 0.95,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.247245,
+        "valid_all_bss": 0.007701,
+        "valid_all_auc": 0.553751,
+        "valid_all_score": 1025.55,
+        "valid_R_brier": 0.248845,
+        "valid_R_auc": 0.539988,
+        "valid_F_brier": 0.235841,
+        "valid_F_auc": 0.506751,
+        "policy_cost_vs_oracle": 0.0
+      },
+      "fold_2022_P4": {
+        "iter_used": 250,
+        "iter_source": "own argmin (ORACLE, feeder only)",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": true,
+        "n_train": 653728,
+        "fit_min": 0.95,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.247245,
+        "valid_all_bss": 0.007701,
+        "valid_all_auc": 0.553751,
+        "valid_all_score": 1025.55,
+        "valid_R_brier": 0.248845,
+        "valid_R_auc": 0.539988,
+        "valid_F_brier": 0.235841,
+        "valid_F_auc": 0.506751,
+        "policy_cost_vs_oracle": 0.0
+      },
+      "fold_2023": {
+        "iter_used": 700,
+        "iter_source": "P10: 250 (own fold_2022 valid_all argmin) x 2.75",
+        "iter_requested": 688,
+        "iter_capped_by_num_boost_round": false,
+        "oracle_flag": false,
+        "n_train": 870752,
+        "fit_min": 1.14,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.24856,
+        "valid_all_bss": 0.00576,
+        "valid_all_auc": 0.542642,
+        "valid_all_score": 499.15,
+        "valid_R_brier": 0.248432,
+        "valid_R_auc": 0.544646,
+        "valid_F_brier": 0.249656,
+        "valid_F_auc": 0.521957,
+        "policy_cost_vs_oracle": 5e-06
+      },
+      "fold_2023_P4": {
+        "iter_used": 250,
+        "iter_source": "P4: 250 (own fold_2022 argmin), no scaling",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": false,
+        "n_train": 870752,
+        "fit_min": 1.14,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248751,
+        "valid_all_bss": 0.004998,
+        "valid_all_auc": 0.540681,
+        "valid_all_score": 422.69,
+        "valid_R_brier": 0.248568,
+        "valid_R_auc": 0.543421,
+        "valid_F_brier": 0.250313,
+        "valid_F_auc": 0.518314,
+        "policy_cost_vs_oracle": 0.000196
+      },
+      "fold_2024": {
+        "iter_used": 2250,
+        "iter_source": "P10: 825 (own fold_2023 valid_all argmin) x 2.75",
+        "iter_requested": 2269,
+        "iter_capped_by_num_boost_round": false,
+        "oracle_flag": false,
+        "n_train": 1116277,
+        "fit_min": 1.59,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248245,
+        "valid_all_bss": 0.006251,
+        "valid_all_auc": 0.544565,
+        "valid_all_score": 625.24,
+        "valid_R_brier": 0.248304,
+        "valid_R_auc": 0.545262,
+        "valid_F_brier": 0.247811,
+        "valid_F_auc": 0.527526,
+        "policy_cost_vs_oracle": 1.5e-05
+      },
+      "fold_2024_P4": {
+        "iter_used": 825,
+        "iter_source": "P4: 825 (own fold_2023 argmin), no scaling",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": false,
+        "n_train": 1116277,
+        "fit_min": 1.59,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248248,
+        "valid_all_bss": 0.006239,
+        "valid_all_auc": 0.544602,
+        "valid_all_score": 624.04,
+        "valid_R_brier": 0.248301,
+        "valid_R_auc": 0.545317,
+        "valid_F_brier": 0.247856,
+        "valid_F_auc": 0.52709,
+        "policy_cost_vs_oracle": 1.7e-05
+      }
+    },
+    "C_seed2024": {
+      "n_features": 36,
+      "elapsed_min": 6.98,
+      "num_boost_round_cap": 4600,
+      "categorical_declared": [
+        "top_bottom",
+        "game_type",
+        "base_state"
+      ],
+      "oracle_iters": {
+        "fold_2022": 475,
+        "fold_2023": 750,
+        "fold_2024": 1850
+      },
+      "argmin_at_cap": {
+        "fold_2022": false,
+        "fold_2023": false,
+        "fold_2024": false
+      },
+      "any_argmin_at_cap": false,
+      "unseen_category_rows": {
+        "fold_2022": {
+          "top_bottom": 0,
+          "game_type": 30448,
+          "base_state": 0
+        },
+        "fold_2023": {
+          "top_bottom": 0,
+          "game_type": 25686,
+          "base_state": 0
+        },
+        "fold_2024": {
+          "top_bottom": 0,
+          "game_type": 0,
+          "base_state": 0
+        }
+      },
+      "constant_in_train_cols": {
+        "fold_2022": [
+          "game_type"
+        ],
+        "fold_2023": [
+          "game_type"
+        ],
+        "fold_2024": []
+      },
+      "pred_files": {
+        "P10": "pred/pred_C_seed2024_fold_2024_P10.npy",
+        "P4": "pred/pred_C_seed2024_fold_2024_P4.npy"
+      },
+      "fold_2022": {
+        "iter_used": 475,
+        "iter_source": "own argmin (no predecessor; ORACLE, feeder only)",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": true,
+        "n_train": 653728,
+        "fit_min": 1.59,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.246946,
+        "valid_all_bss": 0.0089,
+        "valid_all_auc": 0.557464,
+        "valid_all_score": 1145.24,
+        "valid_R_brier": 0.24875,
+        "valid_R_auc": 0.540735,
+        "valid_F_brier": 0.234089,
+        "valid_F_auc": 0.506692,
+        "policy_cost_vs_oracle": 0.0
+      },
+      "fold_2022_P4": {
+        "iter_used": 475,
+        "iter_source": "own argmin (ORACLE, feeder only)",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": true,
+        "n_train": 653728,
+        "fit_min": 1.59,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.246946,
+        "valid_all_bss": 0.0089,
+        "valid_all_auc": 0.557464,
+        "valid_all_score": 1145.24,
+        "valid_R_brier": 0.24875,
+        "valid_R_auc": 0.540735,
+        "valid_F_brier": 0.234089,
+        "valid_F_auc": 0.506692,
+        "policy_cost_vs_oracle": 0.0
+      },
+      "fold_2023": {
+        "iter_used": 1300,
+        "iter_source": "P10: 475 (own fold_2022 valid_all argmin) x 2.75",
+        "iter_requested": 1306,
+        "iter_capped_by_num_boost_round": false,
+        "oracle_flag": false,
+        "n_train": 870752,
+        "fit_min": 2.01,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248698,
+        "valid_all_bss": 0.005207,
+        "valid_all_auc": 0.540383,
+        "valid_all_score": 443.9,
+        "valid_R_brier": 0.248532,
+        "valid_R_auc": 0.543113,
+        "valid_F_brier": 0.250119,
+        "valid_F_auc": 0.519407,
+        "policy_cost_vs_oracle": 2.5e-05
+      },
+      "fold_2023_P4": {
+        "iter_used": 475,
+        "iter_source": "P4: 475 (own fold_2022 argmin), no scaling",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": false,
+        "n_train": 870752,
+        "fit_min": 2.01,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248706,
+        "valid_all_bss": 0.005175,
+        "valid_all_auc": 0.540412,
+        "valid_all_score": 440.7,
+        "valid_R_brier": 0.248503,
+        "valid_R_auc": 0.54366,
+        "valid_F_brier": 0.25045,
+        "valid_F_auc": 0.518533,
+        "policy_cost_vs_oracle": 3.4e-05
+      },
+      "fold_2024": {
+        "iter_used": 2050,
+        "iter_source": "P10: 750 (own fold_2023 valid_all argmin) x 2.75",
+        "iter_requested": 2062,
+        "iter_capped_by_num_boost_round": false,
+        "oracle_flag": false,
+        "n_train": 1116277,
+        "fit_min": 2.59,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.24827,
+        "valid_all_bss": 0.006151,
+        "valid_all_auc": 0.54526,
+        "valid_all_score": 615.24,
+        "valid_R_brier": 0.24834,
+        "valid_R_auc": 0.546092,
+        "valid_F_brier": 0.247748,
+        "valid_F_auc": 0.527762,
+        "policy_cost_vs_oracle": 4e-06
+      },
+      "fold_2024_P4": {
+        "iter_used": 750,
+        "iter_source": "P4: 750 (own fold_2023 argmin), no scaling",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": false,
+        "n_train": 1116277,
+        "fit_min": 2.59,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248281,
+        "valid_all_bss": 0.006108,
+        "valid_all_auc": 0.544919,
+        "valid_all_score": 610.83,
+        "valid_R_brier": 0.248335,
+        "valid_R_auc": 0.545778,
+        "valid_F_brier": 0.247881,
+        "valid_F_auc": 0.526156,
+        "policy_cost_vs_oracle": 1.4e-05
+      }
+    },
+    "C_seed42": {
+      "n_features": 36,
+      "elapsed_min": 6.08,
+      "num_boost_round_cap": 4600,
+      "categorical_declared": [
+        "top_bottom",
+        "game_type",
+        "base_state"
+      ],
+      "oracle_iters": {
+        "fold_2022": 525,
+        "fold_2023": 1100,
+        "fold_2024": 1500
+      },
+      "argmin_at_cap": {
+        "fold_2022": false,
+        "fold_2023": false,
+        "fold_2024": false
+      },
+      "any_argmin_at_cap": false,
+      "unseen_category_rows": {
+        "fold_2022": {
+          "top_bottom": 0,
+          "game_type": 30448,
+          "base_state": 0
+        },
+        "fold_2023": {
+          "top_bottom": 0,
+          "game_type": 25686,
+          "base_state": 0
+        },
+        "fold_2024": {
+          "top_bottom": 0,
+          "game_type": 0,
+          "base_state": 0
+        }
+      },
+      "constant_in_train_cols": {
+        "fold_2022": [
+          "game_type"
+        ],
+        "fold_2023": [
+          "game_type"
+        ],
+        "fold_2024": []
+      },
+      "pred_files": {
+        "P10": "pred/pred_C_seed42_fold_2024_P10.npy",
+        "P4": "pred/pred_C_seed42_fold_2024_P4.npy"
+      },
+      "fold_2022": {
+        "iter_used": 525,
+        "iter_source": "own argmin (no predecessor; ORACLE, feeder only)",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": true,
+        "n_train": 653728,
+        "fit_min": 1.85,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.246932,
+        "valid_all_bss": 0.008955,
+        "valid_all_auc": 0.557553,
+        "valid_all_score": 1150.85,
+        "valid_R_brier": 0.248745,
+        "valid_R_auc": 0.540845,
+        "valid_F_brier": 0.234012,
+        "valid_F_auc": 0.507213,
+        "policy_cost_vs_oracle": 0.0
+      },
+      "fold_2022_P4": {
+        "iter_used": 525,
+        "iter_source": "own argmin (ORACLE, feeder only)",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": true,
+        "n_train": 653728,
+        "fit_min": 1.85,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.246932,
+        "valid_all_bss": 0.008955,
+        "valid_all_auc": 0.557553,
+        "valid_all_score": 1150.85,
+        "valid_R_brier": 0.248745,
+        "valid_R_auc": 0.540845,
+        "valid_F_brier": 0.234012,
+        "valid_F_auc": 0.507213,
+        "policy_cost_vs_oracle": 0.0
+      },
+      "fold_2023": {
+        "iter_used": 1450,
+        "iter_source": "P10: 525 (own fold_2022 valid_all argmin) x 2.75",
+        "iter_requested": 1444,
+        "iter_capped_by_num_boost_round": false,
+        "oracle_flag": false,
+        "n_train": 870752,
+        "fit_min": 1.65,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248682,
+        "valid_all_bss": 0.005273,
+        "valid_all_auc": 0.54059,
+        "valid_all_score": 450.31,
+        "valid_R_brier": 0.248519,
+        "valid_R_auc": 0.543268,
+        "valid_F_brier": 0.250076,
+        "valid_F_auc": 0.519442,
+        "policy_cost_vs_oracle": 1.2e-05
+      },
+      "fold_2023_P4": {
+        "iter_used": 525,
+        "iter_source": "P4: 525 (own fold_2022 argmin), no scaling",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": false,
+        "n_train": 870752,
+        "fit_min": 1.65,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248697,
+        "valid_all_bss": 0.005212,
+        "valid_all_auc": 0.54046,
+        "valid_all_score": 444.3,
+        "valid_R_brier": 0.2485,
+        "valid_R_auc": 0.54362,
+        "valid_F_brier": 0.250384,
+        "valid_F_auc": 0.518441,
+        "policy_cost_vs_oracle": 2.8e-05
+      },
+      "fold_2024": {
+        "iter_used": 3000,
+        "iter_source": "P10: 1100 (own fold_2023 valid_all argmin) x 2.75",
+        "iter_requested": 3025,
+        "iter_capped_by_num_boost_round": false,
+        "oracle_flag": false,
+        "n_train": 1116277,
+        "fit_min": 1.94,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248304,
+        "valid_all_bss": 0.006015,
+        "valid_all_auc": 0.54506,
+        "valid_all_score": 601.62,
+        "valid_R_brier": 0.248381,
+        "valid_R_auc": 0.545791,
+        "valid_F_brier": 0.247735,
+        "valid_F_auc": 0.527922,
+        "policy_cost_vs_oracle": 3.4e-05
+      },
+      "fold_2024_P4": {
+        "iter_used": 1100,
+        "iter_source": "P4: 1100 (own fold_2023 argmin), no scaling",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": false,
+        "n_train": 1116277,
+        "fit_min": 1.94,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248274,
+        "valid_all_bss": 0.006135,
+        "valid_all_auc": 0.544989,
+        "valid_all_score": 613.63,
+        "valid_R_brier": 0.248334,
+        "valid_R_auc": 0.545836,
+        "valid_F_brier": 0.247829,
+        "valid_F_auc": 0.526696,
+        "policy_cost_vs_oracle": 4e-06
+      }
+    },
+    "C_seed7": {
+      "n_features": 36,
+      "elapsed_min": 6.21,
+      "num_boost_round_cap": 4600,
+      "categorical_declared": [
+        "top_bottom",
+        "game_type",
+        "base_state"
+      ],
+      "oracle_iters": {
+        "fold_2022": 450,
+        "fold_2023": 775,
+        "fold_2024": 2300
+      },
+      "argmin_at_cap": {
+        "fold_2022": false,
+        "fold_2023": false,
+        "fold_2024": false
+      },
+      "any_argmin_at_cap": false,
+      "unseen_category_rows": {
+        "fold_2022": {
+          "top_bottom": 0,
+          "game_type": 30448,
+          "base_state": 0
+        },
+        "fold_2023": {
+          "top_bottom": 0,
+          "game_type": 25686,
+          "base_state": 0
+        },
+        "fold_2024": {
+          "top_bottom": 0,
+          "game_type": 0,
+          "base_state": 0
+        }
+      },
+      "constant_in_train_cols": {
+        "fold_2022": [
+          "game_type"
+        ],
+        "fold_2023": [
+          "game_type"
+        ],
+        "fold_2024": []
+      },
+      "pred_files": {
+        "P10": "pred/pred_C_seed7_fold_2024_P10.npy",
+        "P4": "pred/pred_C_seed7_fold_2024_P4.npy"
+      },
+      "fold_2022": {
+        "iter_used": 450,
+        "iter_source": "own argmin (no predecessor; ORACLE, feeder only)",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": true,
+        "n_train": 653728,
+        "fit_min": 1.34,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.246947,
+        "valid_all_bss": 0.008898,
+        "valid_all_auc": 0.55745,
+        "valid_all_score": 1144.84,
+        "valid_R_brier": 0.248755,
+        "valid_R_auc": 0.540746,
+        "valid_F_brier": 0.234058,
+        "valid_F_auc": 0.506656,
+        "policy_cost_vs_oracle": 0.0
+      },
+      "fold_2022_P4": {
+        "iter_used": 450,
+        "iter_source": "own argmin (ORACLE, feeder only)",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": true,
+        "n_train": 653728,
+        "fit_min": 1.34,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.246947,
+        "valid_all_bss": 0.008898,
+        "valid_all_auc": 0.55745,
+        "valid_all_score": 1144.84,
+        "valid_R_brier": 0.248755,
+        "valid_R_auc": 0.540746,
+        "valid_F_brier": 0.234058,
+        "valid_F_auc": 0.506656,
+        "policy_cost_vs_oracle": 0.0
+      },
+      "fold_2023": {
+        "iter_used": 1250,
+        "iter_source": "P10: 450 (own fold_2022 valid_all argmin) x 2.75",
+        "iter_requested": 1238,
+        "iter_capped_by_num_boost_round": false,
+        "oracle_flag": false,
+        "n_train": 870752,
+        "fit_min": 1.88,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248699,
+        "valid_all_bss": 0.005202,
+        "valid_all_auc": 0.540382,
+        "valid_all_score": 443.5,
+        "valid_R_brier": 0.248526,
+        "valid_R_auc": 0.54316,
+        "valid_F_brier": 0.25018,
+        "valid_F_auc": 0.518934,
+        "policy_cost_vs_oracle": 1.4e-05
+      },
+      "fold_2023_P4": {
+        "iter_used": 450,
+        "iter_source": "P4: 450 (own fold_2022 argmin), no scaling",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": false,
+        "n_train": 870752,
+        "fit_min": 1.88,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248716,
+        "valid_all_bss": 0.005135,
+        "valid_all_auc": 0.540257,
+        "valid_all_score": 436.7,
+        "valid_R_brier": 0.248511,
+        "valid_R_auc": 0.5435,
+        "valid_F_brier": 0.250476,
+        "valid_F_auc": 0.518234,
+        "policy_cost_vs_oracle": 3.1e-05
+      },
+      "fold_2024": {
+        "iter_used": 2150,
+        "iter_source": "P10: 775 (own fold_2023 valid_all argmin) x 2.75",
+        "iter_requested": 2131,
+        "iter_capped_by_num_boost_round": false,
+        "oracle_flag": false,
+        "n_train": 1116277,
+        "fit_min": 2.24,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248273,
+        "valid_all_bss": 0.00614,
+        "valid_all_auc": 0.545395,
+        "valid_all_score": 614.03,
+        "valid_R_brier": 0.248348,
+        "valid_R_auc": 0.546161,
+        "valid_F_brier": 0.247714,
+        "valid_F_auc": 0.528306,
+        "policy_cost_vs_oracle": 1e-05
+      },
+      "fold_2024_P4": {
+        "iter_used": 775,
+        "iter_source": "P4: 775 (own fold_2023 argmin), no scaling",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": false,
+        "n_train": 1116277,
+        "fit_min": 2.24,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248278,
+        "valid_all_bss": 0.006122,
+        "valid_all_auc": 0.544907,
+        "valid_all_score": 612.03,
+        "valid_R_brier": 0.248335,
+        "valid_R_auc": 0.545723,
+        "valid_F_brier": 0.247848,
+        "valid_F_auc": 0.526582,
+        "policy_cost_vs_oracle": 1.5e-05
+      }
+    },
+    "D_NOCAT_DIAG_seed42": {
+      "n_features": 47,
+      "elapsed_min": 5.43,
+      "num_boost_round_cap": 3000,
+      "categorical_declared": [],
+      "oracle_iters": {
+        "fold_2022": 300,
+        "fold_2023": 775,
+        "fold_2024": 925
+      },
+      "argmin_at_cap": {
+        "fold_2022": false,
+        "fold_2023": false,
+        "fold_2024": false
+      },
+      "any_argmin_at_cap": false,
+      "unseen_category_rows": {
+        "fold_2022": {
+          "top_bottom": 0,
+          "game_type": 30448,
+          "base_state": 0
+        },
+        "fold_2023": {
+          "top_bottom": 0,
+          "game_type": 25686,
+          "base_state": 0
+        },
+        "fold_2024": {
+          "top_bottom": 0,
+          "game_type": 0,
+          "base_state": 0
+        }
+      },
+      "constant_in_train_cols": {
+        "fold_2022": [
+          "game_type"
+        ],
+        "fold_2023": [
+          "game_type"
+        ],
+        "fold_2024": []
+      },
+      "pred_files": {
+        "P10": "pred/pred_D_NOCAT_DIAG_seed42_fold_2024_P10.npy",
+        "P4": "pred/pred_D_NOCAT_DIAG_seed42_fold_2024_P4.npy"
+      },
+      "fold_2022": {
+        "iter_used": 300,
+        "iter_source": "own argmin (no predecessor; ORACLE, feeder only)",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": true,
+        "n_train": 653728,
+        "fit_min": 1.21,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.247187,
+        "valid_all_bss": 0.007933,
+        "valid_all_auc": 0.55346,
+        "valid_all_score": 1048.77,
+        "valid_R_brier": 0.248752,
+        "valid_R_auc": 0.541557,
+        "valid_F_brier": 0.23603,
+        "valid_F_auc": 0.50679,
+        "policy_cost_vs_oracle": 0.0
+      },
+      "fold_2022_P4": {
+        "iter_used": 300,
+        "iter_source": "own argmin (ORACLE, feeder only)",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": true,
+        "n_train": 653728,
+        "fit_min": 1.21,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.247187,
+        "valid_all_bss": 0.007933,
+        "valid_all_auc": 0.55346,
+        "valid_all_score": 1048.77,
+        "valid_R_brier": 0.248752,
+        "valid_R_auc": 0.541557,
+        "valid_F_brier": 0.23603,
+        "valid_F_auc": 0.50679,
+        "policy_cost_vs_oracle": 0.0
+      },
+      "fold_2023": {
+        "iter_used": 825,
+        "iter_source": "P10: 300 (own fold_2022 valid_all argmin) x 2.75",
+        "iter_requested": 825,
+        "iter_capped_by_num_boost_round": false,
+        "oracle_flag": false,
+        "n_train": 870752,
+        "fit_min": 1.33,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.24882,
+        "valid_all_bss": 0.00472,
+        "valid_all_auc": 0.538183,
+        "valid_all_score": 395.07,
+        "valid_R_brier": 0.248775,
+        "valid_R_auc": 0.538726,
+        "valid_F_brier": 0.249205,
+        "valid_F_auc": 0.520245,
+        "policy_cost_vs_oracle": 8e-06
+      },
+      "fold_2023_P4": {
+        "iter_used": 300,
+        "iter_source": "P4: 300 (own fold_2022 argmin), no scaling",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": false,
+        "n_train": 870752,
+        "fit_min": 1.33,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248892,
+        "valid_all_bss": 0.004432,
+        "valid_all_auc": 0.537395,
+        "valid_all_score": 366.24,
+        "valid_R_brier": 0.248744,
+        "valid_R_auc": 0.539608,
+        "valid_F_brier": 0.250162,
+        "valid_F_auc": 0.516763,
+        "policy_cost_vs_oracle": 8e-05
+      },
+      "fold_2024": {
+        "iter_used": 2150,
+        "iter_source": "P10: 775 (own fold_2023 valid_all argmin) x 2.75",
+        "iter_requested": 2131,
+        "iter_capped_by_num_boost_round": false,
+        "oracle_flag": false,
+        "n_train": 1116277,
+        "fit_min": 2.3,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.24825,
+        "valid_all_bss": 0.006233,
+        "valid_all_auc": 0.545582,
+        "valid_all_score": 623.24,
+        "valid_R_brier": 0.24832,
+        "valid_R_auc": 0.546327,
+        "valid_F_brier": 0.247729,
+        "valid_F_auc": 0.528526,
+        "policy_cost_vs_oracle": 5e-06
+      },
+      "fold_2024_P4": {
+        "iter_used": 775,
+        "iter_source": "P4: 775 (own fold_2023 argmin), no scaling",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": false,
+        "n_train": 1116277,
+        "fit_min": 2.3,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248261,
+        "valid_all_bss": 0.006187,
+        "valid_all_auc": 0.545165,
+        "valid_all_score": 618.84,
+        "valid_R_brier": 0.24831,
+        "valid_R_auc": 0.545989,
+        "valid_F_brier": 0.247898,
+        "valid_F_auc": 0.526466,
+        "policy_cost_vs_oracle": 1.6e-05
+      }
+    },
+    "D_seed2024": {
+      "n_features": 47,
+      "elapsed_min": 5.22,
+      "num_boost_round_cap": 3000,
+      "categorical_declared": [
+        "top_bottom",
+        "game_type",
+        "base_state"
+      ],
+      "oracle_iters": {
+        "fold_2022": 280,
+        "fold_2023": 1000,
+        "fold_2024": 2650
+      },
+      "argmin_at_cap": {
+        "fold_2022": false,
+        "fold_2023": false,
+        "fold_2024": false
+      },
+      "any_argmin_at_cap": false,
+      "unseen_category_rows": {
+        "fold_2022": {
+          "top_bottom": 0,
+          "game_type": 30448,
+          "base_state": 0
+        },
+        "fold_2023": {
+          "top_bottom": 0,
+          "game_type": 25686,
+          "base_state": 0
+        },
+        "fold_2024": {
+          "top_bottom": 0,
+          "game_type": 0,
+          "base_state": 0
+        }
+      },
+      "constant_in_train_cols": {
+        "fold_2022": [
+          "game_type"
+        ],
+        "fold_2023": [
+          "game_type"
+        ],
+        "fold_2024": []
+      },
+      "pred_files": {
+        "P10": "pred/pred_D_seed2024_fold_2024_P10.npy",
+        "P4": "pred/pred_D_seed2024_fold_2024_P4.npy"
+      },
+      "fold_2022": {
+        "iter_used": 280,
+        "iter_source": "own argmin (no predecessor; ORACLE, feeder only)",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": true,
+        "n_train": 653728,
+        "fit_min": 1.18,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.247222,
+        "valid_all_bss": 0.007792,
+        "valid_all_auc": 0.553152,
+        "valid_all_score": 1034.76,
+        "valid_R_brier": 0.248763,
+        "valid_R_auc": 0.541505,
+        "valid_F_brier": 0.236241,
+        "valid_F_auc": 0.506532,
+        "policy_cost_vs_oracle": 0.0
+      },
+      "fold_2022_P4": {
+        "iter_used": 280,
+        "iter_source": "own argmin (ORACLE, feeder only)",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": true,
+        "n_train": 653728,
+        "fit_min": 1.18,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.247222,
+        "valid_all_bss": 0.007792,
+        "valid_all_auc": 0.553152,
+        "valid_all_score": 1034.76,
+        "valid_R_brier": 0.248763,
+        "valid_R_auc": 0.541505,
+        "valid_F_brier": 0.236241,
+        "valid_F_auc": 0.506532,
+        "policy_cost_vs_oracle": 0.0
+      },
+      "fold_2023": {
+        "iter_used": 775,
+        "iter_source": "P10: 280 (own fold_2022 valid_all argmin) x 2.75",
+        "iter_requested": 770,
+        "iter_capped_by_num_boost_round": false,
+        "oracle_flag": false,
+        "n_train": 870752,
+        "fit_min": 1.67,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248831,
+        "valid_all_bss": 0.004675,
+        "valid_all_auc": 0.538121,
+        "valid_all_score": 390.66,
+        "valid_R_brier": 0.248779,
+        "valid_R_auc": 0.538791,
+        "valid_F_brier": 0.249273,
+        "valid_F_auc": 0.519862,
+        "policy_cost_vs_oracle": 4e-06
+      },
+      "fold_2023_P4": {
+        "iter_used": 280,
+        "iter_source": "P4: 280 (own fold_2022 argmin), no scaling",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": false,
+        "n_train": 870752,
+        "fit_min": 1.67,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248926,
+        "valid_all_bss": 0.004297,
+        "valid_all_auc": 0.536947,
+        "valid_all_score": 352.63,
+        "valid_R_brier": 0.248769,
+        "valid_R_auc": 0.53925,
+        "valid_F_brier": 0.250265,
+        "valid_F_auc": 0.516619,
+        "policy_cost_vs_oracle": 9.8e-05
+      },
+      "fold_2024": {
+        "iter_used": 2750,
+        "iter_source": "P10: 1000 (own fold_2023 valid_all argmin) x 2.75",
+        "iter_requested": 2750,
+        "iter_capped_by_num_boost_round": false,
+        "oracle_flag": false,
+        "n_train": 1116277,
+        "fit_min": 1.71,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248242,
+        "valid_all_bss": 0.006263,
+        "valid_all_auc": 0.545828,
+        "valid_all_score": 626.44,
+        "valid_R_brier": 0.248315,
+        "valid_R_auc": 0.546563,
+        "valid_F_brier": 0.247701,
+        "valid_F_auc": 0.529032,
+        "policy_cost_vs_oracle": 7e-06
+      },
+      "fold_2024_P4": {
+        "iter_used": 1000,
+        "iter_source": "P4: 1000 (own fold_2023 argmin), no scaling",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": false,
+        "n_train": 1116277,
+        "fit_min": 1.71,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.24826,
+        "valid_all_bss": 0.006193,
+        "valid_all_auc": 0.545333,
+        "valid_all_score": 619.24,
+        "valid_R_brier": 0.248318,
+        "valid_R_auc": 0.546094,
+        "valid_F_brier": 0.247827,
+        "valid_F_auc": 0.52773,
+        "policy_cost_vs_oracle": 2.5e-05
+      }
+    },
+    "D_seed42": {
+      "n_features": 47,
+      "elapsed_min": 5.64,
+      "num_boost_round_cap": 3000,
+      "categorical_declared": [
+        "top_bottom",
+        "game_type",
+        "base_state"
+      ],
+      "oracle_iters": {
+        "fold_2022": 300,
+        "fold_2023": 750,
+        "fold_2024": 1550
+      },
+      "argmin_at_cap": {
+        "fold_2022": false,
+        "fold_2023": false,
+        "fold_2024": false
+      },
+      "any_argmin_at_cap": false,
+      "unseen_category_rows": {
+        "fold_2022": {
+          "top_bottom": 0,
+          "game_type": 30448,
+          "base_state": 0
+        },
+        "fold_2023": {
+          "top_bottom": 0,
+          "game_type": 25686,
+          "base_state": 0
+        },
+        "fold_2024": {
+          "top_bottom": 0,
+          "game_type": 0,
+          "base_state": 0
+        }
+      },
+      "constant_in_train_cols": {
+        "fold_2022": [
+          "game_type"
+        ],
+        "fold_2023": [
+          "game_type"
+        ],
+        "fold_2024": []
+      },
+      "pred_files": {
+        "P10": "pred/pred_D_seed42_fold_2024_P10.npy",
+        "P4": "pred/pred_D_seed42_fold_2024_P4.npy"
+      },
+      "fold_2022": {
+        "iter_used": 300,
+        "iter_source": "own argmin (no predecessor; ORACLE, feeder only)",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": true,
+        "n_train": 653728,
+        "fit_min": 1.33,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.247197,
+        "valid_all_bss": 0.007895,
+        "valid_all_auc": 0.553256,
+        "valid_all_score": 1044.77,
+        "valid_R_brier": 0.248754,
+        "valid_R_auc": 0.541551,
+        "valid_F_brier": 0.236095,
+        "valid_F_auc": 0.506771,
+        "policy_cost_vs_oracle": 0.0
+      },
+      "fold_2022_P4": {
+        "iter_used": 300,
+        "iter_source": "own argmin (ORACLE, feeder only)",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": true,
+        "n_train": 653728,
+        "fit_min": 1.33,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.247197,
+        "valid_all_bss": 0.007895,
+        "valid_all_auc": 0.553256,
+        "valid_all_score": 1044.77,
+        "valid_R_brier": 0.248754,
+        "valid_R_auc": 0.541551,
+        "valid_F_brier": 0.236095,
+        "valid_F_auc": 0.506771,
+        "policy_cost_vs_oracle": 0.0
+      },
+      "fold_2023": {
+        "iter_used": 825,
+        "iter_source": "P10: 300 (own fold_2022 valid_all argmin) x 2.75",
+        "iter_requested": 825,
+        "iter_capped_by_num_boost_round": false,
+        "oracle_flag": false,
+        "n_train": 870752,
+        "fit_min": 1.65,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248809,
+        "valid_all_bss": 0.004765,
+        "valid_all_auc": 0.538345,
+        "valid_all_score": 399.47,
+        "valid_R_brier": 0.248762,
+        "valid_R_auc": 0.538911,
+        "valid_F_brier": 0.249207,
+        "valid_F_auc": 0.520318,
+        "policy_cost_vs_oracle": 4e-06
+      },
+      "fold_2023_P4": {
+        "iter_used": 300,
+        "iter_source": "P4: 300 (own fold_2022 argmin), no scaling",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": false,
+        "n_train": 870752,
+        "fit_min": 1.65,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248892,
+        "valid_all_bss": 0.004433,
+        "valid_all_auc": 0.537404,
+        "valid_all_score": 366.24,
+        "valid_R_brier": 0.248743,
+        "valid_R_auc": 0.539619,
+        "valid_F_brier": 0.250164,
+        "valid_F_auc": 0.516762,
+        "policy_cost_vs_oracle": 8.7e-05
+      },
+      "fold_2024": {
+        "iter_used": 2050,
+        "iter_source": "P10: 750 (own fold_2023 valid_all argmin) x 2.75",
+        "iter_requested": 2062,
+        "iter_capped_by_num_boost_round": false,
+        "oracle_flag": false,
+        "n_train": 1116277,
+        "fit_min": 1.93,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248257,
+        "valid_all_bss": 0.006204,
+        "valid_all_auc": 0.545578,
+        "valid_all_score": 620.44,
+        "valid_R_brier": 0.248328,
+        "valid_R_auc": 0.546299,
+        "valid_F_brier": 0.247733,
+        "valid_F_auc": 0.528533,
+        "policy_cost_vs_oracle": 1e-05
+      },
+      "fold_2024_P4": {
+        "iter_used": 750,
+        "iter_source": "P4: 750 (own fold_2023 argmin), no scaling",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": false,
+        "n_train": 1116277,
+        "fit_min": 1.93,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248261,
+        "valid_all_bss": 0.00619,
+        "valid_all_auc": 0.545191,
+        "valid_all_score": 618.84,
+        "valid_R_brier": 0.248305,
+        "valid_R_auc": 0.546043,
+        "valid_F_brier": 0.247926,
+        "valid_F_auc": 0.526111,
+        "policy_cost_vs_oracle": 1.4e-05
+      }
+    },
+    "D_seed7": {
+      "n_features": 47,
+      "elapsed_min": 5.08,
+      "num_boost_round_cap": 3000,
+      "categorical_declared": [
+        "top_bottom",
+        "game_type",
+        "base_state"
+      ],
+      "oracle_iters": {
+        "fold_2022": 240,
+        "fold_2023": 775,
+        "fold_2024": 2150
+      },
+      "argmin_at_cap": {
+        "fold_2022": false,
+        "fold_2023": false,
+        "fold_2024": false
+      },
+      "any_argmin_at_cap": false,
+      "unseen_category_rows": {
+        "fold_2022": {
+          "top_bottom": 0,
+          "game_type": 30448,
+          "base_state": 0
+        },
+        "fold_2023": {
+          "top_bottom": 0,
+          "game_type": 25686,
+          "base_state": 0
+        },
+        "fold_2024": {
+          "top_bottom": 0,
+          "game_type": 0,
+          "base_state": 0
+        }
+      },
+      "constant_in_train_cols": {
+        "fold_2022": [
+          "game_type"
+        ],
+        "fold_2023": [
+          "game_type"
+        ],
+        "fold_2024": []
+      },
+      "pred_files": {
+        "P10": "pred/pred_D_seed7_fold_2024_P10.npy",
+        "P4": "pred/pred_D_seed7_fold_2024_P4.npy"
+      },
+      "fold_2022": {
+        "iter_used": 240,
+        "iter_source": "own argmin (no predecessor; ORACLE, feeder only)",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": true,
+        "n_train": 653728,
+        "fit_min": 1.0,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.247249,
+        "valid_all_bss": 0.007682,
+        "valid_all_auc": 0.552985,
+        "valid_all_score": 1023.95,
+        "valid_R_brier": 0.2488,
+        "valid_R_auc": 0.541355,
+        "valid_F_brier": 0.236196,
+        "valid_F_auc": 0.506871,
+        "policy_cost_vs_oracle": 0.0
+      },
+      "fold_2022_P4": {
+        "iter_used": 240,
+        "iter_source": "own argmin (ORACLE, feeder only)",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": true,
+        "n_train": 653728,
+        "fit_min": 1.0,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.247249,
+        "valid_all_bss": 0.007682,
+        "valid_all_auc": 0.552985,
+        "valid_all_score": 1023.95,
+        "valid_R_brier": 0.2488,
+        "valid_R_auc": 0.541355,
+        "valid_F_brier": 0.236196,
+        "valid_F_auc": 0.506871,
+        "policy_cost_vs_oracle": 0.0
+      },
+      "fold_2023": {
+        "iter_used": 650,
+        "iter_source": "P10: 240 (own fold_2022 valid_all argmin) x 2.75",
+        "iter_requested": 660,
+        "iter_capped_by_num_boost_round": false,
+        "oracle_flag": false,
+        "n_train": 870752,
+        "fit_min": 1.54,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248812,
+        "valid_all_bss": 0.004753,
+        "valid_all_auc": 0.538262,
+        "valid_all_score": 398.27,
+        "valid_R_brier": 0.248753,
+        "valid_R_auc": 0.539079,
+        "valid_F_brier": 0.249314,
+        "valid_F_auc": 0.519507,
+        "policy_cost_vs_oracle": 8e-06
+      },
+      "fold_2023_P4": {
+        "iter_used": 240,
+        "iter_source": "P4: 240 (own fold_2022 argmin), no scaling",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": false,
+        "n_train": 870752,
+        "fit_min": 1.54,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248937,
+        "valid_all_bss": 0.004251,
+        "valid_all_auc": 0.536998,
+        "valid_all_score": 348.23,
+        "valid_R_brier": 0.248768,
+        "valid_R_auc": 0.539576,
+        "valid_F_brier": 0.250388,
+        "valid_F_auc": 0.51574,
+        "policy_cost_vs_oracle": 0.000134
+      },
+      "fold_2024": {
+        "iter_used": 2150,
+        "iter_source": "P10: 775 (own fold_2023 valid_all argmin) x 2.75",
+        "iter_requested": 2131,
+        "iter_capped_by_num_boost_round": false,
+        "oracle_flag": false,
+        "n_train": 1116277,
+        "fit_min": 1.89,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248235,
+        "valid_all_bss": 0.006292,
+        "valid_all_auc": 0.545999,
+        "valid_all_score": 629.25,
+        "valid_R_brier": 0.248312,
+        "valid_R_auc": 0.546662,
+        "valid_F_brier": 0.247667,
+        "valid_F_auc": 0.530188,
+        "policy_cost_vs_oracle": 0.0
+      },
+      "fold_2024_P4": {
+        "iter_used": 775,
+        "iter_source": "P4: 775 (own fold_2023 argmin), no scaling",
+        "iter_requested": null,
+        "iter_capped_by_num_boost_round": null,
+        "oracle_flag": false,
+        "n_train": 1116277,
+        "fit_min": 1.89,
+        "argmin_at_cap": false,
+        "valid_all_brier": 0.248266,
+        "valid_all_bss": 0.006167,
+        "valid_all_auc": 0.545181,
+        "valid_all_score": 616.84,
+        "valid_R_brier": 0.248321,
+        "valid_R_auc": 0.545942,
+        "valid_F_brier": 0.247859,
+        "valid_F_auc": 0.527383,
+        "policy_cost_vs_oracle": 3.1e-05
+      }
+    }
+  },
+  "summary_stage1_seed42_fold_2024_valid_all_P10": {
+    "A": {
+      "n_features": 8,
+      "iter_used": 1300,
+      "fold_2023_argmin": 475,
+      "argmin_at_cap_any": false,
+      "valid_all_brier": 0.248647,
+      "valid_all_bss": 0.004642,
+      "valid_all_auc": 0.540025,
+      "score": 464.32,
+      "delta_vs_D": 0.00039,
+      "valid_R_brier": 0.24856,
+      "valid_F_brier": 0.249297
+    },
+    "B": {
+      "n_features": 24,
+      "iter_used": 2250,
+      "fold_2023_argmin": 825,
+      "argmin_at_cap_any": false,
+      "valid_all_brier": 0.248231,
+      "valid_all_bss": 0.00631,
+      "valid_all_auc": 0.544778,
+      "score": 630.85,
+      "delta_vs_D": -2.6e-05,
+      "valid_R_brier": 0.248291,
+      "valid_F_brier": 0.247779
+    },
+    "C": {
+      "n_features": 36,
+      "iter_used": 3000,
+      "fold_2023_argmin": 1100,
+      "argmin_at_cap_any": false,
+      "valid_all_brier": 0.248304,
+      "valid_all_bss": 0.006015,
+      "valid_all_auc": 0.54506,
+      "score": 601.62,
+      "delta_vs_D": 4.7e-05,
+      "valid_R_brier": 0.248381,
+      "valid_F_brier": 0.247735
+    },
+    "D": {
+      "n_features": 47,
+      "iter_used": 2050,
+      "fold_2023_argmin": 750,
+      "argmin_at_cap_any": false,
+      "valid_all_brier": 0.248257,
+      "valid_all_bss": 0.006204,
+      "valid_all_auc": 0.545578,
+      "score": 620.44,
+      "delta_vs_D": 0.0,
+      "valid_R_brier": 0.248328,
+      "valid_F_brier": 0.247733
+    },
+    "D_NOCAT_DIAG": {
+      "n_features": 47,
+      "iter_used": 2150,
+      "fold_2023_argmin": 775,
+      "argmin_at_cap_any": false,
+      "valid_all_brier": 0.24825,
+      "valid_all_bss": 0.006233,
+      "valid_all_auc": 0.545582,
+      "score": 623.24,
+      "delta_vs_D": -7e-06,
+      "valid_R_brier": 0.24832,
+      "valid_F_brier": 0.247729
+    }
+  },
+  "best_arm_seed42": "B",
+  "fold_2024_brier_full_precision_P10": {
+    "A_seed42": {
+      "valid_all": 0.248647444283,
+      "valid_R": 0.248560242488,
+      "valid_F": 0.249296872466
+    },
+    "B_seed7": {
+      "valid_all": 0.248245456703,
+      "valid_R": 0.248303792382,
+      "valid_F": 0.247811006545
+    },
+    "B_seed42": {
+      "valid_all": 0.248230562056,
+      "valid_R": 0.248291261607,
+      "valid_F": 0.24777850716
+    },
+    "B_seed2024": {
+      "valid_all": 0.248237786508,
+      "valid_R": 0.24829853401,
+      "valid_F": 0.247785374495
+    },
+    "C_seed7": {
+      "valid_all": 0.248273125555,
+      "valid_R": 0.248348155011,
+      "valid_F": 0.24771434987
+    },
+    "C_seed42": {
+      "valid_all": 0.248304232624,
+      "valid_R": 0.248380696651,
+      "valid_F": 0.247734773089
+    },
+    "C_seed2024": {
+      "valid_all": 0.248270319206,
+      "valid_R": 0.248340470061,
+      "valid_F": 0.2477478765
+    },
+    "D_seed7": {
+      "valid_all": 0.24823518559,
+      "valid_R": 0.248311531511,
+      "valid_F": 0.247666605641
+    },
+    "D_seed42": {
+      "valid_all": 0.248257249033,
+      "valid_R": 0.248327606781,
+      "valid_F": 0.24773326551
+    },
+    "D_seed2024": {
+      "valid_all": 0.248242374736,
+      "valid_R": 0.248315072453,
+      "valid_F": 0.247700964487
+    },
+    "D_NOCAT_DIAG_seed42": {
+      "valid_all": 0.248249828953,
+      "valid_R": 0.248319811644,
+      "valid_F": 0.247728638634
+    }
+  },
+  "precision_note": "seed_summary uses UNROUNDED Brier recomputed from pred/*_fold_2024__P10.npy; res_*.json stores 1e-6-rounded values, too coarse for a ~3e-6 seed std.",
+  "seed_summary": {
+    "brier_by_seed_fold_2024_valid_all_P10": {
+      "A": {
+        "42": 0.2486474442834381
+      },
+      "B": {
+        "7": 0.24824545670282275,
+        "42": 0.24823056205642244,
+        "2024": 0.24823778650810802
+      },
+      "C": {
+        "7": 0.24827312555510261,
+        "42": 0.24830423262388604,
+        "2024": 0.2482703192060939
+      },
+      "D": {
+        "7": 0.2482351855897444,
+        "42": 0.2482572490329073,
+        "2024": 0.24824237473626987
+      },
+      "D_NOCAT_DIAG": {
+        "42": 0.24824982895294526
+      }
+    },
+    "spread": {
+      "A": {
+        "per_seed": {
+          "42": 0.2486474443
+        },
+        "mean": 0.24864744,
+        "mean_score": 464.14,
+        "std": null,
+        "range": 0.0,
+        "n_seeds": 1
+      },
+      "B": {
+        "per_seed": {
+          "7": 0.2482454567,
+          "42": 0.2482305621,
+          "2024": 0.2482377865
+        },
+        "mean": 0.24823794,
+        "mean_score": 628.07,
+        "std": 7.45e-06,
+        "range": 1.489e-05,
+        "n_seeds": 3
+      },
+      "C": {
+        "per_seed": {
+          "7": 0.2482731256,
+          "42": 0.2483042326,
+          "2024": 0.2482703192
+        },
+        "mean": 0.24828256,
+        "mean_score": 610.21,
+        "std": 1.882e-05,
+        "range": 3.391e-05,
+        "n_seeds": 3
+      },
+      "D": {
+        "per_seed": {
+          "7": 0.2482351856,
+          "42": 0.248257249,
+          "2024": 0.2482423747
+        },
+        "mean": 0.24824494,
+        "mean_score": 625.27,
+        "std": 1.125e-05,
+        "range": 2.206e-05,
+        "n_seeds": 3
+      },
+      "D_NOCAT_DIAG": {
+        "per_seed": {
+          "42": 0.248249829
+        },
+        "mean": 0.24824983,
+        "mean_score": 623.31,
+        "std": null,
+        "range": 0.0,
+        "n_seeds": 1
+      }
+    },
+    "paired_delta_vs_D": {
+      "B": {
+        "vs": "D",
+        "per_seed_delta": {
+          "7": 1.027e-05,
+          "42": -2.669e-05,
+          "2024": -4.59e-06
+        },
+        "n_seeds": 3,
+        "mean_delta": -7e-06,
+        "mean_delta_score_points": 2.8,
+        "std_delta": 1.86e-05,
+        "all_seeds_same_sign": false,
+        "D_seed_std": 1.125e-05,
+        "abs_mean_delta_over_D_std": 0.62,
+        "criterion": "PRE-REGISTERED: measured := same sign on all 3 seeds AND |mean delta| >= 3 x D seed std",
+        "measured": false
+      },
+      "C": {
+        "vs": "D",
+        "per_seed_delta": {
+          "7": 3.794e-05,
+          "42": 4.698e-05,
+          "2024": 2.794e-05
+        },
+        "n_seeds": 3,
+        "mean_delta": 3.762e-05,
+        "mean_delta_score_points": -15.06,
+        "std_delta": 9.52e-06,
+        "all_seeds_same_sign": true,
+        "D_seed_std": 1.125e-05,
+        "abs_mean_delta_over_D_std": 3.34,
+        "criterion": "PRE-REGISTERED: measured := same sign on all 3 seeds AND |mean delta| >= 3 x D seed std",
+        "measured": true
+      }
+    }
+  },
+  "gain_pct_seed42": {
+    "A": {
+      "asof_pitcher_success_rate": 40.622,
+      "asof_pitcher_reverse_rate": 24.609,
+      "asof_pitcher_ball_rate": 11.384,
+      "asof_pitcher_n": 7.555,
+      "asof_pitcher_strike_rate": 5.981,
+      "asof_pitcher_middle_rate": 5.635,
+      "balls_before": 2.563,
+      "strikes_before": 1.651
+    },
+    "B": {
+      "asof_pitcher_success_rate": 27.348,
+      "asof_pitcher_reverse_rate": 14.5,
+      "asof_pitcher_ball_rate": 5.953,
+      "asof_pitcher_prev5_game_success_rate": 5.483,
+      "asof_pitcher_prev1_game_success_rate": 3.983,
+      "asof_pitcher_prev3_game_success_rate": 3.927,
+      "season": 3.901,
+      "asof_pitcher_n": 3.858,
+      "asof_pitcher_offspeed_rate": 3.337,
+      "asof_pitcher_strike_rate": 2.971,
+      "asof_pitcher_middle_rate": 2.658,
+      "asof_pitcher_fastball_rate": 2.632,
+      "asof_pitcher_prev3_game_middle_rate": 2.503,
+      "batter_hand": 2.4,
+      "asof_pitcher_prev1_game_middle_rate": 2.36,
+      "asof_pitcher_prev5_game_middle_rate": 2.333,
+      "asof_pitcher_breaking_rate": 2.273,
+      "balls_before": 1.875,
+      "pitcher_hand": 1.408,
+      "base_state": 1.303,
+      "asof_pitcher_pitchmix_n": 1.298,
+      "strikes_before": 1.268,
+      "game_type": 0.346,
+      "num_runners_on": 0.083
+    },
+    "C": {
+      "asof_pitcher_success_rate": 20.837,
+      "asof_pitcher_reverse_rate": 12.994,
+      "asof_pitcher_ball_rate": 5.25,
+      "asof_pitcher_prev5_game_success_rate": 5.011,
+      "asof_batter_success_rate": 4.527,
+      "asof_pitcher_prev3_game_success_rate": 3.591,
+      "season": 3.464,
+      "asof_pitcher_n": 3.207,
+      "asof_pitcher_prev1_game_success_rate": 2.994,
+      "pitcher_id": 2.786,
+      "asof_pitcher_offspeed_rate": 2.667,
+      "asof_pitcher_fastball_rate": 2.214,
+      "asof_pitcher_strike_rate": 2.186,
+      "asof_pitcher_middle_rate": 2.097,
+      "asof_batter_n": 2.045,
+      "asof_pitcher_prev3_game_middle_rate": 2.033,
+      "asof_batter_middle_rate": 2.0,
+      "batter_hand": 1.979,
+      "asof_pitcher_prev5_game_middle_rate": 1.949,
+      "asof_pitcher_prev1_game_middle_rate": 1.882,
+      "asof_pitcher_breaking_rate": 1.84,
+      "balls_before": 1.603,
+      "batter_id": 1.515,
+      "li": 1.425,
+      "base_state": 1.282,
+      "strikes_before": 1.128,
+      "asof_pitcher_pitchmix_n": 0.964,
+      "game_month": 0.884,
+      "inning": 0.766,
+      "run_total_before": 0.752,
+      "pitcher_hand": 0.694,
+      "score_diff_pitcher_team": 0.457,
+      "game_type": 0.406,
+      "outs_before": 0.306,
+      "top_bottom": 0.191,
+      "num_runners_on": 0.075
+    },
+    "D": {
+      "asof_pitcher_success_rate": 22.307,
+      "asof_pitcher_reverse_rate": 13.288,
+      "asof_pitcher_ball_rate": 5.281,
+      "asof_pitcher_prev5_game_success_rate": 5.265,
+      "season": 4.08,
+      "asof_batter_success_rate": 3.439,
+      "batter_team_id": 3.412,
+      "pitcher_team_id": 3.167,
+      "asof_pitcher_prev3_game_success_rate": 3.035,
+      "asof_pitcher_prev1_game_success_rate": 2.591,
+      "asof_pitcher_n": 2.585,
+      "pitcher_id": 2.093,
+      "asof_pitcher_offspeed_rate": 2.049,
+      "batter_hand": 1.692,
+      "asof_pitcher_strike_rate": 1.656,
+      "balls_before": 1.632,
+      "asof_pitcher_fastball_rate": 1.587,
+      "asof_batter_middle_rate": 1.485,
+      "asof_batter_n": 1.48,
+      "asof_pitcher_middle_rate": 1.471,
+      "asof_pitcher_prev5_game_middle_rate": 1.424,
+      "asof_pitcher_prev3_game_middle_rate": 1.327,
+      "asof_pitcher_prev1_game_middle_rate": 1.258,
+      "asof_pitcher_breaking_rate": 1.252,
+      "strikes_before": 1.07,
+      "li": 1.064,
+      "asof_pitcher_pitchmix_n": 1.013,
+      "base_state": 0.983,
+      "batter_id": 0.864,
+      "game_month": 0.816,
+      "pitcher_hand": 0.639,
+      "inning": 0.606,
+      "home_win_expectancy": 0.584,
+      "game_type": 0.57,
+      "game_dayofweek": 0.524,
+      "run_total_before": 0.483,
+      "away_win_expectancy": 0.4,
+      "run_top_before": 0.328,
+      "outs_before": 0.26,
+      "score_diff_pitcher_team": 0.244,
+      "run_bot_before": 0.244,
+      "score_diff_home": 0.197,
+      "top_bottom": 0.157,
+      "num_runners_on": 0.064,
+      "runner_on_1b": 0.018,
+      "runner_on_2b": 0.01,
+      "runner_on_3b": 0.006
+    },
+    "D_NOCAT_DIAG": {
+      "asof_pitcher_success_rate": 22.089,
+      "asof_pitcher_reverse_rate": 13.134,
+      "asof_pitcher_prev5_game_success_rate": 5.297,
+      "asof_pitcher_ball_rate": 5.278,
+      "season": 4.074,
+      "batter_team_id": 3.438,
+      "asof_batter_success_rate": 3.424,
+      "pitcher_team_id": 3.181,
+      "asof_pitcher_prev3_game_success_rate": 3.039,
+      "asof_pitcher_prev1_game_success_rate": 2.648,
+      "asof_pitcher_n": 2.599,
+      "pitcher_id": 2.151,
+      "asof_pitcher_offspeed_rate": 2.016,
+      "batter_hand": 1.687,
+      "asof_pitcher_strike_rate": 1.676,
+      "asof_pitcher_fastball_rate": 1.642,
+      "balls_before": 1.589,
+      "asof_pitcher_middle_rate": 1.578,
+      "asof_batter_n": 1.547,
+      "asof_batter_middle_rate": 1.534,
+      "asof_pitcher_prev5_game_middle_rate": 1.454,
+      "asof_pitcher_prev3_game_middle_rate": 1.389,
+      "asof_pitcher_breaking_rate": 1.33,
+      "asof_pitcher_prev1_game_middle_rate": 1.301,
+      "li": 1.153,
+      "strikes_before": 1.058,
+      "asof_pitcher_pitchmix_n": 0.989,
+      "batter_id": 0.928,
+      "game_month": 0.815,
+      "pitcher_hand": 0.667,
+      "inning": 0.626,
+      "home_win_expectancy": 0.597,
+      "game_type": 0.573,
+      "game_dayofweek": 0.56,
+      "run_total_before": 0.501,
+      "away_win_expectancy": 0.398,
+      "run_top_before": 0.336,
+      "score_diff_pitcher_team": 0.285,
+      "outs_before": 0.281,
+      "run_bot_before": 0.243,
+      "base_state": 0.221,
+      "score_diff_home": 0.213,
+      "num_runners_on": 0.195,
+      "top_bottom": 0.156,
+      "runner_on_1b": 0.049,
+      "runner_on_2b": 0.03,
+      "runner_on_3b": 0.029
+    }
+  },
+  "train_time_min_sum_of_jobs": 55.74
+}

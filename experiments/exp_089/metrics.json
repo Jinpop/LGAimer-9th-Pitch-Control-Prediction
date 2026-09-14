@@ -1,0 +1,704 @@
+{
+ "exp_id": "exp_089",
+ "title": "딥 축을 잴 수 있는 면 만들기 — 딥 팔 구조 복제 + ≤2023 학습 + LB 눈금 보정",
+ "제출물": "없음 (자를 만드는 실험)",
+ "score_conversion": {
+  "formula": "100000*(1 - Brier/0.2498069)",
+  "K_pts_per_brier": 400309.19882517256,
+  "sensitivity": "Brier 1e-6 = 0.4003점 (S3)"
+ },
+ "🔴_결론": {
+  "stage0_구조복원": "PASS — 접힌 키 17/17 형상 일치, 우리 torch 순전파 == deep_infer._one (max|Δ| 4.23e-07)",
+  "stage1_복제검증": "PASS — 우리 ≤2024 5시드 평균 ↔ 팀원 5시드 평균 rho 0.985651 (문턱 0.98). 시드잡음 천장 0.988034 의 99.76%",
+  "stage2_정직면": "모든 팔 out-of-time 인 면이 처음 만들어졌다. 기준점이 exp_078/080 의 928.501461058684 를 abs_diff 0.0 으로 재현한다",
+  "stage3_눈금": "🔴 **하나의 전이비가 안 나온다.** 사전 등록 레시피(epoch 2)로는 −0.5696, 배포와 옵티마이저 스텝을 맞추면 +0.1866, 한 에폭 더 돌리면 +1.718. 이 축의 정직면 읽기는 **OOT 복제본을 얼마나 오래 학습했는지**가 지배한다",
+  "행동": "이 자는 그대로 못 쓴다. 아래 §해석 참조"
+ },
+ "fold_2024": {
+  "면": "train ≤2023 → valid 2024 전체 253,507행 (valid_all). 모든 팔 out-of-time",
+  "baseline_w_deep_0": {
+   "brier": 0.24747724886050435,
+   "score_abd": 932.5807811936593,
+   "score_rc": 928.501461058684,
+   "rc_expected_exp078_080": 928.501461058684,
+   "rc_abs_diff": 0.0
+  },
+  "note_2022_2023": "이 실험은 fold 별 모델을 만들지 않는다 — fold_2024 정직면 위의 한 축을 재는 측정 실험이다. fold_2022/2023 은 해당 없음"
+ },
+ "stage0_gate": {
+  "cards_from_prep_levels_plus_unk": [
+   3,
+   9,
+   14,
+   14,
+   25
+  ],
+  "n_params": 2499553,
+  "fold_shape_check": {
+   "key_sets_identical": true,
+   "ours_only": [],
+   "theirs_only": [],
+   "shape_mismatches": {},
+   "n_keys": 17,
+   "shapes": {
+    "A": [
+     94,
+     256
+    ],
+    "T0": [
+     3,
+     256
+    ],
+    "T1": [
+     9,
+     256
+    ],
+    "T2": [
+     14,
+     256
+    ],
+    "T3": [
+     14,
+     256
+    ],
+    "T4": [
+     25,
+     256
+    ],
+    "c0": [
+     256
+    ],
+    "m.1.bias": [
+     256
+    ],
+    "m.1.weight": [
+     256
+    ],
+    "m.10.bias": [
+     1
+    ],
+    "m.10.weight": [
+     1,
+     64
+    ],
+    "m.4.bias": [
+     128
+    ],
+    "m.4.weight": [
+     128,
+     256
+    ],
+    "m.5.bias": [
+     128
+    ],
+    "m.5.weight": [
+     128
+    ],
+    "m.8.bias": [
+     64
+    ],
+    "m.8.weight": [
+     64,
+     128
+    ]
+   },
+   "PASS": true
+  },
+  "forward_equivalence": {
+   "n_probe_rows": 4096,
+   "max_abs_diff": 4.233753004567742e-07,
+   "mean_abs_diff": 1.1445397125087372e-07,
+   "sd_z_torch": 0.08606251375855566,
+   "sd_z_numpy": 0.0860625060071284,
+   "note": "torch float32 vs deep_infer float64 접기 — 1e-4 이하면 같은 결선으로 본다",
+   "PASS": true
+  },
+  "VERDICT": "PASS"
+ },
+ "복원한_구조": {
+  "이름": "token-MLP",
+  "토큰화": "수치 94열 각각 token_i = x_i·w[i] + b[i] (w,b: 94×96) · 범주 5열 임베딩 ce_j (card_j×96) → 99토큰 × D96 = 9504 평탄화",
+  "몸통": "Linear(9504→256) · LayerNorm · GELU · Dropout · Linear(256→128) · LayerNorm · GELU · Dropout · Linear(128→64) · GELU · Linear(64→1)",
+  "파라미터수": 2499553,
+  "prep.json에서_읽은_것": {
+   "D": 96,
+   "lr": 0.001,
+   "epoch": 2,
+   "batch": 4096,
+   "NUM": 94,
+   "CAT": 5
+  },
+  "🔴_복원_안_되는_것_probe로_식별": {
+   "w_b_초기화": "ftt — U(±1/√D). randn/ones0 대비 접힌 지문이 압도적으로 가깝다",
+   "dropout": 0.0,
+   "optimizer": "AdamW(wd 0.01)",
+   "식별_근거": "probe 17 fit 의 ① 접힌 A·c0·T 의 sd 가 출하 5시드 범위에 드는가 ② 팀원 5시드평균과의 rho",
+   "선택의_영향": "1시드 rho 가 ftt 0.96586 vs ones0 0.91636 vs randn 0.92144. dropout/optimizer 는 rho 를 ≤0.004 움직인다"
+  },
+  "⚠️_prep.json_ED_8": "이 구조 어디에도 안 들어간다. _fold 가 ce.{j}.weight 를 (card_j, 96) 으로 곧장 곱하므로 범주 임베딩 폭은 D=96 이다. 미사용 기록으로 판정",
+  "🔴_남은_불일치": "접힌 c0 의 sd 가 출하 대비 6.08배. A(1.20)·T0(1.21)·T4(1.00) 는 맞는다. 예측 rho 가 이미 시드잡음 천장에 붙어 있어 더 좁힐 실익이 없다고 판단하고 멈췄다"
+ },
+ "stage1_replication_gate": {
+  "rho_ours_le2024_5seed_vs_mate_5seed": 0.9856505350544615,
+  "gate_threshold": 0.98,
+  "PASS": true,
+  "within_seed_rho_mate": 0.9444275024565654,
+  "within_seed_rho_ours_le2024": 0.9452349655637707,
+  "within_seed_rho_ours_oot23": 0.9723052391306732,
+  "ceiling_5v5_perfect_replica": 0.9880344703598647,
+  "attainment_vs_ceiling": 0.9975871941952239,
+  "per_seed_rho_ours_vs_mate_matched_label": {
+   "42": 0.9582801104546892,
+   "777": 0.9383274303201679,
+   "2024": 0.9518111888491209,
+   "101": 0.9473642563428326,
+   "7": 0.9264115430475368
+  },
+  "rho_ours_oot23_vs_mate_5seed": 0.9130794612174763,
+  "note": "천장은 시드 잡음이 정한다 — 구조가 완벽해도 5시드평균끼리는 5r/√((1+4r_a)(1+4r_b)) 를 못 넘는다"
+ },
+ "probe_식별": {
+  "n_fits": 17,
+  "teammate_within_seed_rho": 0.9444275024565654,
+  "ceiling_1seed_vs_5seedmean": 0.966148,
+  "table": [
+   {
+    "tag": "P_ftt_d0.0_adamw0.01",
+    "rho_vs_mate5": 0.9658635908765544,
+    "z_sd": 0.17277426599853413,
+    "score": 987.4374614483261,
+    "fp_n_in_range": 1,
+    "fp_mean_abs_log_ratio": 0.3559591208166442,
+    "fp_ratio_to_shipped": {
+     "A": 1.1966,
+     "c0": 6.0812,
+     "T0": 1.2086,
+     "T1": 1.0547,
+     "T2": 1.1233,
+     "T3": 1.1588,
+     "T4": 0.9993
+    }
+   },
+   {
+    "tag": "P_ftt_d0.1_adamw0.01",
+    "rho_vs_mate5": 0.9619131340330987,
+    "z_sd": 0.16885296801835517,
+    "score": 964.8840097639777,
+    "fp_n_in_range": 1,
+    "fp_mean_abs_log_ratio": 0.36570073786009083,
+    "fp_ratio_to_shipped": {
+     "A": 1.1981,
+     "c0": 5.7223,
+     "T0": 1.2723,
+     "T1": 1.145,
+     "T2": 1.1059,
+     "T3": 1.1655,
+     "T4": 1.0048
+    }
+   },
+   {
+    "tag": "P_ftt_d0.0_adam",
+    "rho_vs_mate5": 0.9658396187717323,
+    "z_sd": 0.17277960532037293,
+    "score": 987.9285890455392,
+    "fp_n_in_range": 1,
+    "fp_mean_abs_log_ratio": 0.3666252187254216,
+    "fp_ratio_to_shipped": {
+     "A": 1.2072,
+     "c0": 6.162,
+     "T0": 1.2211,
+     "T1": 1.0668,
+     "T2": 1.1351,
+     "T3": 1.1713,
+     "T4": 1.0104
+    }
+   },
+   {
+    "tag": "P_ftt_d0.1_adam",
+    "rho_vs_mate5": 0.9618549592078344,
+    "z_sd": 0.16896491205263842,
+    "score": 965.3012242564873,
+    "fp_n_in_range": 1,
+    "fp_mean_abs_log_ratio": 0.3763089473365561,
+    "fp_ratio_to_shipped": {
+     "A": 1.2091,
+     "c0": 5.7951,
+     "T0": 1.2848,
+     "T1": 1.1578,
+     "T2": 1.1175,
+     "T3": 1.1779,
+     "T4": 1.0154
+    }
+   },
+   {
+    "tag": "P_randn_w_d0.1_adamw0.01",
+    "rho_vs_mate5": 0.9270655631732889,
+    "z_sd": 0.1715143111567476,
+    "score": 956.5638887302108,
+    "fp_n_in_range": 0,
+    "fp_mean_abs_log_ratio": 0.9212428576089922,
+    "fp_ratio_to_shipped": {
+     "A": 8.1813,
+     "c0": 2.4558,
+     "T0": 3.7695,
+     "T1": 1.669,
+     "T2": 1.7849,
+     "T3": 2.2269,
+     "T4": 1.2577
+    }
+   },
+   {
+    "tag": "P_randn_w_d0.0_adamw0.01",
+    "rho_vs_mate5": 0.9237604807882612,
+    "z_sd": 0.17952207695016165,
+    "score": 984.7405441525847,
+    "fp_n_in_range": 0,
+    "fp_mean_abs_log_ratio": 0.9231596476163414,
+    "fp_ratio_to_shipped": {
+     "A": 8.0174,
+     "c0": 2.4346,
+     "T0": 3.6671,
+     "T1": 1.7091,
+     "T2": 1.7267,
+     "T3": 2.3499,
+     "T4": 1.2902
+    }
+   },
+   {
+    "tag": "P_randn_w_d0.1_adam",
+    "rho_vs_mate5": 0.927004200219258,
+    "z_sd": 0.1717874544088383,
+    "score": 957.4790920170107,
+    "fp_n_in_range": 0,
+    "fp_mean_abs_log_ratio": 0.9306713298814054,
+    "fp_ratio_to_shipped": {
+     "A": 8.2744,
+     "c0": 2.4691,
+     "T0": 3.8061,
+     "T1": 1.6875,
+     "T2": 1.8021,
+     "T3": 2.2459,
+     "T4": 1.2709
+    }
+   },
+   {
+    "tag": "P_randn_w_d0.0_adam",
+    "rho_vs_mate5": 0.9235436743545244,
+    "z_sd": 0.1797371496995166,
+    "score": 985.5519445654437,
+    "fp_n_in_range": 0,
+    "fp_mean_abs_log_ratio": 0.9325245286404968,
+    "fp_ratio_to_shipped": {
+     "A": 8.1102,
+     "c0": 2.4469,
+     "T0": 3.7018,
+     "T1": 1.7276,
+     "T2": 1.7435,
+     "T3": 2.3696,
+     "T4": 1.3042
+    }
+   },
+   {
+    "tag": "P_ones0_d0.0_adamw0.01",
+    "rho_vs_mate5": 0.9163575409201189,
+    "z_sd": 0.17007242136982348,
+    "score": 972.4569331219568,
+    "fp_n_in_range": 0,
+    "fp_mean_abs_log_ratio": 0.9971055712741788,
+    "fp_ratio_to_shipped": {
+     "A": 9.9704,
+     "c0": 2.4084,
+     "T0": 4.2844,
+     "T1": 1.7251,
+     "T2": 1.8943,
+     "T3": 2.421,
+     "T4": 1.3203
+    }
+   },
+   {
+    "tag": "P_ones0_d0.1_adamw0.01",
+    "rho_vs_mate5": 0.9231366671589966,
+    "z_sd": 0.17326124431742296,
+    "score": 954.2234584497211,
+    "fp_n_in_range": 0,
+    "fp_mean_abs_log_ratio": 0.9972827725964976,
+    "fp_ratio_to_shipped": {
+     "A": 9.9532,
+     "c0": 2.4802,
+     "T0": 4.4569,
+     "T1": 1.7126,
+     "T2": 1.7994,
+     "T3": 2.3636,
+     "T4": 1.3427
+    }
+   },
+   {
+    "tag": "P_ones0_d0.0_adam",
+    "rho_vs_mate5": 0.9159750230269884,
+    "z_sd": 0.17015600385027582,
+    "score": 972.9346758239221,
+    "fp_n_in_range": 0,
+    "fp_mean_abs_log_ratio": 1.006439337840134,
+    "fp_ratio_to_shipped": {
+     "A": 10.0859,
+     "c0": 2.419,
+     "T0": 4.3256,
+     "T1": 1.7434,
+     "T2": 1.9127,
+     "T3": 2.4425,
+     "T4": 1.3346
+    }
+   },
+   {
+    "tag": "P_ones0_d0.1_adam",
+    "rho_vs_mate5": 0.9230967854446854,
+    "z_sd": 0.17341568232495724,
+    "score": 954.9737135421066,
+    "fp_n_in_range": 0,
+    "fp_mean_abs_log_ratio": 1.0066429878427683,
+    "fp_ratio_to_shipped": {
+     "A": 10.0667,
+     "c0": 2.4913,
+     "T0": 4.5011,
+     "T1": 1.7314,
+     "T2": 1.8169,
+     "T3": 2.3836,
+     "T4": 1.3572
+    }
+   },
+   {
+    "tag": "P_randn_d0.0_adamw0.01",
+    "rho_vs_mate5": 0.9213854751992814,
+    "z_sd": 0.1533546249391196,
+    "score": 818.9779726463175,
+    "fp_n_in_range": 0,
+    "fp_mean_abs_log_ratio": 1.5377265235317437,
+    "fp_ratio_to_shipped": {
+     "A": 7.9088,
+     "c0": 108.5998,
+     "T0": 5.3928,
+     "T1": 1.6119,
+     "T2": 1.8112,
+     "T3": 2.0977,
+     "T4": 1.6672
+    }
+   },
+   {
+    "tag": "P_randn_d0.0_adam",
+    "rho_vs_mate5": 0.9214391810136385,
+    "z_sd": 0.15344830585018204,
+    "score": 819.4367615983577,
+    "fp_n_in_range": 0,
+    "fp_mean_abs_log_ratio": 1.5479618719681754,
+    "fp_ratio_to_shipped": {
+     "A": 7.991,
+     "c0": 110.0976,
+     "T0": 5.4446,
+     "T1": 1.628,
+     "T2": 1.8295,
+     "T3": 2.1147,
+     "T4": 1.684
+    }
+   },
+   {
+    "tag": "P_randn_d0.1_adamw0.01",
+    "rho_vs_mate5": 0.9124311973016836,
+    "z_sd": 0.15264500911682152,
+    "score": 798.8519809478123,
+    "fp_n_in_range": 0,
+    "fp_mean_abs_log_ratio": 1.5727536719883375,
+    "fp_ratio_to_shipped": {
+     "A": 8.3252,
+     "c0": 106.052,
+     "T0": 5.8237,
+     "T1": 1.701,
+     "T2": 1.889,
+     "T3": 2.0696,
+     "T4": 1.7674
+    }
+   },
+   {
+    "tag": "P_randn_d0.1_adam",
+    "rho_vs_mate5": 0.9124979097601483,
+    "z_sd": 0.1525512763696237,
+    "score": 799.4817985854663,
+    "fp_n_in_range": 0,
+    "fp_mean_abs_log_ratio": 1.583145487580563,
+    "fp_ratio_to_shipped": {
+     "A": 8.4105,
+     "c0": 107.4527,
+     "T0": 5.8808,
+     "T1": 1.719,
+     "T2": 1.9074,
+     "T3": 2.0891,
+     "T4": 1.7854
+    }
+   },
+   {
+    "tag": "P_randn_d10_adam",
+    "rho_vs_mate5": 0.9124979097601483,
+    "z_sd": 0.1525512763696237,
+    "score": 799.4817985854663,
+    "fp_n_in_range": 0,
+    "fp_mean_abs_log_ratio": 1.583145487580563,
+    "fp_ratio_to_shipped": {
+     "A": 8.4105,
+     "c0": 107.4527,
+     "T0": 5.8808,
+     "T1": 1.719,
+     "T2": 1.9074,
+     "T3": 2.0891,
+     "T4": 1.7854
+    }
+   }
+  ]
+ },
+ "stage2_정직면": {
+  "산술": "모든 팔 out-of-time. mate = OOT v6 4팔 + Q + EBM + off, ours = AA(exp_049 A1@1400 3시드) + T70(exp_055 3시드) — 둘 다 split_A out-of-time 벡터. 딥만 판본을 갈아끼운다.",
+  "딥_판본별": {
+   "oot23_ours_ep2": {
+    "alone_score": 743.4516162133752,
+    "z_sd": 0.1963541447866598,
+    "rho_vs_z_mate_oot": 0.934985627985493,
+    "gain_at_w0.20_abd": -2.894440236889068,
+    "gain_at_w0.20_abd_alpha_free": -2.8430017863012154,
+    "gain_at_w0.20_rc": -2.2487595890407874,
+    "boot_t_at_w0.20_abd": -1.1099988854847904,
+    "boot_gain_ci95_pts_abd": [
+     -7.699199616283204,
+     2.264798477429224
+    ],
+    "argmax_w_abd": 0.0,
+    "gain_at_argmax_abd": 0.0,
+    "B_K_mean_delta2_abd": 2.7141545282390633,
+    "alone_score_recentred": 812.91,
+    "alone_score_raw_note": "alone_score 는 재센터링 없는 값이라 팔의 수준(level) 오차를 같이 잰다. 판정은 recentred 로 볼 것"
+   },
+   "oot23_ours_step720": {
+    "alone_score": 805.0993132578843,
+    "z_sd": 0.1829123699701478,
+    "rho_vs_z_mate_oot": 0.9379446646946592,
+    "gain_at_w0.20_abd": 0.9482307253728095,
+    "gain_at_w0.20_abd_alpha_free": 0.9497204546571538,
+    "gain_at_w0.20_rc": 0.09691847407952991,
+    "boot_t_at_w0.20_abd": 0.3992872335475117,
+    "boot_gain_ci95_pts_abd": [
+     -3.6640386429073577,
+     5.812598343755826
+    ],
+    "argmax_w_abd": 0.14,
+    "gain_at_argmax_abd": 1.1471170445198595,
+    "B_K_mean_delta2_abd": 2.299851030354906,
+    "alone_score_recentred": 848.89,
+    "alone_score_raw_note": "alone_score 는 재센터링 없는 값이라 팔의 수준(level) 오차를 같이 잰다. 판정은 recentred 로 볼 것"
+   },
+   "oot23_ours_ep3_step816": {
+    "alone_score": 865.9976133704173,
+    "z_sd": 0.1961358583513394,
+    "rho_vs_z_mate_oot": 0.9337318749278408,
+    "gain_at_w0.20_abd": 8.730593474115494,
+    "gain_at_w0.20_abd_alpha_free": 8.724162699902422,
+    "gain_at_w0.20_rc": 8.36644797306269,
+    "boot_t_at_w0.20_abd": 3.250713559816192,
+    "boot_gain_ci95_pts_abd": [
+     3.62858421207675,
+     14.181474300092935
+    ],
+    "argmax_w_abd": 0.42,
+    "gain_at_argmax_abd": 11.941475979826464,
+    "B_K_mean_delta2_abd": 2.7664888219960297,
+    "alone_score_recentred": 889.86,
+    "alone_score_raw_note": "alone_score 는 재센터링 없는 값이라 팔의 수준(level) 오차를 같이 잰다. 판정은 recentred 로 볼 것"
+   },
+   "oot23_ours_step1088": {
+    "alone_score": 885.0323028092299,
+    "z_sd": 0.20889207610081395,
+    "rho_vs_z_mate_oot": 0.9360995810498497,
+    "gain_at_w0.20_abd": 8.985833278929476,
+    "gain_at_w0.20_abd_alpha_free": 9.094951321242434,
+    "gain_at_w0.20_rc": 9.815366785159654,
+    "boot_t_at_w0.20_abd": 3.0969242826365955,
+    "boot_gain_ci95_pts_abd": [
+     3.3596799713364125,
+     14.576795431087671
+    ],
+    "argmax_w_abd": 0.39,
+    "gain_at_argmax_abd": 11.710562218825203,
+    "B_K_mean_delta2_abd": 3.1387965546596366,
+    "alone_score_recentred": 890.76,
+    "alone_score_raw_note": "alone_score 는 재센터링 없는 값이라 팔의 수준(level) 오차를 같이 잰다. 판정은 recentred 로 볼 것"
+   },
+   "le2024_ours_ep2": {
+    "alone_score": 1039.348740096946,
+    "z_sd": 0.20309746462600545,
+    "rho_vs_z_mate_oot": 0.9241200314104059,
+    "gain_at_w0.20_abd": 34.798214859987866,
+    "gain_at_w0.20_abd_alpha_free": 34.84785213514476,
+    "gain_at_w0.20_rc": 33.02437200521922,
+    "boot_t_at_w0.20_abd": 9.040493700299601,
+    "boot_gain_ci95_pts_abd": [
+     27.695352984463835,
+     42.47419442157226
+    ],
+    "argmax_w_abd": 0.6,
+    "gain_at_argmax_abd": 83.78767032600763,
+    "B_K_mean_delta2_abd": 3.4430302597714424,
+    "alone_score_recentred": 1041.45,
+    "alone_score_raw_note": "alone_score 는 재센터링 없는 값이라 팔의 수준(level) 오차를 같이 잰다. 판정은 recentred 로 볼 것"
+   },
+   "le2024_mate_ship": {
+    "alone_score": 1075.9564286307866,
+    "z_sd": 0.18338077930432237,
+    "rho_vs_z_mate_oot": 0.9256796432234975,
+    "gain_at_w0.20_abd": 38.70787430596545,
+    "gain_at_w0.20_abd_alpha_free": 39.25131003720276,
+    "gain_at_w0.20_rc": 34.88051277893419,
+    "boot_t_at_w0.20_abd": 10.069932786909572,
+    "boot_gain_ci95_pts_abd": [
+     31.62494981910048,
+     46.3503762924714
+    ],
+    "argmax_w_abd": 0.6,
+    "gain_at_argmax_abd": 99.38919010780137,
+    "B_K_mean_delta2_abd": 2.7897341303142036,
+    "alone_score_recentred": 1079.42,
+    "alone_score_raw_note": "alone_score 는 재센터링 없는 값이라 팔의 수준(level) 오차를 같이 잰다. 판정은 recentred 로 볼 것"
+   }
+  },
+  "OOT_팔_단독_점수": {
+   "v6_4arm": 896.2599469704236,
+   "Q": 859.7931396724712,
+   "EBM": 642.9281120758135,
+   "z_mate_recentred": 932.8479386726873
+  },
+  "sd_z_mate_oot": 0.1808069314720998,
+  "부트스트랩": "투수 블록(391개) 1000회, w=0.20 대 w=0 의 행별 제곱오차 차",
+  "척도분리_S33": {
+   "root_full_oot23_ep2": {
+    "raw": -2.249,
+    "alpha_free": -2.889,
+    "sd_matched": -2.648
+   },
+   "mate_only_oot23_ep2": {
+    "raw": -4.923,
+    "alpha_free": -6.117,
+    "sd_matched": -5.622
+   },
+   "mate_only_le2024_mate": {
+    "raw": 48.772,
+    "alpha_free": 55.269,
+    "sd_matched": 50.469
+   },
+   "판정": "척도를 걷어내도 부호가 안 바뀐다 — ep2 판본의 음수는 척도 몫이 아니다"
+  },
+  "⚠️_단독점수_재센터링": "OOT 딥 복제본은 수준(level)도 아직 수렴 전이다 — 평균 못박기 상수 c 가 544스텝 −0.0532 에서 1088스텝 −0.0153 으로 움직인다. 그래서 raw 단독 점수는 정보량이 아니라 수준 오차를 섞어 잰다. 재센터링하면 812.91 → 848.89 → 889.86 → 890.76 (단조 증가, 1088 에서 평탄해진다). OOT z_mate 기준선 932.85 보다는 끝까지 낮다."
+ },
+ "stage3_눈금": {
+  "honest_surface_gain_at_w0.20_abd": -2.894440236889068,
+  "honest_surface_gain_at_w0.20_rc": -2.2487595890407874,
+  "LB_gain": 5.0813180433,
+  "TRANSFER_RATIO_surface_over_LB_abd": -0.5696239070698493,
+  "TRANSFER_RATIO_surface_over_LB_rc": -0.4425543864560696,
+  "w_star_honest_abd": 0.0,
+  "w_star_honest_rc": 0.0,
+  "w_star_from_LB_reported": 0.1757,
+  "B_honest_abd_at_w0.20": 2.7141545282390633,
+  "B_cov_frame_reported": 6.717,
+  "robustness_step_matched_720": 0.9482307253728095,
+  "robustness_step_816": 8.730593474115494,
+  "robustness_step_1088": 8.985833278929476,
+  "TRANSFER_RATIO_step_matched_720_over_LB": 0.18661117396953816,
+  "w_star_step_matched_720_abd": 0.14,
+  "identity_control": "STEPS089=720 을 le2024 에 걸면 epoch=2 판본과 예측 sha 동일 (max|Δ| 0.0) — 스텝 못박기 코드 경로 자체는 아무것도 안 바꾼다",
+  "in_sample_deep_ours_gain_abd": 34.798214859987866,
+  "in_sample_deep_mate_gain_abd": 38.70787430596545,
+  "teammate_reported_matched_f24_gain": 10.2
+ },
+ "🔴_눈금_감도표": {
+  "설명": "OOT 딥 복제본의 총 옵티마이저 스텝만 바꾼 것. 나머지는 전부 동일(레시피·시드 5개·면·산술)",
+  "배포_팔_스텝수": 720,
+  "행": [
+   {
+    "steps": 544,
+    "라벨": "epoch 2 = 사전 등록",
+    "alone": 743.4516162133752,
+    "gain_w0.20": -2.894440236889068,
+    "t": -1.1099988854847904,
+    "argmax_w": 0.0,
+    "전이비": -0.5696239070698493,
+    "alone_recentred": 812.91
+   },
+   {
+    "steps": 720,
+    "라벨": "배포 스텝 일치",
+    "alone": 805.0993132578843,
+    "gain_w0.20": 0.9482307253728095,
+    "t": 0.3992872335475117,
+    "argmax_w": 0.14,
+    "전이비": 0.18661117396953816,
+    "alone_recentred": 848.89
+   },
+   {
+    "steps": 816,
+    "라벨": "epoch 3",
+    "alone": 865.9976133704173,
+    "gain_w0.20": 8.730593474115494,
+    "t": 3.250713559816192,
+    "argmax_w": 0.42,
+    "전이비": 1.7181749695095876,
+    "alone_recentred": 889.86
+   },
+   {
+    "steps": 1088,
+    "라벨": "epoch 4",
+    "alone": 885.0323028092299,
+    "gain_w0.20": 8.985833278929476,
+    "t": 3.0969242826365955,
+    "argmax_w": 0.39,
+    "전이비": 1.7684059927675255,
+    "alone_recentred": 890.76
+   }
+  ],
+  "항등_대조": "le2024 에 STEPS089=720 을 걸면 epoch=2 판본과 예측 sha256 동일, max|Δ| 0.0 — 스텝 못박기 코드 경로 자체는 아무것도 안 바꾼다"
+ },
+ "🔴_변경_변인_전부": [
+  "학습 구간 ≤2024 전량(1,475,092) → OOT 규칙 (season≤2023)&~((season≤2022)&F) = 1,116,277 [−24.3%]",
+  "그에 딸려: 표준화 mu/sd 를 그 구간에서 다시 계산",
+  "그에 딸려: 범주 어휘가 바뀐다 — pitcher_team_id·batter_team_id 13→11 레벨(valid 292행이 UNK), idea_matchup_pitch 24→25",
+  "그에 딸려: epoch 2 고정이 총 옵티마이저 스텝을 720→544 로 줄인다 [이것이 이 실험의 지배 변인이었다]",
+  "구조·최적화기·초기화: 팀원 것을 복원한 추정치. w/b 초기화·dropout·optimizer 는 probe 로 골랐고 원본과 같다는 보장은 없다",
+  "프레임: 팀원 파이프라인이 아니라 우리 frame99. 94열 중 86열은 mu 가 sd 단위 3e-07 안에서 같지만 8열(i3_anom_* · p6_*)은 최대 0.616 sd 어긋난다",
+  "p_q OOT 는 1시드(배포 3시드), p_v6 OOT 는 4팔 재구축본 — 정직면 자체의 승계 한계(exp_078/080 과 동일)",
+  "면 산술: alpha 1.07911 · beta_skew −0.059151 를 태운 abd 관례와, 안 태운 rc 관례를 둘 다 낸다"
+ ],
+ "리크_점검": {
+  "OOT_딥_학습": "season≤2023 행만. mu/sd·어휘 전부 그 구간에서만. valid 2024 는 예측에만 쓴다",
+  "프레임": "exp_060 frame99 — shift(1)/as-of, 시즌별 ≤s−1 표 재적합 (exp_048/049 stage0 감사 통과)",
+  "현재행_TrackMan": "없음. p6_* 는 투구 전 정보만 보는 구종 예측 확률",
+  "랜덤KFold": "없음. rolling-origin fold_2024",
+  "결측": "sentinel 대입 안 함 — 표준화 공간 0(=학습 구간 평균). ⚠️ 팀원 딥 팔은 결측 플래그 열을 안 쓴다(NUM 94열이 전부). 그 규약을 그대로 따랐다",
+  "⚠️_평균_못박기": "면의 상수 c 는 2024 실제 성공률에 평균을 맞춘다(exp_078/080 승계 관례, 배포 d_adj 재유도의 대응물). w=0 과 w>0 에 **똑같이** 적용되므로 차이를 만들어내지 못한다. 측정면 전용이고 제출물이 아니다",
+  "⚠️_alpha_free": "전역 스칼라를 평가 라벨로 최적화한다 — exp_080 이 정의한 진단량이고 판정에는 raw 를 쓴다"
+ },
+ "실행시간": {
+  "세션_벽시계_분": 95,
+  "prep_sec": 34.16,
+  "fit_1건_평균_sec": 11.5,
+  "fit_총건수": 33,
+  "s2_surface_sec": 12.5,
+  "s3_extra_sec": 47.4,
+  "s4_final_sec": 29.7,
+  "note": "딥 fit 은 A5000 1장에서 1건 약 12초(≤2024 1,475,092행 720스텝). ETA(계산 15분·벽시계 8분)를 크게 밑돌았다"
+ },
+ "산출물_경로": {
+  "서버": "~/SungjinPark/exp089/ (src·out·work·logs). 딥 가중치는 저장 안 했고 valid 로짓 npy 만 out/preds/ 에 있다",
+  "핵심_json": [
+   "out/s0_gate.json",
+   "out/s1_probe.json",
+   "out/s2_surface.json",
+   "out/s3_extra.json",
+   "out/s4_final.json",
+   "out/prep089.json"
+  ]
+ }
+}

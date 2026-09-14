@@ -1,0 +1,38 @@
+# 캠페인 4-B — 지휘자 작성 2026-08-05
+exp_id: exp_013
+date: "2026-08-05"
+hypothesis: "저신호 문제에서 현재 병목은 피처가 아니라 앙상블 분산이다 — 트리 수·후보 피처수·깊이·잎 크기 스윕만으로 목표선에 유의미하게 접근한다"
+base_exp: "exp_009 P0b"      # valid_all Brier 0.248410 (환산 559.06), 47피처, RF mf=10
+
+motivation: >
+  exp_009에서 피처 추가(trackman 프로파일 65열)가 3 fold 전부 패배해 기각됐고,
+  유일하게 개선을 낸 축이 max_features(6→10, −0.000020)였다. RF는 n_estimators 100으로
+  고정돼 있는데 이는 저신호·고분산 문제에서 명백히 부족하다 — 트리 수 증가는 편향을 늘리지 않고
+  분산만 줄이므로 Brier에 직접 이득이다. 이 축을 제대로 훑는다.
+
+grid:
+  stage1_trees: "n_estimators 100 → 300 → 600 (mf=10, depth=10, leaf=200 고정). 수확체감 지점 확인"
+  stage2_capacity: "최적 트리수 고정 후 max_depth {10,12,14,16,None} × min_samples_leaf {50,100,200,400}"
+  stage3_features: "최적 조합에서 max_features {6,10,14,20,30}"
+  stage4_family: "동일 예산으로 ExtraTreesClassifier 비교 (저신호에서 분산 감소 우위 가능) + HistGradientBoosting 강규제 1안"
+  notes: >
+    단계별 최적을 고정하며 진행(전수 조합 금지 — 시간 낭비). 각 단계 최선만 다음 단계로.
+    시드 1개로 스윕 후, **최종 후보 2~3개는 seed {42,7,2024} 3회 반복**해 delta가 시드 노이즈보다
+    큰지 확인할 것 (exp_009의 −0.000020이 단일 시드였던 한계 해소).
+
+constraints:
+  inference_budget: "추론 10분 제한 — n_estimators·depth 증가 시 245,789행 추론 시간을 반드시 실측 기록. 600초 초과 후보는 탈락"
+  model_size: "zip 10GB 제한 — RF pickle 크기도 기록"
+
+validation:
+  scheme: rolling-origin
+  primary_metric: brier        # fold_2024 valid_all (R+F 전체)
+  report_also: ["valid_R·valid_F 세그먼트", "환산 점수", "시드 반복 산포", "추론 시간·모델 크기"]
+
+runtime:
+  where: a5000
+  expected_min: 60
+
+targets:
+  current_best: "exp_009 P0b — valid_all Brier 0.248410 / 환산 559.06"
+  goal: "LB 1,061점 = valid_all Brier 0.247157"

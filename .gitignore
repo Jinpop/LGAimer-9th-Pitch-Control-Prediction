@@ -1,0 +1,28 @@
+# 대회 데이터 — 절대 커밋 금지 (대회 규정: 외부 유출 시 실격)
+data/
+*.csv
+*.parquet
+
+# 모델·중간 산출물
+*.cbm
+*.npy
+*.npz
+*.pkl
+*.txt.gz
+*.zip
+model/
+model_v6/
+model_form/
+mate/
+
+# PII
+private/
+roster.md
+server.yaml
+
+# 기타
+__pycache__/
+.DS_Store
+
+# 다른 참가자 실명·닉네임이 포함된 정찰 기록 — 공개 제외
+ledger/scout_log.md

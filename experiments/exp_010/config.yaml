@@ -1,0 +1,15 @@
+# 캠페인 4 — 지휘자 작성 2026-08-05
+exp_id: exp_010
+date: "2026-08-05"
+hypothesis: "LGBM의 열세는 규제 부족과 ID 과적합 탓이다 — ID 처리를 바꾸고 강하게 규제하면 RF(0.248487)를 넘는다"
+base_exp: "exp_008 R1"        # 목표: RF 초과
+model:
+  type: lightgbm
+  grid:
+    - "A: ID를 categorical에서 제외(수치 유지), num_leaves 31, min_data_in_leaf 2000, lr 0.02, feature_fraction 0.7"
+    - "B: A + ID 완전 제거 (선수 정체성 없이 상황+asof만)"
+    - "C: A + pitcher_id/batter_id를 causal target encoding (파일순서 expanding+shift(1), 스무딩 prior=리그평균)"
+    - "D: 최강 규제 — num_leaves 15, min_data 5000, lr 0.01, iter 상한 3000"
+  seed: 42
+validation: {primary_metric: brier, note: "fold_2024 valid-R. iter는 P4 정책(직전 fold argmin 승계)으로 각 안 개별 산출"}
+runtime: {where: a5000, expected_min: 40}

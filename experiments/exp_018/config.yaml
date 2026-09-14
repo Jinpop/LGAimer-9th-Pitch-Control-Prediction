@@ -1,0 +1,203 @@
+exp_id: exp_018
+date: "2026-08-06"
+hypothesis: >
+  주최측이 준 투수 성향 열은 전부 무조건부 커리어 평균이다. 투수의 제구 성향은
+  상대 타자의 좌우에 따라 비대칭이며(포수 타깃이 좌우로 뒤집히고 암사이드/글러브사이드
+  제구력이 다르다), 그 비대칭의 크기는 투수마다 다르다. 이 조건부 성향을 명시 피처로
+  주면 강규제 LightGBM(num_leaves 15)이 스스로 만들 수 없는 상호작용을 얻는다.
+base_exp: exp_010 D (47열 강규제 LightGBM) — 대조군이자 재현 게이트
+
+# ---------------------------------------------------------------------------
+# 사전 통계 근거 (지휘자가 전 시즌 train에서 실측, 2026-08-06)
+# ---------------------------------------------------------------------------
+prior_evidence:
+  method: >
+    투수별로 좌타 상대 비율과 우타 상대 비율을 각각 구해 그 차(Δ)의 투수 간 산포를
+    측정. 귀무가설 "모든 투수의 참 Δ가 동일"에서는 관측 산포가 이항잡음뿐이어야 한다.
+    참SD = sqrt(관측SD^2 − 잡음SD^2). 신뢰도 = 참분산/(참+잡음).
+    최소 표본 좌·우 각 100구, 전 시즌 풀링.
+  definition_check:
+    note: >
+      복원한 marginal reverse(= rev_only + both)가 주최측 asof_pitcher_reverse_rate와
+      커리어말 기준 corr = 1.0 (500구 이상 465명). 즉 같은 양이며, 새 피처는 그 열의
+      '조건부 짝'이다.
+  measurements:
+    - axis: "좌우타 × marginal reverse"
+      true_sd_pp: 5.20
+      obs_over_noise: 2.23
+      reliability: 0.80
+      corr_with_unconditional: 0.00        # ← 기존 47열과 직교
+      row_coverage_pct: 98.5
+      eb_k_pitches: 65
+    - axis: "좌우타 × control_success"
+      true_sd_pp: 4.75
+      obs_over_noise: 1.81
+      reliability: 0.69
+      corr_with_unconditional: 0.01
+      row_coverage_pct: 98.5
+      eb_k_pitches: 111
+    - axis: "좌우타 × marginal middle"
+      true_sd_pp: 1.48
+      obs_over_noise: 1.20
+      reliability: 0.30                     # ← 약함. 확장 arm에만
+      corr_with_unconditional: 0.01
+      eb_k_pitches: 583
+  anchor:
+    note: "이미 47열에 있는 무조건부 투수 성공률의 투수 간 참SD = 5.55pp (gain 33.9%)"
+  caveat: >
+    위 신뢰도는 전 시즌 풀링 기준이라 낙관치다. 실제 피처는 as-of 규율상 시즌 s에
+    대해 s 미만만 쓰므로 데이터가 줄어 신뢰도가 낮아진다. 또 exp_014에서 사전 점검의
+    pp 차이가 Brier로 전환되지 않은 전례가 있다 — 이질성 존재 ≠ 성능 개선.
+
+# ---------------------------------------------------------------------------
+model:
+  type: lightgbm
+  params:                                   # exp_010 D 그대로 (전 arm 동일)
+    objective: binary
+    metric: binary_logloss
+    learning_rate: 0.01
+    num_leaves: 15
+    min_data_in_leaf: 5000
+    feature_fraction: 0.7
+    bagging_fraction: 0.8
+    bagging_freq: 1
+    deterministic: true
+    force_row_wise: true
+    num_threads: 6
+    verbose: -1
+  num_boost_round_cap: 3000
+  seed: 42
+  seed_repeats: [7, 2024]
+
+# ---------------------------------------------------------------------------
+features:
+  base: "train.csv 47열 (row_id·control_success 제외). 변경 없음."
+  categorical: [top_bottom, game_type, base_state]
+
+  new_feature_construction:
+    lookup_key: "(pitcher_id, batter_hand)"
+    joined_by: "현재 행의 pitcher_id와 batter_hand — 둘 다 test.csv에 존재"
+    rates:
+      - name: pit_success_rate_vs_hand
+        numerator: control_success
+        eb_k: 111
+      - name: pit_reverse_rate_vs_hand
+        numerator: "marginal reverse (= is_rev_only + is_both), labels.recover()로 복원"
+        eb_k: 65
+      - name: pit_middle_rate_vs_hand
+        numerator: "marginal middle (= is_mid_only + is_both)"
+        eb_k: 583
+      - name: pit_n_vs_hand
+        numerator: "해당 (투수, 타자손) 셀의 표본 수 — 모델이 신뢰도를 할인할 수 있도록"
+
+    shrinkage:
+      form: "shrunk = (n_cell * rate_cell + k * rate_pitcher_overall) / (n_cell + k)"
+      toward: >
+        리그 평균이 아니라 **그 투수 자신의 무조건부 비율** 쪽으로 수축한다.
+        무조건부 비율은 이미 47열에 있으므로, 우리가 추가하려는 것은 '조건부 편차'다.
+        리그 평균으로 수축하면 저표본 셀에서 무조건부 열과 중복된다.
+      k_source: >
+        위 eb_k는 전 시즌 실측 분산분해값(셀내분산/셀간분산). **각 fold의 학습 구간에서
+        재산출**하고 config 값과 20% 이상 벌어지면 로그에 경고. valid를 보고 고르지 않는다.
+
+    as_of_discipline:
+      scheme: "시즌 단위 forward-chaining (exp_016 B3 OOF와 동일 기계)"
+      rule: "시즌 s 행의 룩업값 = 시즌 ≤ s−1 만으로 만든 표"
+      season_2019: "선행 시즌 없음 → NaN 유지 (sentinel 금지). 학습행의 약 16%"
+      test_2025: "≤2024 전체로 만든 동결 표 — 학습/추론 구조가 동일 (비대칭 없음)"
+      why_not_row_level: >
+        주최측 asof_* 열처럼 행 단위 누적을 쓰면 학습행 정보량은 늘지만, test에서는
+        다른 test 행을 참조해야 재현되므로 규칙 2-4 위반이다. 학습만 행 단위로 하면
+        train/inference 비대칭이 생긴다. 시즌 동결로 양쪽을 같은 구조로 맞춘다.
+
+    missing: "미등장 (투수, 손) 조합 → NaN 유지. 결측 플래그는 pit_n_vs_hand=0이 겸한다."
+
+  leak_boundary:
+    recovered_labels: "TARGET 집계 전용. is_* 컬럼이 설계 행렬에 들어가면 즉시 abort (assert)"
+    target_derived: >
+      이 피처는 타깃 파생이다. 시즌 s의 룩업값이 시즌 s 라벨을 포함하면 리크다 —
+      forward-chaining이 그것을 막는다. 매 fold에서 '룩업 표에 쓰인 최대 시즌 < valid 시즌'
+      런타임 assert.
+
+# ---------------------------------------------------------------------------
+arms:
+  - id: A0
+    desc: "대조군 — exp_010 D 재현 (47열)"
+    n_features: 47
+    gate: "fold_2024 valid_all Brier가 P4 정책에서 0.248261과 abs_diff < 5e-6이어야 진행"
+  - id: A1
+    desc: "+ pit_reverse_rate_vs_hand (단독) — 가장 직교·고신뢰 하나만"
+    n_features: 48
+  - id: A2
+    desc: "+ reverse & success vs hand (핵심)"
+    n_features: 49
+  - id: A3
+    desc: "A2 + middle_vs_hand + n_vs_hand (확장)"
+    n_features: 51
+
+  arm_diff_note: >
+    A0→A1→A2→A3는 피처만 누적되고 하이퍼파라미터·시드·학습행·iter 정책은 전부 동일하다.
+    A1과 A2의 차는 success_vs_hand 하나뿐이므로 그 한 열의 기여를 귀속시킬 수 있다.
+
+# ---------------------------------------------------------------------------
+validation:
+  scheme: rolling-origin
+  folds:
+    - {train_until: 2021, valid: 2022}
+    - {train_until: 2022, valid: 2023}
+    - {train_until: 2023, valid: 2024}    # 주 판단 fold
+  primary_metric: "fold_2024 valid_all Brier"
+  secondary: [valid_R, valid_F]
+  mask: "exp_004 마스크 유지 (season ≤ 2022 & game_type == F 학습 제외)"
+
+  iter_policy:
+    name: P10
+    rule: "각 arm이 자기 fold_2023 valid_all argmin을 재측정 → × 2.75를 fold_2024에 승계"
+    source: "exp_017 채택 (c* = 2.75, 홀드아웃으로 선택)"
+    fold_2022: "선행 fold 없음 → 자기 argmin(오라클). 실험 간 비교 불가로 플래그"
+    p4_shadow: "A0는 P4(무스케일 승계)도 함께 산출 — 위 재현 게이트가 P4 기준이므로"
+    never: "valid 2024를 보고 iter를 고르는 경로 없음"
+
+  stages:
+    - stage: 1
+      what: "4 arm × 3 fold × seed 42"
+      decide: "fold_2024 valid_all에서 최선 arm 식별"
+    - stage: 2
+      what: "A0 + 최선 arm × 3 fold × seed {7, 2024}"
+      decide: >
+        paired delta의 부호가 3시드 전부 같고 |평균Δ|가 A0 시드 std의 3배 이상이면 '측정됨'.
+        아니면 exp_014와 같이 '시드 산포 아래'로 서술하고 채택하지 않는다.
+    - stage: 3
+      condition: "stage 2가 '측정됨'일 때만"
+      what: "exp_016 B3 위에 같은 피처를 얹어 seed 42 1쌍"
+      why: "최종 제출은 B3 기반이다. B0에서의 이득이 B3로 전이되는지는 별개 문제"
+      note: "이 단계는 별도 승인 대상 — stage 2 결과를 보고 사용자가 판단"
+
+# ---------------------------------------------------------------------------
+runtime:
+  where: a5000
+  expected_min: 60                          # 45~70 (아래 산정 근거)
+  eta_basis: >
+    실측표 'LightGBM 단일 이진(lr 0.01, cap 3000) 65~112만행 = 1.4~3.5분/fold'.
+    stage 1 = 4 arm × 3 fold = 12 fit, stage 2 = 2 arm × 3 fold × 2 seed = 12 fit,
+    합 24 fit × 1.5~2.5분 = 36~60분. + 룩업 표 구축(fold당 groupby 1.47M행) 약 5분
+    + 곡선 산출·집계 약 5분. 병렬 없음(단일 잡)이라 경합 계수 미적용.
+    stage 3은 별도 승인 후 B3 스태킹 1쌍 = 12~34분 추가.
+
+deliverables:
+  - metrics.json      # arm별 fold별 + 곡선 + seed_summary + 사전 통계 재현
+  - prelim.json       # 각 fold 학습구간에서 재산출한 참SD·신뢰도·EB k (config 값과 대조)
+  - report.md
+  - src/{features_platoon.py, train.py, labels.py}
+  - "pred_*.npy (채택 시)"
+
+audit:
+  required: true
+  why: "타깃 파생 피처 + 새 조인 경로(pitcher_id × batter_hand 룩업). CLAUDE.md 감사 필요 조건에 해당"
+  when: "stage 2 종료 후, 채택 여부와 무관하게"
+
+risks:
+  - "exp_014 전례: 사전 점검 pp 차이가 Brier로 전환되지 않았다. 다만 그때는 기존 열의 함수였고 이번은 r≈0이다"
+  - "2019 행 NaN 16%가 학습 신호를 희석할 수 있다 (B3의 15.45%와 같은 급)"
+  - "저표본 (투수, 손) 셀에서 수축 후 값이 무조건부 열과 거의 같아져 중복될 수 있다 — pit_n_vs_hand가 진단 역할"
+  - "batter_hand 코드 1/2의 좌우 대응은 확인하지 않았다. 피처 정의상 무관하나 report에는 '코드1/코드2'로 표기"

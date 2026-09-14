@@ -1,0 +1,1010 @@
+{
+ "exp_id": "exp_083",
+ "title": "이미 계산되고 버려지는 중간값 전수 조사 — 팀원 +2.68 의 일반형",
+ "date": "2026-08-22",
+ "학습_건수": 0,
+ "제출물": 0,
+ "사전_등록_판정": "A",
+ "사전_등록_문턱": {
+  "rho_max": 0.5,
+  "xfer_pts_min": 1.0,
+  "🔴": "결과를 보고 바꾸지 않았다 (S8).  두 문턱 모두 config.yaml 사전 등록값."
+ },
+ "생존_축": {
+  "D_nn_hidden_nact": {
+   "max_abs_rho": 0.3853080465592241,
+   "honest_raw_pts": 27.05193839164224,
+   "honest_xfer_pts": 1.3939863853213246,
+   "amp_KQ1": 0.0017965502840391436,
+   "amp_KQ1_times_0p2": 0.00035931005680782873
+  }
+ },
+ "갈래별_소명": {
+  "A_우리_AA팔_셀": {
+   "이미_계산되는가": true,
+   "줄번호": [
+    "aa_infer.py:653-654  for name, model in zip(stack_feats, cells): F[name] = predict_prob(model, F_base, cat_idx_base)",
+    "aa_infer.py:894-895  stack_features / cell_model_order",
+    "model/meta.json branches.R.cell_model_order 및 branches.F.cell_model_order"
+   ],
+   "🔑_파트너_Q_셀과_같은_4종인가": true,
+   "근거": "우리 meta 의 cell_model_order 가 R·F 두 분기 모두 ['is_mid_only','is_rev_only','is_both','is_wayoff_true'] 로 파트너 Q 와 ★이름·개수·순서까지 동일★.  다른 모델(CatBoost 67열 스태커, R 18시드 / F 3시드)로 추정한 같은 신호다.",
+   "부스터_호출_증가분": 0,
+   "꺼내는_코드_변경_규모": "3파일 — aa_infer.py(predict_one_seed 반환에 셀 dict 추가 / run_branch 에서 시드별 수집 / run 반환에 2열 추가, 약 25줄), script.py(로짓 2개 조립 후 최종 블렌드 로짓에 가산, 약 20줄), blend.json(상수 블록).  팀원 판례가 4파일인 것은 파트너 팔이 자식 인터프리터라 CSV 를 경유해야 하기 때문이고, AA 는 루트 프로세스 안이라 그 한 파일이 필요 없다.",
+   "규칙2_4": "통과 — 시드 방향 합만 있고 행 방향 집계가 없다 (average_over_seeds 와 같은 논증)",
+   "판정": "기각 — 새 방향이 아니다",
+   "기각_이유": "δ 상관이 팀원이 ★이미 산★ 축과 거의 1 이다: ρ(A_aa_lg_mr, teammate_b) = 0.9549 · ρ(A_aa_lg_wo, teammate_c) = 0.9786. 사전 등록 문턱 |ρ| ≤ 0.5 를 크게 넘는다.  직교 잔여를 따로 만든 불일치 축(A_aa_minus_q_mr·_wo)은 ρ 를 통과하지만(0.3785·0.1454) 정직면 이득이 +0.7182·+0.7821 로 순열 귀무의 최대값(+0.9076, 30회) ★안★ 이다 → 두 모델이 어긋나는 성분에도 신호가 없다.  이것이 1순위 질문에 대한 답이다.",
+   "🔴_정직면_원값을_그대로_읽으면_안_되는_이유": "A_aa_lg_mr 의 정직면 원값은 +179.62 로 팀원 b(+51.94)의 3.46배다.  그러나 대조 실측: 우리 AA 팔의 ★자기 stage-2 로짓★(배포 18시드)을 같은 축으로 넣으면 ★+403.43★, 정직면이 c_aa 자리에 실제로 쓰는 벡터(exp_049 A1 3시드)를 넣으면 +3.14 다.  c_aa 항을 배포 18시드로 갈아끼우는 것만으로 +281.98 이 나온다.  즉 surface079 의 AA 항이 배포보다 훨씬 약한 대역이고, AA 계열 방향이면 무엇이든 크게 벌어 보인다.  전이비 0.05153 은 ★같은 면에서★ LB 로 눈금이 잡힌 값이므로 이 결함까지 흡수한다 (S54).  그래서 판정은 환산값으로 한다."
+  },
+  "B_EBM_피처별_기여": {
+   "이미_계산되는가": true,
+   "줄번호": [
+    "mate/ebm_core.py:110  for feats, ts in spec['terms']:",
+    "mate/ebm_core.py:114  z += ts[np.clip(bi, 0, ts.shape[0]-1)]   (1차항)",
+    "mate/ebm_core.py:118  z += ts[b0, b1]                          (2차 교호항)"
+   ],
+   "항_수": 59,
+   "시드_수": 3,
+   "부스터_호출_증가분": 0,
+   "꺼내는_코드_변경_규모": "4파일 — ebm_core.py(score_numpy 가 항별 배열도 반환, 약 6줄), infer_ebm6.py(전달), mate/script.py(CSV 로 내보내기), script.py + blend.json(소비).  가산 모델이라 분해가 ★정확★하다.",
+   "규칙2_4": "통과 — 행별 bin 조회, 다른 행 미참조",
+   "판정": "기각",
+   "기각_이유": "상위 6항 중 ρ 문턱을 통과한 것은 3개고(ins_p_n 0.2177 · ins_b_success 0.2111 · ins_p_reverse 0.6665 과 game_type 0.5169 은 초과), 통과분의 환산 이득이 +0.0005 · +0.1625 로 문턱 +1.0 은 물론 잡음바닥급이다. 이득이 큰 항(ins_p_success_dev +4.33)은 ρ 0.9197 로 beta_ins 축 그 자체다 — EBM 의 ins 항 기여는 우리가 이미 beta_ins 로 사고 있는 방향이다."
+  },
+  "C_v6_Leaf_경로": {
+   "이미_계산되는가": true,
+   "줄번호": [
+    "mate/nn_infer.py:72  L = booster.predict(X.iloc[s:e], pred_leaf=True)",
+    "mate/nn_infer.py:77  ok = col >= 0            (잎 어휘 미등재 마스크)",
+    "mate/nn_infer.py:78  z[ok] += coef[offs[j] + col[ok]]  (LR 부분합)"
+   ],
+   "부스터_호출_증가분": 0,
+   "꺼내는_코드_변경_규모": "3파일 (nn_infer.py 반환 + v6_infer.py 전달 + mate/script.py 내보내기)",
+   "규칙2_4": "통과",
+   "판정": "기각",
+   "기각_이유": "① 잎 인덱스의 OOV(어휘 미등재) 신호는 ★존재하지 않는다★ — 나무가 50그루뿐이고 253,507행 전부 모든 그루에서 학습 때 본 잎에 떨어진다(leaf_oov 최대 0.0, sd 0). δ 가 항등적으로 0 이라 측정 자체가 불가능하다. ② LR 부분합(pos/neg/absmass)은 잎 팔의 로짓을 분해한 것이라 기존 축과 겹친다 — 최대 |ρ| pos 0.6315(alpha) · neg 0.7938(w_out) · absmass 0.5059(off_BK) — 전부 문턱 초과. 환산 이득은 neg +1.6852 · pos +1.2554 로 점수 문턱은 넘지만 ρ 에서 떨어진다 — ★사고 싶어도 이미 산 방향★ 이다."
+  },
+  "D_v6_NN_은닉": {
+   "이미_계산되는가": true,
+   "줄번호": [
+    "mate/nn_infer.py:49  z = lin(z, 8); z = _relu(z)   ← 마지막 은닉 64차원",
+    "mate/nn_infer.py:50  z = lin(z, 10)                (이 뒤로 은닉은 버려진다)"
+   ],
+   "차원": 64,
+   "시드_수": 4,
+   "부스터_호출_증가분": 0,
+   "꺼내는_코드_변경_규모": "주성분을 쓰면 4파일 + ★train 에서 동결한 회전 행렬 파일 1개★. 활성 개수(nact)를 쓰면 회전 행렬이 필요 없어 3파일이고 한 줄이다 ((z > 0).sum(1)).",
+   "규칙2_4": "주성분: ⚠️ ★조건부★ — 이번 측정의 회전은 이 프레임에서 SVD 로 잡았고 그것은 행 방향 집계다.  출하하려면 회전 행렬을 train 에서 동결해 패키지에 실어야 한다. nact: 통과 — 행 i 의 자기 64값에 대한 행 내 축약이라 회전이 없다.",
+   "판정": "★생존 — D_nn_hidden_nact★ (이 실험의 유일한 생존 축)",
+   "🔑_nact_정확한_소명": "은닉 64차원 벡터는 nn_infer.py:49 에서 ★이미 계산된다★. 활성 개수는 그 위의 새 축약 한 줄((z > 0).sum(1))이고 부스터 호출 증가분은 0 이다. 행 i 의 값이 행 i 자신의 64개 은닉값만으로 정해지므로 규칙 2-4 를 만족한다. 산 축 대비 max|ρ| 0.3853(c_S1) · 형제 축 대비 0.4611(pc3) · 정직면 +27.0519 는 순열 귀무(60회 평균 +0.3061 sd 0.4921 max +2.4199) 대비 z = 54.3 · p < 1/60. 환산 +1.3940 으로 두 문턱을 모두 통과한 유일한 축이다.",
+   "비고": "pc1 은 분산의 66.5% 를 먹고 사실상 NN 로짓 방향이라 이득이 작다(+2.17). pc2 는 이득이 크지만(+89.14) ρ 0.8713 로 w_out 축이다. pc3 는 ρ 0.4801 통과이나 환산 +0.3987 로 문턱 미달."
+  },
+  "E_시드_산포": {
+   "이미_계산되는가": true,
+   "줄번호": [
+    "aa_infer.py:956,969  per_seed 리스트 축적",
+    "aa_infer.py:971      p = average_over_seeds(per_seed)   ← 여기서 산포가 버려진다",
+    "mate/v6_infer.py:138(lgb) :147-152(cat) :156-159(nn) :163-167(leaf)",
+    "mate/q_infer.py      per_seed (팀원이 이미 셀을 꺼낸 바로 그 리스트)"
+   ],
+   "부스터_호출_증가분": 0,
+   "꺼내는_코드_변경_규모": "3파일 · 약 8줄 (리스트를 np.stack 해 std, 반환에 1열 추가)",
+   "규칙2_4": "통과 — 행 i 의 sd 는 행 i 의 18개 값만 쓴다(average_over_seeds 와 정확히 같은 논증). 🔴 단 aa_infer.py:977-979 가 ★시드 산포 진단을 일부러 인쇄하지 않는다★고 명시하고 그 위에 규칙 2-4 논증을 세워 뒀다.  값을 행별로 쓰는 것은 무방하나 ★어떤 통계도 인쇄하면 안 된다★ — 행 수만 찍을 것.",
+   "판정": "차점 — ρ 만 통과, 점수 문턱 미달 (B 티어)",
+   "비고": "E_aa_seed_sd18(18시드 AA stage-2 로짓의 행별 sd)이 이 계열의 최대다. 산 축 대비 max|ρ| ★0.2916★(c_T70) 로 이번 조사에서 가장 직교하는 방향이고, 정직면 원값 +16.3613 은 순열 귀무(60회 평균 +0.3597 sd 0.4572 max +2.6039) 대비 z = 35.0 · p < 1/60 로 확실한 신호다.  그러나 환산값 +0.8431 이 문턱 +1.0 에 미달한다. 🔴 앵커 수정 전에는 +1.06 이라 문턱을 넘었다 — 배포 앵커로 잘못 잡은 1차 캡처에서 ins 16열이 축퇴해 시드 산포가 과대평가된 것이었다. 파트너 v6 쪽 시드 산포는 시드가 3~4개뿐이라 추정이 거칠고 전부 환산 +0.2 미만."
+  },
+  "F_클립_카운터": {
+   "이미_계산되는가": true,
+   "줄번호": [
+    "aa_infer.py:1140-1142  d_p, hit = lookup_table_values(...) (개인 셀 적중 마스크)",
+    "aa_infer.py:1153,1162  L, has_L = lookup_table_values(...) (리그 백오프 마스크)",
+    "aa_infer.py:1181-1182  raw_off / n_clipped 마스크",
+    "script.py:257-258      n_clip_p · n_clip_aa",
+    "script.py:421          n_moved"
+   ],
+   "부스터_호출_증가분": 0,
+   "꺼내는_코드_변경_규모": "1~2파일 · 각 3줄 미만 (가장 싸다)",
+   "규칙2_4": "통과 (행별 조회 결과)",
+   "판정": "기각 — 이 프레임에서 측정 불가, 그리고 새 방향일 가망도 낮다",
+   "기각_이유": "① tr2024 보정 프레임에서 세 마스크가 ★전부 상수 1★ 이다(개인 셀 적중률 100.00% = 253,507/253,507 — S32/S47 이 말한 바로 그 축퇴).  clip 마스크도 0행. leaf OOV 도 0.  δ 가 항등적으로 0 이라 rms(δ)·K·G·ρ 를 낼 수 없다. ② 재측정하려면 ≤2023 표를 2024 행에 적용한 프레임이 필요한데(S32, miss 21.50%), 그 마스크는 정확히 q_league 백오프 4축의 받침이다 — 이미 산 축이라 새 자유도가 아닐 공산이 크다(S37)."
+  }
+ },
+ "축별_측정": {
+  "A_aa_lg_mr": {
+   "rms_delta": 0.06573047155768236,
+   "K_G_jj_pts_at_u1": 1729.5338484226374,
+   "amp_KQ1": 0.024028370579976435,
+   "amp_KQ1_times_0p2_S42": 0.004805674115995287,
+   "K_Q_at_0p2x_pts": 0.039954356966783455,
+   "max_abs_rho_existing": 0.9548814487660664,
+   "max_abs_rho_axis": "teammate_b(q_lg_mr)",
+   "max_abs_rho_sibling_exp083": 0.9989970900811459,
+   "max_abs_rho_sibling_axis": "A_aa_lg_mr_Ronly",
+   "rho_top": {
+    "teammate_b(q_lg_mr)": 0.9548814487660664,
+    "c_T70": -0.7487401459244033,
+    "c_S1": -0.7480268437622809,
+    "c_S2": -0.7408645350480401,
+    "c_aa": -0.7305283787294209
+   },
+   "honest_raw_pts": 176.216400231477,
+   "honest_xfer_0p05153_pts": 9.08043110392801,
+   "rho_gate_pass": false,
+   "pts_gate_pass": true,
+   "SURVIVES": false
+  },
+  "A_aa_lg_wo": {
+   "rms_delta": 0.0896449497384718,
+   "K_G_jj_pts_at_u1": 3216.971594304695,
+   "amp_KQ1": 0.017630900081606928,
+   "amp_KQ1_times_0p2_S42": 0.0035261800163213855,
+   "K_Q_at_0p2x_pts": 0.03999992133038946,
+   "max_abs_rho_existing": 0.978592547297311,
+   "max_abs_rho_axis": "teammate_c(q_lg_wo)",
+   "max_abs_rho_sibling_exp083": 0.9996379121680177,
+   "max_abs_rho_sibling_axis": "A_aa_lg_wo_Ronly",
+   "rho_top": {
+    "teammate_c(q_lg_wo)": 0.978592547297311,
+    "teammate_b(q_lg_mr)": -0.6208316623397363,
+    "exp080/v6_CAT_vs_NN": -0.10845940038250684,
+    "beta_skew": -0.09358255002741107,
+    "w_v6_inner": -0.08678845531848081
+   },
+   "honest_raw_pts": 0.029534501333387198,
+   "honest_xfer_0p05153_pts": 0.0015219128537094422,
+   "rho_gate_pass": false,
+   "pts_gate_pass": false,
+   "SURVIVES": false
+  },
+  "A_aa_lg_mr_Ronly": {
+   "rms_delta": 0.06560830882876836,
+   "K_G_jj_pts_at_u1": 1723.111005889367,
+   "amp_KQ1": 0.02407318191111043,
+   "amp_KQ1_times_0p2_S42": 0.004814636382222086,
+   "K_Q_at_0p2x_pts": 0.03995454465930891,
+   "max_abs_rho_existing": 0.9541346749632809,
+   "max_abs_rho_axis": "teammate_b(q_lg_mr)",
+   "max_abs_rho_sibling_exp083": 0.9989970900811459,
+   "max_abs_rho_sibling_axis": "A_aa_lg_mr",
+   "rho_top": {
+    "teammate_b(q_lg_mr)": 0.9541346749632809,
+    "c_T70": -0.7475418187771187,
+    "c_S1": -0.7472531975635941,
+    "c_S2": -0.7398017802512665,
+    "c_aa": -0.7278991243836965
+   },
+   "honest_raw_pts": 179.61592132292856,
+   "honest_xfer_0p05153_pts": 9.25560842577051,
+   "rho_gate_pass": false,
+   "pts_gate_pass": true,
+   "SURVIVES": false
+  },
+  "A_aa_lg_wo_Ronly": {
+   "rms_delta": 0.08963635791303204,
+   "K_G_jj_pts_at_u1": 3216.3549765491593,
+   "amp_KQ1": 0.017632594867821375,
+   "amp_KQ1_times_0p2_S42": 0.0035265189735642754,
+   "K_Q_at_0p2x_pts": 0.03999993879168452,
+   "max_abs_rho_existing": 0.9780521800559709,
+   "max_abs_rho_axis": "teammate_c(q_lg_wo)",
+   "max_abs_rho_sibling_exp083": 0.9996379121680177,
+   "max_abs_rho_sibling_axis": "A_aa_lg_wo",
+   "rho_top": {
+    "teammate_c(q_lg_wo)": 0.9780521800559709,
+    "teammate_b(q_lg_mr)": -0.620731650005455,
+    "exp080/v6_CAT_vs_NN": -0.1077207062252907,
+    "beta_skew": -0.09346695842621247,
+    "w_v6_inner": -0.08725026955192412
+   },
+   "honest_raw_pts": 0.05635536219904225,
+   "honest_xfer_0p05153_pts": 0.002903991814116647,
+   "rho_gate_pass": false,
+   "pts_gate_pass": false,
+   "SURVIVES": false
+  },
+  "A_aa_minus_q_mr": {
+   "rms_delta": 0.02035436837764144,
+   "K_G_jj_pts_at_u1": 165.84822599084725,
+   "amp_KQ1": 0.07767266059924535,
+   "amp_KQ1_times_0p2_S42": 0.015534532119849072,
+   "K_Q_at_0p2x_pts": 0.040018455894088714,
+   "max_abs_rho_existing": 0.37852534391776355,
+   "max_abs_rho_axis": "exp080/v6_CAT_vs_LEAF",
+   "max_abs_rho_sibling_exp083": 0.40360122114559277,
+   "max_abs_rho_sibling_axis": "A_aa_minus_q_wo",
+   "rho_top": {
+    "exp080/v6_CAT_vs_LEAF": 0.37852534391776355,
+    "exp080/v6_CAT_vs_NN": 0.3098452126107504,
+    "beta_ins": 0.302875006002137,
+    "off_BI": 0.3018658793608376,
+    "w_v6_inner": -0.28944154907124847
+   },
+   "honest_raw_pts": 0.7181856430005382,
+   "honest_xfer_0p05153_pts": 0.03700810618381773,
+   "rho_gate_pass": true,
+   "pts_gate_pass": false,
+   "SURVIVES": false
+  },
+  "A_aa_minus_q_wo": {
+   "rms_delta": 0.0186477852269474,
+   "K_G_jj_pts_at_u1": 139.2034783147934,
+   "amp_KQ1": 0.08475766314282003,
+   "amp_KQ1_times_0p2_S42": 0.016951532628564008,
+   "K_Q_at_0p2x_pts": 0.040000850377573456,
+   "max_abs_rho_existing": 0.14541411166755416,
+   "max_abs_rho_axis": "teammate_c(q_lg_wo)",
+   "max_abs_rho_sibling_exp083": 0.40360122114559277,
+   "max_abs_rho_sibling_axis": "A_aa_minus_q_mr",
+   "rho_top": {
+    "teammate_c(q_lg_wo)": -0.14541411166755416,
+    "teammate_b(q_lg_mr)": 0.11827422554420541,
+    "w_ebm": 0.09021713165167951,
+    "beta_ins": -0.08966396528492293,
+    "off_BI": -0.08950890989689765
+   },
+   "honest_raw_pts": 0.7820626431897608,
+   "honest_xfer_0p05153_pts": 0.040299688003568375,
+   "rho_gate_pass": true,
+   "pts_gate_pass": false,
+   "SURVIVES": false
+  },
+  "D_nn_hidden_pc1": {
+   "rms_delta": 0.23842936108102267,
+   "K_G_jj_pts_at_u1": 22757.001598236355,
+   "amp_KQ1": 0.006552975127567175,
+   "amp_KQ1_times_0p2_S42": 0.001310595025513435,
+   "K_Q_at_0p2x_pts": 0.03939665596278745,
+   "max_abs_rho_existing": 0.28748833365305143,
+   "max_abs_rho_axis": "off_BJ",
+   "max_abs_rho_sibling_exp083": 0.9867560439467981,
+   "max_abs_rho_sibling_axis": "D_nn_hidden_l2",
+   "rho_top": {
+    "off_BJ": -0.28748833365305143,
+    "exp080/v6_CAT_vs_NN": -0.19975146503382338,
+    "beta_skew": 0.14099434288248572,
+    "alpha": -0.13994923479158472,
+    "c_aa": -0.1366225099907962
+   },
+   "honest_raw_pts": 2.1670318392730223,
+   "honest_xfer_0p05153_pts": 0.11166715067773884,
+   "rho_gate_pass": true,
+   "pts_gate_pass": false,
+   "SURVIVES": false
+  },
+  "D_nn_hidden_pc2": {
+   "rms_delta": 0.08906467786104251,
+   "K_G_jj_pts_at_u1": 3175.45946188487,
+   "amp_KQ1": 0.017731840367607294,
+   "amp_KQ1_times_0p2_S42": 0.003546368073521459,
+   "K_Q_at_0p2x_pts": 0.03994979217867534,
+   "max_abs_rho_existing": 0.8712633205577975,
+   "max_abs_rho_axis": "w_out",
+   "max_abs_rho_sibling_exp083": 0.7727136862391192,
+   "max_abs_rho_sibling_axis": "C_leaf_neg",
+   "rho_top": {
+    "w_out": -0.8712633205577975,
+    "alpha": -0.8648796197866413,
+    "c_T70": -0.826350137639853,
+    "c_S2": -0.8194743029892051,
+    "c_S1": -0.8192760456440674
+   },
+   "honest_raw_pts": 89.1401842801564,
+   "honest_xfer_0p05153_pts": 4.593393695956459,
+   "rho_gate_pass": false,
+   "pts_gate_pass": true,
+   "SURVIVES": false
+  },
+  "D_nn_hidden_pc3": {
+   "rms_delta": 0.05884457470843571,
+   "K_G_jj_pts_at_u1": 1386.1442468629455,
+   "amp_KQ1": 0.02686482995032054,
+   "amp_KQ1_times_0p2_S42": 0.005372965990064108,
+   "K_Q_at_0p2x_pts": 0.04001341642391087,
+   "max_abs_rho_existing": 0.4801170060014369,
+   "max_abs_rho_axis": "w_ebm",
+   "max_abs_rho_sibling_exp083": 0.7252229803868857,
+   "max_abs_rho_sibling_axis": "B_ebm_term_game_type",
+   "rho_top": {
+    "w_ebm": -0.4801170060014369,
+    "off_BK": -0.41044025651010996,
+    "off_BJ": -0.37744137537522304,
+    "beta_skew": -0.16041247205421152,
+    "c_S1": -0.14759414514314387
+   },
+   "honest_raw_pts": 7.736270238156635,
+   "honest_xfer_0p05153_pts": 0.3986500053722114,
+   "rho_gate_pass": true,
+   "pts_gate_pass": false,
+   "SURVIVES": false
+  },
+  "D_nn_hidden_l2": {
+   "rms_delta": 0.24493322614824575,
+   "K_G_jj_pts_at_u1": 24015.46365268041,
+   "amp_KQ1": 0.006385280415731564,
+   "amp_KQ1_times_0p2_S42": 0.001277056083146313,
+   "K_Q_at_0p2x_pts": 0.03944246291553127,
+   "max_abs_rho_existing": 0.26684490853189347,
+   "max_abs_rho_axis": "off_BJ",
+   "max_abs_rho_sibling_exp083": 0.9867560439467981,
+   "max_abs_rho_sibling_axis": "D_nn_hidden_pc1",
+   "rho_top": {
+    "off_BJ": -0.26684490853189347,
+    "beta_skew": 0.22612535493281874,
+    "exp080/v6_CAT_vs_NN": -0.21602647528906316,
+    "off_BK": 0.16258958341406848,
+    "alpha": -0.1440968865129627
+   },
+   "honest_raw_pts": 1.269146471527506,
+   "honest_xfer_0p05153_pts": 0.06539911767781238,
+   "rho_gate_pass": true,
+   "pts_gate_pass": false,
+   "SURVIVES": false
+  },
+  "D_nn_hidden_nact": {
+   "rms_delta": 0.8800132330477541,
+   "K_G_jj_pts_at_u1": 310008.76690722344,
+   "amp_KQ1": 0.0017965502840391436,
+   "amp_KQ1_times_0p2_S42": 0.00035931005680782873,
+   "K_Q_at_0p2x_pts": 0.04001881055901461,
+   "max_abs_rho_existing": 0.3853080465592241,
+   "max_abs_rho_axis": "c_S1",
+   "max_abs_rho_sibling_exp083": 0.4870725962636492,
+   "max_abs_rho_sibling_axis": "C_leaf_pos",
+   "rho_top": {
+    "c_S1": 0.3853080465592241,
+    "c_S2": 0.3828066976462393,
+    "alpha": 0.38158270181355336,
+    "c_T70": 0.37198257883286767,
+    "w_out": 0.3714809254435745
+   },
+   "honest_raw_pts": 27.05193839164224,
+   "honest_xfer_0p05153_pts": 1.3939863853213246,
+   "rho_gate_pass": true,
+   "pts_gate_pass": true,
+   "SURVIVES": true
+  },
+  "B_ebm_term_game_type": {
+   "rms_delta": 0.019078713937072896,
+   "K_G_jj_pts_at_u1": 145.71147774247208,
+   "amp_KQ1": 0.08279172363405456,
+   "amp_KQ1_times_0p2_S42": 0.016558344726810913,
+   "K_Q_at_0p2x_pts": 0.039961202807761255,
+   "max_abs_rho_existing": 0.5169477763369174,
+   "max_abs_rho_axis": "w_ebm",
+   "max_abs_rho_sibling_exp083": 0.7657147269892348,
+   "max_abs_rho_sibling_axis": "C_leaf_absmass",
+   "rho_top": {
+    "w_ebm": 0.5169477763369174,
+    "off_BK": 0.4365157444536191,
+    "beta_ins": -0.2823839322318509,
+    "off_BI": -0.28166490495195673,
+    "w_out": -0.20152548722111469
+   },
+   "honest_raw_pts": 0.6282777487931526,
+   "honest_xfer_0p05153_pts": 0.03237515239531115,
+   "rho_gate_pass": false,
+   "pts_gate_pass": false,
+   "SURVIVES": false
+  },
+  "B_ebm_term_ins_p_n": {
+   "rms_delta": 0.012499987848741328,
+   "K_G_jj_pts_at_u1": 62.54819070997672,
+   "amp_KQ1": 0.12649258740627795,
+   "amp_KQ1_times_0p2_S42": 0.02529851748125559,
+   "K_Q_at_0p2x_pts": 0.0400258578489845,
+   "max_abs_rho_existing": 0.21771136309218847,
+   "max_abs_rho_axis": "off_BK",
+   "max_abs_rho_sibling_exp083": 0.31445321668593945,
+   "max_abs_rho_sibling_axis": "C_leaf_absmass",
+   "rho_top": {
+    "off_BK": -0.21771136309218847,
+    "seg_spread_BH": 0.17705447446041986,
+    "exp080/v6_CAT_vs_NN": 0.12219160388708258,
+    "c_T70": 0.11245355526533429,
+    "c_aa": 0.10853603365462598
+   },
+   "honest_raw_pts": 0.00931014303421307,
+   "honest_xfer_0p05153_pts": 0.00047975167055299946,
+   "rho_gate_pass": true,
+   "pts_gate_pass": false,
+   "SURVIVES": false
+  },
+  "B_ebm_term_ins_b_success": {
+   "rms_delta": 0.011929976548196296,
+   "K_G_jj_pts_at_u1": 56.97374269506311,
+   "amp_KQ1": 0.13246182804276266,
+   "amp_KQ1_times_0p2_S42": 0.02649236560855253,
+   "K_Q_at_0p2x_pts": 0.039990789737158236,
+   "max_abs_rho_existing": 0.21114620474663215,
+   "max_abs_rho_axis": "off_BK",
+   "max_abs_rho_sibling_exp083": 0.26476016866970364,
+   "max_abs_rho_sibling_axis": "A_aa_minus_q_mr",
+   "rho_top": {
+    "off_BK": 0.21114620474663215,
+    "w_ebm": 0.19217450915112227,
+    "c_S1": 0.17645813600840252,
+    "c_T70": 0.17100299041776787,
+    "c_S2": 0.168406450180681
+   },
+   "honest_raw_pts": 3.153700245805908,
+   "honest_xfer_0p05153_pts": 0.16251017366637843,
+   "rho_gate_pass": true,
+   "pts_gate_pass": false,
+   "SURVIVES": false
+  },
+  "B_ebm_term_ins_p_success_dev": {
+   "rms_delta": 0.008354712722544469,
+   "K_G_jj_pts_at_u1": 27.942072327164063,
+   "amp_KQ1": 0.1893110483282949,
+   "amp_KQ1_times_0p2_S42": 0.03786220966565898,
+   "K_Q_at_0p2x_pts": 0.04004533145297229,
+   "max_abs_rho_existing": 0.9197408849023769,
+   "max_abs_rho_axis": "beta_ins",
+   "max_abs_rho_sibling_exp083": 0.6117196364255387,
+   "max_abs_rho_sibling_axis": "B_ebm_term_ins_p_success",
+   "rho_top": {
+    "beta_ins": 0.9197408849023769,
+    "off_BI": 0.9187997079920299,
+    "c_T70": 0.51095605767159,
+    "c_S1": 0.5022410121749075,
+    "c_aa": 0.49779105968638704
+   },
+   "honest_raw_pts": 4.334156625562741,
+   "honest_xfer_0p05153_pts": 0.22333909091524806,
+   "rho_gate_pass": false,
+   "pts_gate_pass": false,
+   "SURVIVES": false
+  },
+  "B_ebm_term_ins_p_success": {
+   "rms_delta": 0.007969491277442904,
+   "K_G_jj_pts_at_u1": 25.424754568924445,
+   "amp_KQ1": 0.19846401388450266,
+   "amp_KQ1_times_0p2_S42": 0.039692802776900536,
+   "K_Q_at_0p2x_pts": 0.040045924992868916,
+   "max_abs_rho_existing": 0.7879616684074775,
+   "max_abs_rho_axis": "c_S2",
+   "max_abs_rho_sibling_exp083": 0.7635328047623855,
+   "max_abs_rho_sibling_axis": "B_ebm_term_ins_p_reverse",
+   "rho_top": {
+    "c_S2": 0.7879616684074775,
+    "c_T70": 0.7803752018803183,
+    "c_S1": 0.7799296558804585,
+    "alpha": 0.765339901829967,
+    "w_out": 0.7589287665073837
+   },
+   "honest_raw_pts": 2.757446989831692,
+   "honest_xfer_0p05153_pts": 0.14209124338602708,
+   "rho_gate_pass": false,
+   "pts_gate_pass": false,
+   "SURVIVES": false
+  },
+  "B_ebm_term_ins_p_reverse": {
+   "rms_delta": 0.007716816347375578,
+   "K_G_jj_pts_at_u1": 23.838114375192585,
+   "amp_KQ1": 0.2049453079831177,
+   "amp_KQ1_times_0p2_S42": 0.04098906159662354,
+   "K_Q_at_0p2x_pts": 0.04004058353716541,
+   "max_abs_rho_existing": 0.6665392068874584,
+   "max_abs_rho_axis": "c_T70",
+   "max_abs_rho_sibling_exp083": 0.7635328047623855,
+   "max_abs_rho_sibling_axis": "B_ebm_term_ins_p_success",
+   "rho_top": {
+    "c_T70": 0.6665392068874584,
+    "c_S1": 0.6598666212500063,
+    "c_S2": 0.6570974509766857,
+    "alpha": 0.6347649895092607,
+    "w_out": 0.6306840853104846
+   },
+   "honest_raw_pts": 0.07107588083636074,
+   "honest_xfer_0p05153_pts": 0.0036625401394976688,
+   "rho_gate_pass": false,
+   "pts_gate_pass": false,
+   "SURVIVES": false
+  },
+  "C_leaf_absmass": {
+   "rms_delta": 0.03317305110265141,
+   "K_G_jj_pts_at_u1": 440.52078603878516,
+   "amp_KQ1": 0.04762098525018897,
+   "amp_KQ1_times_0p2_S42": 0.009524197050037795,
+   "K_Q_at_0p2x_pts": 0.039968077332381044,
+   "max_abs_rho_existing": 0.5058775981718672,
+   "max_abs_rho_axis": "off_BK",
+   "max_abs_rho_sibling_exp083": 0.7657147269892348,
+   "max_abs_rho_sibling_axis": "B_ebm_term_game_type",
+   "rho_top": {
+    "off_BK": 0.5058775981718672,
+    "beta_skew": 0.3761964658626973,
+    "w_ebm": 0.36450270742117463,
+    "w_out": -0.3430129235510137,
+    "c_T70": -0.3296680245630504
+   },
+   "honest_raw_pts": 4.558225125383956,
+   "honest_xfer_0p05153_pts": 0.23488534071103523,
+   "rho_gate_pass": false,
+   "pts_gate_pass": false,
+   "SURVIVES": false
+  },
+  "C_leaf_pos": {
+   "rms_delta": 0.024232694910717036,
+   "K_G_jj_pts_at_u1": 235.07096987148526,
+   "amp_KQ1": 0.06526706074673692,
+   "amp_KQ1_times_0p2_S42": 0.013053412149347386,
+   "K_Q_at_0p2x_pts": 0.04004350516836904,
+   "max_abs_rho_existing": 0.631458744149884,
+   "max_abs_rho_axis": "alpha",
+   "max_abs_rho_sibling_exp083": 0.5634251892574461,
+   "max_abs_rho_sibling_axis": "D_nn_hidden_pc2",
+   "rho_top": {
+    "alpha": 0.631458744149884,
+    "w_out": 0.6185805108847114,
+    "c_S1": 0.6050236568310894,
+    "c_S2": 0.6016889496513906,
+    "c_aa": 0.5840883105137863
+   },
+   "honest_raw_pts": 24.361741358380755,
+   "honest_xfer_0p05153_pts": 1.2553605321973602,
+   "rho_gate_pass": false,
+   "pts_gate_pass": true,
+   "SURVIVES": false
+  },
+  "C_leaf_neg": {
+   "rms_delta": 0.03321932123469162,
+   "K_G_jj_pts_at_u1": 441.75052942638246,
+   "amp_KQ1": 0.04762225953778632,
+   "amp_KQ1_times_0p2_S42": 0.009524451907557265,
+   "K_Q_at_0p2x_pts": 0.040058968711299714,
+   "max_abs_rho_existing": 0.7937748488853826,
+   "max_abs_rho_axis": "w_out",
+   "max_abs_rho_sibling_exp083": 0.7727136862391192,
+   "max_abs_rho_sibling_axis": "D_nn_hidden_pc2",
+   "rho_top": {
+    "w_out": 0.7937748488853826,
+    "alpha": 0.7825988316589158,
+    "c_T70": 0.7548279036195737,
+    "c_aa": 0.7351984078162856,
+    "c_S2": 0.7348062781859689
+   },
+   "honest_raw_pts": 32.703831730773686,
+   "honest_xfer_0p05153_pts": 1.685228449086768,
+   "rho_gate_pass": false,
+   "pts_gate_pass": true,
+   "SURVIVES": false
+  },
+  "E_aa_seed_sd18": {
+   "rms_delta": 0.0024323810305220722,
+   "K_G_jj_pts_at_u1": 2.3684203589426946,
+   "amp_KQ1": 0.6493862097589748,
+   "amp_KQ1_times_0p2_S42": 0.12987724195179495,
+   "K_Q_at_0p2x_pts": 0.039961040944942544,
+   "max_abs_rho_existing": 0.2915508905881663,
+   "max_abs_rho_axis": "c_T70",
+   "max_abs_rho_sibling_exp083": 0.5835416022661059,
+   "max_abs_rho_sibling_axis": "E_aa_cellsd_is_rev_only",
+   "rho_top": {
+    "c_T70": -0.2915508905881663,
+    "c_aa": -0.28822943827016667,
+    "off_BK": 0.2862459889854729,
+    "c_S2": -0.285392907565816,
+    "c_S1": -0.2824693798692842
+   },
+   "honest_raw_pts": 16.361346681992245,
+   "honest_xfer_0p05153_pts": 0.8431001945230604,
+   "rho_gate_pass": true,
+   "pts_gate_pass": false,
+   "SURVIVES": false
+  },
+  "E_aa_seed_sdF": {
+   "rms_delta": 0.0022552051124480146,
+   "K_G_jj_pts_at_u1": 2.0359526094802276,
+   "amp_KQ1": 0.7006183408145239,
+   "amp_KQ1_times_0p2_S42": 0.14012366816290478,
+   "K_Q_at_0p2x_pts": 0.03998067696579012,
+   "max_abs_rho_existing": 0.18532170215899182,
+   "max_abs_rho_axis": "off_BK",
+   "max_abs_rho_sibling_exp083": 0.2805667148919885,
+   "max_abs_rho_sibling_axis": "E_aa_cellsd_is_wayoff_true",
+   "rho_top": {
+    "off_BK": 0.18532170215899182,
+    "beta_skew": 0.13798251161907799,
+    "w_ebm": 0.09774657943536613,
+    "exp080/v6_CAT_vs_NN": -0.09630447417292329,
+    "w_out": -0.08497985376337484
+   },
+   "honest_raw_pts": 1.1291173999338753,
+   "honest_xfer_0p05153_pts": 0.058183419618592594,
+   "rho_gate_pass": true,
+   "pts_gate_pass": false,
+   "SURVIVES": false
+  },
+  "E_aa_cellsd_is_mid_only": {
+   "rms_delta": 0.002052970657331985,
+   "K_G_jj_pts_at_u1": 1.6871785846852603,
+   "amp_KQ1": 0.769707615131445,
+   "amp_KQ1_times_0p2_S42": 0.15394152302628902,
+   "K_Q_at_0p2x_pts": 0.039986589282008225,
+   "max_abs_rho_existing": 0.2831190858270941,
+   "max_abs_rho_axis": "off_BK",
+   "max_abs_rho_sibling_exp083": 0.6094972803124481,
+   "max_abs_rho_sibling_axis": "E_aa_cellsd_is_rev_only",
+   "rho_top": {
+    "off_BK": 0.2831190858270941,
+    "beta_skew": 0.12057812915241217,
+    "exp080/v6_CAT_vs_NN": -0.08406658831606446,
+    "w_ebm": 0.07697143837877718,
+    "beta_ins": -0.061877781685902716
+   },
+   "honest_raw_pts": 3.3891634501625276,
+   "honest_xfer_0p05153_pts": 0.17464359258687503,
+   "rho_gate_pass": true,
+   "pts_gate_pass": false,
+   "SURVIVES": false
+  },
+  "E_aa_cellsd_is_rev_only": {
+   "rms_delta": 0.0027973275342269934,
+   "K_G_jj_pts_at_u1": 3.1324360270851086,
+   "amp_KQ1": 0.5647893868277647,
+   "amp_KQ1_times_0p2_S42": 0.11295787736555295,
+   "K_Q_at_0p2x_pts": 0.03997506672868155,
+   "max_abs_rho_existing": 0.2988224639164066,
+   "max_abs_rho_axis": "off_BK",
+   "max_abs_rho_sibling_exp083": 0.649229647774131,
+   "max_abs_rho_sibling_axis": "E_aa_cellsd_is_wayoff_true",
+   "rho_top": {
+    "off_BK": 0.2988224639164066,
+    "beta_skew": 0.16507438183163547,
+    "c_T70": -0.14988468038370487,
+    "w_out": -0.14873171873121407,
+    "c_aa": -0.14370103453316554
+   },
+   "honest_raw_pts": 0.5379433125507376,
+   "honest_xfer_0p05153_pts": 0.027720218895739508,
+   "rho_gate_pass": true,
+   "pts_gate_pass": false,
+   "SURVIVES": false
+  },
+  "E_aa_cellsd_is_both": {
+   "rms_delta": 0.002683823290529515,
+   "K_G_jj_pts_at_u1": 2.8833901124383168,
+   "amp_KQ1": 0.5887576186201195,
+   "amp_KQ1_times_0p2_S42": 0.11775152372402392,
+   "K_Q_at_0p2x_pts": 0.03998404316229665,
+   "max_abs_rho_existing": 0.3016410397989965,
+   "max_abs_rho_axis": "off_BK",
+   "max_abs_rho_sibling_exp083": 0.5865140678730094,
+   "max_abs_rho_sibling_axis": "E_aa_cellsd_is_mid_only",
+   "rho_top": {
+    "off_BK": 0.3016410397989965,
+    "w_ebm": 0.16678876132627576,
+    "beta_skew": 0.13224953726687078,
+    "exp080/v6_CAT_vs_NN": -0.09908238952273328,
+    "off_BI": -0.07402326883042067
+   },
+   "honest_raw_pts": 4.136455212055921,
+   "honest_xfer_0p05153_pts": 0.2131515370772416,
+   "rho_gate_pass": true,
+   "pts_gate_pass": false,
+   "SURVIVES": false
+  },
+  "E_aa_cellsd_is_wayoff_true": {
+   "rms_delta": 0.0023934993778970313,
+   "K_G_jj_pts_at_u1": 2.2933070591698934,
+   "amp_KQ1": 0.659979912964401,
+   "amp_KQ1_times_0p2_S42": 0.1319959825928802,
+   "K_Q_at_0p2x_pts": 0.03996552897340338,
+   "max_abs_rho_existing": 0.28340711439824884,
+   "max_abs_rho_axis": "off_BK",
+   "max_abs_rho_sibling_exp083": 0.649229647774131,
+   "max_abs_rho_sibling_axis": "E_aa_cellsd_is_rev_only",
+   "rho_top": {
+    "off_BK": 0.28340711439824884,
+    "beta_skew": 0.17560880322916794,
+    "off_BJ": -0.15790833009955602,
+    "w_out": -0.14236995953646767,
+    "c_T70": -0.14189284046778475
+   },
+   "honest_raw_pts": 0.0027103787435862614,
+   "honest_xfer_0p05153_pts": 0.00013966581665700005,
+   "rho_gate_pass": true,
+   "pts_gate_pass": false,
+   "SURVIVES": false
+  },
+  "E_v6_cat_seed_sd": {
+   "rms_delta": 0.00334821388012641,
+   "K_G_jj_pts_at_u1": 4.487680759447057,
+   "amp_KQ1": 0.47184235171061845,
+   "amp_KQ1_times_0p2_S42": 0.0943684703421237,
+   "K_Q_at_0p2x_pts": 0.039972186568777726,
+   "max_abs_rho_existing": 0.2675853546378542,
+   "max_abs_rho_axis": "off_BK",
+   "max_abs_rho_sibling_exp083": 0.3975749942758976,
+   "max_abs_rho_sibling_axis": "C_leaf_absmass",
+   "rho_top": {
+    "off_BK": 0.2675853546378542,
+    "beta_skew": 0.17400823042965669,
+    "w_out": -0.14547007690910033,
+    "c_T70": -0.1425983801193901,
+    "alpha": -0.13917428003237223
+   },
+   "honest_raw_pts": 0.2788522396213011,
+   "honest_xfer_0p05153_pts": 0.014369255907685646,
+   "rho_gate_pass": true,
+   "pts_gate_pass": false,
+   "SURVIVES": false
+  },
+  "E_v6_nn_seed_sd": {
+   "rms_delta": 0.013110031080992126,
+   "K_G_jj_pts_at_u1": 68.80230888121167,
+   "amp_KQ1": 0.11992137237671394,
+   "amp_KQ1_times_0p2_S42": 0.02398427447534279,
+   "K_Q_at_0p2x_pts": 0.03972702926405172,
+   "max_abs_rho_existing": 0.2614225222911412,
+   "max_abs_rho_axis": "exp080/v6_CAT_vs_NN",
+   "max_abs_rho_sibling_exp083": 0.7929502886647297,
+   "max_abs_rho_sibling_axis": "D_nn_hidden_pc1",
+   "rho_top": {
+    "exp080/v6_CAT_vs_NN": -0.2614225222911412,
+    "off_BK": 0.17745778437637674,
+    "w_ebm": 0.10926026347327306,
+    "off_BJ": -0.09402386735395041,
+    "seg_spread_BH": -0.06163724864649782
+   },
+   "honest_raw_pts": 2.212908293286432,
+   "honest_xfer_0p05153_pts": 0.11403116435304984,
+   "rho_gate_pass": true,
+   "pts_gate_pass": false,
+   "SURVIVES": false
+  },
+  "E_v6_lgb_seed_sd": {
+   "rms_delta": 0.0027657287244914814,
+   "K_G_jj_pts_at_u1": 3.0620672917670717,
+   "amp_KQ1": 0.5713078792243691,
+   "amp_KQ1_times_0p2_S42": 0.11426157584487383,
+   "K_Q_at_0p2x_pts": 0.039982232407151035,
+   "max_abs_rho_existing": 0.18588264631578244,
+   "max_abs_rho_axis": "off_BK",
+   "max_abs_rho_sibling_exp083": 0.2662281892656537,
+   "max_abs_rho_sibling_axis": "C_leaf_absmass",
+   "rho_top": {
+    "off_BK": 0.18588264631578244,
+    "beta_skew": 0.12078464022137918,
+    "w_out": -0.11270417604983111,
+    "c_aa": -0.11072719558330459,
+    "c_T70": -0.10947266615041809
+   },
+   "honest_raw_pts": 3.3184207774428387,
+   "honest_xfer_0p05153_pts": 0.17099822266162948,
+   "rho_gate_pass": true,
+   "pts_gate_pass": false,
+   "SURVIVES": false
+  },
+  "E_v6_leaf_seed_sd": {
+   "rms_delta": 0.009272211162832765,
+   "K_G_jj_pts_at_u1": 34.416142968092764,
+   "amp_KQ1": 0.17043062400955522,
+   "amp_KQ1_times_0p2_S42": 0.03408612480191105,
+   "K_Q_at_0p2x_pts": 0.03998978305554934,
+   "max_abs_rho_existing": 0.15471932407848077,
+   "max_abs_rho_axis": "off_BK",
+   "max_abs_rho_sibling_exp083": 0.3088829970501544,
+   "max_abs_rho_sibling_axis": "C_leaf_absmass",
+   "rho_top": {
+    "off_BK": 0.15471932407848077,
+    "beta_skew": 0.09019613621249475,
+    "off_BI": -0.07969244542785046,
+    "beta_ins": -0.07950697063766483,
+    "exp080/v6_CAT_vs_NN": -0.058646560989783686
+   },
+   "honest_raw_pts": 1.8825316442149642,
+   "honest_xfer_0p05153_pts": 0.0970068556263971,
+   "rho_gate_pass": true,
+   "pts_gate_pass": false,
+   "SURVIVES": false
+  },
+  "E_v6_ebm_seed_sd": {
+   "rms_delta": 0.0007835210337601211,
+   "K_G_jj_pts_at_u1": 0.2457519029076174,
+   "amp_KQ1": 2.0167986671046694,
+   "amp_KQ1_times_0p2_S42": 0.4033597334209339,
+   "K_Q_at_0p2x_pts": 0.039987109910895234,
+   "max_abs_rho_existing": 0.08742975290825995,
+   "max_abs_rho_axis": "w_out",
+   "max_abs_rho_sibling_exp083": 0.1533112577921437,
+   "max_abs_rho_sibling_axis": "C_leaf_absmass",
+   "rho_top": {
+    "w_out": -0.08742975290825995,
+    "alpha": -0.08398463003976545,
+    "c_S2": -0.08202738242161825,
+    "off_BK": 0.0812581142941836,
+    "c_T70": -0.08097022545857345
+   },
+   "honest_raw_pts": 0.1344642943212193,
+   "honest_xfer_0p05153_pts": 0.0069289450863724315,
+   "rho_gate_pass": true,
+   "pts_gate_pass": false,
+   "SURVIVES": false
+  }
+ },
+ "축퇴로_측정_불가": {
+  "F_leaf_oov": "이 프레임에서 상수다 (sd=0.000e+00, 값=0) → δ 가 항등적으로 0, 측정 불가",
+  "F_lut0_hit": "이 프레임에서 상수다 (sd=0.000e+00, 값=1) → δ 가 항등적으로 0, 측정 불가",
+  "F_lut1_hit": "이 프레임에서 상수다 (sd=0.000e+00, 값=1) → δ 가 항등적으로 0, 측정 불가",
+  "F_lut2_hit": "이 프레임에서 상수다 (sd=0.000e+00, 값=1) → δ 가 항등적으로 0, 측정 불가"
+ },
+ "정직면": {
+  "base_pts": 928.501461058684,
+  "module": "exp_079/src/surface079.py (≤2023 학습 팔 → 2024 253,507행)",
+  "전이비_S54": 0.05153,
+  "🔴": "정직면 원값은 이 계열에서 LB 로 읽으면 안 된다.  팀원 b 축 실측 정직면 +51.94414 → LB +2.6766924977 (전이비 0.05153).  여기 모든 판정은 환산값으로 했다."
+ },
+ "귀무_순열": {
+  "A_aa_lg_mr": {
+   "n_perm": 30,
+   "mean_pts": 0.2104487458956972,
+   "sd_pts": 0.23627008373940975,
+   "max_pts": 0.9075987325356891,
+   "p95_pts": 0.6758875218353689
+  },
+  "E_aa_seed_sd18": {
+   "n_perm": 30,
+   "mean_pts": 0.3097899743671822,
+   "sd_pts": 0.4489161934811969,
+   "max_pts": 2.169784264538521,
+   "p95_pts": 1.0086354623023328
+  }
+ },
+ "생존_후보_귀무_60회_및_산축단독_rho": {
+  "base_pts": 928.501461058684,
+  "n_perm": 60,
+  "D_nn_hidden_nact": {
+   "max_abs_rho_BOUGHT_axes_only": 0.3853080465592241,
+   "axis": "c_S1",
+   "signed": 0.3853080465592241,
+   "rho_top5_bought": {
+    "c_S1": 0.3853080465592241,
+    "c_S2": 0.3828066976462393,
+    "alpha": 0.38158270181355336,
+    "c_T70": 0.37198257883286767,
+    "w_out": 0.3714809254435745
+   },
+   "observed_raw_pts": 27.05193839164224,
+   "xfer_pts": 1.3939863853213246,
+   "null_mean": 0.30605050109743576,
+   "null_sd": 0.49213020869620233,
+   "null_max": 2.4199094398546777,
+   "null_p99": 1.9899638261426331,
+   "z_vs_null": 54.34717767357246,
+   "p_perm_ge_obs": 0.0
+  },
+  "D_nn_hidden_pc3": {
+   "max_abs_rho_BOUGHT_axes_only": 0.4801170060014369,
+   "axis": "w_ebm",
+   "signed": -0.4801170060014369,
+   "rho_top5_bought": {
+    "w_ebm": -0.4801170060014369,
+    "off_BK": -0.41044025651010996,
+    "off_BJ": -0.37744137537522304,
+    "beta_skew": -0.16041247205421152,
+    "c_S1": -0.14759414514314387
+   },
+   "observed_raw_pts": 7.736270238156635,
+   "xfer_pts": 0.3986500053722114,
+   "null_mean": 0.3678196944957582,
+   "null_sd": 0.4971575183407684,
+   "null_max": 2.3649973178606842,
+   "null_p99": 1.9950603824532676,
+   "z_vs_null": 14.82115883161661,
+   "p_perm_ge_obs": 0.0
+  },
+  "E_aa_seed_sd18": {
+   "max_abs_rho_BOUGHT_axes_only": 0.2915508905881663,
+   "axis": "c_T70",
+   "signed": -0.2915508905881663,
+   "rho_top5_bought": {
+    "c_T70": -0.2915508905881663,
+    "c_aa": -0.28822943827016667,
+    "off_BK": 0.2862459889854729,
+    "c_S2": -0.285392907565816,
+    "c_S1": -0.2824693798692842
+   },
+   "observed_raw_pts": 16.361346681992245,
+   "xfer_pts": 0.8431001945230604,
+   "null_mean": 0.35970282196887143,
+   "null_sd": 0.4572415917355879,
+   "null_max": 2.6039013978684125,
+   "null_p99": 1.9741363266973313,
+   "z_vs_null": 34.99603743238815,
+   "p_perm_ge_obs": 0.0
+  }
+ },
+ "🔴_rho_기준_정의": "사전 등록된 '기존 축'은 exp_078 15축 + q_beta + q_league 4 + 셀 8 + 팀원 b·c 다.  exp_083 이 이번에 새로 만든 형제 축은 그 목록에 없으므로 게이트에 넣지 않는다(문턱 0.5 는 그대로 — S8).  다만 형제 축과의 ρ 도 max_abs_rho_sibling_exp083 로 전부 기록했다: 두 축 이상을 함께 실을 때 naive 합산이 위험하기 때문이다(S16).",
+ "귀속_대조": {
+  "aa_stage2_logit_18seed": {
+   "argmax_t_unit_sd": 0.13296843153873394,
+   "raw_gain_pts": 403.43279179998456
+  },
+  "aa_p_off_logit": {
+   "argmax_t_unit_sd": 0.13499597085947218,
+   "raw_gain_pts": 415.18771409130284
+  },
+  "aa_p_final_logit": {
+   "argmax_t_unit_sd": 0.13613267240910265,
+   "raw_gain_pts": 421.9210302700004
+  },
+  "surface_own_L_aa(exp049 A1 3seed)": {
+   "argmax_t_unit_sd": 0.011505292525482925,
+   "raw_gain_pts": 3.144144078415252
+  },
+  "A_aa_lg_mr": {
+   "argmax_t_unit_sd": -0.08698614814494789,
+   "raw_gain_pts": 179.61592132292856
+  },
+  "A_aa_lg_wo": {
+   "argmax_t_unit_sd": -0.0015120611117191522,
+   "raw_gain_pts": 0.05635536219904225
+  },
+  "rho_lg_mr_vs_aa_stage2": -0.7506191447709696,
+  "rho_lg_mr_vs_L_aa": -0.6795212885901779,
+  "rho_aa_stage2_vs_L_aa": 0.916222884889959
+ },
+ "정직면_AA팔_교체_대조": {
+  "what": "정직면의 c_aa 항을 exp_049 A1(3시드) 대신 배포 18시드 stage-2 로짓으로 교체",
+  "base_pts_swapped": 1210.4836331718327,
+  "gain_of_swap_alone_pts": 281.98217211314875,
+  "A_aa_lg_mr_gain_on_swapped_surface_pts": 153.54259873782144,
+  "A_aa_lg_mr_argmax_t": -0.08033601790353428,
+  "A_aa_lg_wo_gain_on_swapped_surface_pts": 0.35174939151397666
+ },
+ "게이트": {
+  "AA_캡처_항등앵커": {
+   "what": "monkeypatch 캡처 실행의 stage-3 출력이 저장된 pcal_aa 와 같은가",
+   "p_off_vs_build_AY/work/pcal_aa.npy": {
+    "ndiff": 0,
+    "max_abs": 0.0,
+    "PASS": true
+   },
+   "smooth_S2/S1/T70_vs_pcal_*": {
+    "ndiff": 0,
+    "max_abs": 0.0,
+    "PASS": true
+   },
+   "의미": "감싼 함수가 원본 반환값을 손대지 않았음이 비트 단위로 증명된다"
+  },
+  "v6_캡처_재현": {
+   "what": "복제한 4팔 블렌드가 exp_078 저장본 tr2024_v6_pv.npy 와 같은가",
+   "ndiff": 0,
+   "max_abs": 0.0,
+   "PASS": true
+  },
+  "행_순서": {
+   "honest_surface_ids_equal_tr2024_ids": true,
+   "n": 253507
+  },
+  "AA_부스터_호출_수": 114
+ },
+ "🔴_앵커_사고_기록": {
+  "무슨_일": "1차 캡처는 AA 모델의 ins 앵커를 ★배포 앵커(7b96e3de…)★ 로 두고 2024 행에 적용했다.  그러면 ins_p_n = asof_n − 2024종료누적 ≤ 0 이 되어 ins 16열이 전부 축퇴한다(BO blend.json 이 이미 경고한 그것).  저장된 pcal_aa 와 253,338행이 어긋나 발견했다.",
+  "고침": "model 을 build_AY/work/aa_AY/model_cal 로 바꿔 재캡처 (ins 앵커 0e4b586d… = lt2024 보정 앵커).  그러자 p_off 가 pcal_aa 와 ★비트 동일★ 이 됐다.",
+  "교훈": "‘저장된 벡터와 대조되지 않는 캡처는 캡처가 아니다.’  1차 결과는 폐기하지 않고 out/cap_aa.npz 로 남겨 뒀다(파일 삭제 없음)."
+ },
+ "프레임_한계": [
+  "S49/S52 — K·G_jj 와 K·Q=1 진폭은 프레임 조건부다.  여기 수치는 tr2024 보정 프레임 단독.",
+  "S56 — 생존 두 축(AA 시드 sd · NN 활성 개수)은 개인 셀 표·백오프를 타지 않으므로 프레임 폭이 q_league 계열(15배)보다 훨씬 작을 것으로 본다.  다만 ★측정하지 않았다★ — 빌드 전에 cov/band/real5 에서 재측정할 것.",
+  "S16 — 두 생존 축을 함께 실으면 프로브 u 를 naive 로 더하지 말고 G⁻¹L 로 재적합할 것.",
+  "S42 — 매수 진폭은 K·Q=1 의 0.2배."
+ ],
+ "runs": {
+  "cap_aa(배포앵커·폐기)": "out/cap_aa.npz",
+  "cap_aa(보정앵커·채택)": "out/cap_aa_cal.npz",
+  "cap_mate": "out/cap_mate.npz",
+  "analyze": "out/analyze_cal.json",
+  "ctrl": "out/ctrl_cal.json"
+ },
+ "wall_sec": {
+  "analyze": 27.61695694923401,
+  "ctrl": 12.973388195037842
+ },
+ "K_pts_per_brier": 400309.19882517256,
+ "ref_brier": 0.2498069,
+ "n_rows": 253507,
+ "threads": 6
+}

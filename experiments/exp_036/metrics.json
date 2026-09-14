@@ -1,0 +1,850 @@
+{
+ "exp_id": "exp_036",
+ "title": "the uncensored fold_2024 argmin of the B3 stacker \u2014 a MEASUREMENT, not an adoption",
+ "primary_metric": "fold_2024 valid_all (R+F) Brier",
+ "conversion": {
+  "formula": "score = 100000 * (1 - brier / 0.2498069)",
+  "sensitivity": "1e-06 Brier = 0.4003 score points",
+  "caveat": "every Brier below is full precision, so the +-0.20 rounding caveat does NOT apply"
+ },
+ "what_changed_vs_exp_030_fold_2024": [
+  "1. the stacker's training length: 481 rounds (exp_030 stage-2 row-ratio policy) -> 3000 rounds, and the round reported is the argmin of the validation curve rather than the fixed 481.",
+  "2. the stacker's validation curve resolution: exp_030 evaluated the sparse curve_grid (step 25 in this region); exp_036 evaluates EVERY round 1..3000.  A finer grid can move a reported argmin on its own, so this is listed as a variable, not as a free upgrade.",
+  "3. NOTHING ELSE.  The four cell iterations are exp_030's {is_mid_only 577, is_rev_only 1346, is_both 449, is_wayoff_true 897}, pinned on the command line; the OOF construction, masks, row counts, seeds and the C5 spec are unchanged and the reproduction gate below checks that claim at round 481."
+ ],
+ "reproduction_gate": {
+  "tol": 5e-06,
+  "gate_k": 481,
+  "expected_read_from": "experiments/exp_030/metrics.json fold_2024.candidate_brier_by_seed",
+  "exp030_stacker_iter_2024_read_from_metrics": 481,
+  "by_seed": {
+   "42": {
+    "expected_exp030_metrics": 0.24803936078925748,
+    "expected_exp030_res_file": 0.2480393607892575,
+    "observed": 0.2480393607892575,
+    "abs_diff_vs_metrics": 2.7755575615628914e-17,
+    "abs_diff_vs_res_file": 0.0,
+    "PASS": true,
+    "bit_identical_pred": true,
+    "pred_sha256_expected": "ef4bafad23f53798b60e221b497e448c70321ef14e0618233930ff54893d54bf",
+    "pred_sha256_observed": "ef4bafad23f53798b60e221b497e448c70321ef14e0618233930ff54893d54bf"
+   },
+   "7": {
+    "expected_exp030_metrics": 0.24798335833269683,
+    "expected_exp030_res_file": 0.2479833583326968,
+    "observed": 0.2479833583326968,
+    "abs_diff_vs_metrics": 2.7755575615628914e-17,
+    "abs_diff_vs_res_file": 0.0,
+    "PASS": true,
+    "bit_identical_pred": true,
+    "pred_sha256_expected": "d3c606b0433768250219de958864054294d0098fb724dc7377224b1b92153668",
+    "pred_sha256_observed": "d3c606b0433768250219de958864054294d0098fb724dc7377224b1b92153668"
+   },
+   "2024": {
+    "expected_exp030_metrics": 0.2479648004372976,
+    "expected_exp030_res_file": 0.2479648004372976,
+    "observed": 0.2479648004372976,
+    "abs_diff_vs_metrics": 0.0,
+    "abs_diff_vs_res_file": 0.0,
+    "PASS": true,
+    "bit_identical_pred": true,
+    "pred_sha256_expected": "aa999bb9eee3c419a4239338330e086b72826e57c9cdf03e231768cc89ea330d",
+    "pred_sha256_observed": "aa999bb9eee3c419a4239338330e086b72826e57c9cdf03e231768cc89ea330d"
+   }
+  },
+  "ALL_PASS": true,
+  "ALL_BIT_IDENTICAL": true,
+  "cells_match_exp030": true,
+  "means": "the stacker trained to 3000 rounds reproduces exp_030's 481-round prediction when read at round 481, so exp_036 drew the SAME curve further, not a different curve"
+ },
+ "Q1_argmin": {
+  "question": "where does the fold_2024 stacker curve bottom, and is the argmin an INTERIOR extremum?",
+  "cap": 3000,
+  "curve_step": 1,
+  "by_seed": {
+   "42": {
+    "argmin": 493,
+    "argmin_brier": 0.24803082833944287,
+    "argmin_score": 710.97782,
+    "is_interior": true,
+    "brier_at_cap": 0.24845713816311193,
+    "rise_argmin_to_cap_brier": 0.0004263098236690632,
+    "rise_argmin_to_cap_score": -170.65574,
+    "n_rounds_within_1e-6_of_min": 8,
+    "flat_region_1e-6": [
+     429,
+     494
+    ]
+   },
+   "7": {
+    "argmin": 472,
+    "argmin_brier": 0.2479821405269259,
+    "argmin_score": 730.468,
+    "is_interior": true,
+    "brier_at_cap": 0.24838120134120606,
+    "rise_argmin_to_cap_brier": 0.00039906081428014994,
+    "rise_argmin_to_cap_score": -159.74771,
+    "n_rounds_within_1e-6_of_min": 9,
+    "flat_region_1e-6": [
+     468,
+     514
+    ]
+   },
+   "2024": {
+    "argmin": 541,
+    "argmin_brier": 0.24794559390431953,
+    "argmin_score": 745.09795,
+    "is_interior": true,
+    "brier_at_cap": 0.24861667534654036,
+    "rise_argmin_to_cap_brier": 0.0006710814422208333,
+    "rise_argmin_to_cap_score": -268.64007,
+    "n_rounds_within_1e-6_of_min": 1,
+    "flat_region_1e-6": [
+     541,
+     541
+    ]
+   }
+  },
+  "argmins": [
+   493,
+   472,
+   541
+  ],
+  "argmin_mean": 502.0,
+  "argmin_median": 493.0,
+  "argmin_geomean": 501.18191860208987,
+  "argmin_min": 472,
+  "argmin_max": 541,
+  "argmin_seed_std": 28.879058156387302,
+  "ALL_INTERIOR": true,
+  "ANY_AT_CAP": false,
+  "EXPERIMENT_VALID": true,
+  "verdict": "VALID \u2014 all three stacker argmins are interior extrema under cap 3000",
+  "exp030_reported_argmin_at_cap481": {}
+ },
+ "Q2_cost_of_481": {
+  "question": "how much was the 481-round configuration leaving on the table?",
+  "note": "this is NOT a candidate-vs-control adoption delta.  Both numbers come from the SAME fitted model read at two different rounds, so the comparison is paired to the byte and carries no seed noise from refitting.",
+  "by_seed": {
+   "42": {
+    "brier_at_481": 0.2480393607892575,
+    "score_at_481": 707.56221,
+    "argmin": 493,
+    "brier_at_argmin": 0.24803082833944287,
+    "score_at_argmin": 710.97782,
+    "delta_brier": -8.532449814635523e-06,
+    "delta_score_points": 3.41562
+   },
+   "7": {
+    "brier_at_481": 0.2479833583326968,
+    "score_at_481": 729.9805,
+    "argmin": 472,
+    "brier_at_argmin": 0.2479821405269259,
+    "score_at_argmin": 730.468,
+    "delta_brier": -1.2178057708922552e-06,
+    "delta_score_points": 0.4875
+   },
+   "2024": {
+    "brier_at_481": 0.2479648004372976,
+    "score_at_481": 737.4094,
+    "argmin": 541,
+    "brier_at_argmin": 0.24794559390431953,
+    "score_at_argmin": 745.09795,
+    "delta_brier": -1.9206532978072177e-05,
+    "delta_score_points": 7.68855
+   }
+  },
+  "mean_brier_at_481": 0.24799583985308396,
+  "mean_score_at_481": 724.98404,
+  "mean_brier_at_argmin": 0.24798618759022947,
+  "mean_score_at_argmin": 728.84793,
+  "mean_delta_brier": -9.652262854533319e-06,
+  "mean_delta_score_points": 3.86389,
+  "signs_agree": true,
+  "argmin_above_481_seeds": [
+   42,
+   2024
+  ],
+  "argmin_below_481_seeds": [
+   7
+  ],
+  "direction": "NOT uniform: seeds [42, 2024] bottom ABOVE 481 (481 was slightly under-trained for them) and seeds [7] bottom BELOW 481 (481 was slightly over-trained for them).  481 sits INSIDE the spread of the three argmins [472, 541], which is why the recoverable gain is small in every seed.",
+  "481_is_inside_the_argmin_spread": true,
+  "headline": "481 was NOT badly under-trained.  The three argmins are [493, 472, 541] against a cap of 3000; recovering the difference is worth 3.86389 points on the 3-seed mean, and the largest single-seed gain is 7.68855 points.",
+  "comparison_exp034_cut_to_240": {
+   "what": "exp_034 cut the stacker from 481 to 240 and measured the cost with the cells held fixed",
+   "source": "experiments/exp_034/curves/loss_decomposition.json",
+   "file_contents": {
+    "what": "the -23.02 point move from exp_030's configuration to exp_032's splits exactly into two, because the stacker's Brier-vs-iteration curve was recorded for BOTH cell-feature sets and can be read at a COMMON stacker iteration (k=240).",
+    "endpoints": {
+     "exp030_config_oldcells_stack481": {
+      "brier": 0.24799583983333331,
+      "score": 724.98404
+     },
+     "exp032_config_newcells_stack241": {
+      "brier": 0.2480533512666667,
+      "score": 701.96169
+     }
+    },
+    "step1_stacker_stopped_earlier_cells_HELD_FIXED": {
+     "from": "old cells, stacker 481",
+     "to": "old cells, stacker 240",
+     "brier_from": 0.24799583983333331,
+     "brier_to": 0.24806293283333333,
+     "score_points": -26.85795
+    },
+    "step2_cell_iterations_changed_stacker_HELD_FIXED": {
+     "from": "old cells, stacker 240",
+     "to": "new cells, stacker 240",
+     "brier_from": 0.24806293283333333,
+     "brier_to": 0.2480535381,
+     "score_points": 3.7608
+    },
+    "step3_stacker_240_to_241_new_cells": {
+     "brier_from": 0.2480535381,
+     "brier_to": 0.2480533512666667,
+     "score_points": 0.07479
+    },
+    "sum_of_steps_score_points": -23.02236,
+    "direct_total_score_points": -23.02236,
+    "reading": "the entire loss is the stacker being cut at 241 instead of 481.  The cell-iteration change on its own is a small GAIN, so the fitted law helped the cells and hurt the stacker.",
+    "why_the_stacker_number_is_wrong": "the stacker's own fold_2024 curve is still DESCENDING where each run stops: exp_030 capped it at 481 and two of three seeds put their argmin exactly there; exp_032 capped it at 241 and two of three seeds again put their argmin exactly there.  Both runs are censored, so the stacker's true argmin on fold_2024 is only known to be >= 481, and the block observations the law was fitted to (65, 106, 362) were NOT censored.  The law was fitted to uncensored small-unit argmins and extrapolated to a size where the quantity it predicts has never been observed to completion.",
+    "censoring_check": {
+     "exp032_stage4_stack_argmin_by_seed": {
+      "42": 240,
+      "7": 241,
+      "2024": 241
+     },
+     "exp032_stack_iter_cap": 241,
+     "exp030_stage2_stack_argmin_by_seed": {
+      "42": 425,
+      "7": 481,
+      "2024": 481
+     },
+     "exp030_stack_iter_cap": 481,
+     "note": "an argmin equal to the cap means the curve never turned; the 'agreement' between the fitted 241 and the observed 240.67 is therefore an artefact of the cap being the fitted value itself, NOT evidence that the law was right."
+    }
+   }
+  }
+ },
+ "Q3_seed_std": {
+  "question": "what is the seed std AT the measured argmin?",
+  "PRE_REGISTERED_SCOPE_LIMIT": "this std is recorded as the honest denominator for FUTURE adoption thresholds on this configuration.  It is NOT applied retroactively; no past adoption call is re-decided with it.",
+  "naming_warning": "'threshold multiple' and 'std multiple' differ by exactly 3x because the rule's threshold IS 3 x std.  They are different numbers with different names and must never be compared across experiments without checking which one was reported.",
+  "at_argmin": {
+   "brier_by_seed": [
+    0.24803082833944287,
+    0.2479821405269259,
+    0.24794559390431953
+   ],
+   "seed_std": 3.491428813285408e-05,
+   "seed_std_score_points": 13.97651,
+   "implied_3x_threshold_brier": 0.00010474286439856224,
+   "implied_3x_threshold_score_points": 41.92953
+  },
+  "at_481_same_models": {
+   "brier_by_seed": [
+    0.2480393607892575,
+    0.2479833583326968,
+    0.2479648004372976
+   ],
+   "seed_std": 3.169282552332379e-05,
+   "seed_std_score_points": 12.68693
+  },
+  "exp030_recorded_control_seed_std": 4.897825479068653e-06,
+  "ratio_argmin_std_over_481_std": 1.101646431213888
+ },
+ "Q4_offset": {
+  "exp_id": "exp_036",
+  "what": "Q4 \u2014 offset on the uncensored base",
+  "cell": "S400_self",
+  "k": 400,
+  "arm": "self",
+  "supply_blocks": [
+   2022,
+   2023
+  ],
+  "block_seeds": [
+   42,
+   7
+  ],
+  "d_zero_on_miss": true,
+  "supply_provenance": {
+   "2022_42": {
+    "file": "/home/<user>/SungjinPark/experiments/exp_031/pred/pred_C5B3_u2022_seed42_st3.npy",
+    "sha256": "034f5ac362b453e2106853ab69c13cd96de7b6fdf15be47ddca528cc6539795c",
+    "stack_argmin": 80,
+    "made_by": "exp_031 block_self.py stage 3 (own early stop)"
+   },
+   "2022_7": {
+    "file": "/home/<user>/SungjinPark/experiments/exp_031/pred/pred_C5B3_u2022_seed7_st3.npy",
+    "sha256": "516af8ae611efb2c2b95891f59c2426e5582121b52d5bcdb2520bcf402125f8c",
+    "stack_argmin": 140,
+    "made_by": "exp_031 block_self.py stage 3 (own early stop)"
+   },
+   "2023_42": {
+    "file": "/home/<user>/SungjinPark/experiments/exp_031/pred/pred_C5B3_u2023_seed42_st3.npy",
+    "sha256": "bd8c17ec35e0b9c86a291d361d5fe94b5f7605bf13eff9ece15e86859298ae56",
+    "stack_argmin": 375,
+    "made_by": "exp_031 block_self.py stage 3 (own early stop)"
+   },
+   "2023_7": {
+    "file": "/home/<user>/SungjinPark/experiments/exp_031/pred/pred_C5B3_u2023_seed7_st3.npy",
+    "sha256": "a25e0733fcbab2422496f1e8cd7d8b8378ad2754ca510fd1b551a3df797936c1",
+    "stack_argmin": 350,
+    "made_by": "exp_031 block_self.py stage 3 (own early stop)"
+   }
+  },
+  "beta_refit_on_supply": {
+   "beta": 0.59072,
+   "se": 0.032372,
+   "n": 985994,
+   "sum_d2": 236.126043,
+   "mean_d2": 0.0002394802,
+   "t": 18.248,
+   "expected_brier_gain": -8.3567e-05
+  },
+  "beta_applied": 0.59072,
+  "beta_recorded_by_exp034": 0.59072,
+  "beta_reproduces_exp034": true,
+  "d_2024": {
+   "n": 253507,
+   "sd": 0.014856504213995606,
+   "hit_pct": 78.501,
+   "max_abs_beta_d": 0.04561535509435441,
+   "note": "max_abs_beta_d is a PROBABILITY shift, not a score; its sign per row is not known to be helpful, so it does not convert to points"
+  },
+  "bases": {
+   "base_at_481_GATE": {
+    "by_seed": {
+     "42": {
+      "base_brier": 0.2480393607892575,
+      "base_score": 707.56221,
+      "offset_brier": 0.24794831900950637,
+      "offset_score": 744.00707,
+      "delta_brier": -9.10417797511387e-05,
+      "delta_score": 36.44486,
+      "n_clipped": 0
+     },
+     "7": {
+      "base_brier": 0.2479833583326968,
+      "base_score": 729.9805,
+      "offset_brier": 0.24788834471528198,
+      "offset_score": 768.01533,
+      "delta_brier": -9.501361741481862e-05,
+      "delta_score": 38.03483,
+      "n_clipped": 0
+     },
+     "2024": {
+      "base_brier": 0.2479648004372976,
+      "base_score": 737.4094,
+      "offset_brier": 0.24786391750337364,
+      "offset_score": 777.79377,
+      "delta_brier": -0.00010088293392396253,
+      "delta_score": 40.38437,
+      "n_clipped": 0
+     }
+    },
+    "base_mean_brier": 0.24799583985308396,
+    "base_mean_score": 724.98404,
+    "base_seed_std": 3.169282552332379e-05,
+    "offset_mean_brier": 0.24790019374272065,
+    "offset_mean_score": 763.27205,
+    "offset_seed_std": 3.5460806042731085e-05,
+    "mean_delta_brier": -9.564611036330661e-05,
+    "mean_delta_score": 38.28802,
+    "signs_agree": true,
+    "improves": true,
+    "adoption_rule": {
+     "rule": "3 seeds same sign AND |mean delta| >= 3 x CONTROL seed std",
+     "CONTROL_seed_std": 3.169282552332379e-05,
+     "THRESHOLD_abs_mean_delta": 9.507847656997138e-05,
+     "MULTIPLE_OF_THE_THRESHOLD": 1.0059701607957243,
+     "MULTIPLE_OF_THE_CONTROL_STD": 3.017910482387173,
+     "naming_warning": "MULTIPLE_OF_THE_THRESHOLD and MULTIPLE_OF_THE_CONTROL_STD differ by exactly 3x and are not interchangeable",
+     "signs_agree": true,
+     "passes_magnitude": true,
+     "PASSES": true
+    }
+   },
+   "base_at_argmin": {
+    "by_seed": {
+     "42": {
+      "base_brier": 0.24803082833944287,
+      "base_score": 710.97782,
+      "offset_brier": 0.2479398464520731,
+      "offset_score": 747.39871,
+      "delta_brier": -9.098188736977875e-05,
+      "delta_score": 36.42089,
+      "n_clipped": 0
+     },
+     "7": {
+      "base_brier": 0.2479821405269259,
+      "base_score": 730.468,
+      "offset_brier": 0.24788731276923423,
+      "offset_score": 768.42843,
+      "delta_brier": -9.482775769167895e-05,
+      "delta_score": 37.96042,
+      "n_clipped": 0
+     },
+     "2024": {
+      "base_brier": 0.24794559390431953,
+      "base_score": 745.09795,
+      "offset_brier": 0.24785160900081118,
+      "offset_score": 782.72097,
+      "delta_brier": -9.398490350834288e-05,
+      "delta_score": 37.62302,
+      "n_clipped": 0
+     }
+    },
+    "base_mean_brier": 0.24798618759022947,
+    "base_mean_score": 728.84793,
+    "base_seed_std": 3.491428813285408e-05,
+    "offset_mean_brier": 0.24789292274070618,
+    "offset_mean_score": 766.1827,
+    "offset_seed_std": 3.624054622690229e-05,
+    "mean_delta_brier": -9.326484952326686e-05,
+    "mean_delta_score": 37.33478,
+    "signs_agree": true,
+    "improves": true,
+    "adoption_rule": {
+     "rule": "3 seeds same sign AND |mean delta| >= 3 x CONTROL seed std",
+     "CONTROL_seed_std": 3.491428813285408e-05,
+     "THRESHOLD_abs_mean_delta": 0.00010474286439856224,
+     "MULTIPLE_OF_THE_THRESHOLD": 0.8904172141825354,
+     "MULTIPLE_OF_THE_CONTROL_STD": 2.671251642547606,
+     "naming_warning": "MULTIPLE_OF_THE_THRESHOLD and MULTIPLE_OF_THE_CONTROL_STD differ by exactly 3x and are not interchangeable",
+     "signs_agree": true,
+     "passes_magnitude": false,
+     "PASSES": false
+    }
+   }
+  },
+  "cross_check_481_equals_exp030": {
+   "42": {
+    "exp030": 0.2480393607892575,
+    "ours": 0.2480393607892575,
+    "abs_diff": 0.0
+   },
+   "7": {
+    "exp030": 0.2479833583326968,
+    "ours": 0.2479833583326968,
+    "abs_diff": 0.0
+   },
+   "2024": {
+    "exp030": 0.2479648004372976,
+    "ours": 0.2479648004372976,
+    "abs_diff": 0.0
+   }
+  },
+  "compute_min": 0.16
+ },
+ "deploy_iter": {
+  "deploy_n_train_full": 1369784,
+  "fold_2024_n_train_full": 1116277,
+  "row_ratio": 1.2271004419154028,
+  "observed_argmin_series": [
+   {
+    "n": 432501,
+    "argmins": [
+     70,
+     60
+    ],
+    "n_seeds": 2,
+    "arith_mean": 65.0,
+    "geo_mean": 64.80740698407861
+   },
+   {
+    "n": 653728,
+    "argmins": [
+     80,
+     140
+    ],
+    "n_seeds": 2,
+    "arith_mean": 110.0,
+    "geo_mean": 105.83005244258358
+   },
+   {
+    "n": 870752,
+    "argmins": [
+     375,
+     350
+    ],
+    "n_seeds": 2,
+    "arith_mean": 362.5,
+    "geo_mean": 362.2844186547359
+   },
+   {
+    "n": 1116277,
+    "argmins": [
+     493,
+     472,
+     541
+    ],
+    "n_seeds": 3,
+    "arith_mean": 502.0,
+    "geo_mean": 501.18191860208987
+   }
+  ],
+  "out_of_sample_test_of_the_fitted_laws": {
+   "measured_fold_2024_geomean_argmin": 501.18191860208987,
+   "exp034_selected_form": "proportional",
+   "exp034_selected_by": "lowest leave-one-SIZE-out total absolute error in log space; ties to fewer parameters, then constant",
+   "exp034_loso_ranking": [
+    "proportional",
+    "saturating",
+    "loglog",
+    "constant"
+   ],
+   "exp034_predicted_fold_2024_stack_iter": 241,
+   "exp034_predicted_deploy_stack_iter": 296,
+   "exp034_deploy_iter_in_iter_policy_json": 296,
+   "exp034_SELECTED_form_ratio_measured_over_predicted": 2.0795930232451862,
+   "exp034_SELECTED_form_error": "the form exp_034 chose ('proportional') predicted 241 for fold_2024; the measured geometric-mean argmin is 501.2, so it UNDER-predicted by a factor of 2.08.  That is the mechanism behind exp_034's -23.02235-point base: it trained the stacker to less than half the rounds the curve wanted.",
+   "refit_loglog_on_3_smaller_sizes": {
+    "slope": 2.3698859556594862,
+    "predicted_at_fold_2024": 531.9146357815177,
+    "measured_at_fold_2024": 501.18191860208987,
+    "predicted_at_deploy": 863.9282403678727,
+    "ratio_measured_over_predicted": 0.9422224636961273
+   },
+   "verdict": "the LOSO selection picked the wrong form.  Fitted on the same three smaller sizes, the LOG-LOG form exp_034 RANKED THIRD predicts 532 against a measured 501 \u2014 an error of 5.8%, while the 'proportional' form it SELECTED is off by a factor of 2.08.  One out-of-sample point cannot crown a form, but it does say the selection rule that produced 241 is not to be trusted at the deploy size either.",
+   "CAUTION": "this is ONE out-of-sample point, and it is not even drawn from the same construction as the three it is tested against (see SERIES_CAVEATS: pinned vs self-stopped cells, step-1 vs sparse grid, 3 seeds vs 2).  It is enough to falsify 'proportional'; it is NOT enough to certify log-log."
+  },
+  "forms": {
+   "A_loglog_all_4_sizes": {
+    "deploy_iter": 823.5186370611378,
+    "params": {
+     "slope": 2.318086931436791
+    },
+    "basis": "log(argmin) ~ log(n) over all four observed sizes"
+   },
+   "B_loglog_last_2_sizes": {
+    "deploy_iter": 654.817660462333,
+    "params": {
+     "slope": 1.3065351316583556
+    },
+    "basis": "log-log through the two largest sizes only \u2014 the closest pair to the deploy size, but a 2-point line has no residual"
+   },
+   "C_loglinear_all_4": {
+    "deploy_iter": 1311.558846815456,
+    "params": {
+     "slope_per_row": 3.230934197602965e-06
+    },
+    "basis": "log(argmin) ~ n (exponential in rows)"
+   },
+   "D_linear_all_4": {
+    "deploy_iter": 673.4426454104441,
+    "params": {
+     "slope_per_row": 0.0006898382981008545
+    },
+    "basis": "argmin ~ n (straight line in rows)"
+   },
+   "E_row_ratio_from_fold_2024": {
+    "deploy_iter": 616.0044218415321,
+    "params": {
+     "ratio": 1.2271004419154028
+    },
+    "basis": "exp_030's own policy FORM (argmin x training-row ratio) applied from the newly measured fold_2024 argmin.  The form was falsified as a SUCCESSION rule by exp_033; it is listed only because it is the rule the current build would use"
+   },
+   "F_no_extrapolation": {
+    "deploy_iter": 502.0,
+    "params": {},
+    "basis": "carry the fold_2024 argmin over unchanged \u2014 the lower anchor, assuming argmin has stopped growing with rows"
+   }
+  },
+  "RANGE": {
+   "min": 502.0,
+   "max": 1311.558846815456,
+   "spread_factor": 2.612667025528797
+  },
+  "NO_SINGLE_VALUE_IS_ASSERTED": "config.yaml forbids picking one.  Choosing among these is the orchestrator's and the user's call, not this experiment's.",
+  "WHAT_THIS_EXPERIMENT_DID_AND_DID_NOT_CLOSE": "CLOSED: the fold_2024 argmin, which was previously known only as '>= 481'.  NOT CLOSED: the DEPLOY argmin.  1,369,784 rows remain OUTSIDE every size ever observed, and a deployment build cannot early-stop, so no validation curve exists there.  Every number in `forms` is an extrapolation, not a measurement.",
+  "SERIES_CAVEATS": [
+   "the three smaller sizes were measured on the SPARSE curve_grid (resolution 5 to 25 rounds in the relevant range); the 1,116,277 point is measured at step 1.  The points do not share a resolution.",
+   "the three smaller sizes let their CELL models early-stop on their own curves; the 1,116,277 point has its cells PINNED at exp_030's row-scaled numbers.  The stacker's input features are therefore not built the same way across the series.",
+   "the smaller sizes have 2 seeds each, the largest has 3.",
+   "the share of the training pool carrying NaN stack columns falls monotonically across the series (48.9 / 32.4 / 24.3 / 19.0 pct) and is 15.45 pct at the deploy size, so the units are not pure rescalings of one another and no one-parameter law in n is innocent of that confound.",
+   "exp_034 fitted a law on the first three points, extrapolated to stacker 241 for fold_2024, and the resulting configuration was NOT adopted (it worsened the base by 23.02235 points).  A fitted form on this series has already failed once."
+  ]
+ },
+ "runtime": {
+  "train_time_min_by_seed": {
+   "42": 23.48,
+   "7": 24.74,
+   "2024": 26.4
+  },
+  "train_time_min_wallclock_3wide": 26.4,
+  "stacker_fit_min_by_seed": {
+   "42": 4.618,
+   "7": 4.554,
+   "2024": 4.867
+  },
+  "stacker_sec_per_round_by_seed": {
+   "42": 0.09236,
+   "7": 0.09108,
+   "2024": 0.09733
+  },
+  "oof_min_by_seed": {
+   "42": 9.52,
+   "7": 11.1,
+   "2024": 11.93
+  },
+  "concurrency": "3 units at once, 6 threads per fit"
+ },
+ "provenance": {
+  "sha256": {
+   "train.csv": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+   "self_stack_argmin.py": "71b025e783580e89a7608d8497796940647c234488937c4ba5e844aa8b91ce40",
+   "exp032_block_iter.py": "b4ecb311ba4a8acaff2484e225fe174cc82ca1a356f128fa42fdea5c6110882d",
+   "exp031_block_self.py": "2146d0e78a487b3223be42a743e5d03ff5e56d35c12e502f812c0eb1f3184406",
+   "exp030_b3_cat.py": "0984c57e5af66600f9fca5532a984ddd6d4c22996c9e0105d3e798bc7bfa76ca",
+   "labels.py": "439cd504478b4bc8162e9dedc32be27bfadd5d1178472d6b384b60f46ed7a9f2",
+   "exp016_ref.py": "4f24deb71d9eef3d626900f34a71aecd2d6acbae646eb9c92c51189a38a3ece1",
+   "exp_027_train.py": "e4b308a5f6e4564ed43aed6715d05c0aa617b5e9d22e1bfd51e71dd127416f0f"
+  },
+  "versions": {
+   "python": "3.11.15",
+   "numpy": "1.26.4",
+   "pandas": "2.0.3",
+   "catboost": "1.2.10"
+  },
+  "n_train_full": 1116277,
+  "n_train_mode": 1115798,
+  "n_valid": 253507,
+  "n_valid_R": 223497,
+  "n_valid_F": 30010,
+  "iter_source": "exp_030 stage-2 fold_2024 CELL iterations, pinned verbatim; this run changes ONLY how far the stacker is trained",
+  "iter_policy": "stage 5 \u2014 the four CELL iterations were supplied on the command line and this unit's own valid curve was not consulted to choose them.  The STACKER is trained to the cap and its dense (step-1) valid curve is the quantity being MEASURED; the argmin of that curve is a measurement, not a selected deployment setting.",
+  "nan_stack_rows_in_train_pct": 18.958
+ },
+ "segments_at_argmin": {
+  "42": {
+   "valid_all": {
+    "n": 253507,
+    "brier": 0.248031,
+    "bss": 0.00711,
+    "score": 710.988,
+    "base_rate": 0.486105,
+    "pred_mean": 0.493459,
+    "auc": 0.547858,
+    "logloss": 0.689195
+   },
+   "valid_R": {
+    "n": 223497,
+    "brier": 0.248096,
+    "bss": 0.007195,
+    "score": 719.454,
+    "base_rate": 0.489707,
+    "pred_mean": 0.497925,
+    "auc": 0.548515,
+    "logloss": 0.689326
+   },
+   "valid_F": {
+    "n": 30010,
+    "brier": 0.247544,
+    "bss": 0.003212,
+    "score": 321.231,
+    "base_rate": 0.45928,
+    "pred_mean": 0.460193,
+    "auc": 0.532761,
+    "logloss": 0.688219
+   }
+  },
+  "7": {
+   "valid_all": {
+    "n": 253507,
+    "brier": 0.247982,
+    "bss": 0.007305,
+    "score": 730.479,
+    "base_rate": 0.486105,
+    "pred_mean": 0.493065,
+    "auc": 0.548538,
+    "logloss": 0.689097
+   },
+   "valid_R": {
+    "n": 223497,
+    "brier": 0.248049,
+    "bss": 0.007385,
+    "score": 738.477,
+    "base_rate": 0.489707,
+    "pred_mean": 0.497405,
+    "auc": 0.549172,
+    "logloss": 0.689231
+   },
+   "valid_F": {
+    "n": 30010,
+    "brier": 0.247487,
+    "bss": 0.003443,
+    "score": 344.287,
+    "base_rate": 0.45928,
+    "pred_mean": 0.460741,
+    "auc": 0.534196,
+    "logloss": 0.688102
+   }
+  },
+  "2024": {
+   "valid_all": {
+    "n": 253507,
+    "brier": 0.247946,
+    "bss": 0.007451,
+    "score": 745.109,
+    "base_rate": 0.486105,
+    "pred_mean": 0.493452,
+    "auc": 0.549005,
+    "logloss": 0.689023
+   },
+   "valid_R": {
+    "n": 223497,
+    "brier": 0.248019,
+    "bss": 0.007502,
+    "score": 750.161,
+    "base_rate": 0.489707,
+    "pred_mean": 0.497857,
+    "auc": 0.549524,
+    "logloss": 0.689171
+   },
+   "valid_F": {
+    "n": 30010,
+    "brier": 0.247396,
+    "bss": 0.00381,
+    "score": 381.042,
+    "base_rate": 0.45928,
+    "pred_mean": 0.460641,
+    "auc": 0.536441,
+    "logloss": 0.687919
+   }
+  }
+ },
+ "NO_ADOPTION_CALL": "This experiment makes no adoption call.  An argmin larger than 481 means the previous configuration was UNDER-TRAINED, not that a better configuration was discovered.  Promoting the new round count to a deployment candidate is a separate decision.",
+ "report_derived": {
+  "note": "report.md must not contain a number that is absent from this block.  Everything here is computed from res/, curves/, offset_q4.json and the exp_030 / exp_034 artefacts.",
+  "gate": {
+   "abs_diff_by_seed": {
+    "42": 2.7755575615628914e-17,
+    "7": 2.7755575615628914e-17,
+    "2024": 0.0
+   },
+   "all_pass": true,
+   "all_bit_identical": true
+  },
+  "Q1": {
+   "argmins_by_seed": {
+    "42": 493,
+    "7": 472,
+    "2024": 541
+   },
+   "arith_mean": 502.0,
+   "geo_mean": 501.18191860208987,
+   "cap": 3000,
+   "all_interior": true,
+   "flat_region_1e-6_by_seed": {
+    "42": [
+     429,
+     494
+    ],
+    "7": [
+     468,
+     514
+    ],
+    "2024": [
+     541,
+     541
+    ]
+   },
+   "brier_at_cap_by_seed": {
+    "42": 0.24845713816311193,
+    "7": 0.24838120134120606,
+    "2024": 0.24861667534654036
+   },
+   "rise_argmin_to_cap_score_by_seed": {
+    "42": -170.65574,
+    "7": -159.74771,
+    "2024": -268.64007
+   }
+  },
+  "Q2": {
+   "delta_score_by_seed": {
+    "42": 3.41562,
+    "7": 0.4875,
+    "2024": 7.68855
+   },
+   "mean_delta_score": 3.86389,
+   "mean_brier_at_481": 0.24799583985308396,
+   "mean_score_at_481": 724.98404,
+   "mean_brier_at_argmin": 0.24798618759022947,
+   "mean_score_at_argmin": 728.84793,
+   "481_inside_argmin_spread": true,
+   "argmin_above_481_seeds": [
+    42,
+    2024
+   ],
+   "argmin_below_481_seeds": [
+    7
+   ]
+  },
+  "Q3": {
+   "seed_std_at_argmin": 3.491428813285408e-05,
+   "seed_std_at_argmin_points": 13.97651,
+   "seed_std_at_481": 3.169282552332379e-05,
+   "seed_std_at_481_points": 12.68693,
+   "ratio": 1.101646431213888,
+   "implied_3x_threshold_points": 41.92953
+  },
+  "Q4": {
+   "beta": 0.59072,
+   "beta_reproduces_exp034": true,
+   "gain_on_base_481_points": 38.28802,
+   "gain_on_base_argmin_points": 37.33478,
+   "offset_score_on_base_481": 763.27205,
+   "offset_score_on_base_argmin": 766.1827,
+   "threshold_multiple_on_base_481": 1.0059701607957243,
+   "threshold_multiple_on_base_argmin": 0.8904172141825354,
+   "max_abs_beta_d_PROBABILITY_UNITS": 0.04561535509435441
+  },
+  "deploy": {
+   "forms": {
+    "A_loglog_all_4_sizes": 823.5186370611378,
+    "B_loglog_last_2_sizes": 654.817660462333,
+    "C_loglinear_all_4": 1311.558846815456,
+    "D_linear_all_4": 673.4426454104441,
+    "E_row_ratio_from_fold_2024": 616.0044218415321,
+    "F_no_extrapolation": 502.0
+   },
+   "range": {
+    "min": 502.0,
+    "max": 1311.558846815456,
+    "spread_factor": 2.612667025528797
+   },
+   "exp034_predicted_fold_2024": 241,
+   "exp034_predicted_deploy": 296,
+   "exp034_selected_form_error_factor": 2.0795930232451862,
+   "loglog_on_3_predicted_fold_2024": 531.9146357815177,
+   "loglog_on_3_predicted_deploy": 863.9282403678727
+  },
+  "runtime": {
+   "train_time_min_by_seed": {
+    "42": 23.48,
+    "7": 24.74,
+    "2024": 26.4
+   },
+   "train_time_min_wallclock_3wide": 26.4,
+   "stacker_fit_min_by_seed": {
+    "42": 4.618,
+    "7": 4.554,
+    "2024": 4.867
+   },
+   "stacker_sec_per_round_by_seed": {
+    "42": 0.09236,
+    "7": 0.09108,
+    "2024": 0.09733
+   },
+   "oof_min_by_seed": {
+    "42": 9.52,
+    "7": 11.1,
+    "2024": 11.93
+   },
+   "concurrency": "3 units at once, 6 threads per fit"
+  }
+ }
+}

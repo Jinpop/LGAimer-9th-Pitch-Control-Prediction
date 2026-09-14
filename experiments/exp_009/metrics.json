@@ -1,0 +1,5267 @@
+{
+  "exp_id": "exp_009",
+  "base_exp": "exp_008 R2 (RF + exp_004 mask, valid_R Brier 0.248455)",
+  "hypothesis": "the exp_003 TrackMan pitcher profile still improves fold_2024 valid_R Brier on the strong RF base; has_profile preserves the missingness the median imputer would otherwise turn into a sentinel",
+  "seed": 42,
+  "n_jobs": 6,
+  "rf_params": {
+    "n_estimators": 100,
+    "max_depth": 10,
+    "min_samples_leaf": 200,
+    "random_state": 42
+  },
+  "mask": "training rows with (season <= 2022 & game_type == 'F') dropped (exp_004)",
+  "arms": {
+    "P0": "47 base features (matched control, = exp_008 R2)",
+    "P0b": "P0 with max_features=10 (isolates the sqrt-default shift P1 causes)",
+    "P1": "P0 + 65 as-of profile features, median-imputed (sentinel for the ~19% missing)",
+    "P2": "P1 + has_profile flag",
+    "P3": "P2 + has_recent_profile flag",
+    "P4": "P3 but profile columns bypass the imputer (native NaN splits)"
+  },
+  "profile": {
+    "source": "trackman_history via exp_002 pitcher_id_map",
+    "asof_rule": "fold validating year Y aggregates seasons <= Y-1 only",
+    "prefixes": [
+      "career_* (all seasons <= cutoff)",
+      "recent_* (season == cutoff)",
+      "last_season_gap"
+    ],
+    "missing_policy": "P1-P3: SimpleImputer(median) (organizers' pipeline) + explicit flag column; P4: native NaN"
+  },
+  "sha256": {
+    "train.csv": "d2081186b458b49f60b082be480c273135833e15ba59a76d033af28bcf8763ff",
+    "trackman_history.csv": "f7818f9ee0ccefe7c2cf69fa99efe6e5cb882d8b886dd96d2394bcf3b53f33a9",
+    "pitcher_id_map.csv": "49ce6fc6c6f7b89106d0714ccb437161fd71a19cde90467c932a5e71cb6e1756",
+    "train.py": "cd7aa4864a348b3502c09d636e2a572ef6f8664665a9e3418a4c9792e85668f5"
+  },
+  "versions": {
+    "python": "3.11.15",
+    "numpy": "1.26.4",
+    "pandas": "2.0.3",
+    "sklearn": "1.8.0"
+  },
+  "runs": {
+    "P0": {
+      "spec": "47 base features (matched control, = exp_008 R2)",
+      "fold_2022": {
+        "n_features": 47,
+        "n_raw_nan_features": 0,
+        "max_features_effective": 6,
+        "train_time_min": 0.6,
+        "inference_time_sec": 0.69,
+        "valid_all": {
+          "n": 247472,
+          "brier": 0.247324,
+          "bss": 0.007383,
+          "score": 738.276,
+          "base_rate": 0.52892,
+          "pred_mean": 0.510899,
+          "auc": 0.554876,
+          "logloss": 0.687773
+        },
+        "valid_R": {
+          "n": 217024,
+          "brier": 0.248813,
+          "bss": 0.004695,
+          "score": 469.488,
+          "base_rate": 0.503691,
+          "pred_mean": 0.507199,
+          "auc": 0.539543,
+          "logloss": 0.690768
+        },
+        "valid_F": {
+          "n": 30448,
+          "brier": 0.236714,
+          "bss": -0.146737,
+          "score": 0.0,
+          "base_rate": 0.708749,
+          "pred_mean": 0.53727,
+          "auc": 0.508116,
+          "logloss": 0.666421
+        },
+        "cold_start_R": {
+          "n": 37826,
+          "brier": 0.248932,
+          "bss": 0.003779,
+          "score": 377.934,
+          "base_rate": 0.51113,
+          "pred_mean": 0.515704,
+          "auc": 0.536379,
+          "logloss": 0.69101
+        },
+        "seen_R": {
+          "n": 179198,
+          "brier": 0.248788,
+          "bss": 0.004832,
+          "score": 483.172,
+          "base_rate": 0.502121,
+          "pred_mean": 0.505404,
+          "auc": 0.539763,
+          "logloss": 0.690717
+        },
+        "valid_R_has_profile": {
+          "n": 184193,
+          "brier": 0.248848,
+          "bss": 0.004602,
+          "score": 460.175,
+          "base_rate": 0.501425,
+          "pred_mean": 0.505484,
+          "auc": 0.538862,
+          "logloss": 0.690838
+        },
+        "valid_R_no_profile": {
+          "n": 32831,
+          "brier": 0.248617,
+          "bss": 0.004459,
+          "score": 445.919,
+          "base_rate": 0.516402,
+          "pred_mean": 0.516825,
+          "auc": 0.53852,
+          "logloss": 0.690379
+        },
+        "valid_R_has_recent": {
+          "n": 172863,
+          "brier": 0.248793,
+          "bss": 0.004815,
+          "score": 481.477,
+          "base_rate": 0.501796,
+          "pred_mean": 0.504399,
+          "auc": 0.53959,
+          "logloss": 0.690728
+        },
+        "importance_top25": [
+          [
+            "asof_pitcher_success_rate",
+            0.150569
+          ],
+          [
+            "asof_pitcher_reverse_rate",
+            0.119035
+          ],
+          [
+            "asof_pitcher_prev5_game_success_rate",
+            0.069675
+          ],
+          [
+            "asof_pitcher_prev3_game_success_rate",
+            0.058965
+          ],
+          [
+            "asof_batter_success_rate",
+            0.043025
+          ],
+          [
+            "asof_pitcher_ball_rate",
+            0.040437
+          ],
+          [
+            "asof_pitcher_prev1_game_success_rate",
+            0.033545
+          ],
+          [
+            "asof_pitcher_middle_rate",
+            0.029915
+          ],
+          [
+            "asof_pitcher_offspeed_rate",
+            0.029875
+          ],
+          [
+            "asof_batter_middle_rate",
+            0.02659
+          ],
+          [
+            "asof_pitcher_strike_rate",
+            0.025872
+          ],
+          [
+            "batter_team_id",
+            0.025598
+          ],
+          [
+            "asof_pitcher_fastball_rate",
+            0.025265
+          ],
+          [
+            "asof_pitcher_pitchmix_n",
+            0.023314
+          ],
+          [
+            "asof_pitcher_n",
+            0.02302
+          ],
+          [
+            "asof_pitcher_breaking_rate",
+            0.019965
+          ],
+          [
+            "asof_batter_n",
+            0.019399
+          ],
+          [
+            "pitcher_id",
+            0.018669
+          ],
+          [
+            "asof_pitcher_prev3_game_middle_rate",
+            0.017673
+          ],
+          [
+            "asof_pitcher_prev5_game_middle_rate",
+            0.017627
+          ],
+          [
+            "season",
+            0.015578
+          ],
+          [
+            "pitcher_team_id",
+            0.015213
+          ],
+          [
+            "li",
+            0.014556
+          ],
+          [
+            "away_win_expectancy",
+            0.013889
+          ],
+          [
+            "asof_pitcher_prev1_game_middle_rate",
+            0.013781
+          ]
+        ],
+        "train_until": 2021,
+        "valid_year": 2022,
+        "n_train": 653728
+      },
+      "fold_2023": {
+        "n_features": 47,
+        "n_raw_nan_features": 0,
+        "max_features_effective": 6,
+        "train_time_min": 0.85,
+        "inference_time_sec": 0.7,
+        "valid_all": {
+          "n": 245525,
+          "brier": 0.248713,
+          "bss": 0.005147,
+          "score": 514.712,
+          "base_rate": 0.499957,
+          "pred_mean": 0.502859,
+          "auc": 0.540356,
+          "logloss": 0.690566
+        },
+        "valid_R": {
+          "n": 219839,
+          "brier": 0.248564,
+          "bss": 0.005707,
+          "score": 570.705,
+          "base_rate": 0.503118,
+          "pred_mean": 0.502989,
+          "auc": 0.542805,
+          "logloss": 0.690266
+        },
+        "valid_F": {
+          "n": 25686,
+          "brier": 0.249994,
+          "bss": -0.002921,
+          "score": 0.0,
+          "base_rate": 0.472904,
+          "pred_mean": 0.501749,
+          "auc": 0.517957,
+          "logloss": 0.693136
+        },
+        "cold_start_R": {
+          "n": 33398,
+          "brier": 0.249191,
+          "bss": 0.003225,
+          "score": 322.455,
+          "base_rate": 0.501737,
+          "pred_mean": 0.499953,
+          "auc": 0.531434,
+          "logloss": 0.691526
+        },
+        "seen_R": {
+          "n": 186441,
+          "brier": 0.248451,
+          "bss": 0.00615,
+          "score": 615.016,
+          "base_rate": 0.503366,
+          "pred_mean": 0.503533,
+          "auc": 0.544601,
+          "logloss": 0.69004
+        },
+        "valid_R_has_profile": {
+          "n": 189637,
+          "brier": 0.248459,
+          "bss": 0.006131,
+          "score": 613.076,
+          "base_rate": 0.502929,
+          "pred_mean": 0.503446,
+          "auc": 0.544563,
+          "logloss": 0.690056
+        },
+        "valid_R_no_profile": {
+          "n": 30202,
+          "brier": 0.249222,
+          "bss": 0.00304,
+          "score": 304.0,
+          "base_rate": 0.504304,
+          "pred_mean": 0.500121,
+          "auc": 0.530699,
+          "logloss": 0.691587
+        },
+        "valid_R_has_recent": {
+          "n": 184010,
+          "brier": 0.248642,
+          "bss": 0.005429,
+          "score": 542.913,
+          "base_rate": 0.501076,
+          "pred_mean": 0.502188,
+          "auc": 0.542193,
+          "logloss": 0.690424
+        },
+        "importance_top25": [
+          [
+            "asof_pitcher_success_rate",
+            0.159464
+          ],
+          [
+            "asof_pitcher_reverse_rate",
+            0.121242
+          ],
+          [
+            "asof_pitcher_prev5_game_success_rate",
+            0.072163
+          ],
+          [
+            "asof_pitcher_prev3_game_success_rate",
+            0.059685
+          ],
+          [
+            "asof_pitcher_ball_rate",
+            0.044132
+          ],
+          [
+            "asof_batter_success_rate",
+            0.038235
+          ],
+          [
+            "asof_pitcher_prev1_game_success_rate",
+            0.033818
+          ],
+          [
+            "asof_pitcher_offspeed_rate",
+            0.030411
+          ],
+          [
+            "asof_pitcher_strike_rate",
+            0.027983
+          ],
+          [
+            "asof_pitcher_middle_rate",
+            0.027216
+          ],
+          [
+            "asof_batter_middle_rate",
+            0.026045
+          ],
+          [
+            "asof_pitcher_fastball_rate",
+            0.024875
+          ],
+          [
+            "batter_team_id",
+            0.023138
+          ],
+          [
+            "asof_pitcher_pitchmix_n",
+            0.022872
+          ],
+          [
+            "asof_pitcher_n",
+            0.021145
+          ],
+          [
+            "season",
+            0.020801
+          ],
+          [
+            "asof_pitcher_breaking_rate",
+            0.019739
+          ],
+          [
+            "asof_batter_n",
+            0.019499
+          ],
+          [
+            "pitcher_team_id",
+            0.017186
+          ],
+          [
+            "pitcher_id",
+            0.015816
+          ],
+          [
+            "asof_pitcher_prev5_game_middle_rate",
+            0.015733
+          ],
+          [
+            "asof_pitcher_prev3_game_middle_rate",
+            0.015635
+          ],
+          [
+            "li",
+            0.01397
+          ],
+          [
+            "asof_pitcher_prev1_game_middle_rate",
+            0.013167
+          ],
+          [
+            "away_win_expectancy",
+            0.012889
+          ]
+        ],
+        "train_until": 2022,
+        "valid_year": 2023,
+        "n_train": 870752
+      },
+      "fold_2024": {
+        "n_features": 47,
+        "n_raw_nan_features": 0,
+        "max_features_effective": 6,
+        "train_time_min": 1.29,
+        "inference_time_sec": 0.79,
+        "valid_all": {
+          "n": 253507,
+          "brier": 0.24843,
+          "bss": 0.005511,
+          "score": 551.092,
+          "base_rate": 0.486105,
+          "pred_mean": 0.496479,
+          "auc": 0.542807,
+          "logloss": 0.689999
+        },
+        "valid_R": {
+          "n": 223497,
+          "brier": 0.248455,
+          "bss": 0.005758,
+          "score": 575.816,
+          "base_rate": 0.489707,
+          "pred_mean": 0.49904,
+          "auc": 0.543655,
+          "logloss": 0.690048
+        },
+        "valid_F": {
+          "n": 30010,
+          "brier": 0.248245,
+          "bss": 0.00039,
+          "score": 38.97,
+          "base_rate": 0.45928,
+          "pred_mean": 0.477402,
+          "auc": 0.524146,
+          "logloss": 0.68963
+        },
+        "cold_start_R": {
+          "n": 44672,
+          "brier": 0.248242,
+          "bss": 0.006935,
+          "score": 693.451,
+          "base_rate": 0.495008,
+          "pred_mean": 0.502254,
+          "auc": 0.550707,
+          "logloss": 0.689622
+        },
+        "seen_R": {
+          "n": 178825,
+          "brier": 0.248508,
+          "bss": 0.005429,
+          "score": 542.925,
+          "base_rate": 0.488382,
+          "pred_mean": 0.498237,
+          "auc": 0.541919,
+          "logloss": 0.690155
+        },
+        "valid_R_has_profile": {
+          "n": 180906,
+          "brier": 0.248521,
+          "bss": 0.005365,
+          "score": 536.467,
+          "base_rate": 0.488243,
+          "pred_mean": 0.498002,
+          "auc": 0.54157,
+          "logloss": 0.69018
+        },
+        "valid_R_no_profile": {
+          "n": 42591,
+          "brier": 0.248174,
+          "bss": 0.007239,
+          "score": 723.86,
+          "base_rate": 0.495926,
+          "pred_mean": 0.503449,
+          "auc": 0.552488,
+          "logloss": 0.689486
+        },
+        "valid_R_has_recent": {
+          "n": 175492,
+          "brier": 0.248505,
+          "bss": 0.005491,
+          "score": 549.074,
+          "base_rate": 0.488894,
+          "pred_mean": 0.498311,
+          "auc": 0.542056,
+          "logloss": 0.690147
+        },
+        "importance_top25": [
+          [
+            "asof_pitcher_success_rate",
+            0.163145
+          ],
+          [
+            "asof_pitcher_reverse_rate",
+            0.120435
+          ],
+          [
+            "asof_pitcher_prev5_game_success_rate",
+            0.083317
+          ],
+          [
+            "asof_pitcher_prev3_game_success_rate",
+            0.064603
+          ],
+          [
+            "asof_pitcher_ball_rate",
+            0.051752
+          ],
+          [
+            "asof_pitcher_prev1_game_success_rate",
+            0.037497
+          ],
+          [
+            "asof_batter_success_rate",
+            0.032664
+          ],
+          [
+            "asof_pitcher_offspeed_rate",
+            0.031098
+          ],
+          [
+            "asof_pitcher_strike_rate",
+            0.030215
+          ],
+          [
+            "asof_pitcher_middle_rate",
+            0.026072
+          ],
+          [
+            "asof_pitcher_fastball_rate",
+            0.024756
+          ],
+          [
+            "season",
+            0.024536
+          ],
+          [
+            "asof_pitcher_n",
+            0.023155
+          ],
+          [
+            "asof_pitcher_pitchmix_n",
+            0.022696
+          ],
+          [
+            "asof_batter_middle_rate",
+            0.022288
+          ],
+          [
+            "asof_pitcher_breaking_rate",
+            0.019283
+          ],
+          [
+            "asof_batter_n",
+            0.01754
+          ],
+          [
+            "pitcher_id",
+            0.017529
+          ],
+          [
+            "batter_team_id",
+            0.014656
+          ],
+          [
+            "asof_pitcher_prev5_game_middle_rate",
+            0.01427
+          ],
+          [
+            "asof_pitcher_prev3_game_middle_rate",
+            0.013758
+          ],
+          [
+            "pitcher_team_id",
+            0.012947
+          ],
+          [
+            "asof_pitcher_prev1_game_middle_rate",
+            0.01249
+          ],
+          [
+            "li",
+            0.011984
+          ],
+          [
+            "away_win_expectancy",
+            0.0113
+          ]
+        ],
+        "train_until": 2023,
+        "valid_year": 2024,
+        "n_train": 1116277
+      }
+    },
+    "P0b": {
+      "spec": "P0 with max_features=10 (isolates the sqrt-default shift P1 causes)",
+      "fold_2023": {
+        "n_features": 47,
+        "n_raw_nan_features": 0,
+        "max_features_effective": 10,
+        "train_time_min": 1.3,
+        "inference_time_sec": 0.7,
+        "valid_all": {
+          "n": 245525,
+          "brier": 0.248741,
+          "bss": 0.005034,
+          "score": 503.406,
+          "base_rate": 0.499957,
+          "pred_mean": 0.501229,
+          "auc": 0.539511,
+          "logloss": 0.690623
+        },
+        "valid_R": {
+          "n": 219839,
+          "brier": 0.248622,
+          "bss": 0.005474,
+          "score": 547.433,
+          "base_rate": 0.503118,
+          "pred_mean": 0.501614,
+          "auc": 0.541524,
+          "logloss": 0.690383
+        },
+        "valid_F": {
+          "n": 25686,
+          "brier": 0.249766,
+          "bss": -0.002008,
+          "score": 0.0,
+          "base_rate": 0.472904,
+          "pred_mean": 0.49793,
+          "auc": 0.5184,
+          "logloss": 0.692678
+        },
+        "cold_start_R": {
+          "n": 33398,
+          "brier": 0.249207,
+          "bss": 0.003159,
+          "score": 315.927,
+          "base_rate": 0.501737,
+          "pred_mean": 0.499225,
+          "auc": 0.531227,
+          "logloss": 0.691559
+        },
+        "seen_R": {
+          "n": 186441,
+          "brier": 0.248517,
+          "bss": 0.005887,
+          "score": 588.744,
+          "base_rate": 0.503366,
+          "pred_mean": 0.502042,
+          "auc": 0.543199,
+          "logloss": 0.690172
+        },
+        "valid_R_has_profile": {
+          "n": 189637,
+          "brier": 0.248526,
+          "bss": 0.005862,
+          "score": 586.164,
+          "base_rate": 0.502929,
+          "pred_mean": 0.501979,
+          "auc": 0.543094,
+          "logloss": 0.69019
+        },
+        "valid_R_no_profile": {
+          "n": 30202,
+          "brier": 0.249223,
+          "bss": 0.003036,
+          "score": 303.581,
+          "base_rate": 0.504304,
+          "pred_mean": 0.499322,
+          "auc": 0.531034,
+          "logloss": 0.691589
+        },
+        "valid_R_has_recent": {
+          "n": 184010,
+          "brier": 0.248708,
+          "bss": 0.005164,
+          "score": 516.365,
+          "base_rate": 0.501076,
+          "pred_mean": 0.500707,
+          "auc": 0.5407,
+          "logloss": 0.690557
+        },
+        "importance_top25": [
+          [
+            "asof_pitcher_success_rate",
+            0.179522
+          ],
+          [
+            "asof_pitcher_reverse_rate",
+            0.130625
+          ],
+          [
+            "asof_pitcher_prev5_game_success_rate",
+            0.068135
+          ],
+          [
+            "asof_pitcher_prev3_game_success_rate",
+            0.05315
+          ],
+          [
+            "asof_batter_success_rate",
+            0.042791
+          ],
+          [
+            "asof_pitcher_ball_rate",
+            0.040475
+          ],
+          [
+            "asof_pitcher_offspeed_rate",
+            0.029223
+          ],
+          [
+            "asof_pitcher_prev1_game_success_rate",
+            0.027493
+          ],
+          [
+            "asof_pitcher_strike_rate",
+            0.026879
+          ],
+          [
+            "asof_pitcher_fastball_rate",
+            0.024803
+          ],
+          [
+            "asof_batter_middle_rate",
+            0.024119
+          ],
+          [
+            "batter_team_id",
+            0.024025
+          ],
+          [
+            "asof_pitcher_middle_rate",
+            0.023965
+          ],
+          [
+            "asof_pitcher_n",
+            0.022624
+          ],
+          [
+            "asof_pitcher_pitchmix_n",
+            0.022252
+          ],
+          [
+            "asof_pitcher_breaking_rate",
+            0.020417
+          ],
+          [
+            "asof_batter_n",
+            0.019309
+          ],
+          [
+            "season",
+            0.019122
+          ],
+          [
+            "asof_pitcher_prev5_game_middle_rate",
+            0.015956
+          ],
+          [
+            "pitcher_team_id",
+            0.015639
+          ],
+          [
+            "asof_pitcher_prev3_game_middle_rate",
+            0.01546
+          ],
+          [
+            "pitcher_id",
+            0.015366
+          ],
+          [
+            "li",
+            0.014503
+          ],
+          [
+            "asof_pitcher_prev1_game_middle_rate",
+            0.013499
+          ],
+          [
+            "home_win_expectancy",
+            0.012291
+          ]
+        ],
+        "train_until": 2022,
+        "valid_year": 2023,
+        "n_train": 870752
+      },
+      "fold_2024": {
+        "n_features": 47,
+        "n_raw_nan_features": 0,
+        "max_features_effective": 10,
+        "train_time_min": 1.96,
+        "inference_time_sec": 0.94,
+        "valid_all": {
+          "n": 253507,
+          "brier": 0.24841,
+          "bss": 0.005591,
+          "score": 559.059,
+          "base_rate": 0.486105,
+          "pred_mean": 0.495796,
+          "auc": 0.542876,
+          "logloss": 0.689959
+        },
+        "valid_R": {
+          "n": 223497,
+          "brier": 0.248445,
+          "bss": 0.005798,
+          "score": 579.828,
+          "base_rate": 0.489707,
+          "pred_mean": 0.498486,
+          "auc": 0.543718,
+          "logloss": 0.690028
+        },
+        "valid_F": {
+          "n": 30010,
+          "brier": 0.248152,
+          "bss": 0.000766,
+          "score": 76.604,
+          "base_rate": 0.45928,
+          "pred_mean": 0.475766,
+          "auc": 0.524304,
+          "logloss": 0.68944
+        },
+        "cold_start_R": {
+          "n": 44672,
+          "brier": 0.248204,
+          "bss": 0.007084,
+          "score": 708.446,
+          "base_rate": 0.495008,
+          "pred_mean": 0.502775,
+          "auc": 0.55126,
+          "logloss": 0.689547
+        },
+        "seen_R": {
+          "n": 178825,
+          "brier": 0.248505,
+          "bss": 0.005442,
+          "score": 544.192,
+          "base_rate": 0.488382,
+          "pred_mean": 0.497414,
+          "auc": 0.541898,
+          "logloss": 0.690148
+        },
+        "valid_R_has_profile": {
+          "n": 180906,
+          "brier": 0.248515,
+          "bss": 0.00539,
+          "score": 539.018,
+          "base_rate": 0.488243,
+          "pred_mean": 0.497169,
+          "auc": 0.541606,
+          "logloss": 0.690168
+        },
+        "valid_R_no_profile": {
+          "n": 42591,
+          "brier": 0.248148,
+          "bss": 0.007341,
+          "score": 734.076,
+          "base_rate": 0.495926,
+          "pred_mean": 0.504079,
+          "auc": 0.552921,
+          "logloss": 0.689435
+        },
+        "valid_R_has_recent": {
+          "n": 175492,
+          "brier": 0.248497,
+          "bss": 0.005523,
+          "score": 552.279,
+          "base_rate": 0.488894,
+          "pred_mean": 0.497488,
+          "auc": 0.542135,
+          "logloss": 0.690131
+        },
+        "importance_top25": [
+          [
+            "asof_pitcher_success_rate",
+            0.168336
+          ],
+          [
+            "asof_pitcher_reverse_rate",
+            0.134158
+          ],
+          [
+            "asof_pitcher_prev5_game_success_rate",
+            0.082784
+          ],
+          [
+            "asof_pitcher_prev3_game_success_rate",
+            0.059934
+          ],
+          [
+            "asof_pitcher_ball_rate",
+            0.053146
+          ],
+          [
+            "asof_batter_success_rate",
+            0.034427
+          ],
+          [
+            "asof_pitcher_strike_rate",
+            0.029275
+          ],
+          [
+            "asof_pitcher_prev1_game_success_rate",
+            0.029022
+          ],
+          [
+            "asof_pitcher_offspeed_rate",
+            0.027802
+          ],
+          [
+            "asof_pitcher_pitchmix_n",
+            0.025995
+          ],
+          [
+            "asof_pitcher_n",
+            0.024751
+          ],
+          [
+            "season",
+            0.023628
+          ],
+          [
+            "asof_pitcher_middle_rate",
+            0.023311
+          ],
+          [
+            "asof_pitcher_fastball_rate",
+            0.022207
+          ],
+          [
+            "asof_batter_middle_rate",
+            0.021847
+          ],
+          [
+            "asof_pitcher_breaking_rate",
+            0.01974
+          ],
+          [
+            "asof_batter_n",
+            0.017751
+          ],
+          [
+            "pitcher_id",
+            0.015716
+          ],
+          [
+            "batter_team_id",
+            0.015692
+          ],
+          [
+            "asof_pitcher_prev5_game_middle_rate",
+            0.01438
+          ],
+          [
+            "asof_pitcher_prev3_game_middle_rate",
+            0.014281
+          ],
+          [
+            "li",
+            0.012629
+          ],
+          [
+            "pitcher_team_id",
+            0.012417
+          ],
+          [
+            "asof_pitcher_prev1_game_middle_rate",
+            0.012322
+          ],
+          [
+            "batter_id",
+            0.011127
+          ]
+        ],
+        "train_until": 2023,
+        "valid_year": 2024,
+        "n_train": 1116277
+      }
+    },
+    "P1": {
+      "spec": "P0 + 65 as-of profile features, median-imputed (sentinel for the ~19% missing)",
+      "fold_2022": {
+        "n_features": 112,
+        "n_raw_nan_features": 0,
+        "max_features_effective": 10,
+        "train_time_min": 0.87,
+        "inference_time_sec": 1.28,
+        "valid_all": {
+          "n": 247472,
+          "brier": 0.247759,
+          "bss": 0.005638,
+          "score": 563.764,
+          "base_rate": 0.52892,
+          "pred_mean": 0.511575,
+          "auc": 0.548592,
+          "logloss": 0.68865
+        },
+        "valid_R": {
+          "n": 217024,
+          "brier": 0.248778,
+          "bss": 0.004835,
+          "score": 483.503,
+          "base_rate": 0.503691,
+          "pred_mean": 0.50947,
+          "auc": 0.540463,
+          "logloss": 0.690697
+        },
+        "valid_F": {
+          "n": 30448,
+          "brier": 0.240497,
+          "bss": -0.165067,
+          "score": 0.0,
+          "base_rate": 0.708749,
+          "pred_mean": 0.526578,
+          "auc": 0.505262,
+          "logloss": 0.674058
+        },
+        "cold_start_R": {
+          "n": 37826,
+          "brier": 0.248904,
+          "bss": 0.003892,
+          "score": 389.236,
+          "base_rate": 0.51113,
+          "pred_mean": 0.518622,
+          "auc": 0.538658,
+          "logloss": 0.690952
+        },
+        "seen_R": {
+          "n": 179198,
+          "brier": 0.248751,
+          "bss": 0.004978,
+          "score": 497.761,
+          "base_rate": 0.502121,
+          "pred_mean": 0.507539,
+          "auc": 0.540515,
+          "logloss": 0.690643
+        },
+        "valid_R_has_profile": {
+          "n": 184193,
+          "brier": 0.248803,
+          "bss": 0.00478,
+          "score": 477.955,
+          "base_rate": 0.501425,
+          "pred_mean": 0.507515,
+          "auc": 0.539755,
+          "logloss": 0.690747
+        },
+        "valid_R_no_profile": {
+          "n": 32831,
+          "brier": 0.248635,
+          "bss": 0.004388,
+          "score": 438.8,
+          "base_rate": 0.516402,
+          "pred_mean": 0.520441,
+          "auc": 0.540069,
+          "logloss": 0.690414
+        },
+        "valid_R_has_recent": {
+          "n": 172863,
+          "brier": 0.248712,
+          "bss": 0.005138,
+          "score": 513.821,
+          "base_rate": 0.501796,
+          "pred_mean": 0.506157,
+          "auc": 0.540751,
+          "logloss": 0.690564
+        },
+        "importance_top25": [
+          [
+            "asof_pitcher_success_rate",
+            0.114973
+          ],
+          [
+            "asof_pitcher_reverse_rate",
+            0.110099
+          ],
+          [
+            "asof_pitcher_prev3_game_success_rate",
+            0.048268
+          ],
+          [
+            "asof_pitcher_prev5_game_success_rate",
+            0.047855
+          ],
+          [
+            "asof_batter_success_rate",
+            0.031392
+          ],
+          [
+            "asof_pitcher_ball_rate",
+            0.02858
+          ],
+          [
+            "asof_pitcher_prev1_game_success_rate",
+            0.028014
+          ],
+          [
+            "batter_team_id",
+            0.021546
+          ],
+          [
+            "asof_batter_middle_rate",
+            0.018309
+          ],
+          [
+            "asof_pitcher_offspeed_rate",
+            0.016203
+          ],
+          [
+            "asof_pitcher_middle_rate",
+            0.014175
+          ],
+          [
+            "asof_pitcher_pitchmix_n",
+            0.013958
+          ],
+          [
+            "asof_pitcher_strike_rate",
+            0.013392
+          ],
+          [
+            "career_rel_speed_mean",
+            0.013306
+          ],
+          [
+            "asof_pitcher_n",
+            0.012967
+          ],
+          [
+            "asof_pitcher_fastball_rate",
+            0.012093
+          ],
+          [
+            "asof_batter_n",
+            0.010781
+          ],
+          [
+            "asof_pitcher_breaking_rate",
+            0.010727
+          ],
+          [
+            "season",
+            0.010097
+          ],
+          [
+            "career_zone_speed_mean",
+            0.009722
+          ],
+          [
+            "asof_pitcher_prev5_game_middle_rate",
+            0.009009
+          ],
+          [
+            "recent_rel_side_std",
+            0.008831
+          ],
+          [
+            "asof_pitcher_prev1_game_middle_rate",
+            0.008781
+          ],
+          [
+            "away_win_expectancy",
+            0.008709
+          ],
+          [
+            "asof_pitcher_prev3_game_middle_rate",
+            0.008703
+          ]
+        ],
+        "profile_importance_share": 0.316504,
+        "profile_importance_ranked": [
+          [
+            14,
+            "career_rel_speed_mean",
+            0.013306
+          ],
+          [
+            20,
+            "career_zone_speed_mean",
+            0.009722
+          ],
+          [
+            22,
+            "recent_rel_side_std",
+            0.008831
+          ],
+          [
+            28,
+            "career_n_pitches",
+            0.008391
+          ],
+          [
+            29,
+            "recent_rel_side_mean",
+            0.008352
+          ],
+          [
+            30,
+            "recent_offspeed_share",
+            0.008077
+          ],
+          [
+            31,
+            "recent_rel_speed_p90",
+            0.008017
+          ],
+          [
+            32,
+            "recent_breaking_rel_speed_mean",
+            0.007743
+          ],
+          [
+            33,
+            "career_offspeed_share",
+            0.007017
+          ],
+          [
+            36,
+            "career_fastball_rel_speed_mean",
+            0.006712
+          ],
+          [
+            37,
+            "career_rel_speed_p90",
+            0.005976
+          ],
+          [
+            38,
+            "recent_rel_speed_mean",
+            0.005881
+          ],
+          [
+            39,
+            "recent_offspeed_hb_mean",
+            0.005858
+          ],
+          [
+            40,
+            "career_offspeed_hb_mean",
+            0.005573
+          ],
+          [
+            41,
+            "career_offspeed_ivb_mean",
+            0.005458
+          ],
+          [
+            42,
+            "career_rel_height_std",
+            0.005331
+          ],
+          [
+            43,
+            "career_fastball_share",
+            0.005325
+          ],
+          [
+            44,
+            "recent_n_pitches",
+            0.005305
+          ],
+          [
+            46,
+            "recent_fastball_share",
+            0.005202
+          ],
+          [
+            48,
+            "career_rel_side_mean",
+            0.005074
+          ],
+          [
+            49,
+            "career_fastball_hb_mean",
+            0.004918
+          ],
+          [
+            50,
+            "recent_spin_rate_std",
+            0.004843
+          ],
+          [
+            51,
+            "recent_horz_break_mean",
+            0.004841
+          ],
+          [
+            52,
+            "recent_induced_vert_break_mean",
+            0.004781
+          ],
+          [
+            53,
+            "career_induced_vert_break_std",
+            0.004777
+          ],
+          [
+            54,
+            "recent_rel_height_std",
+            0.004691
+          ],
+          [
+            55,
+            "recent_fastball_hb_mean",
+            0.00469
+          ],
+          [
+            56,
+            "career_horz_break_std",
+            0.004653
+          ],
+          [
+            58,
+            "career_fastball_ivb_mean",
+            0.00451
+          ],
+          [
+            59,
+            "career_induced_vert_break_mean",
+            0.004494
+          ],
+          [
+            60,
+            "career_horz_break_mean",
+            0.004471
+          ],
+          [
+            61,
+            "recent_breaking_spin_rate_mean",
+            0.004466
+          ],
+          [
+            62,
+            "recent_fastball_rel_speed_mean",
+            0.004413
+          ],
+          [
+            63,
+            "career_breaking_ivb_mean",
+            0.004404
+          ],
+          [
+            65,
+            "recent_fastball_ivb_mean",
+            0.004367
+          ],
+          [
+            66,
+            "recent_zone_speed_mean",
+            0.004285
+          ],
+          [
+            67,
+            "career_breaking_share",
+            0.00422
+          ],
+          [
+            69,
+            "career_breaking_spin_rate_mean",
+            0.004155
+          ],
+          [
+            70,
+            "recent_breaking_hb_mean",
+            0.00406
+          ],
+          [
+            71,
+            "career_rel_speed_std",
+            0.004019
+          ]
+        ],
+        "train_until": 2021,
+        "valid_year": 2022,
+        "n_train": 653728
+      },
+      "fold_2023": {
+        "n_features": 112,
+        "n_raw_nan_features": 0,
+        "max_features_effective": 10,
+        "train_time_min": 1.17,
+        "inference_time_sec": 1.25,
+        "valid_all": {
+          "n": 245525,
+          "brier": 0.248784,
+          "bss": 0.004863,
+          "score": 486.268,
+          "base_rate": 0.499957,
+          "pred_mean": 0.504129,
+          "auc": 0.539042,
+          "logloss": 0.690709
+        },
+        "valid_R": {
+          "n": 219839,
+          "brier": 0.248676,
+          "bss": 0.005258,
+          "score": 525.79,
+          "base_rate": 0.503118,
+          "pred_mean": 0.505279,
+          "auc": 0.540531,
+          "logloss": 0.690491
+        },
+        "valid_F": {
+          "n": 25686,
+          "brier": 0.249713,
+          "bss": -0.001793,
+          "score": 0.0,
+          "base_rate": 0.472904,
+          "pred_mean": 0.494293,
+          "auc": 0.513288,
+          "logloss": 0.692573
+        },
+        "cold_start_R": {
+          "n": 33398,
+          "brier": 0.24927,
+          "bss": 0.002908,
+          "score": 290.806,
+          "base_rate": 0.501737,
+          "pred_mean": 0.50478,
+          "auc": 0.529656,
+          "logloss": 0.691684
+        },
+        "seen_R": {
+          "n": 186441,
+          "brier": 0.248569,
+          "bss": 0.005677,
+          "score": 567.725,
+          "base_rate": 0.503366,
+          "pred_mean": 0.505368,
+          "auc": 0.542227,
+          "logloss": 0.690277
+        },
+        "valid_R_has_profile": {
+          "n": 189637,
+          "brier": 0.248577,
+          "bss": 0.005656,
+          "score": 565.588,
+          "base_rate": 0.502929,
+          "pred_mean": 0.505278,
+          "auc": 0.542179,
+          "logloss": 0.690293
+        },
+        "valid_R_no_profile": {
+          "n": 30202,
+          "brier": 0.249293,
+          "bss": 0.002752,
+          "score": 275.244,
+          "base_rate": 0.504304,
+          "pred_mean": 0.505283,
+          "auc": 0.528861,
+          "logloss": 0.691731
+        },
+        "valid_R_has_recent": {
+          "n": 184010,
+          "brier": 0.248769,
+          "bss": 0.004919,
+          "score": 491.916,
+          "base_rate": 0.501076,
+          "pred_mean": 0.503928,
+          "auc": 0.539698,
+          "logloss": 0.690679
+        },
+        "importance_top25": [
+          [
+            "asof_pitcher_success_rate",
+            0.116676
+          ],
+          [
+            "asof_pitcher_reverse_rate",
+            0.113928
+          ],
+          [
+            "asof_pitcher_prev5_game_success_rate",
+            0.051846
+          ],
+          [
+            "asof_pitcher_prev3_game_success_rate",
+            0.042018
+          ],
+          [
+            "asof_pitcher_ball_rate",
+            0.031969
+          ],
+          [
+            "asof_pitcher_prev1_game_success_rate",
+            0.029487
+          ],
+          [
+            "asof_batter_success_rate",
+            0.028755
+          ],
+          [
+            "batter_team_id",
+            0.016957
+          ],
+          [
+            "asof_batter_middle_rate",
+            0.016679
+          ],
+          [
+            "recent_offspeed_share",
+            0.016292
+          ],
+          [
+            "season",
+            0.015775
+          ],
+          [
+            "asof_pitcher_offspeed_rate",
+            0.015462
+          ],
+          [
+            "asof_pitcher_strike_rate",
+            0.015363
+          ],
+          [
+            "asof_pitcher_middle_rate",
+            0.014061
+          ],
+          [
+            "asof_pitcher_pitchmix_n",
+            0.013855
+          ],
+          [
+            "asof_pitcher_n",
+            0.013147
+          ],
+          [
+            "asof_batter_n",
+            0.012221
+          ],
+          [
+            "asof_pitcher_fastball_rate",
+            0.011466
+          ],
+          [
+            "asof_pitcher_breaking_rate",
+            0.011419
+          ],
+          [
+            "career_rel_speed_mean",
+            0.010427
+          ],
+          [
+            "career_zone_speed_mean",
+            0.010239
+          ],
+          [
+            "asof_pitcher_prev3_game_middle_rate",
+            0.009609
+          ],
+          [
+            "career_offspeed_share",
+            0.008752
+          ],
+          [
+            "asof_pitcher_prev1_game_middle_rate",
+            0.008749
+          ],
+          [
+            "asof_pitcher_prev5_game_middle_rate",
+            0.008702
+          ]
+        ],
+        "profile_importance_share": 0.308817,
+        "profile_importance_ranked": [
+          [
+            10,
+            "recent_offspeed_share",
+            0.016292
+          ],
+          [
+            20,
+            "career_rel_speed_mean",
+            0.010427
+          ],
+          [
+            21,
+            "career_zone_speed_mean",
+            0.010239
+          ],
+          [
+            23,
+            "career_offspeed_share",
+            0.008752
+          ],
+          [
+            27,
+            "career_breaking_rel_speed_mean",
+            0.008555
+          ],
+          [
+            30,
+            "career_n_pitches",
+            0.007951
+          ],
+          [
+            31,
+            "career_fastball_rel_speed_mean",
+            0.007937
+          ],
+          [
+            32,
+            "career_rel_speed_p90",
+            0.00773
+          ],
+          [
+            33,
+            "career_rel_height_std",
+            0.00736
+          ],
+          [
+            36,
+            "recent_fastball_share",
+            0.006074
+          ],
+          [
+            37,
+            "recent_horz_break_mean",
+            0.005924
+          ],
+          [
+            38,
+            "career_rel_side_std",
+            0.005873
+          ],
+          [
+            39,
+            "career_offspeed_rel_speed_mean",
+            0.005731
+          ],
+          [
+            40,
+            "career_offspeed_hb_mean",
+            0.005673
+          ],
+          [
+            41,
+            "recent_offspeed_hb_mean",
+            0.005656
+          ],
+          [
+            43,
+            "recent_rel_side_mean",
+            0.005534
+          ],
+          [
+            44,
+            "career_breaking_spin_rate_mean",
+            0.005418
+          ],
+          [
+            45,
+            "career_induced_vert_break_mean",
+            0.005385
+          ],
+          [
+            46,
+            "career_fastball_share",
+            0.00527
+          ],
+          [
+            47,
+            "recent_induced_vert_break_std",
+            0.005228
+          ],
+          [
+            48,
+            "career_offspeed_ivb_mean",
+            0.004869
+          ],
+          [
+            49,
+            "career_fastball_ivb_mean",
+            0.00468
+          ],
+          [
+            50,
+            "career_n_games",
+            0.004623
+          ],
+          [
+            52,
+            "career_breaking_ivb_mean",
+            0.004609
+          ],
+          [
+            53,
+            "career_horz_break_std",
+            0.004499
+          ],
+          [
+            54,
+            "career_rel_speed_std",
+            0.004491
+          ],
+          [
+            56,
+            "recent_spin_rate_std",
+            0.004461
+          ],
+          [
+            57,
+            "career_fastball_hb_mean",
+            0.004453
+          ],
+          [
+            59,
+            "career_breaking_hb_mean",
+            0.004423
+          ],
+          [
+            60,
+            "career_rel_side_mean",
+            0.004406
+          ],
+          [
+            61,
+            "last_season_gap",
+            0.004401
+          ],
+          [
+            62,
+            "career_induced_vert_break_std",
+            0.004308
+          ],
+          [
+            63,
+            "career_rel_height_mean",
+            0.004269
+          ],
+          [
+            65,
+            "career_spin_rate_std",
+            0.00407
+          ],
+          [
+            66,
+            "career_breaking_share",
+            0.003927
+          ],
+          [
+            67,
+            "recent_fastball_hb_mean",
+            0.003898
+          ],
+          [
+            68,
+            "career_horz_break_mean",
+            0.003892
+          ],
+          [
+            69,
+            "career_offspeed_spin_rate_mean",
+            0.003887
+          ],
+          [
+            70,
+            "recent_induced_vert_break_mean",
+            0.003824
+          ],
+          [
+            72,
+            "career_extension_mean",
+            0.003526
+          ]
+        ],
+        "train_until": 2022,
+        "valid_year": 2023,
+        "n_train": 870752
+      },
+      "fold_2024": {
+        "n_features": 112,
+        "n_raw_nan_features": 0,
+        "max_features_effective": 10,
+        "train_time_min": 2.11,
+        "inference_time_sec": 1.45,
+        "valid_all": {
+          "n": 253507,
+          "brier": 0.248517,
+          "bss": 0.005162,
+          "score": 516.184,
+          "base_rate": 0.486105,
+          "pred_mean": 0.498201,
+          "auc": 0.542005,
+          "logloss": 0.690174
+        },
+        "valid_R": {
+          "n": 223497,
+          "brier": 0.24852,
+          "bss": 0.005499,
+          "score": 549.854,
+          "base_rate": 0.489707,
+          "pred_mean": 0.500322,
+          "auc": 0.543048,
+          "logloss": 0.690179
+        },
+        "valid_F": {
+          "n": 30010,
+          "brier": 0.248499,
+          "bss": -0.000631,
+          "score": 0.0,
+          "base_rate": 0.45928,
+          "pred_mean": 0.482398,
+          "auc": 0.522426,
+          "logloss": 0.690138
+        },
+        "cold_start_R": {
+          "n": 44672,
+          "brier": 0.248409,
+          "bss": 0.006266,
+          "score": 626.551,
+          "base_rate": 0.495008,
+          "pred_mean": 0.504199,
+          "auc": 0.549947,
+          "logloss": 0.689959
+        },
+        "seen_R": {
+          "n": 178825,
+          "brier": 0.248548,
+          "bss": 0.005272,
+          "score": 527.194,
+          "base_rate": 0.488382,
+          "pred_mean": 0.499354,
+          "auc": 0.541644,
+          "logloss": 0.690234
+        },
+        "valid_R_has_profile": {
+          "n": 180906,
+          "brier": 0.248562,
+          "bss": 0.005201,
+          "score": 520.129,
+          "base_rate": 0.488243,
+          "pred_mean": 0.499181,
+          "auc": 0.541282,
+          "logloss": 0.690262
+        },
+        "valid_R_no_profile": {
+          "n": 42591,
+          "brier": 0.248341,
+          "bss": 0.00657,
+          "score": 657.037,
+          "base_rate": 0.495926,
+          "pred_mean": 0.50517,
+          "auc": 0.551835,
+          "logloss": 0.689823
+        },
+        "valid_R_has_recent": {
+          "n": 175492,
+          "brier": 0.24853,
+          "bss": 0.005388,
+          "score": 538.794,
+          "base_rate": 0.488894,
+          "pred_mean": 0.499342,
+          "auc": 0.541965,
+          "logloss": 0.690199
+        },
+        "importance_top25": [
+          [
+            "asof_pitcher_success_rate",
+            0.113192
+          ],
+          [
+            "asof_pitcher_reverse_rate",
+            0.111476
+          ],
+          [
+            "asof_pitcher_prev5_game_success_rate",
+            0.057663
+          ],
+          [
+            "asof_pitcher_prev3_game_success_rate",
+            0.056625
+          ],
+          [
+            "asof_pitcher_ball_rate",
+            0.039192
+          ],
+          [
+            "asof_pitcher_prev1_game_success_rate",
+            0.034512
+          ],
+          [
+            "asof_batter_success_rate",
+            0.022977
+          ],
+          [
+            "asof_pitcher_strike_rate",
+            0.018261
+          ],
+          [
+            "season",
+            0.017889
+          ],
+          [
+            "asof_pitcher_offspeed_rate",
+            0.015732
+          ],
+          [
+            "recent_offspeed_share",
+            0.015324
+          ],
+          [
+            "asof_batter_middle_rate",
+            0.015305
+          ],
+          [
+            "asof_pitcher_pitchmix_n",
+            0.015147
+          ],
+          [
+            "career_zone_speed_mean",
+            0.013614
+          ],
+          [
+            "asof_pitcher_n",
+            0.012723
+          ],
+          [
+            "asof_pitcher_middle_rate",
+            0.012619
+          ],
+          [
+            "asof_pitcher_breaking_rate",
+            0.010887
+          ],
+          [
+            "asof_pitcher_fastball_rate",
+            0.010754
+          ],
+          [
+            "career_offspeed_share",
+            0.010157
+          ],
+          [
+            "recent_fastball_share",
+            0.010141
+          ],
+          [
+            "asof_batter_n",
+            0.009999
+          ],
+          [
+            "career_rel_speed_mean",
+            0.009951
+          ],
+          [
+            "career_breaking_rel_speed_mean",
+            0.009072
+          ],
+          [
+            "asof_pitcher_prev5_game_middle_rate",
+            0.008976
+          ],
+          [
+            "asof_pitcher_prev3_game_middle_rate",
+            0.008676
+          ]
+        ],
+        "profile_importance_share": 0.30887,
+        "profile_importance_ranked": [
+          [
+            11,
+            "recent_offspeed_share",
+            0.015324
+          ],
+          [
+            14,
+            "career_zone_speed_mean",
+            0.013614
+          ],
+          [
+            19,
+            "career_offspeed_share",
+            0.010157
+          ],
+          [
+            20,
+            "recent_fastball_share",
+            0.010141
+          ],
+          [
+            22,
+            "career_rel_speed_mean",
+            0.009951
+          ],
+          [
+            23,
+            "career_breaking_rel_speed_mean",
+            0.009072
+          ],
+          [
+            27,
+            "career_n_pitches",
+            0.008324
+          ],
+          [
+            28,
+            "recent_offspeed_hb_mean",
+            0.008245
+          ],
+          [
+            31,
+            "recent_n_pitches",
+            0.007397
+          ],
+          [
+            34,
+            "career_rel_height_std",
+            0.006208
+          ],
+          [
+            37,
+            "career_n_games",
+            0.005895
+          ],
+          [
+            38,
+            "career_offspeed_rel_speed_mean",
+            0.005808
+          ],
+          [
+            39,
+            "career_rel_speed_p90",
+            0.005543
+          ],
+          [
+            40,
+            "career_offspeed_hb_mean",
+            0.005541
+          ],
+          [
+            41,
+            "career_breaking_spin_rate_mean",
+            0.005447
+          ],
+          [
+            42,
+            "career_fastball_rel_speed_mean",
+            0.005386
+          ],
+          [
+            43,
+            "career_breaking_ivb_mean",
+            0.005178
+          ],
+          [
+            44,
+            "career_horz_break_mean",
+            0.005034
+          ],
+          [
+            45,
+            "career_horz_break_std",
+            0.004959
+          ],
+          [
+            46,
+            "career_induced_vert_break_mean",
+            0.004892
+          ],
+          [
+            47,
+            "career_rel_side_mean",
+            0.004809
+          ],
+          [
+            48,
+            "career_fastball_ivb_mean",
+            0.004804
+          ],
+          [
+            49,
+            "recent_horz_break_mean",
+            0.004641
+          ],
+          [
+            50,
+            "career_fastball_share",
+            0.004627
+          ],
+          [
+            51,
+            "career_offspeed_ivb_mean",
+            0.004417
+          ],
+          [
+            52,
+            "career_induced_vert_break_std",
+            0.004415
+          ],
+          [
+            53,
+            "career_breaking_hb_mean",
+            0.004408
+          ],
+          [
+            54,
+            "career_rel_side_std",
+            0.00437
+          ],
+          [
+            56,
+            "recent_fastball_hb_mean",
+            0.004241
+          ],
+          [
+            57,
+            "recent_induced_vert_break_std",
+            0.004101
+          ],
+          [
+            58,
+            "recent_breaking_spin_rate_mean",
+            0.004091
+          ],
+          [
+            60,
+            "career_extension_mean",
+            0.004012
+          ],
+          [
+            61,
+            "recent_rel_side_mean",
+            0.003943
+          ],
+          [
+            62,
+            "recent_fastball_spin_rate_mean",
+            0.00394
+          ],
+          [
+            63,
+            "career_breaking_share",
+            0.00389
+          ],
+          [
+            64,
+            "career_fastball_hb_mean",
+            0.003864
+          ],
+          [
+            65,
+            "recent_spin_rate_std",
+            0.003769
+          ],
+          [
+            66,
+            "last_season_gap",
+            0.003741
+          ],
+          [
+            67,
+            "career_rel_speed_std",
+            0.003736
+          ],
+          [
+            68,
+            "recent_rel_height_std",
+            0.003657
+          ]
+        ],
+        "train_until": 2023,
+        "valid_year": 2024,
+        "n_train": 1116277
+      }
+    },
+    "P2": {
+      "spec": "P1 + has_profile flag",
+      "fold_2022": {
+        "n_features": 113,
+        "n_raw_nan_features": 0,
+        "max_features_effective": 10,
+        "train_time_min": 0.91,
+        "inference_time_sec": 1.25,
+        "valid_all": {
+          "n": 247472,
+          "brier": 0.247811,
+          "bss": 0.005427,
+          "score": 542.706,
+          "base_rate": 0.52892,
+          "pred_mean": 0.511688,
+          "auc": 0.547573,
+          "logloss": 0.688755
+        },
+        "valid_R": {
+          "n": 217024,
+          "brier": 0.248818,
+          "bss": 0.004672,
+          "score": 467.189,
+          "base_rate": 0.503691,
+          "pred_mean": 0.509616,
+          "auc": 0.539952,
+          "logloss": 0.690779
+        },
+        "valid_F": {
+          "n": 30448,
+          "brier": 0.240633,
+          "bss": -0.165725,
+          "score": 0.0,
+          "base_rate": 0.708749,
+          "pred_mean": 0.526458,
+          "auc": 0.502928,
+          "logloss": 0.674327
+        },
+        "cold_start_R": {
+          "n": 37826,
+          "brier": 0.248926,
+          "bss": 0.003804,
+          "score": 380.423,
+          "base_rate": 0.51113,
+          "pred_mean": 0.517423,
+          "auc": 0.538337,
+          "logloss": 0.690997
+        },
+        "seen_R": {
+          "n": 179198,
+          "brier": 0.248796,
+          "bss": 0.004799,
+          "score": 479.863,
+          "base_rate": 0.502121,
+          "pred_mean": 0.507968,
+          "auc": 0.539973,
+          "logloss": 0.690733
+        },
+        "valid_R_has_profile": {
+          "n": 184193,
+          "brier": 0.248845,
+          "bss": 0.004613,
+          "score": 461.341,
+          "base_rate": 0.501425,
+          "pred_mean": 0.507842,
+          "auc": 0.539255,
+          "logloss": 0.690831
+        },
+        "valid_R_no_profile": {
+          "n": 32831,
+          "brier": 0.248672,
+          "bss": 0.004242,
+          "score": 424.158,
+          "base_rate": 0.516402,
+          "pred_mean": 0.519568,
+          "auc": 0.539911,
+          "logloss": 0.690488
+        },
+        "valid_R_has_recent": {
+          "n": 172863,
+          "brier": 0.248755,
+          "bss": 0.004968,
+          "score": 496.841,
+          "base_rate": 0.501796,
+          "pred_mean": 0.506592,
+          "auc": 0.540262,
+          "logloss": 0.69065
+        },
+        "importance_top25": [
+          [
+            "asof_pitcher_reverse_rate",
+            0.105762
+          ],
+          [
+            "asof_pitcher_success_rate",
+            0.100422
+          ],
+          [
+            "asof_pitcher_prev5_game_success_rate",
+            0.055584
+          ],
+          [
+            "asof_pitcher_prev3_game_success_rate",
+            0.039002
+          ],
+          [
+            "asof_batter_success_rate",
+            0.03177
+          ],
+          [
+            "asof_pitcher_ball_rate",
+            0.030098
+          ],
+          [
+            "asof_pitcher_prev1_game_success_rate",
+            0.027422
+          ],
+          [
+            "batter_team_id",
+            0.019484
+          ],
+          [
+            "asof_batter_middle_rate",
+            0.018325
+          ],
+          [
+            "asof_pitcher_middle_rate",
+            0.016043
+          ],
+          [
+            "asof_pitcher_offspeed_rate",
+            0.015073
+          ],
+          [
+            "asof_pitcher_pitchmix_n",
+            0.013679
+          ],
+          [
+            "asof_pitcher_strike_rate",
+            0.013446
+          ],
+          [
+            "asof_pitcher_n",
+            0.012983
+          ],
+          [
+            "season",
+            0.012896
+          ],
+          [
+            "career_rel_speed_mean",
+            0.012734
+          ],
+          [
+            "asof_batter_n",
+            0.01142
+          ],
+          [
+            "asof_pitcher_fastball_rate",
+            0.011328
+          ],
+          [
+            "asof_pitcher_breaking_rate",
+            0.010765
+          ],
+          [
+            "career_zone_speed_mean",
+            0.010591
+          ],
+          [
+            "career_offspeed_share",
+            0.009672
+          ],
+          [
+            "career_breaking_rel_speed_mean",
+            0.009471
+          ],
+          [
+            "asof_pitcher_prev3_game_middle_rate",
+            0.009224
+          ],
+          [
+            "asof_pitcher_prev5_game_middle_rate",
+            0.009035
+          ],
+          [
+            "asof_pitcher_prev1_game_middle_rate",
+            0.008928
+          ]
+        ],
+        "profile_importance_share": 0.33412,
+        "profile_importance_ranked": [
+          [
+            16,
+            "career_rel_speed_mean",
+            0.012734
+          ],
+          [
+            20,
+            "career_zone_speed_mean",
+            0.010591
+          ],
+          [
+            21,
+            "career_offspeed_share",
+            0.009672
+          ],
+          [
+            22,
+            "career_breaking_rel_speed_mean",
+            0.009471
+          ],
+          [
+            27,
+            "career_n_pitches",
+            0.008281
+          ],
+          [
+            30,
+            "recent_rel_side_std",
+            0.007917
+          ],
+          [
+            31,
+            "recent_offspeed_share",
+            0.007748
+          ],
+          [
+            32,
+            "career_fastball_rel_speed_mean",
+            0.007563
+          ],
+          [
+            34,
+            "recent_fastball_share",
+            0.007066
+          ],
+          [
+            35,
+            "recent_offspeed_hb_mean",
+            0.006947
+          ],
+          [
+            36,
+            "recent_rel_side_mean",
+            0.006881
+          ],
+          [
+            37,
+            "career_offspeed_hb_mean",
+            0.006751
+          ],
+          [
+            38,
+            "career_rel_speed_p90",
+            0.006691
+          ],
+          [
+            40,
+            "recent_fastball_rel_speed_mean",
+            0.005901
+          ],
+          [
+            41,
+            "recent_induced_vert_break_std",
+            0.005672
+          ],
+          [
+            42,
+            "recent_rel_speed_mean",
+            0.005646
+          ],
+          [
+            43,
+            "career_induced_vert_break_std",
+            0.005624
+          ],
+          [
+            44,
+            "career_rel_side_std",
+            0.005538
+          ],
+          [
+            45,
+            "career_offspeed_ivb_mean",
+            0.005484
+          ],
+          [
+            46,
+            "career_rel_side_mean",
+            0.005475
+          ],
+          [
+            47,
+            "career_horz_break_mean",
+            0.005404
+          ],
+          [
+            49,
+            "recent_rel_speed_p90",
+            0.005247
+          ],
+          [
+            50,
+            "recent_n_pitches",
+            0.00514
+          ],
+          [
+            51,
+            "career_offspeed_rel_speed_mean",
+            0.005071
+          ],
+          [
+            52,
+            "recent_breaking_ivb_mean",
+            0.004878
+          ],
+          [
+            53,
+            "recent_horz_break_mean",
+            0.004875
+          ],
+          [
+            54,
+            "career_rel_height_std",
+            0.00487
+          ],
+          [
+            55,
+            "career_breaking_hb_mean",
+            0.004862
+          ],
+          [
+            56,
+            "career_fastball_ivb_mean",
+            0.004813
+          ],
+          [
+            58,
+            "recent_fastball_ivb_mean",
+            0.004703
+          ],
+          [
+            60,
+            "recent_fastball_hb_mean",
+            0.004598
+          ],
+          [
+            61,
+            "recent_zone_speed_mean",
+            0.004554
+          ],
+          [
+            62,
+            "career_spin_rate_std",
+            0.004552
+          ],
+          [
+            63,
+            "recent_rel_height_mean",
+            0.004508
+          ],
+          [
+            65,
+            "recent_horz_break_std",
+            0.00449
+          ],
+          [
+            66,
+            "career_breaking_ivb_mean",
+            0.004465
+          ],
+          [
+            67,
+            "career_breaking_spin_rate_mean",
+            0.004426
+          ],
+          [
+            68,
+            "recent_breaking_spin_rate_mean",
+            0.004367
+          ],
+          [
+            69,
+            "recent_breaking_rel_speed_mean",
+            0.00429
+          ],
+          [
+            70,
+            "recent_spin_rate_std",
+            0.004188
+          ]
+        ],
+        "train_until": 2021,
+        "valid_year": 2022,
+        "n_train": 653728
+      },
+      "fold_2023": {
+        "n_features": 113,
+        "n_raw_nan_features": 0,
+        "max_features_effective": 10,
+        "train_time_min": 1.29,
+        "inference_time_sec": 1.4,
+        "valid_all": {
+          "n": 245525,
+          "brier": 0.248787,
+          "bss": 0.004852,
+          "score": 485.201,
+          "base_rate": 0.499957,
+          "pred_mean": 0.503976,
+          "auc": 0.538981,
+          "logloss": 0.690714
+        },
+        "valid_R": {
+          "n": 219839,
+          "brier": 0.248682,
+          "bss": 0.005235,
+          "score": 523.489,
+          "base_rate": 0.503118,
+          "pred_mean": 0.505243,
+          "auc": 0.540414,
+          "logloss": 0.690502
+        },
+        "valid_F": {
+          "n": 25686,
+          "brier": 0.249689,
+          "bss": -0.001698,
+          "score": 0.0,
+          "base_rate": 0.472904,
+          "pred_mean": 0.493131,
+          "auc": 0.512687,
+          "logloss": 0.692526
+        },
+        "cold_start_R": {
+          "n": 33398,
+          "brier": 0.249311,
+          "bss": 0.002745,
+          "score": 274.534,
+          "base_rate": 0.501737,
+          "pred_mean": 0.505029,
+          "auc": 0.528999,
+          "logloss": 0.691766
+        },
+        "seen_R": {
+          "n": 186441,
+          "brier": 0.248569,
+          "bss": 0.005679,
+          "score": 567.926,
+          "base_rate": 0.503366,
+          "pred_mean": 0.505281,
+          "auc": 0.542213,
+          "logloss": 0.690275
+        },
+        "valid_R_has_profile": {
+          "n": 189637,
+          "brier": 0.248579,
+          "bss": 0.005648,
+          "score": 564.82,
+          "base_rate": 0.502929,
+          "pred_mean": 0.50515,
+          "auc": 0.542124,
+          "logloss": 0.690296
+        },
+        "valid_R_no_profile": {
+          "n": 30202,
+          "brier": 0.249323,
+          "bss": 0.002633,
+          "score": 263.313,
+          "base_rate": 0.504304,
+          "pred_mean": 0.505826,
+          "auc": 0.528191,
+          "logloss": 0.691791
+        },
+        "valid_R_has_recent": {
+          "n": 184010,
+          "brier": 0.248767,
+          "bss": 0.004925,
+          "score": 492.55,
+          "base_rate": 0.501076,
+          "pred_mean": 0.503848,
+          "auc": 0.539673,
+          "logloss": 0.690676
+        },
+        "importance_top25": [
+          [
+            "asof_pitcher_reverse_rate",
+            0.109044
+          ],
+          [
+            "asof_pitcher_success_rate",
+            0.102476
+          ],
+          [
+            "asof_pitcher_prev5_game_success_rate",
+            0.052298
+          ],
+          [
+            "asof_pitcher_prev3_game_success_rate",
+            0.044645
+          ],
+          [
+            "asof_pitcher_prev1_game_success_rate",
+            0.030378
+          ],
+          [
+            "asof_pitcher_ball_rate",
+            0.030327
+          ],
+          [
+            "asof_batter_success_rate",
+            0.027604
+          ],
+          [
+            "batter_team_id",
+            0.020312
+          ],
+          [
+            "season",
+            0.0172
+          ],
+          [
+            "asof_batter_middle_rate",
+            0.015902
+          ],
+          [
+            "asof_pitcher_offspeed_rate",
+            0.015525
+          ],
+          [
+            "asof_pitcher_strike_rate",
+            0.015464
+          ],
+          [
+            "asof_pitcher_middle_rate",
+            0.015213
+          ],
+          [
+            "recent_offspeed_share",
+            0.014267
+          ],
+          [
+            "asof_pitcher_n",
+            0.013068
+          ],
+          [
+            "asof_pitcher_pitchmix_n",
+            0.012691
+          ],
+          [
+            "career_offspeed_share",
+            0.011681
+          ],
+          [
+            "career_breaking_rel_speed_mean",
+            0.011485
+          ],
+          [
+            "asof_batter_n",
+            0.011164
+          ],
+          [
+            "asof_pitcher_breaking_rate",
+            0.011149
+          ],
+          [
+            "asof_pitcher_fastball_rate",
+            0.011117
+          ],
+          [
+            "career_zone_speed_mean",
+            0.009974
+          ],
+          [
+            "asof_pitcher_prev5_game_middle_rate",
+            0.009378
+          ],
+          [
+            "career_rel_speed_mean",
+            0.009294
+          ],
+          [
+            "asof_pitcher_prev3_game_middle_rate",
+            0.009281
+          ]
+        ],
+        "profile_importance_share": 0.324524,
+        "profile_importance_ranked": [
+          [
+            14,
+            "recent_offspeed_share",
+            0.014267
+          ],
+          [
+            17,
+            "career_offspeed_share",
+            0.011681
+          ],
+          [
+            18,
+            "career_breaking_rel_speed_mean",
+            0.011485
+          ],
+          [
+            22,
+            "career_zone_speed_mean",
+            0.009974
+          ],
+          [
+            24,
+            "career_rel_speed_mean",
+            0.009294
+          ],
+          [
+            26,
+            "career_fastball_rel_speed_mean",
+            0.008768
+          ],
+          [
+            31,
+            "career_n_pitches",
+            0.007567
+          ],
+          [
+            33,
+            "career_rel_speed_p90",
+            0.007119
+          ],
+          [
+            34,
+            "career_offspeed_rel_speed_mean",
+            0.007047
+          ],
+          [
+            35,
+            "recent_offspeed_hb_mean",
+            0.00693
+          ],
+          [
+            36,
+            "career_rel_side_std",
+            0.006874
+          ],
+          [
+            37,
+            "career_breaking_ivb_mean",
+            0.006736
+          ],
+          [
+            38,
+            "recent_horz_break_mean",
+            0.006637
+          ],
+          [
+            39,
+            "career_rel_height_std",
+            0.006595
+          ],
+          [
+            40,
+            "career_fastball_share",
+            0.006124
+          ],
+          [
+            41,
+            "recent_fastball_share",
+            0.006109
+          ],
+          [
+            43,
+            "recent_fastball_hb_mean",
+            0.006062
+          ],
+          [
+            44,
+            "career_offspeed_hb_mean",
+            0.005927
+          ],
+          [
+            46,
+            "career_induced_vert_break_std",
+            0.005441
+          ],
+          [
+            47,
+            "career_rel_side_mean",
+            0.005134
+          ],
+          [
+            49,
+            "recent_rel_side_mean",
+            0.005
+          ],
+          [
+            51,
+            "recent_breaking_ivb_mean",
+            0.004893
+          ],
+          [
+            52,
+            "career_breaking_spin_rate_mean",
+            0.004858
+          ],
+          [
+            53,
+            "career_offspeed_ivb_mean",
+            0.004827
+          ],
+          [
+            54,
+            "career_breaking_hb_mean",
+            0.004809
+          ],
+          [
+            55,
+            "career_induced_vert_break_mean",
+            0.004761
+          ],
+          [
+            57,
+            "career_horz_break_mean",
+            0.0045
+          ],
+          [
+            58,
+            "recent_spin_rate_std",
+            0.004378
+          ],
+          [
+            59,
+            "recent_breaking_hb_mean",
+            0.004355
+          ],
+          [
+            60,
+            "career_fastball_hb_mean",
+            0.004347
+          ],
+          [
+            61,
+            "career_rel_height_mean",
+            0.004315
+          ],
+          [
+            63,
+            "career_fastball_spin_rate_mean",
+            0.0042
+          ],
+          [
+            64,
+            "recent_offspeed_ivb_mean",
+            0.004143
+          ],
+          [
+            65,
+            "career_extension_mean",
+            0.004139
+          ],
+          [
+            66,
+            "career_spin_rate_std",
+            0.004043
+          ],
+          [
+            67,
+            "recent_rel_height_std",
+            0.003996
+          ],
+          [
+            68,
+            "recent_offspeed_rel_speed_mean",
+            0.003979
+          ],
+          [
+            69,
+            "career_n_games",
+            0.003974
+          ],
+          [
+            70,
+            "career_horz_break_std",
+            0.00396
+          ],
+          [
+            72,
+            "career_fastball_ivb_mean",
+            0.003909
+          ]
+        ],
+        "train_until": 2022,
+        "valid_year": 2023,
+        "n_train": 870752
+      },
+      "fold_2024": {
+        "n_features": 113,
+        "n_raw_nan_features": 0,
+        "max_features_effective": 10,
+        "train_time_min": 2.15,
+        "inference_time_sec": 1.58,
+        "valid_all": {
+          "n": 253507,
+          "brier": 0.248549,
+          "bss": 0.005037,
+          "score": 503.692,
+          "base_rate": 0.486105,
+          "pred_mean": 0.498581,
+          "auc": 0.542017,
+          "logloss": 0.690237
+        },
+        "valid_R": {
+          "n": 223497,
+          "brier": 0.248555,
+          "bss": 0.00536,
+          "score": 535.979,
+          "base_rate": 0.489707,
+          "pred_mean": 0.500655,
+          "auc": 0.5429,
+          "logloss": 0.690249
+        },
+        "valid_F": {
+          "n": 30010,
+          "brier": 0.248504,
+          "bss": -0.000653,
+          "score": 0.0,
+          "base_rate": 0.45928,
+          "pred_mean": 0.483139,
+          "auc": 0.523787,
+          "logloss": 0.690149
+        },
+        "cold_start_R": {
+          "n": 44672,
+          "brier": 0.248484,
+          "bss": 0.005966,
+          "score": 596.578,
+          "base_rate": 0.495008,
+          "pred_mean": 0.504911,
+          "auc": 0.549629,
+          "logloss": 0.690109
+        },
+        "seen_R": {
+          "n": 178825,
+          "brier": 0.248572,
+          "bss": 0.005173,
+          "score": 517.341,
+          "base_rate": 0.488382,
+          "pred_mean": 0.499592,
+          "auc": 0.541547,
+          "logloss": 0.690284
+        },
+        "valid_R_has_profile": {
+          "n": 180906,
+          "brier": 0.248585,
+          "bss": 0.005111,
+          "score": 511.075,
+          "base_rate": 0.488243,
+          "pred_mean": 0.499377,
+          "auc": 0.541209,
+          "logloss": 0.690309
+        },
+        "valid_R_no_profile": {
+          "n": 42591,
+          "brier": 0.248427,
+          "bss": 0.006227,
+          "score": 622.693,
+          "base_rate": 0.495926,
+          "pred_mean": 0.506083,
+          "auc": 0.551455,
+          "logloss": 0.689995
+        },
+        "valid_R_has_recent": {
+          "n": 175492,
+          "brier": 0.248557,
+          "bss": 0.005282,
+          "score": 528.156,
+          "base_rate": 0.488894,
+          "pred_mean": 0.499554,
+          "auc": 0.541813,
+          "logloss": 0.690253
+        },
+        "importance_top25": [
+          [
+            "asof_pitcher_success_rate",
+            0.110296
+          ],
+          [
+            "asof_pitcher_reverse_rate",
+            0.096138
+          ],
+          [
+            "asof_pitcher_prev5_game_success_rate",
+            0.062771
+          ],
+          [
+            "asof_pitcher_prev3_game_success_rate",
+            0.04934
+          ],
+          [
+            "asof_pitcher_ball_rate",
+            0.044413
+          ],
+          [
+            "asof_pitcher_prev1_game_success_rate",
+            0.034194
+          ],
+          [
+            "asof_batter_success_rate",
+            0.023425
+          ],
+          [
+            "season",
+            0.020932
+          ],
+          [
+            "recent_offspeed_share",
+            0.017263
+          ],
+          [
+            "asof_pitcher_strike_rate",
+            0.016735
+          ],
+          [
+            "asof_pitcher_offspeed_rate",
+            0.015495
+          ],
+          [
+            "asof_batter_middle_rate",
+            0.014926
+          ],
+          [
+            "asof_pitcher_pitchmix_n",
+            0.014581
+          ],
+          [
+            "asof_pitcher_n",
+            0.013686
+          ],
+          [
+            "asof_pitcher_middle_rate",
+            0.013297
+          ],
+          [
+            "asof_pitcher_fastball_rate",
+            0.011825
+          ],
+          [
+            "asof_pitcher_breaking_rate",
+            0.01137
+          ],
+          [
+            "recent_n_pitches",
+            0.011249
+          ],
+          [
+            "career_offspeed_share",
+            0.010703
+          ],
+          [
+            "asof_batter_n",
+            0.009925
+          ],
+          [
+            "recent_fastball_share",
+            0.009561
+          ],
+          [
+            "batter_team_id",
+            0.009439
+          ],
+          [
+            "career_rel_speed_mean",
+            0.009235
+          ],
+          [
+            "recent_offspeed_hb_mean",
+            0.008996
+          ],
+          [
+            "asof_pitcher_prev5_game_middle_rate",
+            0.008687
+          ]
+        ],
+        "profile_importance_share": 0.316953,
+        "profile_importance_ranked": [
+          [
+            9,
+            "recent_offspeed_share",
+            0.017263
+          ],
+          [
+            18,
+            "recent_n_pitches",
+            0.011249
+          ],
+          [
+            19,
+            "career_offspeed_share",
+            0.010703
+          ],
+          [
+            21,
+            "recent_fastball_share",
+            0.009561
+          ],
+          [
+            23,
+            "career_rel_speed_mean",
+            0.009235
+          ],
+          [
+            24,
+            "recent_offspeed_hb_mean",
+            0.008996
+          ],
+          [
+            26,
+            "career_zone_speed_mean",
+            0.008051
+          ],
+          [
+            27,
+            "career_breaking_rel_speed_mean",
+            0.008021
+          ],
+          [
+            33,
+            "career_n_pitches",
+            0.007261
+          ],
+          [
+            34,
+            "career_breaking_spin_rate_mean",
+            0.007051
+          ],
+          [
+            36,
+            "career_rel_speed_p90",
+            0.006045
+          ],
+          [
+            38,
+            "career_fastball_rel_speed_mean",
+            0.005737
+          ],
+          [
+            39,
+            "career_breaking_ivb_mean",
+            0.005675
+          ],
+          [
+            40,
+            "career_fastball_ivb_mean",
+            0.005665
+          ],
+          [
+            41,
+            "career_rel_side_mean",
+            0.005571
+          ],
+          [
+            42,
+            "career_offspeed_hb_mean",
+            0.005495
+          ],
+          [
+            43,
+            "career_induced_vert_break_std",
+            0.005462
+          ],
+          [
+            44,
+            "career_offspeed_rel_speed_mean",
+            0.005304
+          ],
+          [
+            45,
+            "career_fastball_share",
+            0.005214
+          ],
+          [
+            46,
+            "recent_fastball_hb_mean",
+            0.005188
+          ],
+          [
+            47,
+            "career_rel_side_std",
+            0.005169
+          ],
+          [
+            49,
+            "recent_spin_rate_std",
+            0.005117
+          ],
+          [
+            50,
+            "career_horz_break_std",
+            0.004997
+          ],
+          [
+            51,
+            "career_offspeed_ivb_mean",
+            0.004995
+          ],
+          [
+            52,
+            "career_rel_height_std",
+            0.00487
+          ],
+          [
+            53,
+            "recent_horz_break_mean",
+            0.00455
+          ],
+          [
+            54,
+            "recent_breaking_hb_mean",
+            0.004539
+          ],
+          [
+            56,
+            "career_horz_break_mean",
+            0.004381
+          ],
+          [
+            57,
+            "career_spin_rate_std",
+            0.004366
+          ],
+          [
+            58,
+            "career_fastball_hb_mean",
+            0.004343
+          ],
+          [
+            59,
+            "career_n_games",
+            0.004298
+          ],
+          [
+            60,
+            "recent_rel_side_std",
+            0.004238
+          ],
+          [
+            62,
+            "recent_rel_height_std",
+            0.004165
+          ],
+          [
+            63,
+            "career_breaking_share",
+            0.0041
+          ],
+          [
+            64,
+            "recent_rel_side_mean",
+            0.004083
+          ],
+          [
+            65,
+            "recent_breaking_spin_rate_mean",
+            0.004045
+          ],
+          [
+            66,
+            "career_induced_vert_break_mean",
+            0.004033
+          ],
+          [
+            67,
+            "career_rel_height_mean",
+            0.003866
+          ],
+          [
+            68,
+            "recent_breaking_share",
+            0.003859
+          ],
+          [
+            69,
+            "recent_offspeed_ivb_mean",
+            0.003687
+          ]
+        ],
+        "train_until": 2023,
+        "valid_year": 2024,
+        "n_train": 1116277
+      }
+    },
+    "P3": {
+      "spec": "P2 + has_recent_profile flag",
+      "fold_2023": {
+        "n_features": 114,
+        "n_raw_nan_features": 0,
+        "max_features_effective": 10,
+        "train_time_min": 1.33,
+        "inference_time_sec": 1.42,
+        "valid_all": {
+          "n": 245525,
+          "brier": 0.248814,
+          "bss": 0.004743,
+          "score": 474.312,
+          "base_rate": 0.499957,
+          "pred_mean": 0.504149,
+          "auc": 0.538607,
+          "logloss": 0.690769
+        },
+        "valid_R": {
+          "n": 219839,
+          "brier": 0.24871,
+          "bss": 0.005122,
+          "score": 512.151,
+          "base_rate": 0.503118,
+          "pred_mean": 0.505374,
+          "auc": 0.540075,
+          "logloss": 0.690559
+        },
+        "valid_F": {
+          "n": 25686,
+          "brier": 0.249707,
+          "bss": -0.001769,
+          "score": 0.0,
+          "base_rate": 0.472904,
+          "pred_mean": 0.493663,
+          "auc": 0.512037,
+          "logloss": 0.69256
+        },
+        "cold_start_R": {
+          "n": 33398,
+          "brier": 0.249306,
+          "bss": 0.002763,
+          "score": 276.26,
+          "base_rate": 0.501737,
+          "pred_mean": 0.506256,
+          "auc": 0.529852,
+          "logloss": 0.691757
+        },
+        "seen_R": {
+          "n": 186441,
+          "brier": 0.248603,
+          "bss": 0.005542,
+          "score": 554.248,
+          "base_rate": 0.503366,
+          "pred_mean": 0.505216,
+          "auc": 0.54176,
+          "logloss": 0.690345
+        },
+        "valid_R_has_profile": {
+          "n": 189637,
+          "brier": 0.248608,
+          "bss": 0.005533,
+          "score": 553.265,
+          "base_rate": 0.502929,
+          "pred_mean": 0.505069,
+          "auc": 0.541783,
+          "logloss": 0.690355
+        },
+        "valid_R_no_profile": {
+          "n": 30202,
+          "brier": 0.249348,
+          "bss": 0.002533,
+          "score": 253.337,
+          "base_rate": 0.504304,
+          "pred_mean": 0.507289,
+          "auc": 0.528091,
+          "logloss": 0.691841
+        },
+        "valid_R_has_recent": {
+          "n": 184010,
+          "brier": 0.248798,
+          "bss": 0.004803,
+          "score": 480.337,
+          "base_rate": 0.501076,
+          "pred_mean": 0.50375,
+          "auc": 0.539294,
+          "logloss": 0.690737
+        },
+        "importance_top25": [
+          [
+            "asof_pitcher_reverse_rate",
+            0.111497
+          ],
+          [
+            "asof_pitcher_success_rate",
+            0.106332
+          ],
+          [
+            "asof_pitcher_prev5_game_success_rate",
+            0.051907
+          ],
+          [
+            "asof_pitcher_prev3_game_success_rate",
+            0.038052
+          ],
+          [
+            "asof_pitcher_ball_rate",
+            0.033636
+          ],
+          [
+            "asof_pitcher_prev1_game_success_rate",
+            0.030658
+          ],
+          [
+            "asof_batter_success_rate",
+            0.028796
+          ],
+          [
+            "asof_batter_middle_rate",
+            0.016833
+          ],
+          [
+            "batter_team_id",
+            0.016659
+          ],
+          [
+            "asof_pitcher_offspeed_rate",
+            0.014994
+          ],
+          [
+            "asof_pitcher_middle_rate",
+            0.014876
+          ],
+          [
+            "asof_pitcher_strike_rate",
+            0.0148
+          ],
+          [
+            "asof_pitcher_pitchmix_n",
+            0.01377
+          ],
+          [
+            "asof_pitcher_n",
+            0.013332
+          ],
+          [
+            "season",
+            0.012992
+          ],
+          [
+            "recent_offspeed_share",
+            0.012809
+          ],
+          [
+            "asof_pitcher_fastball_rate",
+            0.012247
+          ],
+          [
+            "career_zone_speed_mean",
+            0.011633
+          ],
+          [
+            "asof_batter_n",
+            0.011564
+          ],
+          [
+            "career_offspeed_share",
+            0.011369
+          ],
+          [
+            "asof_pitcher_breaking_rate",
+            0.01111
+          ],
+          [
+            "career_rel_speed_mean",
+            0.010579
+          ],
+          [
+            "career_breaking_rel_speed_mean",
+            0.010093
+          ],
+          [
+            "asof_pitcher_prev3_game_middle_rate",
+            0.009674
+          ],
+          [
+            "asof_pitcher_prev5_game_middle_rate",
+            0.009615
+          ]
+        ],
+        "profile_importance_share": 0.321334,
+        "profile_importance_ranked": [
+          [
+            16,
+            "recent_offspeed_share",
+            0.012809
+          ],
+          [
+            18,
+            "career_zone_speed_mean",
+            0.011633
+          ],
+          [
+            20,
+            "career_offspeed_share",
+            0.011369
+          ],
+          [
+            22,
+            "career_rel_speed_mean",
+            0.010579
+          ],
+          [
+            23,
+            "career_breaking_rel_speed_mean",
+            0.010093
+          ],
+          [
+            26,
+            "career_n_pitches",
+            0.009209
+          ],
+          [
+            31,
+            "career_fastball_rel_speed_mean",
+            0.007452
+          ],
+          [
+            33,
+            "career_rel_speed_p90",
+            0.007242
+          ],
+          [
+            35,
+            "career_rel_height_std",
+            0.006621
+          ],
+          [
+            36,
+            "career_rel_side_std",
+            0.006566
+          ],
+          [
+            38,
+            "recent_horz_break_mean",
+            0.006243
+          ],
+          [
+            39,
+            "career_offspeed_hb_mean",
+            0.006148
+          ],
+          [
+            40,
+            "recent_rel_side_mean",
+            0.005989
+          ],
+          [
+            41,
+            "career_offspeed_rel_speed_mean",
+            0.005856
+          ],
+          [
+            42,
+            "recent_fastball_share",
+            0.005811
+          ],
+          [
+            43,
+            "career_rel_side_mean",
+            0.005786
+          ],
+          [
+            44,
+            "recent_fastball_hb_mean",
+            0.005772
+          ],
+          [
+            45,
+            "career_fastball_share",
+            0.005768
+          ],
+          [
+            46,
+            "career_horz_break_mean",
+            0.005673
+          ],
+          [
+            47,
+            "recent_induced_vert_break_std",
+            0.005458
+          ],
+          [
+            48,
+            "career_breaking_spin_rate_mean",
+            0.005342
+          ],
+          [
+            50,
+            "recent_offspeed_hb_mean",
+            0.005161
+          ],
+          [
+            51,
+            "career_breaking_ivb_mean",
+            0.00509
+          ],
+          [
+            53,
+            "career_induced_vert_break_std",
+            0.004972
+          ],
+          [
+            54,
+            "career_fastball_ivb_mean",
+            0.004952
+          ],
+          [
+            55,
+            "career_rel_height_mean",
+            0.004804
+          ],
+          [
+            56,
+            "career_fastball_hb_mean",
+            0.00471
+          ],
+          [
+            57,
+            "career_breaking_hb_mean",
+            0.004685
+          ],
+          [
+            58,
+            "career_induced_vert_break_mean",
+            0.004558
+          ],
+          [
+            60,
+            "last_season_gap",
+            0.004476
+          ],
+          [
+            61,
+            "career_spin_rate_std",
+            0.004475
+          ],
+          [
+            62,
+            "career_extension_mean",
+            0.004347
+          ],
+          [
+            64,
+            "career_horz_break_std",
+            0.004157
+          ],
+          [
+            65,
+            "career_offspeed_ivb_mean",
+            0.004143
+          ],
+          [
+            66,
+            "recent_breaking_ivb_mean",
+            0.00412
+          ],
+          [
+            67,
+            "career_breaking_share",
+            0.004106
+          ],
+          [
+            68,
+            "recent_spin_rate_std",
+            0.003969
+          ],
+          [
+            69,
+            "career_offspeed_spin_rate_mean",
+            0.003847
+          ],
+          [
+            70,
+            "career_n_games",
+            0.003781
+          ],
+          [
+            71,
+            "recent_breaking_hb_mean",
+            0.003763
+          ]
+        ],
+        "train_until": 2022,
+        "valid_year": 2023,
+        "n_train": 870752
+      },
+      "fold_2024": {
+        "n_features": 114,
+        "n_raw_nan_features": 0,
+        "max_features_effective": 10,
+        "train_time_min": 2.13,
+        "inference_time_sec": 1.66,
+        "valid_all": {
+          "n": 253507,
+          "brier": 0.248471,
+          "bss": 0.005348,
+          "score": 534.791,
+          "base_rate": 0.486105,
+          "pred_mean": 0.498188,
+          "auc": 0.542916,
+          "logloss": 0.690081
+        },
+        "valid_R": {
+          "n": 223497,
+          "brier": 0.248473,
+          "bss": 0.005687,
+          "score": 568.749,
+          "base_rate": 0.489707,
+          "pred_mean": 0.500282,
+          "auc": 0.543885,
+          "logloss": 0.690084
+        },
+        "valid_F": {
+          "n": 30010,
+          "brier": 0.248458,
+          "bss": -0.000466,
+          "score": 0.0,
+          "base_rate": 0.45928,
+          "pred_mean": 0.482587,
+          "auc": 0.524602,
+          "logloss": 0.690056
+        },
+        "cold_start_R": {
+          "n": 44672,
+          "brier": 0.248408,
+          "bss": 0.006271,
+          "score": 627.066,
+          "base_rate": 0.495008,
+          "pred_mean": 0.504676,
+          "auc": 0.55077,
+          "logloss": 0.689957
+        },
+        "seen_R": {
+          "n": 178825,
+          "brier": 0.248489,
+          "bss": 0.005507,
+          "score": 550.683,
+          "base_rate": 0.488382,
+          "pred_mean": 0.499185,
+          "auc": 0.542523,
+          "logloss": 0.690116
+        },
+        "valid_R_has_profile": {
+          "n": 180906,
+          "brier": 0.248503,
+          "bss": 0.00544,
+          "score": 543.988,
+          "base_rate": 0.488243,
+          "pred_mean": 0.498982,
+          "auc": 0.542168,
+          "logloss": 0.690143
+        },
+        "valid_R_no_profile": {
+          "n": 42591,
+          "brier": 0.248346,
+          "bss": 0.006549,
+          "score": 654.86,
+          "base_rate": 0.495926,
+          "pred_mean": 0.505804,
+          "auc": 0.552812,
+          "logloss": 0.689834
+        },
+        "valid_R_has_recent": {
+          "n": 175492,
+          "brier": 0.248472,
+          "bss": 0.005621,
+          "score": 562.105,
+          "base_rate": 0.488894,
+          "pred_mean": 0.49915,
+          "auc": 0.542834,
+          "logloss": 0.690082
+        },
+        "importance_top25": [
+          [
+            "asof_pitcher_success_rate",
+            0.122711
+          ],
+          [
+            "asof_pitcher_reverse_rate",
+            0.105151
+          ],
+          [
+            "asof_pitcher_prev5_game_success_rate",
+            0.058141
+          ],
+          [
+            "asof_pitcher_prev3_game_success_rate",
+            0.045132
+          ],
+          [
+            "asof_pitcher_ball_rate",
+            0.039629
+          ],
+          [
+            "asof_pitcher_prev1_game_success_rate",
+            0.033365
+          ],
+          [
+            "asof_batter_success_rate",
+            0.025059
+          ],
+          [
+            "asof_pitcher_strike_rate",
+            0.017396
+          ],
+          [
+            "season",
+            0.016386
+          ],
+          [
+            "asof_batter_middle_rate",
+            0.016196
+          ],
+          [
+            "asof_pitcher_offspeed_rate",
+            0.016159
+          ],
+          [
+            "recent_n_pitches",
+            0.01468
+          ],
+          [
+            "asof_pitcher_n",
+            0.01434
+          ],
+          [
+            "asof_pitcher_pitchmix_n",
+            0.013958
+          ],
+          [
+            "asof_pitcher_middle_rate",
+            0.013428
+          ],
+          [
+            "asof_pitcher_fastball_rate",
+            0.01178
+          ],
+          [
+            "recent_offspeed_share",
+            0.011602
+          ],
+          [
+            "asof_pitcher_breaking_rate",
+            0.010586
+          ],
+          [
+            "career_zone_speed_mean",
+            0.01055
+          ],
+          [
+            "asof_batter_n",
+            0.010188
+          ],
+          [
+            "batter_team_id",
+            0.009489
+          ],
+          [
+            "career_offspeed_share",
+            0.009142
+          ],
+          [
+            "asof_pitcher_prev5_game_middle_rate",
+            0.009012
+          ],
+          [
+            "asof_pitcher_prev3_game_middle_rate",
+            0.007957
+          ],
+          [
+            "career_n_pitches",
+            0.007934
+          ]
+        ],
+        "profile_importance_share": 0.309259,
+        "profile_importance_ranked": [
+          [
+            12,
+            "recent_n_pitches",
+            0.01468
+          ],
+          [
+            17,
+            "recent_offspeed_share",
+            0.011602
+          ],
+          [
+            19,
+            "career_zone_speed_mean",
+            0.01055
+          ],
+          [
+            22,
+            "career_offspeed_share",
+            0.009142
+          ],
+          [
+            25,
+            "career_n_pitches",
+            0.007934
+          ],
+          [
+            27,
+            "career_rel_speed_mean",
+            0.007672
+          ],
+          [
+            29,
+            "career_offspeed_rel_speed_mean",
+            0.007639
+          ],
+          [
+            31,
+            "recent_fastball_share",
+            0.007282
+          ],
+          [
+            35,
+            "career_fastball_rel_speed_mean",
+            0.006761
+          ],
+          [
+            36,
+            "recent_offspeed_hb_mean",
+            0.00619
+          ],
+          [
+            37,
+            "career_rel_height_std",
+            0.006161
+          ],
+          [
+            38,
+            "career_offspeed_hb_mean",
+            0.006159
+          ],
+          [
+            39,
+            "career_breaking_rel_speed_mean",
+            0.006068
+          ],
+          [
+            40,
+            "career_horz_break_std",
+            0.006049
+          ],
+          [
+            41,
+            "career_fastball_share",
+            0.005994
+          ],
+          [
+            42,
+            "career_breaking_ivb_mean",
+            0.00597
+          ],
+          [
+            43,
+            "career_breaking_spin_rate_mean",
+            0.005875
+          ],
+          [
+            44,
+            "career_rel_speed_p90",
+            0.005836
+          ],
+          [
+            45,
+            "recent_horz_break_mean",
+            0.005419
+          ],
+          [
+            46,
+            "career_induced_vert_break_std",
+            0.005134
+          ],
+          [
+            47,
+            "recent_fastball_hb_mean",
+            0.005064
+          ],
+          [
+            48,
+            "career_rel_side_std",
+            0.004863
+          ],
+          [
+            49,
+            "career_n_games",
+            0.004817
+          ],
+          [
+            51,
+            "career_offspeed_ivb_mean",
+            0.004667
+          ],
+          [
+            52,
+            "career_extension_mean",
+            0.004623
+          ],
+          [
+            53,
+            "career_rel_side_mean",
+            0.004613
+          ],
+          [
+            54,
+            "recent_breaking_hb_mean",
+            0.00454
+          ],
+          [
+            55,
+            "recent_rel_side_mean",
+            0.00435
+          ],
+          [
+            56,
+            "career_fastball_ivb_mean",
+            0.004321
+          ],
+          [
+            57,
+            "career_rel_height_mean",
+            0.004298
+          ],
+          [
+            59,
+            "career_induced_vert_break_mean",
+            0.004074
+          ],
+          [
+            60,
+            "career_fastball_hb_mean",
+            0.004028
+          ],
+          [
+            61,
+            "career_breaking_share",
+            0.004
+          ],
+          [
+            64,
+            "recent_spin_rate_std",
+            0.003872
+          ],
+          [
+            65,
+            "career_horz_break_mean",
+            0.003824
+          ],
+          [
+            66,
+            "recent_fastball_spin_rate_mean",
+            0.003793
+          ],
+          [
+            67,
+            "recent_induced_vert_break_mean",
+            0.003779
+          ],
+          [
+            68,
+            "career_fastball_spin_rate_mean",
+            0.003677
+          ],
+          [
+            69,
+            "career_spin_rate_std",
+            0.003656
+          ],
+          [
+            70,
+            "career_rel_speed_std",
+            0.003637
+          ]
+        ],
+        "train_until": 2023,
+        "valid_year": 2024,
+        "n_train": 1116277
+      }
+    },
+    "P4": {
+      "spec": "P3 but profile columns bypass the imputer (native NaN splits)",
+      "fold_2023": {
+        "n_features": 114,
+        "n_raw_nan_features": 65,
+        "max_features_effective": 10,
+        "train_time_min": 1.28,
+        "inference_time_sec": 1.24,
+        "valid_all": {
+          "n": 245525,
+          "brier": 0.248792,
+          "bss": 0.004831,
+          "score": 483.126,
+          "base_rate": 0.499957,
+          "pred_mean": 0.504039,
+          "auc": 0.538868,
+          "logloss": 0.690724
+        },
+        "valid_R": {
+          "n": 219839,
+          "brier": 0.248698,
+          "bss": 0.005168,
+          "score": 516.78,
+          "base_rate": 0.503118,
+          "pred_mean": 0.505417,
+          "auc": 0.540034,
+          "logloss": 0.690535
+        },
+        "valid_F": {
+          "n": 25686,
+          "brier": 0.249595,
+          "bss": -0.001321,
+          "score": 0.0,
+          "base_rate": 0.472904,
+          "pred_mean": 0.492244,
+          "auc": 0.512405,
+          "logloss": 0.692337
+        },
+        "cold_start_R": {
+          "n": 33398,
+          "brier": 0.249481,
+          "bss": 0.002066,
+          "score": 206.589,
+          "base_rate": 0.501737,
+          "pred_mean": 0.5049,
+          "auc": 0.524247,
+          "logloss": 0.692106
+        },
+        "seen_R": {
+          "n": 186441,
+          "brier": 0.248558,
+          "bss": 0.005722,
+          "score": 572.188,
+          "base_rate": 0.503366,
+          "pred_mean": 0.50551,
+          "auc": 0.542375,
+          "logloss": 0.690254
+        },
+        "valid_R_has_profile": {
+          "n": 189637,
+          "brier": 0.248567,
+          "bss": 0.005696,
+          "score": 569.642,
+          "base_rate": 0.502929,
+          "pred_mean": 0.505356,
+          "auc": 0.542309,
+          "logloss": 0.690272
+        },
+        "valid_R_no_profile": {
+          "n": 30202,
+          "brier": 0.249521,
+          "bss": 0.001842,
+          "score": 184.202,
+          "base_rate": 0.504304,
+          "pred_mean": 0.505804,
+          "auc": 0.523013,
+          "logloss": 0.692187
+        },
+        "valid_R_has_recent": {
+          "n": 184010,
+          "brier": 0.248761,
+          "bss": 0.00495,
+          "score": 494.999,
+          "base_rate": 0.501076,
+          "pred_mean": 0.503878,
+          "auc": 0.539891,
+          "logloss": 0.690664
+        },
+        "importance_top25": [
+          [
+            "asof_pitcher_success_rate",
+            0.121771
+          ],
+          [
+            "asof_pitcher_reverse_rate",
+            0.091966
+          ],
+          [
+            "asof_pitcher_prev5_game_success_rate",
+            0.049799
+          ],
+          [
+            "asof_pitcher_prev3_game_success_rate",
+            0.036496
+          ],
+          [
+            "asof_pitcher_ball_rate",
+            0.034298
+          ],
+          [
+            "asof_pitcher_prev1_game_success_rate",
+            0.029802
+          ],
+          [
+            "asof_batter_success_rate",
+            0.029403
+          ],
+          [
+            "batter_team_id",
+            0.017025
+          ],
+          [
+            "asof_pitcher_offspeed_rate",
+            0.016686
+          ],
+          [
+            "asof_pitcher_strike_rate",
+            0.015532
+          ],
+          [
+            "asof_batter_middle_rate",
+            0.015518
+          ],
+          [
+            "asof_pitcher_middle_rate",
+            0.013708
+          ],
+          [
+            "asof_pitcher_n",
+            0.013266
+          ],
+          [
+            "career_offspeed_share",
+            0.012853
+          ],
+          [
+            "asof_pitcher_fastball_rate",
+            0.012624
+          ],
+          [
+            "asof_pitcher_pitchmix_n",
+            0.012293
+          ],
+          [
+            "recent_offspeed_share",
+            0.011829
+          ],
+          [
+            "season",
+            0.011779
+          ],
+          [
+            "asof_batter_n",
+            0.01172
+          ],
+          [
+            "career_rel_speed_mean",
+            0.010611
+          ],
+          [
+            "asof_pitcher_breaking_rate",
+            0.010577
+          ],
+          [
+            "asof_pitcher_prev5_game_middle_rate",
+            0.010359
+          ],
+          [
+            "asof_pitcher_prev3_game_middle_rate",
+            0.009404
+          ],
+          [
+            "asof_pitcher_prev1_game_middle_rate",
+            0.009181
+          ],
+          [
+            "career_n_pitches",
+            0.008866
+          ]
+        ],
+        "profile_importance_share": 0.332056,
+        "profile_importance_ranked": [
+          [
+            14,
+            "career_offspeed_share",
+            0.012853
+          ],
+          [
+            17,
+            "recent_offspeed_share",
+            0.011829
+          ],
+          [
+            20,
+            "career_rel_speed_mean",
+            0.010611
+          ],
+          [
+            25,
+            "career_n_pitches",
+            0.008866
+          ],
+          [
+            26,
+            "career_rel_speed_p90",
+            0.008582
+          ],
+          [
+            30,
+            "career_zone_speed_mean",
+            0.008244
+          ],
+          [
+            31,
+            "career_breaking_rel_speed_mean",
+            0.007979
+          ],
+          [
+            33,
+            "recent_fastball_share",
+            0.007196
+          ],
+          [
+            34,
+            "career_fastball_rel_speed_mean",
+            0.006723
+          ],
+          [
+            35,
+            "career_breaking_spin_rate_mean",
+            0.006645
+          ],
+          [
+            36,
+            "career_offspeed_hb_mean",
+            0.006494
+          ],
+          [
+            38,
+            "career_breaking_ivb_mean",
+            0.006322
+          ],
+          [
+            39,
+            "recent_rel_side_mean",
+            0.00616
+          ],
+          [
+            40,
+            "career_fastball_share",
+            0.006088
+          ],
+          [
+            41,
+            "career_offspeed_ivb_mean",
+            0.005959
+          ],
+          [
+            42,
+            "career_fastball_ivb_mean",
+            0.005917
+          ],
+          [
+            43,
+            "recent_fastball_ivb_mean",
+            0.005908
+          ],
+          [
+            44,
+            "career_rel_height_std",
+            0.005871
+          ],
+          [
+            45,
+            "career_induced_vert_break_mean",
+            0.005745
+          ],
+          [
+            46,
+            "career_offspeed_rel_speed_mean",
+            0.005645
+          ],
+          [
+            47,
+            "recent_n_pitches",
+            0.005621
+          ],
+          [
+            48,
+            "career_rel_side_mean",
+            0.005541
+          ],
+          [
+            50,
+            "recent_rel_height_std",
+            0.005425
+          ],
+          [
+            52,
+            "recent_horz_break_mean",
+            0.005216
+          ],
+          [
+            53,
+            "career_rel_side_std",
+            0.005195
+          ],
+          [
+            54,
+            "career_induced_vert_break_std",
+            0.005194
+          ],
+          [
+            55,
+            "recent_offspeed_hb_mean",
+            0.005147
+          ],
+          [
+            56,
+            "recent_fastball_hb_mean",
+            0.00511
+          ],
+          [
+            57,
+            "recent_spin_rate_mean",
+            0.005002
+          ],
+          [
+            58,
+            "recent_offspeed_ivb_mean",
+            0.004867
+          ],
+          [
+            59,
+            "career_offspeed_spin_rate_mean",
+            0.00471
+          ],
+          [
+            60,
+            "recent_induced_vert_break_std",
+            0.004657
+          ],
+          [
+            61,
+            "career_fastball_hb_mean",
+            0.004595
+          ],
+          [
+            62,
+            "career_spin_rate_std",
+            0.004483
+          ],
+          [
+            64,
+            "career_extension_mean",
+            0.004439
+          ],
+          [
+            65,
+            "recent_spin_rate_std",
+            0.004436
+          ],
+          [
+            66,
+            "recent_breaking_ivb_mean",
+            0.004415
+          ],
+          [
+            67,
+            "career_breaking_hb_mean",
+            0.004389
+          ],
+          [
+            68,
+            "career_rel_height_mean",
+            0.004372
+          ],
+          [
+            70,
+            "career_n_games",
+            0.004273
+          ]
+        ],
+        "train_until": 2022,
+        "valid_year": 2023,
+        "n_train": 870752
+      },
+      "fold_2024": {
+        "n_features": 114,
+        "n_raw_nan_features": 65,
+        "max_features_effective": 10,
+        "train_time_min": 2.42,
+        "inference_time_sec": 1.37,
+        "valid_all": {
+          "n": 253507,
+          "brier": 0.2486,
+          "bss": 0.00483,
+          "score": 482.956,
+          "base_rate": 0.486105,
+          "pred_mean": 0.498409,
+          "auc": 0.540975,
+          "logloss": 0.690341
+        },
+        "valid_R": {
+          "n": 223497,
+          "brier": 0.248622,
+          "bss": 0.005089,
+          "score": 508.89,
+          "base_rate": 0.489707,
+          "pred_mean": 0.500719,
+          "auc": 0.541696,
+          "logloss": 0.690385
+        },
+        "valid_F": {
+          "n": 30010,
+          "brier": 0.248437,
+          "bss": -0.000385,
+          "score": 0.0,
+          "base_rate": 0.45928,
+          "pred_mean": 0.481205,
+          "auc": 0.524101,
+          "logloss": 0.690015
+        },
+        "cold_start_R": {
+          "n": 44672,
+          "brier": 0.248762,
+          "bss": 0.004852,
+          "score": 485.248,
+          "base_rate": 0.495008,
+          "pred_mean": 0.507002,
+          "auc": 0.545474,
+          "logloss": 0.690668
+        },
+        "seen_R": {
+          "n": 178825,
+          "brier": 0.248587,
+          "bss": 0.005113,
+          "score": 511.305,
+          "base_rate": 0.488382,
+          "pred_mean": 0.49915,
+          "auc": 0.540923,
+          "logloss": 0.690314
+        },
+        "valid_R_has_profile": {
+          "n": 180906,
+          "brier": 0.2486,
+          "bss": 0.00505,
+          "score": 505.027,
+          "base_rate": 0.488243,
+          "pred_mean": 0.498958,
+          "auc": 0.540591,
+          "logloss": 0.690339
+        },
+        "valid_R_no_profile": {
+          "n": 42591,
+          "brier": 0.248718,
+          "bss": 0.005063,
+          "score": 506.268,
+          "base_rate": 0.495926,
+          "pred_mean": 0.508199,
+          "auc": 0.547049,
+          "logloss": 0.690579
+        },
+        "valid_R_has_recent": {
+          "n": 175492,
+          "brier": 0.248562,
+          "bss": 0.005261,
+          "score": 526.115,
+          "base_rate": 0.488894,
+          "pred_mean": 0.499053,
+          "auc": 0.541385,
+          "logloss": 0.690263
+        },
+        "importance_top25": [
+          [
+            "asof_pitcher_success_rate",
+            0.116537
+          ],
+          [
+            "asof_pitcher_reverse_rate",
+            0.104678
+          ],
+          [
+            "asof_pitcher_prev5_game_success_rate",
+            0.058904
+          ],
+          [
+            "asof_pitcher_prev3_game_success_rate",
+            0.042449
+          ],
+          [
+            "asof_pitcher_ball_rate",
+            0.036105
+          ],
+          [
+            "asof_pitcher_prev1_game_success_rate",
+            0.033245
+          ],
+          [
+            "asof_batter_success_rate",
+            0.023833
+          ],
+          [
+            "season",
+            0.018138
+          ],
+          [
+            "asof_pitcher_strike_rate",
+            0.01789
+          ],
+          [
+            "asof_pitcher_offspeed_rate",
+            0.01671
+          ],
+          [
+            "recent_offspeed_share",
+            0.015048
+          ],
+          [
+            "asof_pitcher_n",
+            0.014876
+          ],
+          [
+            "asof_batter_middle_rate",
+            0.014352
+          ],
+          [
+            "asof_pitcher_middle_rate",
+            0.013403
+          ],
+          [
+            "asof_pitcher_pitchmix_n",
+            0.012809
+          ],
+          [
+            "recent_n_pitches",
+            0.012723
+          ],
+          [
+            "career_offspeed_share",
+            0.012126
+          ],
+          [
+            "asof_pitcher_breaking_rate",
+            0.011128
+          ],
+          [
+            "batter_team_id",
+            0.011008
+          ],
+          [
+            "asof_batter_n",
+            0.010709
+          ],
+          [
+            "asof_pitcher_fastball_rate",
+            0.010451
+          ],
+          [
+            "career_zone_speed_mean",
+            0.009752
+          ],
+          [
+            "recent_fastball_share",
+            0.009093
+          ],
+          [
+            "asof_pitcher_prev3_game_middle_rate",
+            0.008335
+          ],
+          [
+            "career_rel_speed_mean",
+            0.008304
+          ]
+        ],
+        "profile_importance_share": 0.325492,
+        "profile_importance_ranked": [
+          [
+            11,
+            "recent_offspeed_share",
+            0.015048
+          ],
+          [
+            16,
+            "recent_n_pitches",
+            0.012723
+          ],
+          [
+            17,
+            "career_offspeed_share",
+            0.012126
+          ],
+          [
+            22,
+            "career_zone_speed_mean",
+            0.009752
+          ],
+          [
+            23,
+            "recent_fastball_share",
+            0.009093
+          ],
+          [
+            25,
+            "career_rel_speed_mean",
+            0.008304
+          ],
+          [
+            26,
+            "career_rel_speed_p90",
+            0.008273
+          ],
+          [
+            29,
+            "career_offspeed_rel_speed_mean",
+            0.007871
+          ],
+          [
+            30,
+            "career_n_pitches",
+            0.007657
+          ],
+          [
+            31,
+            "recent_offspeed_hb_mean",
+            0.007346
+          ],
+          [
+            33,
+            "career_breaking_spin_rate_mean",
+            0.007108
+          ],
+          [
+            37,
+            "career_fastball_rel_speed_mean",
+            0.006231
+          ],
+          [
+            38,
+            "career_rel_height_std",
+            0.006113
+          ],
+          [
+            39,
+            "career_breaking_ivb_mean",
+            0.005839
+          ],
+          [
+            41,
+            "recent_fastball_spin_rate_mean",
+            0.005586
+          ],
+          [
+            42,
+            "career_breaking_rel_speed_mean",
+            0.005502
+          ],
+          [
+            43,
+            "recent_rel_height_std",
+            0.00537
+          ],
+          [
+            44,
+            "career_induced_vert_break_std",
+            0.005325
+          ],
+          [
+            45,
+            "career_offspeed_hb_mean",
+            0.005278
+          ],
+          [
+            46,
+            "career_fastball_ivb_mean",
+            0.005178
+          ],
+          [
+            47,
+            "career_fastball_share",
+            0.005134
+          ],
+          [
+            48,
+            "recent_breaking_hb_mean",
+            0.005112
+          ],
+          [
+            49,
+            "career_rel_side_std",
+            0.005058
+          ],
+          [
+            50,
+            "recent_spin_rate_std",
+            0.004755
+          ],
+          [
+            51,
+            "recent_fastball_hb_mean",
+            0.004666
+          ],
+          [
+            52,
+            "recent_fastball_ivb_mean",
+            0.00466
+          ],
+          [
+            54,
+            "recent_breaking_ivb_mean",
+            0.004606
+          ],
+          [
+            55,
+            "career_n_games",
+            0.004576
+          ],
+          [
+            56,
+            "career_offspeed_ivb_mean",
+            0.004388
+          ],
+          [
+            57,
+            "career_rel_height_mean",
+            0.00428
+          ],
+          [
+            58,
+            "career_horz_break_std",
+            0.004261
+          ],
+          [
+            59,
+            "career_fastball_hb_mean",
+            0.004246
+          ],
+          [
+            60,
+            "recent_rel_speed_std",
+            0.004235
+          ],
+          [
+            61,
+            "recent_spin_rate_mean",
+            0.004145
+          ],
+          [
+            63,
+            "career_fastball_spin_rate_mean",
+            0.004084
+          ],
+          [
+            65,
+            "recent_offspeed_spin_rate_mean",
+            0.004018
+          ],
+          [
+            66,
+            "career_spin_rate_mean",
+            0.004008
+          ],
+          [
+            67,
+            "career_rel_side_mean",
+            0.003986
+          ],
+          [
+            68,
+            "career_spin_rate_std",
+            0.003861
+          ],
+          [
+            69,
+            "career_breaking_hb_mean",
+            0.003857
+          ]
+        ],
+        "train_until": 2023,
+        "valid_year": 2024,
+        "n_train": 1116277
+      }
+    }
+  },
+  "coverage": {
+    "fold_2022": {
+      "n_train": 653728,
+      "n_valid": 247472,
+      "profile_cutoff": 2021,
+      "n_profile_pitchers": 514,
+      "n_profile_features": 65,
+      "train_profile_row_coverage": 0.9971,
+      "valid_profile_row_coverage": 0.8432,
+      "valid_recent_profile_row_coverage": 0.7714,
+      "valid_R_profile_row_coverage": 0.8487
+    },
+    "fold_2023": {
+      "n_train": 870752,
+      "n_valid": 245525,
+      "profile_cutoff": 2022,
+      "n_profile_pitchers": 578,
+      "n_profile_features": 65,
+      "train_profile_row_coverage": 0.9978,
+      "valid_profile_row_coverage": 0.8649,
+      "valid_recent_profile_row_coverage": 0.8353,
+      "valid_R_profile_row_coverage": 0.8626
+    },
+    "fold_2024": {
+      "n_train": 1116277,
+      "n_valid": 253507,
+      "profile_cutoff": 2023,
+      "n_profile_pitchers": 627,
+      "n_profile_features": 65,
+      "train_profile_row_coverage": 0.9975,
+      "valid_profile_row_coverage": 0.807,
+      "valid_recent_profile_row_coverage": 0.7691,
+      "valid_R_profile_row_coverage": 0.8094
+    }
+  },
+  "summary": {
+    "references": {
+      "exp_008_R2_fold_2024_valid_R_brier": 0.248455,
+      "exp_008_R1_fold_2024_valid_R_brier": 0.248487,
+      "exp_007_V1_fold_2024_valid_R_brier": 0.249061,
+      "target_1061_points_brier": 0.24724
+    },
+    "fold_2024_valid_R_brier": {
+      "P0": 0.248455,
+      "P0b": 0.248445,
+      "P1": 0.24852,
+      "P2": 0.248555,
+      "P3": 0.248473,
+      "P4": 0.248622
+    },
+    "control_reproduces_exp008_R2": 0.0,
+    "delta_vs_P0_fold_2024_valid_R": {
+      "P0b": -1e-05,
+      "P1": 6.5e-05,
+      "P2": 0.0001,
+      "P3": 1.8e-05,
+      "P4": 0.000167
+    },
+    "single_variable_chain_fold_2024_valid_R": {
+      "P0->P0b": -1e-05,
+      "P0->P1": 6.5e-05,
+      "P1->P2": 3.5e-05,
+      "P2->P3": -8.2e-05,
+      "P3->P4": 0.000149
+    },
+    "fold_2024_valid_R_score": {
+      "P0": 575.816,
+      "P0b": 579.828,
+      "P1": 549.854,
+      "P2": 535.979,
+      "P3": 568.749,
+      "P4": 508.89
+    },
+    "fold_2024_valid_R_auc": {
+      "P0": 0.543655,
+      "P0b": 0.543718,
+      "P1": 0.543048,
+      "P2": 0.5429,
+      "P3": 0.543885,
+      "P4": 0.541696
+    },
+    "fold_2023_valid_R_brier": {
+      "P0": 0.248564,
+      "P0b": 0.248622,
+      "P1": 0.248676,
+      "P2": 0.248682,
+      "P3": 0.24871,
+      "P4": 0.248698
+    },
+    "fold_2022_valid_R_brier": {
+      "P0": 0.248813,
+      "P0b": null,
+      "P1": 0.248778,
+      "P2": 0.248818,
+      "P3": null,
+      "P4": null
+    },
+    "primary_gauge": "valid_all",
+    "references_valid_all": {
+      "exp_008_R1_fold_2024_valid_all_brier": 0.248769,
+      "exp_008_R1_score": 415.574,
+      "exp_008_R2_fold_2024_valid_all_brier": 0.24843,
+      "exp_008_R2_score": 551.092,
+      "organizers_RF_actual_LB": 549.51,
+      "target_1061_points_bss_valid_all": 0.01061,
+      "target_1061_points_brier_valid_all": 0.247157
+    },
+    "fold_2022_valid_all_brier": {
+      "P0": 0.247324,
+      "P0b": null,
+      "P1": 0.247759,
+      "P2": 0.247811,
+      "P3": null,
+      "P4": null
+    },
+    "fold_2022_valid_all_score": {
+      "P0": 738.276,
+      "P0b": null,
+      "P1": 563.764,
+      "P2": 542.706,
+      "P3": null,
+      "P4": null
+    },
+    "fold_2022_valid_F_brier": {
+      "P0": 0.236714,
+      "P0b": null,
+      "P1": 0.240497,
+      "P2": 0.240633,
+      "P3": null,
+      "P4": null
+    },
+    "fold_2023_valid_all_brier": {
+      "P0": 0.248713,
+      "P0b": 0.248741,
+      "P1": 0.248784,
+      "P2": 0.248787,
+      "P3": 0.248814,
+      "P4": 0.248792
+    },
+    "fold_2023_valid_all_score": {
+      "P0": 514.712,
+      "P0b": 503.406,
+      "P1": 486.268,
+      "P2": 485.201,
+      "P3": 474.312,
+      "P4": 483.126
+    },
+    "fold_2023_valid_F_brier": {
+      "P0": 0.249994,
+      "P0b": 0.249766,
+      "P1": 0.249713,
+      "P2": 0.249689,
+      "P3": 0.249707,
+      "P4": 0.249595
+    },
+    "fold_2024_valid_all_brier": {
+      "P0": 0.24843,
+      "P0b": 0.24841,
+      "P1": 0.248517,
+      "P2": 0.248549,
+      "P3": 0.248471,
+      "P4": 0.2486
+    },
+    "fold_2024_valid_all_score": {
+      "P0": 551.092,
+      "P0b": 559.059,
+      "P1": 516.184,
+      "P2": 503.692,
+      "P3": 534.791,
+      "P4": 482.956
+    },
+    "fold_2024_valid_F_brier": {
+      "P0": 0.248245,
+      "P0b": 0.248152,
+      "P1": 0.248499,
+      "P2": 0.248504,
+      "P3": 0.248458,
+      "P4": 0.248437
+    },
+    "delta_vs_P0_fold_2024_valid_all": {
+      "P0b": -2e-05,
+      "P1": 8.7e-05,
+      "P2": 0.000119,
+      "P3": 4.1e-05,
+      "P4": 0.00017
+    },
+    "single_variable_chain_fold_2024_valid_all": {
+      "P0->P0b": -2e-05,
+      "P0b->P1": 0.000107,
+      "P1->P2": 3.2e-05,
+      "P2->P3": -7.8e-05,
+      "P3->P4": 0.000129
+    },
+    "best_arm_fold_2024_valid_all": {
+      "arm": "P0b",
+      "brier": 0.24841,
+      "score": 559.059,
+      "note": "no profile features — only max_features 6->10 on the 47-feature base"
+    },
+    "verdict": "REJECT: no profile arm (P1-P4) beats the profile-free control on fold_2024 valid_all."
+  },
+  "fold_2022": {
+    "gauge": "valid_all",
+    "arm": "P2",
+    "brier": 0.247811,
+    "bss": 0.005427,
+    "auc": 0.547573,
+    "score": 542.706,
+    "n": 247472,
+    "control_P0_brier": 0.247324,
+    "delta_vs_control_P0": 0.000487,
+    "valid_R": {
+      "n": 217024,
+      "brier": 0.248818,
+      "bss": 0.004672,
+      "score": 467.189,
+      "auc": 0.539952
+    },
+    "valid_F": {
+      "n": 30448,
+      "brier": 0.240633,
+      "bss": -0.165725,
+      "score": 0.0,
+      "auc": 0.502928
+    }
+  },
+  "fold_2023": {
+    "gauge": "valid_all",
+    "arm": "P2",
+    "brier": 0.248787,
+    "bss": 0.004852,
+    "auc": 0.538981,
+    "score": 485.201,
+    "n": 245525,
+    "control_P0_brier": 0.248713,
+    "delta_vs_control_P0": 7.4e-05,
+    "valid_R": {
+      "n": 219839,
+      "brier": 0.248682,
+      "bss": 0.005235,
+      "score": 523.489,
+      "auc": 0.540414
+    },
+    "valid_F": {
+      "n": 25686,
+      "brier": 0.249689,
+      "bss": -0.001698,
+      "score": 0.0,
+      "auc": 0.512687
+    }
+  },
+  "fold_2024": {
+    "gauge": "valid_all",
+    "arm": "P2",
+    "brier": 0.248549,
+    "bss": 0.005037,
+    "auc": 0.542017,
+    "score": 503.692,
+    "n": 253507,
+    "control_P0_brier": 0.24843,
+    "delta_vs_control_P0": 0.000119,
+    "valid_R": {
+      "n": 223497,
+      "brier": 0.248555,
+      "bss": 0.00536,
+      "score": 535.979,
+      "auc": 0.5429
+    },
+    "valid_F": {
+      "n": 30010,
+      "brier": 0.248504,
+      "bss": -0.000653,
+      "score": 0.0,
+      "auc": 0.523787
+    }
+  },
+  "train_time_min": 22.56,
+  "inference_time_sec": 17.72,
+  "primary_gauge": {
+    "gauge": "valid_all",
+    "reason": "test 245,789 rows fall in the full R+F season range; R-only range is ~10% lower. Coordinator decision 2026-08-05. valid_R / valid_F kept as sub-segments."
+  },
+  "headline_arm": {
+    "arm": "P2",
+    "spec": "P1 + has_profile flag",
+    "note": "the arm named by config.yaml (profile + has_profile flag)"
+  },
+  "control_arm": {
+    "arm": "P0",
+    "spec": "47 base features (matched control, = exp_008 R2)",
+    "reproduces_exp_008_R2_valid_all": 0.0,
+    "reproduces_exp_008_R2_valid_R": 0.0
+  }
+}

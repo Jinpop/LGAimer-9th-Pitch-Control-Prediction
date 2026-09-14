@@ -1,0 +1,73 @@
+exp_id: exp_053
+date: "2026-08-16"
+hypothesis: >
+  타깃을 매끄럽게 하면 hard label 모델이 못 맞추던 부분집합이 좋아진다.
+  exp_052 stage 0.6 의 파생 관측(혼합 타깃 arm 전체 +30.3707점 · std 의 7.35159배 ·
+  부호 3/3, 그 몫이 타깃이 안 바뀐 미매칭행 +137.24506점 에 몰림)을 **teacher 없이**
+  재현하는가. 재현된다면 그 기전이 (a) 단순 로짓 수축인가 (b) 행마다 다른 평활인가.
+base_exp: exp_048          # 현행 67열 팔 (A1 @1400) — 대조군의 출처
+
+동기: >
+  2026-08-16 정보축 전수 스크리닝(22개 축, out-of-time 잔차표 + 투수 블록 부트스트랩)에서
+  현행 67열 팔 위에 t>=2 인 양수 축이 **하나도 없었다**. 대조군(투수손x타자손)마저
+  -0.8772(t=-0.12)로 죽었다 — 팔이 흡수했다는 뜻이다. 오프셋 계열(전이비 0.52~1.11,
+  우리 최고 구간)은 eb_k=400 이 이미 최적이고 백오프 lambda 는 t=0.78 로 기각됐다.
+  **사후 보정으로 얻을 것이 남아 있지 않다.** 남은 것은 모델 자체를 바꾸는 축이며,
+  대장의 미착수 항목 중 측정된 신호가 가장 강한 것이 이 축이다.
+
+arms:
+  - id: A0_control
+    target: "y (hard label)"
+    목적: >
+      🔴 **항등 앵커**. alpha=1 로 두면 혼합 코드를 타고도 exp_048 A1@1400 의
+      seed 42 예측과 **바이트 동일**해야 한다. 어긋나면 이 실험의 나머지는 무의미하다.
+  - id: S0_const
+    target: "t = (1-eps)*y + eps*ybar   (ybar = train 전역 성공률)"
+    eps_grid: [0.05, 0.10, 0.20]
+    목적: >
+      기전 분리용 대조. 상수 평활은 로짓을 균일 수축시킬 뿐이라 배포의
+      gamma·d_adj 재보정이 대부분 되돌린다고 예측한다. **S0 가 이득의 대부분을
+      재현하면 이 축은 우리 파이프라인에서 값이 없다** — 그 판정을 위해 넣는다.
+  - id: S1_selfdistill
+    target: "t = alpha*y + (1-alpha)*p_oof"
+    alpha_grid: [0.85, 0.70, 0.50]
+    p_oof: >
+      control_success 의 **forward-chaining OOF**. 시즌 블록마다 그 시즌보다
+      과거로만 적합해 예측한다 — 자기 행의 라벨도, 미래 블록도 보지 않는다.
+      🔴 타깃 파생 경로이므로 S1 이 살아남으면 **제출 전 감사 필수**.
+  - id: S2_asof_cell
+    target: "t = alpha*y + (1-alpha)*r_cell"
+    alpha_grid: [0.85, 0.70, 0.50]
+    r_cell: >
+      (pitcher_id, batter_hand) 셀의 **as-of 수축 성공률**. 이미 피처로 계산돼
+      있는 값이라 **새 리크 표면이 0** 이다. 행마다 다른 평활이라 S0 와 갈린다.
+
+model:
+  type: catboost          # 현행 C5_B3 계보 — 셀 4 + OOF 4열 + 67열 스태커
+  params: "exp_048 A1 과 동일 (셀 iter {510,844,548,706} · 스태커 1400)"
+  seed: 42                # stage 1 은 screen 이다 (아래)
+
+validation:
+  scheme: rolling-origin
+  folds:
+    - {train_until: 2023, valid: 2024}   # 유일한 판정 fold (규약)
+  primary_metric: brier                  # valid_all(R+F) — valid_R/valid_F 는 보조
+
+단계:
+  stage_1_screen:
+    내용: "seed 42 단독 · arm 4개(A0 + S0/S1/S2 각 최적 격자 1점)"
+    🔴: "**이것은 채택 판정이 아니다** — 부호와 크기만 본다. 단일 시드로 채택을 선언하지 않는다"
+    정지점: "S1·S2 가 둘 다 A0 대비 음수이거나 |Δ| < 시드 std 1배면 축을 닫고 보고한다"
+  stage_2_판정:
+    내용: "stage 1 을 통과한 arm 만 **3시드**(42/7/2024) · 격자 최적점 고정"
+    문턱: "🔴 **사전 등록** — |Δ|/시드std >= 3배 이고 부호 3/3. 결과를 보고 바꾸지 않는다(S8)"
+
+리크_방지:
+  - "p_oof 는 forward-chaining — 블록 b 의 예측은 시즌 < b 로만 적합. assert 로 강제"
+  - "r_cell 은 as-of 열이라 shift(1) 성질이 이미 보장됨"
+  - "혼합 타깃은 **학습에만** 들어간다. 검증 Brier 는 언제나 원 라벨 y 로 잰다"
+  - "현재 행 TrackMan 사용 0 · test 참조 0"
+
+runtime:
+  where: a5000
+  expected_min: 90        # stage 1 계산 (아래 ETA 근거)

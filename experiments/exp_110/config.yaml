@@ -1,0 +1,79 @@
+exp_id: exp_110
+date: 2026-08-27
+type: "read-only 재판독 (재학습 0 · zip 0 · 슬롯 0 · GPU 0 · CPU 2스레드)"
+title: "닫힌 오프셋 축 전수 재판독 — S206(표 빈티지 부호 반전) 이후"
+
+question: >
+  팀원 CT 가 sp_pit_split 축의 부호를 뒤집어 LB +6.6519071210 을 벌었는데
+  같은 축이 우리 정직면에서 −18.61점이다(S206). 우리가 프레임으로 닫은
+  오프셋 축 판정들이 표를 타는 축에 대해 신뢰할 수 없다면, 어떤 축을
+  다시 봐야 하는가.
+
+# ── 사전 등록 (결과를 보기 전에 고정) ────────────────────────────────
+prereg:
+  판정량: "꼭지점 최대이득 K·L²/G (점수 단위). 부호에 무관한 양이다."
+  행동_문턱: "+1.0점 (exp_109 config 와 동일). 팀 원장 검출한계는 +1.4."
+  귀무_바닥: >
+    exp_095 사전 등록 귀무 p95 = 1.3349점 (iid 정규 방향 200개).
+    같은 계열 하니스의 순열 대조군 단일 추첨: exp_074 perm_shuffle 1.4745 ·
+    exp_076 0.7637 · exp_075 0.2296 · exp_073 0.1901.
+  분류_기준: "산문이 아니라 출하 .py 코드. 축의 값이 동결표 조회를 거치는가."
+  🔴_사후성_고지: >
+    stage3(22축 재판독)은 사후 재분석이다. 그 t 는 사전 등록된 문턱이
+    아니며 (S8·S172·S190) 채택 근거로 쓸 수 없다. 크기 추정으로만 쓴다.
+
+# ── 눈금 (전부 실측) ─────────────────────────────────────────────────
+scale:
+  K_pts_per_brier: 400309.19882517256
+  screen_probe_eps: 0.02        # exp_073~076 s2_screen.py:83 EPS_PROBE
+  변환: "L = M / eps ;  최대이득 = K·L²/G = (K·L)²/(K·G)"
+  K_G_단위분산방향:
+    BN_BG_면: 24085-24490     # exp_059 metrics 의 beta_star 에서 역산, 15축 일치
+    CT_CR_캘프레임: 28954.695 # exp_109 stage2 실측 (S201 연속판)
+  sp_축_눈금:
+    우리_면_K_L: "+510.3 (CT blend.json K_L_local) / +196.5 (exp_059 face A 재구성)"
+    배포_K_L: "-440.251 (CT 를 CR 기반 LB 점으로 푼 값, exp_109 stage3)"
+    실현_LB: "+6.6519071210"
+    "🔴": "부호는 모든 로컬 면에서 틀렸다. 크기는 0.45~1.16배."
+
+# ── 단계 ─────────────────────────────────────────────────────────────
+stages:
+  s0_enumerate:
+    원문: ["exp_073/074/075/076 out/screen.json", "exp_095 out/s2_leftover.json",
+           "exp_059 metrics.json", "EXPERIMENTS.md 전문", "submissions/CV_LB.md 전문"]
+    산출: out/master_rank.json
+  s1_classify:
+    방법: "출하 패키지 build_CS3/pkg/CS3 의 .py 를 읽어 표 조회 경로를 확인"
+    분류: ["표 안 탐", "표를 타되 결정론적 카운트 앵커(무라벨·무수축)",
+           "표를 타고 라벨 EB 수축 소셀 추정(위험군)"]
+  s2_vintage:
+    질문: "표가 한 시즌 늘면 방향 벡터가 얼마나 움직이는가"
+    방법: >
+      exp_109 stage2c 와 동일. hist ≤2023 과 ≤2024 로 각각 표를 짓고
+      같은 2024행 253,507 에 적용해 ρ·sd비를 잰다.
+    양성_대조: "sp_pit_split — exp_109 실측 ρ 0.6595262 · Var비 0.9037166 재현"
+    음성_대조: "ctrl_asof_psr — 표를 안 타므로 ρ = 1.0000 이어야 한다"
+    산출: out/exp110_vint.json
+  s3_ax22_reread:
+    질문: >
+      2026-08-16 22축 스크린은 gain(s=1) = 2K·L − K·G 를 보고했고 판정을
+      "t≥2 인 **양수** 축 0개" 로 했다. 그것은 부호·배율 의존 기준이다.
+      L 과 G 를 분리해 부호 무관한 꼭지점 이득을 다시 낸다.
+    방법: "axis_scan.py 와 동일한 표·예측·수축 후보. 재학습 0."
+    산출: out/exp110_ax22.json, out/exp110_overlap.json
+  s4_overlap:
+    질문: "겹치면 재고가 아니다 (S19·S16)"
+    방법: "c0 벡터 쌍상관 + 고윳값 절단(rcond 1e-10) 동시 해 (S44)"
+
+resources:
+  retrain: 0
+  zip_built: 0
+  submissions_used: 0
+  gpu: "미사용"
+  cpu_threads: 2
+  files_deleted: 0
+  server_write: "~/SungjinPark/{e110_vint.py, e110_ax22.py, e110_ov.py, exp110_*.json} 신규 생성만"
+
+artifacts:
+  local: "experiments/exp_110/{metrics.json, out/*.json, src/*.py}"
+  server: "a5000:~/SungjinPark/{exp110_vint.json, exp110_ax22.json, exp110_overlap.json}"

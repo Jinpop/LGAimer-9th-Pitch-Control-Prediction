@@ -1,0 +1,47 @@
+exp_id: exp_094
+date: 2026-08-25
+title: "Q 팔 시드 확장 18개 — 팀원 정품 빌더(qdeploy3.py) · CPU 재현 증명 후 GPU 생산"
+학습_건수: "CPU 검증 seed 42·7 각 25모델 · GPU 생산 18시드 × 25모델 = 450 fit"
+제출물: "없음 — 모델 파일만 팀원에게 인계 (조립·mu 재유도·d_adj 는 팀원 몫)"
+
+왜: |
+  팀원 인계팩 `Q_18seed_kit_v2.zip` 의 배포급 Q 빌더로 시드를 3 → 18 로 늘린다.
+  기대값은 팀원 제91 블렌드 직접 실측 천장(3→∞) +0.35 에서 역산한 **+0.29** —
+  팀 검출한계 +1.4 의 1/5. 이 숫자를 키우지 않는다.
+
+변인 (🔴 둘이다 — 팀원은 "시드만" 을 기대하고 있다):
+  1: "시드 3 → 18"
+  2: "CatBoost CPU → GPU (task_type='GPU', A5000)"
+  근거: 18개를 전부 GPU 로 구우면 자기들끼리는 동질. 기존 CPU 3시드와 섞으면 안 된다.
+
+무엇을_안_바꿨나:
+  - 피처 77열 · 순서포함 sha256[:16] = d387caeb73979555 (출하 CH Q base_features 와 일치)
+  - ITER_CELL {is_mid_only 708, is_rev_only 1652, is_both 551, is_wayoff_true 1101} (배포 트리수. ×1.35 아님)
+  - ITER_STACK 915
+  - CBP depth 6 · lr 0.03 · l2_leaf_reg 10 · Logloss · Bernoulli · subsample 0.8 · Plain
+    · one_hot_max_size 10 · has_time True · thread_count 2
+  - 학습 마스크 ~((season<=2022) & game_type=='F')
+  - OOF 전방연쇄 시즌 [2020,2021,2022,2023,2024] · 2019 행 stack 열 NaN 유지(nan_pct 15.45)
+  - 셀 학습행 1,369,186 · 스태커 학습행 1,369,784
+
+시드:
+  기존: [42, 7, 2024]
+  추가: [1, 13, 101, 777, 2025, 31337, 3, 17, 77, 123, 555, 999, 2019, 8191, 65537]
+
+게이트:
+  A단_CPU_재현: "시드 42 를 CPU thread_count=2 로 재적합 → 출하 seed_42 와 max|Δp| = 0.000e+00"
+  B단_GPU_격차_사전등록: |
+    통과 조건: |GPU42 팔점수 − CPU42 팔점수| <= 시드 하나 바꾼 팔점수 차
+    면: exp_089 정직면(OOT-2024) — 셀도 스태커도 2024 를 안 본 팔
+  C단: "판정 통과 시 18시드 전부 GPU 로 (기존 CPU 3개는 지우지 않고 별도 OUT)"
+
+산출물_경로:
+  서버_모델: "~/SungjinPark/qseed/out/gpu/seed_*/  (각 5파일) + oofstack_gpu/oof_p6_s*.npz"
+  서버_CPU증명: "~/SungjinPark/qseed/out/cpu/  ·  verify/"
+  인계문서: "~/SungjinPark/qseed/out/gpu/HANDOFF.md"
+
+금지:
+  - "qlab.parquet · teacher.npy · lab*.parquet · calls.parquet 를 산출물·zip 에 넣지 않는다 (학습 전용)"
+  - "stacker_S1 / stacker_S2 만들지 않는다 (지분 정확히 0)"
+  - "조립·mu_mr·mu_wo 재유도·d_adj 재유도 하지 않는다 (팀원 몫)"
+  - "후보 zip 을 만들지 않는다"
